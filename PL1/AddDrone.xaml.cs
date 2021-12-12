@@ -1,4 +1,4 @@
-﻿using BO;
+﻿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -58,7 +58,7 @@ namespace PL
 
         private void cmbWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            IBL.BO.Enums.WeightCategories weightCategories = (IBL.BO.Enums.WeightCategories)WeightCategSelector.SelectedItem;
+            BO.Enums.WeightCategories weightCategories = (BO.Enums.WeightCategories)WeightCategSelector.SelectedItem;
             drone.MaxWeight = weightCategories;
             Categorie_weight.Background= Brushes.Transparent; 
 
@@ -146,7 +146,7 @@ namespace PL
           
 
                 }
-                catch (IBL.BO.AddException)
+                catch (BO.AddException)
                 {
                     MessageBox.Show("Missed Add");
                 }
@@ -215,11 +215,11 @@ namespace PL
                 }
                 else if (dr.Status == Enums.DroneStatuses.InDelivery)
                 {
-                    IBL.BO.Drone drone = bl1.GetDrone(dr.Id);
+                    BO.Drone drone = bl1.GetDrone(dr.Id);
 
                     if (drone.PID != null)
                     {
-                        IBL.BO.Parcel p = bl1.GetParcel(drone.PID.Id);
+                       Parcel p = bl1.GetParcel(drone.PID.Id);
                         if (p.PickedUp < DateTime.Now && p.Delivered > DateTime.Now)
                         {
                             bl1.UpdateDeliverParcel(dr.Id);
@@ -231,7 +231,7 @@ namespace PL
                     }
                 }
             }
-            catch (IBL.BO.AddException)
+            catch (AddException)
             {
                 this.myEvent("Missed Update");
             }

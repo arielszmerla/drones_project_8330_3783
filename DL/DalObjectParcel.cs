@@ -7,7 +7,7 @@ using DLAPI;
 using DO;
 using DS;
 
-namespace DL
+namespace DalObject
 {
     internal partial class DalObject : IDal
     {
@@ -36,7 +36,7 @@ namespace DL
             Parcel? myParcel = DataSource.Parcels.Find(p=>p.Id==id);
             if (myParcel == null)
                 throw new ParcelExeption("id of parcel not found");
-            return (Parcel)myParcel;
+            return (Parcel)myParcel.Clone();
         }
         /// <summary>
         /// 

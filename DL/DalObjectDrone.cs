@@ -8,7 +8,7 @@ using DO;
 using DS;
 
 
-namespace DL
+namespace DalObject
 {
     /// <summary>
     /// 

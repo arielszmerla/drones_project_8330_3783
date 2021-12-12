@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath></OutputPath>
+    <OutputPath>C:\Users\ariel\source\repos\PL\bin\net5.0-windows\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BL\BL.csproj" />
+    <ProjectReference Include="..\BL1\BL1.csproj" />
   </ItemGroup>
 
 </Project>

@@ -8,15 +8,19 @@ using DO;
 using DS;
 
 
-namespace DL
+namespace DalObject
 {
     sealed partial class DalObject : IDal
     {
         #region singelton
-        static readonly DalObject instance = new DalObject();
+        class Nested
+        {
+            static Nested() { }
+            internal static readonly DalObject instance = new DalObject();
+        }
         static DalObject() { }
         DalObject() { }
-        public static DalObject Instance { get => instance; }
+        public static DalObject Instance { get => Nested.instance; }
         #endregion
 
 

@@ -7,7 +7,7 @@ using DS;
 using DLAPI;
 using DO;
 
-namespace DL
+namespace DalObject
 {
     internal partial class DalObject : IDal
     {
@@ -44,7 +44,7 @@ namespace DL
         public IEnumerable<BaseStation> GetAllBaseStations(Func<BaseStation, bool> predicat = null)
         {
             if (predicat == null)
-                return DataSource.BaseStations.ToList();
+                return DataSource.BaseStations.ToList().Clone();
             else
                 return (from item in DataSource.BaseStations
                         where predicat(item)
@@ -57,7 +57,7 @@ namespace DL
         /// <param name="bs"></param>
         public void UpdateBaseStationFromBl(BaseStation bs)
         {
-            int index = DataSource.BaseStations.FindIndex(ba => ba.Id == bs.Id);
+            int index = DataSource.BaseStations.FindIndex(ba => ba.Id == bs.Id).Clone();
             if (index == -1)
             {
                 throw new BaseExeption($"base station {bs.Id} not found\n");

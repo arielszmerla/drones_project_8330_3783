@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BLAPI;
 
-using BL;
+
 
 
 namespace PL
@@ -28,7 +28,7 @@ namespace PL
         IBL bl;
         public MainWindow()
         {
-            bl = BLFactory.GetBL("1");
+            bl = BLFactory.GetBL();
             InitializeComponent();
         }
 

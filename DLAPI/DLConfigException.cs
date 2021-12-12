@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace DLAPI
 {
     [Serializable]
-    internal class DLConfigException : Exception
+    public class DLConfigException : Exception
     {
         public DLConfigException()
         {

@@ -4,51 +4,53 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DLAPI
 {
+
     public static class DLFactory
     {
-        public static IDal GetDL()
+        public static IDal GetDL(string str)
         {
-            string dlType = DLConfig.DLName;
-            DLConfig.DLPackage dLPackage;
-            try
+            switch (str)
             {
-                dLPackage = DLConfig.DLPackages[dlType];
-            }
-            catch (KeyNotFoundException ex)
-            {
-                throw new DLConfigException($"Wrong DL type: {dlType}", ex);
-            }
-            string dlPackageName = dLPackage.PkgName;
-            string dlNameSpace = dLPackage.NameSpace;
-            string dlClass = dLPackage.ClassName;
+                case "1":
+                    {
+                        string dlType = DLConfig.DalName;
+                        string dlPkg = DLConfig.DalPackages[dlType];
+                        if (dlPkg == null)
+                            throw new DLConfigException($"Wrong DL type: {dlType}");
+                        try
+                        {
+                            Assembly.Load(dlPkg);
+                        }
+                        catch (KeyNotFoundException ex)
+                        {
+                            throw new DLConfigException($"Failed loading {dlPkg}.dll", ex);
+                        }
+                        Type type = Type.GetType($"DalObject.{dlPkg}, {dlPkg}");
+                        if (type == null) throw new DLConfigException($"Class name is not the same as Assembly Name: {dlPkg}");
+                        IDal dal = (IDal)type.GetProperty("Instance",
+                        BindingFlags.Public | BindingFlags.Static).GetValue(null);
+                        if (dal == null) throw new DLConfigException($"Class {dlPkg} is not a singleton");
+                        return dal;
+                    }
+         
+                default:
+                    throw new DLConfigException($"didn't send a parameter,{str} is a wrong dl type ");
 
-            try
-            {
-                Assembly.Load(dlPackageName);
 
             }
-            catch (KeyNotFoundException ex)
-            {
-                throw new DLConfigException($"Failed loading {dlPackageName}.dll", ex);
-            }
-            Type type = Type.GetType($"DalObject.{dlPackageName}, {dlPackageName}");
-            if (type == null)
-                throw new DLConfigException($"Class name is not the same as Assembly Name: {dlPackageName}");
-            try
-            {
-                IDal dal = type.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static).GetValue(null) as IDal;
-                if (dal == null)
-                    throw new DLConfigException($"Class {dlPackageName} instance is not initialized");
-                return dal;
-            }
-            catch (NullReferenceException ex)
-            {
-                throw new DLConfigException($"Class {dlPackageName} is not a singleton", ex);
-            }
-
         }
     }
 }
+
+
+
+
+
+
+
+
+
