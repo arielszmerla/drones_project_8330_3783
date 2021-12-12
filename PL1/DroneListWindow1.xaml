@@ -1,0 +1,48 @@
+﻿<Window x:Class="PL.DroneListWindow1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Closing="list_closing"
+      
+
+         Title = "LIST OF DRONES" Height="450" Width="800" >
+    <Window.Background>
+        <ImageBrush ImageSource="C:\Users\ariel\source\repos\dotNet5782_3783_8330\PL\dronefon.jpg" />
+    </Window.Background>
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="400*"/>
+        </Grid.RowDefinitions>
+        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
+        VerticalAlignment="Stretch" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions >
+            
+            <Label   Grid.Row="0" Foreground="BlanchedAlmond" VerticalContentAlignment="Center" FontSize="25" FontWeight="DemiBold" Grid.Column="1" Content="BY STATUS" x:Name="Status_label" />
+            <ComboBox  Opacity="0.8"  BorderBrush="Transparent" Background="Bisque" ToolTip="Drone Status" Text="Drone Status" x:Name="StatusSelector"  Grid.Column="1" HorizontalAlignment= "Left" VerticalAlignment="Stretch" SelectionChanged="StatusSelector_SelectionChanged"  Margin="172,0,0,0">
+            </ComboBox>
+            <Label Grid.Row="0"   VerticalContentAlignment="Center" Foreground="BlanchedAlmond" Grid.Column="2" FontSize="25" FontWeight="DemiBold" Content="BY WEIGHT" x:Name="Weight_label"  />
+            <ComboBox  Background="Bisque"  BorderBrush="Transparent" Opacity="0.8" ToolTip="Drone weight" Text="Drone weight" x:Name="WeightChoise" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Stretch"  SelectionChanged="WeightChoise_SelectionChanged" Margin="172,0,0,0"/>
+
+            <Button  Background="Bisque" BorderBrush="Transparent"  Opacity="0.8" FontSize="16" Content="ADD A DRONE" Grid.Column="3" Click="Button_Click" Margin="60,271,19,-271"/>
+            <Label  Content="MY DRONES:" Foreground="Black" VerticalContentAlignment="Center"  FontSize="25" FontWeight="Bold" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"/>
+            <Button  Background="Bisque"  BorderBrush="Transparent" Opacity="0.8"  FontSize="16"  Content="CLOSE WINDOW" Grid.Column="3" x:Name="Closing_Button" HorizontalAlignment="Left" Click="Closing_Button_Click" Margin="60,345,0,-347" Width="120"/>
+            <Button    BorderBrush="Transparent" Opacity="0.8" x:Name="reset" Content="Reset List" Visibility="Hidden" Grid.Column="3" HorizontalAlignment="Left" Margin="19,0,0,0" VerticalAlignment="Center" Height="72" Width="171" ToolTip="Reset List" Click="Reset_List"/>
+        </Grid>
+   
+            <ListView   Background="Transparent" Foreground="Black" x:Name="DroneListView" MouseDoubleClick="drone_action" FontSize="15"  FontWeight="ExtraBlack" SelectionChanged="DroneListView_SelectionChanged" Margin="0,69,154,21" Grid.RowSpan="2">
+        </ListView>
+        
+    </Grid>
+ 
+
+
+</Window>

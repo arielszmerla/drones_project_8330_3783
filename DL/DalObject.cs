@@ -10,15 +10,16 @@ using DS;
 
 namespace DL
 {
-     partial class DalObject : IDal
-    {/// <summary>
-     /// constructor
-     /// </summary>
-        public DalObject()
-        {///set the company with init func
-            DataSource.Config.Initialize();
-        }
-  
+    sealed partial class DalObject : IDal
+    {
+        #region singelton
+        static readonly DalObject instance = new DalObject();
+        static DalObject() { }
+        DalObject() { }
+        public static DalObject Instance { get => instance; }
+        #endregion
+
+
 
         /// <summary>
         /// method to release a charging drone from a base station
@@ -94,9 +95,8 @@ namespace DL
             }
         }
 
-     
+
 
 
     }
 }
- 

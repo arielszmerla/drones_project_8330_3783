@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BLAPI;
+using DO;
 
 namespace BL
 {/// <summary>
@@ -59,7 +60,7 @@ namespace BL
             if (!drones.Any(dr => dr.Id == id))
                 throw new GetException("$ID OF DRONE {dr.Id} DOESN'T EXIST\n");
             DroneToList dr = drones.Find(dr => dr.Id == id);
-            List<IDAL.DO.Parcel> parcels = (List<IDAL.DO.Parcel>)myDal.GetParcelList();
+            List<DO.Parcel> parcels = (List<IDAL.DO.Parcel>)myDal.GetParcelList();
             List<IDAL.DO.Parcel> parcelConnected = parcels.FindAll(pc => pc.DroneId == id);
 
             int index = parcelConnected.FindIndex(pc => pc.Scheduled < DateTime.Now && pc.PickedUp > DateTime.Now);
@@ -159,8 +160,8 @@ namespace BL
                 return;
             }
             BaseStation bc = getClosestBase(drone.DroneLocation);
-            List<IDAL.DO.BaseStation> bs = (List<IDAL.DO.BaseStation>)myDal.GetAllBaseStations();
-            IDAL.DO.BaseStation myBase = bs.Find(bas => bas.Latitude == bc.BaseStationLocation.latitude&&bas.Longitude==bc.BaseStationLocation.longitude);
+            List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetAllBaseStations();
+            DO.BaseStation myBase = bs.Find(bas => bas.Latitude == bc.BaseStationLocation.latitude&&bas.Longitude==bc.BaseStationLocation.longitude);
             if ((myDal.DroneElectricConsumations()[0]) *
                LocationFuncs.Distance(drone.DroneLocation,new Location { latitude = myBase.Latitude, longitude = myBase.Longitude }) <= drone.BatteryStatus)
             {
@@ -187,7 +188,7 @@ namespace BL
                 throw new GetException($"id {idC} doesn't exist ");
             }
             //do the wanted changes
-            List<IDAL.DO.Customer> custom = (List<IDAL.DO.Customer>)myDal.GetCustomerList();
+            List<DO.Customer> custom = (List<DO.Customer>)myDal.GetCustomerList();
             IDAL.DO.Customer bs = custom[custom.FindIndex(cus => cus.Id == idC)];
             if (name != " ")
                 bs.Name = name;
@@ -207,8 +208,8 @@ namespace BL
             {
                 throw new GetException ($"id {myId} doesn't exist ");
             }
-            List<IDAL.DO.BaseStation> BaseS = (List<IDAL.DO.BaseStation>)myDal.GetAllBaseStations();
-            IDAL.DO.BaseStation bs = BaseS[BaseS.FindIndex(bs => bs.Id == myId)];
+            List<DO.BaseStation> BaseS = (List<DO.BaseStation>)myDal.GetAllBaseStations();
+            DO.BaseStation bs = BaseS[BaseS.FindIndex(bs => bs.Id == myId)];
             if (numOfSlots != null)
                 bs.NumOfSlots = numOfSlots;
             if (name != "Base ")
@@ -217,7 +218,7 @@ namespace BL
             {
                 myDal.UpdateBaseStationFromBl(bs);
             }
-            catch (DalObject.BaseExeption p) {
+            catch (BaseExeption p) {
                 throw new GetException($"The Base station {bs.Id} doesn't exist" ,p);
             }
 

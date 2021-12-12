@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BLAPI;
 using DLAPI;
-using DL; 
+using DO; 
 
 namespace BL
 {/// <summary>
@@ -23,8 +23,8 @@ namespace BL
         /// </summary>
         public BLImp()
         {
-
-            myDal = new DalObject();
+            myDal = DLFactory.GetDL();
+      
             double consumationFreeDrone = myDal.DroneElectricConsumations()[0];
             double consumationLightCarrier = myDal.DroneElectricConsumations()[1];
             double consumationMediumCarrier = myDal.DroneElectricConsumations()[2];
