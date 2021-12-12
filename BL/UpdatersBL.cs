@@ -22,15 +22,15 @@ namespace BL
             if (!drones.Any(dr => dr.Id == id))
                 throw new GetException($"ID OF DRONE {id} DOESN'T EXIST\n");
             DroneToList dr = drones.Find(dr => dr.Id == id);
-            List<IDAL.DO.Parcel> parcels = (List<IDAL.DO.Parcel>)myDal.GetParcelList();
+            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList();
             //find all parcels that are connected to this drone
-            List<IDAL.DO.Parcel> parcelConnected = parcels.FindAll(pc => pc.DroneId == id);
+            List<DO.Parcel> parcelConnected = parcels.FindAll(pc => pc.DroneId == id);
             //if any of the drone's parcels is picked up but not delivered
             if (parcelConnected.Any(ps => ps.PickedUp <= DateTime.Now && ps.Delivered == DateTime.MinValue))
             {
-                IDAL.DO.Parcel p = parcelConnected.Find(ps => ps.PickedUp <= DateTime.Now && ps.Delivered == DateTime.MinValue);
+                DO.Parcel p = parcelConnected.Find(ps => ps.PickedUp <= DateTime.Now && ps.Delivered == DateTime.MinValue);
                 p.Delivered = DateTime.Now;
-                IDAL.DO.Customer cs = myDal.GetCustomerList().First(cs => cs.Id == p.TargetId);
+                DO.Customer cs = myDal.GetCustomerList().First(cs => cs.Id == p.TargetId);
                 //if the drone can deliver it taking in account his battery status
                 //then update drone and parcel
                 if (dr.BatteryStatus - myDal.DroneElectricConsumations()[(int)p.Weight + 1] * (LocationFuncs.Distance(dr.DroneLocation, new Location { latitude = cs.Latitude, longitude = cs.Longitude })) >= 0)
