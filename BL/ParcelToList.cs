@@ -1,6 +1,6 @@
-﻿using static BO.Enums;
+﻿using static IBL.BO.Enums;
 
-namespace BO
+namespace IBL.BO
 {/// <summary>
 /// implement ParcelToList class
 /// </summary>

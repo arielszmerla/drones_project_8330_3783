@@ -1,35 +1,37 @@
-﻿using static BO.Enums;
+﻿using static IBL.BO.Enums;
 
-
-namespace BO
-{/// <summary>
- /// implement class drone
- /// </summary>
-    public class Drone
-    {
-        public int Id { get; set; }//
-        public string Model { get; set; }//
-        public WeightCategories MaxWeight { get; set; }//
-        public double BatteryStatus { get; set; }
-        public DroneStatuses Status { get; set; }//
-        public ParcelInDelivery PID { get; set; }
-        public Location DronePlace { get; set; }
-        public override string ToString()///toString erased func
+namespace IBL
+{
+    namespace BO
+    {/// <summary>
+    /// implement class drone
+    /// </summary>
+        public class Drone
         {
-            string result = "";
-            result += $"ID is {Id}\n";
-            result += $"model is {Model}\n";
-            result += $"maxWeight is {MaxWeight}\n";
-            result += $"Battery Status is {BatteryStatus}\n";
-            result += $"Status is {Status}\n";
-            if (PID != null)
+            public int Id { get; set; }//
+            public string Model { get; set; }//
+            public WeightCategories MaxWeight { get; set; }//
+            public double BatteryStatus { get; set; }
+            public DroneStatuses Status { get; set; }//
+            public ParcelInDelivery PID { get; set; }  
+            public Location DronePlace { get; set; }
+            public override string ToString()///toString erased func
             {
-                result += $"Parcel in delivery is {PID}\n";
+                string result = "";
+                result += $"ID is {Id}\n";
+                result += $"model is {Model}\n";
+                result += $"maxWeight is {MaxWeight}\n";
+                result += $"Battery Status is {BatteryStatus}\n";
+                result += $"Status is {Status}\n";
+                if (PID != null)
+                {
+                    result += $"Parcel in delivery is {PID}\n";
+                }
+                result += $"Location is {DronePlace}\n";
+
+                return result;
             }
-            result += $"Location is {DronePlace}\n";
 
-            return result;
         }
-
     }
 }

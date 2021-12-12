@@ -1,4 +1,4 @@
-﻿namespace BO
+﻿namespace IBL.BO
 {/// <summary>
 /// implement BaseStationToList class
 /// </summary>

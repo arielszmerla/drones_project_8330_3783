@@ -1,23 +1,21 @@
-﻿using BO;
+﻿
+using IBL.BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BLAPI;
-using DL;
-using DLAPI;
 
 /// <summary>
 /// partial Bl Class
 ///with Add functs
 /// </summary>
-namespace BL
+namespace IBL
 {/// <summary>
 /// partial Bl Class
 ///with Add functs
 /// </summary>
-    public partial class BLImp : IBL
+    public partial class BL : IBL
     {
         /// <summary>
         /// add a costumer to database
@@ -36,7 +34,7 @@ namespace BL
             try
             {
                 //calling mydal after mapping BO to DO
-                myDal.AddCustomer(new DO.Customer
+                myDal.AddCustomer(new IDAL.DO.Customer
                 {
                     Id = customer.Id,
                     Latitude = customer.Location.latitude,
@@ -45,7 +43,7 @@ namespace BL
                     Phone = customer.Phone
                 });
             }
-            catch (CostumerExeption d)
+            catch (DalObject.CostumerExeption d)
             {
                 throw new AddException($"The Customer {customer.Id} already exists ", d);
             }
@@ -66,7 +64,7 @@ namespace BL
             try
             {
                 //calling mydal after mapping BO to DO
-                myDal.AddBaseStation(new DO.BaseStation
+                myDal.AddBaseStation(new IDAL.DO.BaseStation
                 {
                     Id = station.Id,
                     Latitude = station.BaseStationLocation.latitude,
@@ -75,7 +73,7 @@ namespace BL
                     NumOfSlots = station.NumOfFreeSlots
                 });
             }
-            catch (BaseExeption d)
+            catch (DalObject.BaseExeption d)
             {
 
                 throw new AddException($"The Base station {station.Id} already exists " , d);
@@ -87,7 +85,7 @@ namespace BL
         /// </summary>
         /// <param name="drone"></param>
         /// <param name="BaseStationNum"></param>
-        public void AddDrone(DO.Drone drone, int BaseStationNum)
+        public void AddDrone(IDAL.DO.Drone drone, int BaseStationNum)
         { //checks if exists already
             foreach (var item in myDal.GetDroneList())
             {
@@ -105,13 +103,13 @@ namespace BL
             {
                 myDal.AddDrone(drone);
             }
-            catch (DroneException d)
+            catch (DalObject.DroneException d)
             {
 
                 throw new AddException($"The drone {drone.Id} already exists " , d);
             }
 
-            List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetAllBaseStations();
+            List<IDAL.DO.BaseStation> bs = (List<IDAL.DO.BaseStation>)myDal.GetAllBaseStations();
             //put it in the BL droneList
             DroneToList dr = new DroneToList
             {
@@ -135,8 +133,8 @@ namespace BL
                         throw new AddException($"id {drone.Id} exist already");
                     }
                 } //checks if basestation to send drone exists 
-                DO.Drone drone1 = new DO.Drone { Id= drone.Id,
-                 MaxWeight = (DO.WeightCategories)drone.MaxWeight, Model = drone.Model};
+                IDAL.DO.Drone drone1 = new IDAL.DO.Drone { Id= drone.Id,
+                 MaxWeight = (IDAL.DO.WeightCategories)drone.MaxWeight, Model = drone.Model};
                 //drone1.Id = drone.Id;
                
                 //calling mydal after mapping BO to DO
@@ -144,13 +142,13 @@ namespace BL
                 {
                     myDal.AddDrone(drone1);
                 }
-                catch (DroneException d)
+                catch (DalObject.DroneException d)
                 {
 
                     throw new AddException($"The drone {drone.Id} already exists ", d);
                 }
 
-                List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetAllBaseStations();
+                List<IDAL.DO.BaseStation> bs = (List<IDAL.DO.BaseStation>)myDal.GetAllBaseStations();
             //put it in the BL droneList
             DroneToList dr = new DroneToList
             {
@@ -178,7 +176,7 @@ namespace BL
             //calling mydal after mapping BO to DO
             try
             {
-                myDal.AddParcel(new DO.Parcel
+                myDal.AddParcel(new IDAL.DO.Parcel
                 {
                     Id = parcel.Id,
                     Delivered = parcel.Delivered,
@@ -188,10 +186,10 @@ namespace BL
                     Scheduled = parcel.Assignment,
                     SenderId = parcel.Sender.Id,
                     TargetId = parcel.Target.Id,
-                    Weight = (DO.WeightCategories)parcel.WeightCategories
+                    Weight = (IDAL.DO.WeightCategories)parcel.WeightCategories
                 });
             }
-            catch (ParcelExeption pr)
+            catch (DalObject.ParcelExeption pr)
             {
                 throw new AddException($"The parcel {parcel.Id} alreaedy exists." , pr);
             }
