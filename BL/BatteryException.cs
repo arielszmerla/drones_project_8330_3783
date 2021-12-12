@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace BO
+namespace IBL.BO
 {
     [Serializable]
     public class BatteryException : Exception

@@ -1,11 +1,11 @@
-﻿using BO;
+﻿using IBL.BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BO
+namespace IBL.BO
 {
     public class LocationFuncs
     {

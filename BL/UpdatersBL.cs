@@ -1,4 +1,4 @@
-﻿using BO;
+﻿using IBL.BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 using BLAPI;
 using DO;
 
-namespace BL
+
+namespace IBL
 {/// <summary>
 /// part of BL class
 /// </summary>
-    public partial class BLImp : IBL
+    public partial class BL : IBL
 
     {
         /// <summary>
@@ -23,15 +24,15 @@ namespace BL
             if (!drones.Any(dr => dr.Id == id))
                 throw new GetException($"ID OF DRONE {id} DOESN'T EXIST\n");
             DroneToList dr = drones.Find(dr => dr.Id == id);
-            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList();
+            List<IDAL.DO.Parcel> parcels = (List<IDAL.DO.Parcel>)myDal.GetParcelList();
             //find all parcels that are connected to this drone
-            List<DO.Parcel> parcelConnected = parcels.FindAll(pc => pc.DroneId == id);
+            List<IDAL.DO.Parcel> parcelConnected = parcels.FindAll(pc => pc.DroneId == id);
             //if any of the drone's parcels is picked up but not delivered
             if (parcelConnected.Any(ps => ps.PickedUp <= DateTime.Now && ps.Delivered == DateTime.MinValue))
             {
-                DO.Parcel p = parcelConnected.Find(ps => ps.PickedUp <= DateTime.Now && ps.Delivered == DateTime.MinValue);
+                IDAL.DO.Parcel p = parcelConnected.Find(ps => ps.PickedUp <= DateTime.Now && ps.Delivered == DateTime.MinValue);
                 p.Delivered = DateTime.Now;
-                DO.Customer cs = myDal.GetCustomerList().First(cs => cs.Id == p.TargetId);
+                IDAL.DO.Customer cs = myDal.GetCustomerList().First(cs => cs.Id == p.TargetId);
                 //if the drone can deliver it taking in account his battery status
                 //then update drone and parcel
                 if (dr.BatteryStatus - myDal.DroneElectricConsumations()[(int)p.Weight + 1] * (LocationFuncs.Distance(dr.DroneLocation, new Location { latitude = cs.Latitude, longitude = cs.Longitude })) >= 0)

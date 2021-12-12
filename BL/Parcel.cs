@@ -1,7 +1,7 @@
 ﻿using System;
-using static BO.Enums;
+using static IBL.BO.Enums;
 
-namespace BO
+namespace IBL.BO
 {/// <summary>
 /// implement parcel class
 /// </summary>

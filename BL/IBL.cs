@@ -1,5 +1,5 @@
-﻿using BO;
-
+﻿using IBL.BO;
+using IBL;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLAPI
+namespace IBL
 {/// <summary>
 /// part of interface
 /// </summary>
@@ -24,7 +24,7 @@ namespace BLAPI
         /// </summary>
         /// <param name="drone"></param>
         /// <param name="BaseStationNum"></param>
-        void AddDrone(DO.Drone drone, int BaseStationNum);
+        void AddDrone(IDAL.DO.Drone drone, int BaseStationNum);
         /// <summary>
         /// method to add a drone
         /// </summary>
