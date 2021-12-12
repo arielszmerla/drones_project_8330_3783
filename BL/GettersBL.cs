@@ -22,8 +22,8 @@ namespace BL
         /// <returns></returns>
         public Parcel GetParcel(int idP)
         {
-            IDAL.DO.Parcel parcel = new();
-            List<IDAL.DO.Parcel> parcels = (List<IDAL.DO.Parcel>)myDal.GetParcelList();
+            DO.Parcel parcel = new();
+            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList();
             if (parcels.Any(pc => pc.Id == idP))
             {
                 parcel = parcels.Find(pc => pc.Id == idP);
@@ -31,7 +31,7 @@ namespace BL
             else
                 throw new GetException("id of parcel not found");
             Parcel p = new Parcel();
-            List<IDAL.DO.Customer> customers = (List<IDAL.DO.Customer>)myDal.GetCustomerList();
+            List<DO.Customer> customers = (List<DO.Customer>)myDal.GetCustomerList();
             p.Assignment = parcel.Scheduled;
             p.Created = parcel.Requested;
             p.Delivered = parcel.Delivered;
@@ -60,8 +60,8 @@ namespace BL
         /// <returns></returns>
         public BaseStation GetBaseStation(int idP)
         {
-            IDAL.DO.BaseStation myBase = new();
-            List<IDAL.DO.BaseStation> bases = (List<IDAL.DO.BaseStation>)myDal.GetAllBaseStations();
+           DO.BaseStation myBase = new();
+            List<DO.BaseStation> bases = (List<DO.BaseStation>)myDal.GetAllBaseStations();
             if (bases.Any(pc => pc.Id == idP))
             {
                 myBase = bases.Find(pc => pc.Id == idP);
@@ -80,8 +80,8 @@ namespace BL
         public Customer GetCustomer(int idP)
         {
 
-            IDAL.DO.Customer myCust = new();
-            List<IDAL.DO.Customer> customers = (List<IDAL.DO.Customer>)myDal.GetCustomerList();
+            DO.Customer myCust = new();
+            List<DO.Customer> customers = (List<DO.Customer>)myDal.GetCustomerList();
             if (customers.Any(pc => pc.Id == idP))
             {
                 myCust = customers.Find(pc => pc.Id == idP);
@@ -94,9 +94,9 @@ namespace BL
             customer.Location.longitude = myCust.Longitude;
             customer.Name = myCust.Name;
             customer.Phone = myCust.Phone;
-            List<IDAL.DO.Parcel> parcels = (List<IDAL.DO.Parcel>)myDal.GetParcelList();
-            List<IDAL.DO.Parcel> parcelTo = parcels.FindAll(ps => ps.TargetId == customer.Id);
-            List<IDAL.DO.Parcel> parcelFrom = parcels.FindAll(ps => ps.SenderId == customer.Id);
+            List<DO.Parcel> parcelTo = (List<DO.Parcel>)myDal.GetParcelList().Where(ps => ps.TargetId == customer.Id);
+        
+            List<DO.Parcel> parcelFrom = (List<DO.Parcel>)myDal.GetParcelList().Where(ps => ps.SenderId == customer.Id);
             List<ParcelByCustomer> customerTmp = new();
             foreach (var it in parcelFrom)
             {
@@ -168,7 +168,7 @@ namespace BL
 
         public IEnumerable<BaseStationToList> GetBaseStationList(Func<BaseStationToList, bool> predicat = null)
         {
-            List<IDAL.DO.BaseStation> bases = (List<IDAL.DO.BaseStation>)myDal.GetAllBaseStations();
+            List<DO.BaseStation> bases = (List<DO.BaseStation>)myDal.GetAllBaseStations();
             List<BaseStationToList> baseStationTos = new();
             foreach (var it in bases)
             {
@@ -196,7 +196,7 @@ namespace BL
         public IEnumerable<ParcelToList> GetParcelList(Func<ParcelToList
             , bool> predicat = null)
         {
-            List<IDAL.DO.Parcel> parcels = (List<IDAL.DO.Parcel>)myDal.GetParcelList();
+            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList();
             List<ParcelToList> parcelTos = new();
             foreach (var it in parcels)
             {
@@ -207,7 +207,7 @@ namespace BL
                     WeightCategorie = (Enums.WeightCategories)it.Weight
                 };
 
-                List<IDAL.DO.Customer> customers = (List<IDAL.DO.Customer>)myDal.GetCustomerList();
+                List<DO.Customer> customers = (List<DO.Customer>)myDal.GetCustomerList();
                 parcelToList.SenderName = customers.Find(s => s.Id == it.SenderId).Name;
                 parcelToList.TargetName = customers.Find(s => s.Id == it.TargetId).Name;
                 parcelTos.Add(parcelToList);
@@ -224,7 +224,7 @@ namespace BL
 
         public IEnumerable<ParcelToList> GetParcelNotAssignedList()
         {
-            List<IDAL.DO.Parcel> parcels = (List<IDAL.DO.Parcel>)myDal.GetParcelList();
+            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList();
             List<ParcelToList> tmp = (List<ParcelToList>)GetParcelList();
             List<ParcelToList> toReturn = new();
             foreach (var t in parcels)
@@ -256,7 +256,7 @@ namespace BL
 
         public IEnumerable<CustomerToList> GetCustomerList(Func<CustomerToList, bool> predicat = null)
         {
-            List<IDAL.DO.Customer> customers = (List<IDAL.DO.Customer>)myDal.GetCustomerList();
+            List<DO.Customer> customers = (List<DO.Customer>)myDal.GetCustomerList();
             List<CustomerToList> customerTos = new();
             foreach (var it in customers)
             {
@@ -265,7 +265,7 @@ namespace BL
                 ct.Name = it.Name;
                 ct.Phone = it.Phone;
 
-                List<IDAL.DO.Parcel> parcels = (List<IDAL.DO.Parcel>)myDal.GetParcelList();
+                List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList();
                 ct.NumberOfParcelsReceived = parcels.FindAll(pc => pc.TargetId == ct.Id && pc.Delivered <= DateTime.Now && pc.Delivered != DateTime.MinValue).Count;
                 ct.NumberOfParcelsonTheWay = parcels.FindAll(pc => pc.TargetId == ct.Id && pc.Delivered > DateTime.Now).Count;
                 ct.NumberOfParcelsSentAndDelivered = parcels.FindAll(pc => pc.SenderId == ct.Id && pc.Delivered <= DateTime.Now && pc.Delivered != DateTime.MinValue).Count;

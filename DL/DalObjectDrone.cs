@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DLAPI;
 using DO;
+using DS;
 
 
 namespace DL
@@ -12,7 +13,7 @@ namespace DL
     /// <summary>
     /// 
     /// </summary>
-    internal partial class DalObject : IDal
+     partial class DalObject : IDal
     {
         public void UpdateDrone(Drone dr)
         {

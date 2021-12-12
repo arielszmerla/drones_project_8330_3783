@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using DLAPI;
 using DO;
-
+using DS;
 
 
 namespace DL
 {
-    internal partial class DalObject : IDal
+     partial class DalObject : IDal
     {/// <summary>
      /// constructor
      /// </summary>

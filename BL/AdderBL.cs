@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BLAPI;
+using DL;
+using DLAPI;
 
 /// <summary>
 /// partial Bl Class
@@ -43,7 +45,7 @@ namespace BL
                     Phone = customer.Phone
                 });
             }
-            catch (DalObject.CostumerExeption d)
+            catch (CostumerExeption d)
             {
                 throw new AddException($"The Customer {customer.Id} already exists ", d);
             }
@@ -64,7 +66,7 @@ namespace BL
             try
             {
                 //calling mydal after mapping BO to DO
-                myDal.AddBaseStation(new IDAL.DO.BaseStation
+                myDal.AddBaseStation(new DO.BaseStation
                 {
                     Id = station.Id,
                     Latitude = station.BaseStationLocation.latitude,
@@ -73,7 +75,7 @@ namespace BL
                     NumOfSlots = station.NumOfFreeSlots
                 });
             }
-            catch (DalObject.BaseExeption d)
+            catch (BaseExeption d)
             {
 
                 throw new AddException($"The Base station {station.Id} already exists " , d);
@@ -85,7 +87,7 @@ namespace BL
         /// </summary>
         /// <param name="drone"></param>
         /// <param name="BaseStationNum"></param>
-        public void AddDrone(IDAL.DO.Drone drone, int BaseStationNum)
+        public void AddDrone(DO.Drone drone, int BaseStationNum)
         { //checks if exists already
             foreach (var item in myDal.GetDroneList())
             {
@@ -103,13 +105,13 @@ namespace BL
             {
                 myDal.AddDrone(drone);
             }
-            catch (DalObject.DroneException d)
+            catch (DroneException d)
             {
 
                 throw new AddException($"The drone {drone.Id} already exists " , d);
             }
 
-            List<IDAL.DO.BaseStation> bs = (List<IDAL.DO.BaseStation>)myDal.GetAllBaseStations();
+            List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetAllBaseStations();
             //put it in the BL droneList
             DroneToList dr = new DroneToList
             {
@@ -133,8 +135,8 @@ namespace BL
                         throw new AddException($"id {drone.Id} exist already");
                     }
                 } //checks if basestation to send drone exists 
-                IDAL.DO.Drone drone1 = new IDAL.DO.Drone { Id= drone.Id,
-                 MaxWeight = (IDAL.DO.WeightCategories)drone.MaxWeight, Model = drone.Model};
+                DO.Drone drone1 = new DO.Drone { Id= drone.Id,
+                 MaxWeight = (DO.WeightCategories)drone.MaxWeight, Model = drone.Model};
                 //drone1.Id = drone.Id;
                
                 //calling mydal after mapping BO to DO
@@ -142,13 +144,13 @@ namespace BL
                 {
                     myDal.AddDrone(drone1);
                 }
-                catch (DalObject.DroneException d)
+                catch (DroneException d)
                 {
 
                     throw new AddException($"The drone {drone.Id} already exists ", d);
                 }
 
-                List<IDAL.DO.BaseStation> bs = (List<IDAL.DO.BaseStation>)myDal.GetAllBaseStations();
+                List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetAllBaseStations();
             //put it in the BL droneList
             DroneToList dr = new DroneToList
             {
@@ -176,7 +178,7 @@ namespace BL
             //calling mydal after mapping BO to DO
             try
             {
-                myDal.AddParcel(new IDAL.DO.Parcel
+                myDal.AddParcel(new DO.Parcel
                 {
                     Id = parcel.Id,
                     Delivered = parcel.Delivered,
@@ -186,10 +188,10 @@ namespace BL
                     Scheduled = parcel.Assignment,
                     SenderId = parcel.Sender.Id,
                     TargetId = parcel.Target.Id,
-                    Weight = (IDAL.DO.WeightCategories)parcel.WeightCategories
+                    Weight = (DO.WeightCategories)parcel.WeightCategories
                 });
             }
-            catch (DalObject.ParcelExeption pr)
+            catch (ParcelExeption pr)
             {
                 throw new AddException($"The parcel {parcel.Id} alreaedy exists." , pr);
             }

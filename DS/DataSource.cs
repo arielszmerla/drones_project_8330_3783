@@ -14,26 +14,26 @@ namespace DS
     public static class DataSource//storage class for the whole company
     {
         //arrays for each item
-        static internal List<Drone> Drones = new List<Drone>();
-        static internal List<BaseStation> BaseStations = new List<BaseStation>();
-        static internal List<Customer> Customers = new List<Customer>();
-        static internal List<Parcel> Parcels = new List<Parcel>();
-        static internal List<DroneCharge> DroneCharges = new List<DroneCharge>();
-        internal class Config//starting company with value
+        public static List<Drone> Drones = new List<Drone>();
+        public static List<BaseStation> BaseStations = new List<BaseStation>();
+        static public List<Customer> Customers = new List<Customer>();
+        static public List<Parcel> Parcels = new List<Parcel>();
+        static public List<DroneCharge> DroneCharges = new List<DroneCharge>();
+        public class Config//starting company with value
         {
             //indexes showing amount of items in arrays
-            static internal double powerUseFreeDrone= 0.5;
-            static internal double powerUseLightCarrying=0.7;
-            static internal double powerUseMediumCarrying=0.9;
-            static internal double powerUseHeavyCarrying=1;
-            static internal double chargePerHour= 35;//השאלה האם צריך static
-            static internal int totalNumOfParcels = 0;
+            static public double powerUseFreeDrone= 0.5;
+            static public double powerUseLightCarrying=0.7;
+            static public double powerUseMediumCarrying=0.9;
+            static public double powerUseHeavyCarrying=1;
+            static public double chargePerHour= 35;//השאלה האם צריך static
+            static public int totalNumOfParcels = 0;
             /// <summary>
             /// function that intialize the datasource (company main data) with randomal but
             /// logical states
             /// </summary>
             static Random random = new Random();
-            static internal void Initialize()
+            static public void Initialize()
             {
                 BaseStation B = new BaseStation()///create new objects as asked
                 {
