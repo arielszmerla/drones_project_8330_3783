@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DLAPI", "DLAPI\DLAPI.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DS", "DS\DS.csproj", "{BB3F32C7-07E5-4818-BC10-AAD43F67BECD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PL", "PL\PL.csproj", "{DEA974D8-D84A-474E-BF44-8129C6413816}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PL", "PL\PL.csproj", "{DEA974D8-D84A-474E-BF44-8129C6413816}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{BB3F32C7-07E5-4818-BC10-AAD43F67BECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB3F32C7-07E5-4818-BC10-AAD43F67BECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB3F32C7-07E5-4818-BC10-AAD43F67BECD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DEA974D8-D84A-474E-BF44-8129C6413816}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DEA974D8-D84A-474E-BF44-8129C6413816}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DEA974D8-D84A-474E-BF44-8129C6413816}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DEA974D8-D84A-474E-BF44-8129C6413816}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCC11032-3440-459C-9C98-C8D076B1D8CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCC11032-3440-459C-9C98-C8D076B1D8CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCC11032-3440-459C-9C98-C8D076B1D8CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCC11032-3440-459C-9C98-C8D076B1D8CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
