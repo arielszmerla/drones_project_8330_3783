@@ -26,13 +26,11 @@ namespace BL
         public void AddCustomer(Customer customer)
         {
             //checks if exists already
-            foreach (var item in myDal.GetParcelList())
+            if (myDal.GetCustomerList().Any(item => item.Id == customer.Id))
             {
-                if (item.Id == customer.Id)
-                {
-                    throw new AddException ($"id {customer.Id} exist already");
-                }
+                throw new AddException($"id {customer.Id} exist already");
             }
+
             try
             {
                 //calling mydal after mapping BO to DO
@@ -78,7 +76,7 @@ namespace BL
             catch (BaseExeption d)
             {
 
-                throw new AddException($"The Base station {station.Id} already exists " , d);
+                throw new AddException($"The Base station {station.Id} already exists ", d);
             }
         }
 
@@ -108,7 +106,7 @@ namespace BL
             catch (DroneException d)
             {
 
-                throw new AddException($"The drone {drone.Id} already exists " , d);
+                throw new AddException($"The drone {drone.Id} already exists ", d);
             }
 
             List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetAllBaseStations();
@@ -126,31 +124,36 @@ namespace BL
             drones.Add(dr);
         }
 
-       public void AddDrone(Drone drone) {
+        public void AddDrone(Drone drone)
+        {
             //checks if exists already
-                foreach (var item in myDal.GetDroneList())
+            foreach (var item in myDal.GetDroneList())
+            {
+                if (item.Id == drone.Id)
                 {
-                    if (item.Id == drone.Id)
-                    {
-                        throw new AddException($"id {drone.Id} exist already");
-                    }
-                } //checks if basestation to send drone exists 
-                DO.Drone drone1 = new DO.Drone { Id= drone.Id,
-                 MaxWeight = (DO.WeightCategories)drone.MaxWeight, Model = drone.Model};
-                //drone1.Id = drone.Id;
-               
-                //calling mydal after mapping BO to DO
-                try
-                {
-                    myDal.AddDrone(drone1);
+                    throw new AddException($"id {drone.Id} exist already");
                 }
-                catch (DroneException d)
-                {
+            } //checks if basestation to send drone exists 
+            DO.Drone drone1 = new DO.Drone
+            {
+                Id = drone.Id,
+                MaxWeight = (DO.WeightCategories)drone.MaxWeight,
+                Model = drone.Model
+            };
+            //drone1.Id = drone.Id;
 
-                    throw new AddException($"The drone {drone.Id} already exists ", d);
-                }
+            //calling mydal after mapping BO to DO
+            try
+            {
+                myDal.AddDrone(drone1);
+            }
+            catch (DroneException d)
+            {
 
-                List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetAllBaseStations();
+                throw new AddException($"The drone {drone.Id} already exists ", d);
+            }
+
+            List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetAllBaseStations();
             //put it in the BL droneList
             DroneToList dr = new DroneToList
             {
@@ -162,9 +165,9 @@ namespace BL
                 NumOfDeliveredParcel = 0,
                 Status = drone.Status
             };
-                drones.Add(dr);
+            drones.Add(dr);
 
-            }
+        }
         /// <summary>
         /// adds new  parcel to datasource
         /// </summary>
@@ -193,7 +196,7 @@ namespace BL
             }
             catch (ParcelExeption pr)
             {
-                throw new AddException($"The parcel {parcel.Id} alreaedy exists." , pr);
+                throw new AddException($"The parcel {parcel.Id} alreaedy exists.", pr);
             }
         }
 
