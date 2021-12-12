@@ -43,7 +43,7 @@ namespace BL
                     Phone = customer.Phone
                 });
             }
-            catch (DalObject.CostumerExeption d)
+            catch (CostumerExeption d)
             {
                 throw new AddException($"The Customer {customer.Id} already exists ", d);
             }
@@ -64,7 +64,7 @@ namespace BL
             try
             {
                 //calling mydal after mapping BO to DO
-                myDal.AddBaseStation(new IDAL.DO.BaseStation
+                myDal.AddBaseStation(new DO.BaseStation
                 {
                     Id = station.Id,
                     Latitude = station.BaseStationLocation.latitude,
