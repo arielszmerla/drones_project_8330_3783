@@ -7,11 +7,30 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>C:\Users\user\source\repos\drones_project_8330_3783\bin\net5.0-windows\</OutputPath>
+    <OutputPath>..\net5.0-windows\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="NewFolder\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
+    <None Remove="NewFolder\**" />
+    <Page Remove="NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="images\dronefon.jpg" />
+    <None Remove="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
+    <None Remove="images\pngegg.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BL1\BL1.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\dronefon.jpg" />
+    <Resource Include="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
+    <Resource Include="images\pngegg.png" />
   </ItemGroup>
 
 </Project>

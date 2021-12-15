@@ -10,7 +10,7 @@
 
          Title = "LIST OF DRONES" Height="450" Width="800" >
     <Window.Background>
-        <ImageBrush ImageSource="C:\Users\user\source\repos\drones_project_8330_3783\PL1\dronefon.jpg" />
+        <ImageBrush ImageSource="\images\dronefon.jpg" />
     </Window.Background>
     <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
@@ -41,7 +41,7 @@
             <Label  Content="MY DRONES"  FontStyle="Italic" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Black"  BorderThickness="5" FontSize="35" FontWeight="ExtraBlack" Grid.ColumnSpan="2" Grid.Column="1" Margin="0,53,0,-76"/>
             <Button    BorderBrush="Red" Opacity="0.8" ToolTip="Click Here To Close" FontSize="16" BorderThickness="0.5" Grid.Column="3" x:Name="Closing_Button" HorizontalAlignment="Left" Click="Closing_Button_Click" Margin="110,338,0,-349" Width="64">
                 <Button.Background>
-                    <ImageBrush ImageSource="C:\Users\user\source\repos\drones_project_8330_3783\PL1\pngegg.png" />
+                    <ImageBrush ImageSource="\images\pngegg.png" />
                 </Button.Background>
             </Button>
             <Button BorderBrush="Transparent"  Opacity="0.8" x:Name="reset" Content="Reset List" Visibility="Hidden" Grid.Column="3" HorizontalAlignment="Left" Margin="19,0,0,0" VerticalAlignment="Center" Height="72" Width="171" ToolTip="Reset List" Click="Reset_List"/>
