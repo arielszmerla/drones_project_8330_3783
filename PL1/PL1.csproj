@@ -11,7 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-<<<<<<< HEAD
     <Compile Remove="NewFolder\**" />
     <EmbeddedResource Remove="NewFolder\**" />
     <None Remove="NewFolder\**" />
@@ -22,7 +21,6 @@
     <None Remove="images\dronefon.jpg" />
     <None Remove="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
     <None Remove="images\pngegg.png" />
-=======
     <None Remove="images\customerspic.png" />
     <None Remove="images\drone-icon.png" />
     <None Remove="images\drone.png" />
@@ -38,7 +36,6 @@
     <None Remove="images\pngegg.png" />
     <None Remove="images\pngwing.com.png" />
     <None Remove="images\wifind_back.png" />
->>>>>>> f3b13eb3d0b383e913b6b11468c03d424277690d
   </ItemGroup>
 
   <ItemGroup>
@@ -46,11 +43,9 @@
   </ItemGroup>
 
   <ItemGroup>
-<<<<<<< HEAD
     <Resource Include="images\dronefon.jpg" />
     <Resource Include="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
     <Resource Include="images\pngegg.png" />
-=======
     <Resource Include="images\customerspic.png" />
     <Resource Include="images\drone-icon.png" />
     <Resource Include="images\drone.png" />
@@ -66,7 +61,6 @@
     <Resource Include="images\pngegg.png" />
     <Resource Include="images\pngwing.com.png" />
     <Resource Include="images\wifind_back.png" />
->>>>>>> f3b13eb3d0b383e913b6b11468c03d424277690d
   </ItemGroup>
 
 </Project>
