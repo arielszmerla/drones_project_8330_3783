@@ -28,7 +28,9 @@ namespace PL1
             InitializeComponent();
             this.bl = bl;
             BaseViewOptions.ItemsSource = Enum.GetValues(typeof(options));
-            BaseStationView.ItemsSource = bl.GetBaseStationList(vs => vs.Id == 10000);
+            BaseStationView.ItemsSource = bl.GetBaseStationList();
+            //StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
+           // WeightChoise.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
         }
 
         private void End_the_page(object sender, RoutedEventArgs e)
@@ -42,8 +44,9 @@ namespace PL1
             switch(stat)
             {
                 case options.Regular:
-                  //  BaseStationView.BindingGroup
+                    //  BaseStationView.BindingGroup
                     //bl.GetBaseStationList();
+                    //BaseStationView = ;
                     break;
                 case options.Free_Base_Stations:
                     break;
@@ -58,6 +61,11 @@ namespace PL1
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }

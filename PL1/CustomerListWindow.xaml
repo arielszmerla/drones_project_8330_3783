@@ -7,7 +7,11 @@
         mc:Ignorable="d"
         Title="CustomerListWindow" Height="450" Width="800">
     <Window.Background>
+<<<<<<< HEAD
         <ImageBrush ImageSource="C:\Users\ariel\source\repos\PL\PL1\images\customerspic.png"/>
+=======
+        <ImageBrush ImageSource="\images\customerspic.png"/>
+>>>>>>> f3b13eb3d0b383e913b6b11468c03d424277690d
     </Window.Background>
     <Grid>
         <ListView x:Name="CustomerViewList" Background="Transparent" Margin="0,94,80,0" SelectionChanged="ListView_SelectionChanged">
@@ -19,7 +23,11 @@
         </ListView>
         <Button x:Name="PageStop"  Visibility="Visible" HorizontalAlignment="Left"  Margin="730,357,0,0" Click="End_the_page" Height="37" VerticalAlignment="Top" RenderTransformOrigin="0.526,0.522" Width="40">
             <Button.Background>
+<<<<<<< HEAD
                 <ImageBrush ImageSource="C:\Users\ariel\source\repos\PL\PL1\images\pngegg.png" />
+=======
+                <ImageBrush ImageSource="\images\pngegg.png" />
+>>>>>>> f3b13eb3d0b383e913b6b11468c03d424277690d
             </Button.Background>
         </Button>
     </Grid>

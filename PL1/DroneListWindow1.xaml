@@ -35,7 +35,7 @@
             <Button Opacity="0.8" ToolTip="Click Here To Add" BorderBrush="Black" Background="Transparent" FontSize="16" Grid.Column="3" Click="Button_Click" Margin="100,238,26,-264">
 
 
-                <Image Source="C:\Users\user\source\repos\drones_project_8330_3783\PL1\kindpng_797882.png" Stretch="Fill"  />
+                <Image Source="\images\kindpng_797882.png" Stretch="Fill"  />
                 
             </Button>
             <Label  Content="MY DRONES"  FontStyle="Italic" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Black"  BorderThickness="5" FontSize="35" FontWeight="ExtraBlack" Grid.ColumnSpan="2" Grid.Column="1" Margin="0,53,0,-76"/>

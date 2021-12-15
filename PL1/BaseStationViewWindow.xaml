@@ -7,7 +7,11 @@
         mc:Ignorable="d"
         Title="Base station view window" Height="450" Width="800">
     <Window.Background>
+<<<<<<< HEAD
         <ImageBrush ImageSource="C:\Users\ariel\source\repos\PL\PL1\images\dronefon.jpg"/>
+=======
+        <ImageBrush ImageSource="\images\droneStation.jpg"/>
+>>>>>>> f3b13eb3d0b383e913b6b11468c03d424277690d
     </Window.Background>
     <Grid>
         <ListView x:Name="BaseStationView"  DataContext="" Background="Transparent" Margin="0,74,70,10" SelectionChanged="ListView_SelectionChanged">
@@ -15,12 +19,16 @@
         </ListView>
         <Button x:Name="PageStop"  Visibility="Visible" HorizontalAlignment="Left"  Margin="730,357,0,0" Click="End_the_page" Height="37" VerticalAlignment="Top" RenderTransformOrigin="0.526,0.522" Width="40">
             <Button.Background>
+<<<<<<< HEAD
                 <ImageBrush ImageSource="C:\Users\ariel\source\repos\PL\PL1\images\pngegg.png" />
+=======
+                <ImageBrush ImageSource="\images\pngegg.png" />
+>>>>>>> f3b13eb3d0b383e913b6b11468c03d424277690d
             </Button.Background>
         </Button>
         <ComboBox x:Name="BaseViewOptions" Text="View options" HorizontalAlignment="Left" Margin="435,29,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="BaseViewOptions_SelectionChanged"/>
         <Button x:Name="ResetList" Content="Reset" Background="Beige"  HorizontalAlignment="Left" Margin="735,29,0,0" VerticalAlignment="Top" Click="ResetList_Click"/>
-        <TextBox  HorizontalAlignment="Left" Margin="160,29,0,0" Text="{Binding ElementName=BaseStationView, Path =SelectedItem, Mode=OneWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="BaseStationOptionsView"  HorizontalAlignment="Left" Margin="160,29,0,0" Text="View options" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
 
     </Grid>
 
