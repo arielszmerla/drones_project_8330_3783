@@ -18,7 +18,7 @@ namespace DalObject
         public void UpdateDrone(Drone dr)
         {
             int index = DataSource.Drones.FindIndex(drone => drone.Id == dr.Id);
-            DataSource.Drones[index] = dr;
+            DataSource.Drones[index] = dr.Clone();
         }
         /// <summary>
         /// send a new drone to database
@@ -30,7 +30,7 @@ namespace DalObject
             {
                 throw new DroneException($"id {drone.Id} allready exist");
             }
-            DataSource.Drones.Add(drone);
+            DataSource.Drones.Add(drone.Clone());
         }
         /// <summary>
         /// gets drone from database and return it to main
@@ -44,7 +44,7 @@ namespace DalObject
             myDrone = DataSource.Drones.Find(dr => dr.Id == id);
             if (myDrone == null)
                 throw new DroneException("id of drone not found");
-            return (Drone)myDrone;
+            return (Drone)myDrone.Clone();
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace DalObject
                 throw new ParcelExeption("invalid parcel id");
             Parcel tmp = DataSource.Parcels[k];
             tmp.PickedUp = DateTime.Now;
-            DataSource.Parcels[k] = tmp;
+            DataSource.Parcels[k] = tmp.Clone();
         }
         /// <summary>
         /// func that returns list to print in console
@@ -74,7 +74,7 @@ namespace DalObject
             else
                 return (from item in DataSource.Drones
                         where predicate(item)
-                        select item);
+                        select item.Clone());
         }
 
         public double[] DroneElectricConsumations()

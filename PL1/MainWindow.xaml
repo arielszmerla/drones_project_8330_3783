@@ -16,11 +16,38 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Label FontStyle="Oblique" FontWeight="Heavy"  Content="MY DRONE COMPANY" FontSize="20"  HorizontalAlignment="Left" Margin="285,77,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <Label FontStyle="Oblique" BorderThickness="7" BorderBrush="Black" FontWeight="Heavy"  Content="MY DRONE COMPANY " FontSize="20"  HorizontalAlignment="Left" Margin="275,76,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
 
-        <Button x:Name="DronesList" BorderBrush="Transparent" Background="Bisque" Opacity="0.8" Content="CLICK HERE TO VIEW THE DRONES" HorizontalAlignment="Left" Margin="285,308,0,0" VerticalAlignment="Top" Height="52" Width="230" RenderTransformOrigin="2.136,3.631" Click="DronesList_Click_1" Grid.ColumnSpan="2"/>
-        
+        </Label>
 
+
+        <Button x:Name="DronesList" RenderTransformOrigin="0.843,1.844" Content="CLICK HERE TO VIEW THE DRONES"  FontSize="20"  Background="Bisque" Margin="224,321,225,34" Grid.ColumnSpan="2"  Click="DronesList_Click_1" >
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Ellipse Stroke="Black"
+                         StrokeThickness="2"   RenderTransformOrigin="0.967,1.89">
+                            <Ellipse.Fill>
+                                <RadialGradientBrush>
+
+
+                                    <GradientStop Offset="1"
+                                          Color="Bisque"  />
+                                    <RadialGradientBrush.Transform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleY="0.65" />
+                                        </TransformGroup>
+                                    </RadialGradientBrush.Transform>
+                                </RadialGradientBrush>
+
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <ContentPresenter HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
     </Grid>
 
 </Window>

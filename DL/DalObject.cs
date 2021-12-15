@@ -18,12 +18,30 @@ namespace DalObject
             static Nested() { }
             internal static readonly DalObject instance = new DalObject();
         }
-        static DalObject() { }
-        DalObject() { }
-        public static DalObject Instance { get => Nested.instance; }
+        
+        private static object syncRoot = new object();
+        public static DalObject Instance
+        {
+            get
+            {
+                if (Nested.instance == null)
+                {
+                    lock (syncRoot)
+                    {
+                        if (Nested.instance == null)
+                            return Nested.instance;
+                    }
+                }
+
+                return Nested.instance;
+            }
+        }
+
         #endregion
 
-
+        private DalObject() {
+            DataSource.Config.Initialize();
+        }
 
         /// <summary>
         /// method to release a charging drone from a base station

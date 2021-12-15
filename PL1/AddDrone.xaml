@@ -25,7 +25,7 @@
 
 
 
-        <StackPanel Background="Transparent"   Visibility="Visible" x:Name="add_drone_stack" Orientation="Vertical" Grid.Column="1"  Margin="0,10,63,0">
+        <StackPanel Background="Transparent"   Visibility="Visible" x:Name="add_drone_stack" Orientation="Vertical" Grid.Column="1"  Margin="0,47,63,-37">
 
             <TextBox Opacity="0.8"  BorderBrush="Transparent" Background="Bisque" x:Name="ChooseId" ToolTip="Enter Id"  Text= "" TextChanged="TextBox_TextChanged_1" Width="147" Height="27"/>
             <TextBox Visibility="Visible" Margin="0,10,0,0"  Opacity="0.8"   BorderBrush="Transparent"  Background="Bisque" x:Name="Choose_model" ToolTip="Enter Model"  Text= ""  TextChanged="Model_input" Width="147" Height="27"/>
@@ -38,7 +38,11 @@
             <TextBox Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Bisque" x:Name="ChooseLatitude" ToolTip="Enter Latitude"  Text= ""  TextChanged="Latitude_input" Width="147" Height="27" RenderTransformOrigin="0.502,1.282" />
 
             <TextBox Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Bisque" x:Name="ChooseLongitude" ToolTip="Enter Longitude"  Text= ""  TextChanged="Longitude_input" Width="147" Height="27" />
-            <Button Opacity="0.9"  BorderBrush="Transparent" Visibility="Visible" Background="DarkOliveGreen" FontWeight="ExtraBlack" Margin="0,111,0,0" x:Name="enter" Content="ADD THIS DRONE"  Click="enter_your_drone" Width="147" Height="27" RenderTransformOrigin="0.61,2.198"/>
+            <Button Opacity="0.9"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,20,0,0" FontWeight="ExtraBlack" x:Name="enter" Content="ADD THIS DRONE"  Click="enter_your_drone" Width="120" Height="84" RenderTransformOrigin="0.61,2.198">
+                <Button.Background>
+                    <ImageBrush ImageSource="C:\Users\ariel\source\repos\PL\PL1\pngwing.com.png" />
+                </Button.Background>
+            </Button>
 
         </StackPanel>
         <StackPanel Background="Transparent"    Visibility="Visible" x:Name="add_drone_titles" Orientation="Vertical" Grid.Column="0" Margin="20,0,0,0" Height="434" VerticalAlignment="Bottom">
@@ -79,8 +83,12 @@
 
         </StackPanel>
 
-        <Button x:Name="PageStop" Content="Page CLOSE"  Background="DarkOliveGreen"  Visibility="Visible" Grid.Column="3" HorizontalAlignment="Left"  Margin="100,363,0,0" Click="End_the_page" Height="34" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="90">
+        <Button x:Name="PageStop"  Visibility="Visible" Grid.Column="3" HorizontalAlignment="Left"  Margin="104,358,0,0" Click="End_the_page" Height="37" VerticalAlignment="Top" RenderTransformOrigin="0.526,0.522" Width="40">
+            <Button.Background>
+                <ImageBrush ImageSource="C:\Users\ariel\source\repos\PL\PL1\pngegg.png" />
+            </Button.Background>
         </Button>
+
 
 
 

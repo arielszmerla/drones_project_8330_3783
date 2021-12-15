@@ -9,11 +9,11 @@ using DO;
 using DLAPI;
 using BO;
 
-namespace BLAPI
+namespace BL
 {/// <summary>
 /// part of BL class
 /// </summary>
-    public partial class BLImp : IBL
+    partial class BLImp : IBL
 
     {
         /// <summary>

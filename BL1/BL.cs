@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,32 +8,50 @@ using DLAPI;
 using DO;
 using BO;
 
-
-namespace BLAPI
+namespace BL
 {/// <summary>
 /// part of BL class containing private funcs and ctor
 /// 
 /// </summary>
-    public partial class BLImp : IBL
+    partial class BLImp : IBL
     {
-        List<DroneToList> drones = new();
+       private List<DroneToList> drones = new();
         static Random random = new Random();
+      
+        
         IDal myDal;
         /// <summary>
         /// constructor BL
         /// </summary>
-         #region singelton
+        #region singelton
         class Nested
         {
             static Nested() { }
-            internal static readonly BLImp instance = new BLImp();
+            internal static readonly BLImp instance =new BLImp() ;
         }
-        static BLImp() { }
+        private static object syncRoot = new object();
+        public static BLImp Instance
+        {
+            get
+            {
+                if (Nested.instance == null)
+                {
+                    lock (syncRoot)
+                    {
+                        if (Nested.instance == null)
+                            return Nested.instance;
+                    }
+                }
+
+                return Nested.instance;
+            }
+        }
+       
+    
       
-        public static BLImp Instance { get => Nested.instance; }
         #endregion
 
-        public BLImp()
+        private BLImp()
         {
 
             try
@@ -65,7 +82,7 @@ namespace BLAPI
                 };
                 drones.Add(droneToList);
             }
-            foreach (var parcel in myDal.GetParcelList())
+             foreach (var parcel in myDal.GetParcelList())
             {
 
                 if (drones.Any(dr => dr.Id == parcel.DroneId) && parcel.PickedUp >= DateTime.Now)

@@ -1,0 +1,21 @@
+﻿<Window x:Class = "PL.Window1" 
+   xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+   xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml" 
+   Title = "MainWindow" Height = "350" Width = "604">
+
+    <StackPanel>
+        <ComboBox Name = "comboBox"  Margin = "50" Width = "100" SelectionChanged="comboBox_SelectionChanged">
+            <ComboBoxItem Content = "Green" />
+            <ComboBoxItem Content = "Yellow" IsSelected = "True" />
+            <ComboBoxItem Content = "Orange" />
+        </ComboBox>
+
+        <TextBox  Name = "textBox" Margin = "50" 
+         Width = "100" Height = "23" VerticalAlignment = "Top" 
+         Text  = "{Binding ElementName = comboBox, Path = SelectedItem.Content, 
+         Mode = TwoWay, UpdateSourceTrigger = PropertyChanged}" 
+         Background = "{Binding ElementName = comboBox, Path = SelectedItem.Content}">
+        </TextBox>
+    </StackPanel>
+
+</Window> 

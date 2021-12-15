@@ -31,8 +31,7 @@ namespace DLAPI
                         }
                         Type type = Type.GetType($"DalObject.{dlPkg}, {dlPkg}");
                         if (type == null) throw new DLConfigException($"Class name is not the same as Assembly Name: {dlPkg}");
-                        IDal dal = (IDal)type.GetProperty("Instance",
-                        BindingFlags.Public | BindingFlags.Static).GetValue(null);
+                        IDal dal = (IDal)type.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static).GetValue(null);
                         if (dal == null) throw new DLConfigException($"Class {dlPkg} is not a singleton");
                         return dal;
                     }

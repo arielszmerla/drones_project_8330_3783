@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BO;
+using BLAPI;
 
 
-
-namespace BLAPI
+namespace BL
 {/// <summary>
 /// part of interface
 /// </summary>
-    public partial class BLImp : IBL
+    partial class BLImp : IBL
     {
 
         #region

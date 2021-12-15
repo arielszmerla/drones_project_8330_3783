@@ -44,7 +44,7 @@ namespace DalObject
         public IEnumerable<BaseStation> GetAllBaseStations(Func<BaseStation, bool> predicat = null)
         {
             if (predicat == null)
-                return DataSource.BaseStations.ToList().Clone();
+                return DataSource.BaseStations.ToList();
             else
                 return (from item in DataSource.BaseStations
                         where predicat(item)

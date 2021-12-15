@@ -10,35 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BLAPI;
-
-
-
 
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Window1 : Window
     {
-        
-        IBL bl = BLFactory.GetBL();
-        public MainWindow()
+        public Window1()
         {
-            
             InitializeComponent();
-            new Window1().Show();
         }
 
-      
-        private void DronesList_Click_1(object sender, RoutedEventArgs e)
+        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            new DroneListWindow1(bl).Show();
-        }
 
-       
+        }
     }
 }

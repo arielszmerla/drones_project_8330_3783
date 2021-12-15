@@ -11,12 +11,12 @@ using DLAPI;
 /// partial Bl Class
 ///with Add functs
 /// </summary>
-namespace BLAPI
+namespace BL
 {/// <summary>
 /// partial Bl Class
 ///with Add functs
 /// </summary>
-    public partial class BLImp : IBL
+    partial class BLImp : IBL
     {
         /// <summary>
         /// add a costumer to database
