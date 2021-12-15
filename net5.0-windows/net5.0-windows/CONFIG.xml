@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+<dl>data</dl>
+<dl-packages>
+<data>DalObject</data>
+<xml>DalXml</xml>
+</dl-packages>
+</config>

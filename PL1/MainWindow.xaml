@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         
-        Title="APPLICATION WINDOW" Height="450" Width="800" Icon="C:\Users\user\source\repos\drones_project_8330_3783\PL1\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico">
+        Title="APPLICATION WINDOW" Height="450" Width="800" Icon="\images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico">
 
     <Window.Background>
-        <ImageBrush ImageSource="C:\Users\user\source\repos\drones_project_8330_3783\PL1\dronefon.jpg" />
+        <ImageBrush ImageSource="\images\dronefon.jpg" />
     </Window.Background>
     <Grid>
         <Grid.ColumnDefinitions>

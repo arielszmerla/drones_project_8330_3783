@@ -6,7 +6,21 @@
         xmlns:local="clr-namespace:PL1"
         mc:Ignorable="d"
         Title="ParcelListWindow" Height="450" Width="800">
+    <Window.Background>
+        <ImageBrush ImageSource="\images\parcelpic.jfif"/>
+    </Window.Background>
     <Grid>
-        
+        <ListView x:Name="CustomerViewList" Background="Transparent" Margin="0,89,100,0" SelectionChanged="CustomerViewList_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button    BorderBrush="Red" Opacity="0.8" ToolTip="Click Here To Close" FontSize="16" BorderThickness="0.5" x:Name="Closing_Button" HorizontalAlignment="Left" Click="Closing_Button_Click" Margin="726,349,0,29" Width="64">
+            <Button.Background>
+                <ImageBrush ImageSource="\images\pngegg.png" />
+            </Button.Background>
+        </Button>
     </Grid>
 </Window>
