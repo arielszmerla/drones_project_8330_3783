@@ -56,6 +56,15 @@
     
     
     
+    <Window.Background>
+        <ImageBrush ImageSource="\images\dronefon.jpg" />
+    </Window.Background>
+        <ImageBrush ImageSource="\images\dronefon.jpg" />
+    </Window.Background>
+        <ImageBrush ImageSource="\images\dronefon.jpg" />
+    </Window.Background>
+        <ImageBrush ImageSource="\images\dronefon.jpg" />
+    </Window.Background>
     <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
@@ -77,7 +86,10 @@
             <ComboBox FontSize="10" Background="Bisque"  BorderBrush="Transparent" Opacity="0.8" ToolTip="Drone weight" Text="Drone weight" x:Name="WeightChoise" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Stretch"  SelectionChanged="WeightChoise_SelectionChanged" Margin="172,0,0,0"/>
 
             <Button Opacity="0.8" ToolTip="Click Here To Add" BorderBrush="Black" FontSize="16" Grid.Column="3" Click="Button_Click" Margin="100,238,26,-264">
-         
+                <Button.Background>
+                    <ImageBrush ImageSource="\images\kindpng_797882.png" Stretch="Fill"  />
+                </Button.Background>
+ 
             </Button>
             <Label  Content="MY DRONES"  FontStyle="Italic" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Black"  BorderThickness="5" FontSize="35" FontWeight="ExtraBlack" Grid.ColumnSpan="2" Grid.Column="1" Margin="0,53,0,-76"/>
             <Button    BorderBrush="Red" Opacity="0.8" ToolTip="Click Here To Close" FontSize="16" BorderThickness="0.5" Grid.Column="3" x:Name="Closing_Button" HorizontalAlignment="Left" Click="Closing_Button_Click" Margin="110,338,0,-349" Width="64">
