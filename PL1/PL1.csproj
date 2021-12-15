@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>C:\Users\ariel\source\repos\PL\bin\net5.0-windows\</OutputPath>
+    <OutputPath>C:\Users\user\source\repos\drones_project_8330_3783\bin\net5.0-windows\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
