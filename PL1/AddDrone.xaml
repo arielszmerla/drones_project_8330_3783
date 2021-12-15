@@ -80,9 +80,7 @@
         </StackPanel>
 
         <Button x:Name="PageStop"  Visibility="Visible" Grid.Column="3" HorizontalAlignment="Left"  Margin="104,358,0,0" Click="End_the_page" Height="37" VerticalAlignment="Top" RenderTransformOrigin="0.526,0.522" Width="40">
-            <Button.Background>
-                <ImageBrush ImageSource="\images\pngegg.png" />
-            </Button.Background>
+           
         </Button>
 
 
