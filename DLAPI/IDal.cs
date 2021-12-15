@@ -133,5 +133,10 @@ namespace DLAPI
         /// <param name="p"></param>
         void UpdateParcel(Parcel p);
         #endregion
+        #region delete
+        
+
+
+        #endregion
     }
 }

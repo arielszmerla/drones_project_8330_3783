@@ -69,7 +69,7 @@ namespace BL
             else
                 throw new GetException("id of BaseStation not found");
             BaseStation bs = new();
-            bs.BaseStationLocation = new Location { latitude = myBase.Latitude, longitude = myBase.Longitude };
+            bs.BaseStationLocation = new Location { Latitude = myBase.Latitude, Longitude = myBase.Longitude };
           
             bs.Id = myBase.Id;
             bs.Name = myBase.Name;
@@ -90,8 +90,8 @@ namespace BL
                 throw new GetException("id of Customer not found");
             Customer customer = new Customer();
             customer.Id = myCust.Id;
-            customer.Location.latitude = myCust.Latitude;
-            customer.Location.longitude = myCust.Longitude;
+            customer.Location.Latitude = myCust.Latitude;
+            customer.Location.Longitude = myCust.Longitude;
             customer.Name = myCust.Name;
             customer.Phone = myCust.Phone;
             List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList();

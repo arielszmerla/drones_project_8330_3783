@@ -27,7 +27,8 @@ namespace PL
         {
             InitializeComponent();
             this.bl1 = bl1;
-            DroneListView.ItemsSource = bl1.GetDroneList();
+            DataContext = bl1.GetDroneList();
+            
             StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
             WeightChoise.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
         }
@@ -55,19 +56,27 @@ namespace PL
         private void drone_action(object sender, MouseButtonEventArgs e)
         {
             BO.DroneToList drone = (BO.DroneToList)DroneListView.SelectedItem;
-            BO.Drone dr = new BO.Drone
+            if (drone == null)
             {
-                Id = drone.Id,
-                BatteryStatus = drone.BatteryStatus,
-                DronePlace = drone.DroneLocation,
-                MaxWeight = drone.MaxWeight,
-                Model = drone.Model,
-                PID = null,
-                Status = drone.Status
-            };
-            Closing_Button.Visibility = Visibility.Hidden;
-            new AddDrone(bl1, dr).Show();
-            Close();
+                MessageBox.Show("click on a drone please");
+            }
+            else
+            {
+
+                BO.Drone dr = new BO.Drone
+                {
+                    Id = drone.Id,
+                    BatteryStatus = drone.BatteryStatus,
+                    DronePlace = drone.DroneLocation,
+                    MaxWeight = drone.MaxWeight,
+                    Model = drone.Model,
+                    PID = null,
+                    Status = drone.Status
+                };
+                Closing_Button.Visibility = Visibility.Hidden;
+                new AddDrone(bl1, dr).Show();
+                Close();
+            }
         }
 
         private void Closing_Button_Click(object sender, RoutedEventArgs e)

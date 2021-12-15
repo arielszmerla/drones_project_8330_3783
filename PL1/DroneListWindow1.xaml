@@ -9,6 +9,53 @@
       
 
          Title = "LIST OF DRONES" Height="450" Width="800" >
+    <Window.Resources>
+        <DataTemplate x:Key="MyDataTemplate"
+                  DataType="local:MyData">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                   Text="Drone Id: " />
+                <TextBlock Grid.Column="1"
+                   Text="{Binding Path=Id}" />
+                <TextBlock Grid.Column="2"
+                   Text=" Model: " />
+                <TextBlock Grid.Column="3"
+                   Text="{Binding Path=Model}" />
+                <TextBlock Grid.Column="4"
+                   Text=" Longitude: " />
+                <TextBlock Grid.Column="5"
+                   Text="{Binding Path=Longitude}" />
+                <TextBlock Grid.Column="6"
+                   Text=" Latitude: " />
+                <TextBlock Grid.Column="7"
+                   Text="{Binding Path=DronePlace}" />
+                <TextBlock Grid.Column="8"
+                   Text=" Battery: " />
+                <TextBlock Grid.Column="9"
+                   Text="{Binding Path=BatteryStatus}" />
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+    
+    
+    
     <Window.Background>
         <ImageBrush ImageSource="\images\dronefon.jpg" />
     </Window.Background>
@@ -27,28 +74,26 @@
             </Grid.ColumnDefinitions >
 
             <Label BorderBrush="Black" BorderThickness="5" Grid.Row="0" Foreground="BlanchedAlmond" VerticalContentAlignment="Center" FontSize="25" FontWeight="DemiBold" Content="BY STATUS" x:Name="Status_label" Grid.Column="1" Margin="0,0,28,0" />
-            <ComboBox  Opacity="0.8"  BorderBrush="Transparent" Background="Bisque" ToolTip="Drone Status" FontSize="10" Text="Drone Status" x:Name="StatusSelector"  Grid.Column="1" HorizontalAlignment= "Left" VerticalAlignment="Stretch" SelectionChanged="StatusSelector_SelectionChanged"  Margin="172,0,0,0">
+            <ComboBox  Opacity="0.8"   BorderBrush="Transparent" Background="Bisque" ToolTip="Drone Status" FontSize="10" Text="Drone Status" x:Name="StatusSelector"  Grid.Column="1" HorizontalAlignment= "Left" VerticalAlignment="Stretch" SelectionChanged="StatusSelector_SelectionChanged"  Margin="172,0,0,0">
             </ComboBox>
             <Label Grid.Row="0" BorderBrush="Black" BorderThickness="5" VerticalContentAlignment="Center" Foreground="BlanchedAlmond" Grid.Column="2" FontSize="25" FontWeight="DemiBold" Content="BY WEIGHT" x:Name="Weight_label" Margin="0,0,28,0"  />
             <ComboBox FontSize="10" Background="Bisque"  BorderBrush="Transparent" Opacity="0.8" ToolTip="Drone weight" Text="Drone weight" x:Name="WeightChoise" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Stretch"  SelectionChanged="WeightChoise_SelectionChanged" Margin="172,0,0,0"/>
 
-            <Button Opacity="0.8" ToolTip="Click Here To Add" BorderBrush="Black" Background="Transparent" FontSize="16" Grid.Column="3" Click="Button_Click" Margin="100,238,26,-264">
-
-
-                <Image Source="\images\kindpng_797882.png" Stretch="Fill"  />
-                
+            <Button Opacity="0.8" ToolTip="Click Here To Add" BorderBrush="Black" FontSize="16" Grid.Column="3" Click="Button_Click" Margin="100,238,26,-264">
+                <Button.Background>
+                    <ImageBrush ImageSource="\images\kindpng_797882.png" Stretch="Fill"  />
+                </Button.Background>
+ 
             </Button>
             <Label  Content="MY DRONES"  FontStyle="Italic" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Black"  BorderThickness="5" FontSize="35" FontWeight="ExtraBlack" Grid.ColumnSpan="2" Grid.Column="1" Margin="0,53,0,-76"/>
             <Button    BorderBrush="Red" Opacity="0.8" ToolTip="Click Here To Close" FontSize="16" BorderThickness="0.5" Grid.Column="3" x:Name="Closing_Button" HorizontalAlignment="Left" Click="Closing_Button_Click" Margin="110,338,0,-349" Width="64">
-                <Button.Background>
-                    <ImageBrush ImageSource="\images\pngegg.png" />
-                </Button.Background>
+              
             </Button>
             <Button BorderBrush="Transparent"  Opacity="0.8" x:Name="reset" Content="Reset List" Visibility="Hidden" Grid.Column="3" HorizontalAlignment="Left" Margin="19,0,0,0" VerticalAlignment="Center" Height="72" Width="171" ToolTip="Reset List" Click="Reset_List"/>
         </Grid>
 
-       
-        <ListView    Background="Transparent" Foreground="Black" x:Name="DroneListView" MouseDoubleClick="drone_action" FontSize="15" FontWeight="ExtraBlack" SelectionChanged="DroneListView_SelectionChanged" Margin="0,81,154,21" Grid.Row="1">
+
+        <ListView ItemTemplate="{StaticResource MyDataTemplate}" ItemsSource="{Binding}"  Background="Transparent" Foreground="Black" x:Name="DroneListView" MouseDoubleClick="drone_action" FontSize="15" FontWeight="ExtraBlack" SelectionChanged="DroneListView_SelectionChanged" Margin="0,81,154,21" Grid.Row="1">
 
         </ListView>
     </Grid>

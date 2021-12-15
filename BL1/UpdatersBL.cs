@@ -36,11 +36,11 @@ namespace BL
                DO.Customer cs = myDal.GetCustomerList().First(cs => cs.Id == p.TargetId);
                 //if the drone can deliver it taking in account his battery status
                 //then update drone and parcel
-                if (dr.BatteryStatus - myDal.DroneElectricConsumations()[(int)p.Weight + 1] * (BO.LocationFuncs.Distance(dr.DroneLocation, new Location { latitude = cs.Latitude, longitude = cs.Longitude })) >= 0)
-                    dr.BatteryStatus -= myDal.DroneElectricConsumations()[(int)p.Weight + 1] * (BO.LocationFuncs.Distance(dr.DroneLocation, new Location { latitude = cs.Latitude, longitude = cs.Longitude }));
+                if (dr.BatteryStatus - myDal.DroneElectricConsumations()[(int)p.Weight + 1] * (BO.LocationFuncs.Distance(dr.DroneLocation, new Location { Latitude = cs.Latitude, Longitude = cs.Longitude })) >= 0)
+                    dr.BatteryStatus -= myDal.DroneElectricConsumations()[(int)p.Weight + 1] * (BO.LocationFuncs.Distance(dr.DroneLocation, new Location { Latitude = cs.Latitude, Longitude = cs.Longitude }));
                 else throw new BatteryException ($"DRONE {dr.Id} HASNT ENOUGH BATTERY\n");
 
-                Location l1 = new Location { latitude = cs.Latitude, longitude = cs.Longitude };
+                Location l1 = new Location { Latitude = cs.Latitude, Longitude = cs.Longitude };
                 dr.DroneLocation = l1;
                 dr.Status = Enums.DroneStatuses.Vacant;
                 drones[drones.FindIndex(dr => dr.Id == id)] = dr;
@@ -74,13 +74,13 @@ namespace BL
                 //if hte drone has enough battery to deliver the parcel
                 //then make the wanted changes
                 if (dr.BatteryStatus >= myDal.DroneElectricConsumations()[0] *
-                    BO.LocationFuncs.Distance(dr.DroneLocation, new Location { latitude = cs.Latitude, longitude = cs.Longitude }))
+                    BO.LocationFuncs.Distance(dr.DroneLocation, new Location { Latitude = cs.Latitude, Longitude = cs.Longitude }))
                 {
                     p.PickedUp = DateTime.Now;
                     dr.BatteryStatus -= myDal.DroneElectricConsumations()[0] *
-                         BO.LocationFuncs.Distance(dr.DroneLocation, new Location { latitude = cs.Latitude, longitude = cs.Longitude });
-                    dr.DroneLocation.latitude = cs.Latitude;
-                    dr.DroneLocation.longitude = cs.Longitude;
+                         BO.LocationFuncs.Distance(dr.DroneLocation, new Location { Latitude = cs.Latitude, Longitude = cs.Longitude });
+                    dr.DroneLocation.Latitude = cs.Latitude;
+                    dr.DroneLocation.Longitude = cs.Longitude;
                     drones[drones.FindIndex(dr => dr.Id == id)] = dr;
                     myDal.UpdateParcel(p);
                 }
@@ -139,8 +139,8 @@ namespace BL
                 drones[drones.FindIndex(dr => dr.Id == idC)].BatteryStatus += ((duration.TotalSeconds * 1 / 3600) + (duration.TotalMinutes * 1 / 60) + (duration.TotalHours)) * myDal.DroneElectricConsumations()[4];
             drones[drones.FindIndex(dr => dr.Id == idC)].Status = Enums.DroneStatuses.Vacant;
             List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetAllBaseStations();
-            DO.BaseStation myBase = bs.Find(bas => bas.Latitude == drones[drones.FindIndex(dr => dr.Id == idC)].DroneLocation.latitude&&
-             bas.Latitude == drones[drones.FindIndex(dr => dr.Id == idC)].DroneLocation.latitude);
+            DO.BaseStation myBase = bs.Find(bas => bas.Latitude == drones[drones.FindIndex(dr => dr.Id == idC)].DroneLocation.Latitude&&
+             bas.Latitude == drones[drones.FindIndex(dr => dr.Id == idC)].DroneLocation.Latitude);
             myBase.NumOfSlots++;
 
 
@@ -163,13 +163,13 @@ namespace BL
             }
             BO.BaseStation bc = getClosestBase(drone.DroneLocation);
             List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetAllBaseStations();
-            DO.BaseStation myBase = bs.Find(bas => bas.Latitude == bc.BaseStationLocation.latitude&&bas.Longitude==bc.BaseStationLocation.longitude);
+            DO.BaseStation myBase = bs.Find(bas => bas.Latitude == bc.BaseStationLocation.Latitude&&bas.Longitude==bc.BaseStationLocation.Longitude);
             if ((myDal.DroneElectricConsumations()[0]) *
-                BO.LocationFuncs.Distance(drone.DroneLocation,new Location { latitude = myBase.Latitude, longitude = myBase.Longitude }) <= drone.BatteryStatus)
+                BO.LocationFuncs.Distance(drone.DroneLocation,new Location { Latitude = myBase.Latitude, Longitude = myBase.Longitude }) <= drone.BatteryStatus)
             {
                 drone.BatteryStatus -= (myDal.DroneElectricConsumations()[0]) *
-                BO.LocationFuncs.Distance(drone.DroneLocation, new Location { latitude = myBase.Latitude, longitude = myBase.Longitude });
-                drone.DroneLocation = new Location { latitude = myBase.Latitude, longitude = myBase.Longitude };
+                BO.LocationFuncs.Distance(drone.DroneLocation, new Location { Latitude = myBase.Latitude, Longitude = myBase.Longitude });
+                drone.DroneLocation = new Location { Latitude = myBase.Latitude, Longitude = myBase.Longitude };
                 drone.Status = Enums.DroneStatuses.Maintenance;
                 myBase.NumOfSlots--;
               

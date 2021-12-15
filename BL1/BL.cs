@@ -95,12 +95,12 @@ namespace BL
                     DO.Customer cs = customers.Find(c => c.Id == parcel.SenderId);
                     //caculate the nearest station to customer
 
-                    droneToList.DroneLocation = getClosestBase(new Location { latitude = cs.Latitude, longitude = cs.Longitude }).BaseStationLocation;
+                    droneToList.DroneLocation = getClosestBase(new Location { Latitude = cs.Latitude, Longitude = cs.Longitude }).BaseStationLocation;
 
                     List<DO.Customer> custom = (List<DO.Customer>)myDal.GetCustomerList();
                     DO.Customer myCs = custom.Find(cs => cs.Id == parcel.SenderId);
-                    droneToList.BatteryStatus = random.Next((int)(BO.LocationFuncs.Distance(closestBase, new Location { latitude = myCs.Latitude, longitude = myCs.Longitude })
-                        * consumationFreeDrone + BatteryCons(new Location { latitude = myCs.Latitude, longitude = myCs.Longitude }, parcel)), 99) +
+                    droneToList.BatteryStatus = random.Next((int)(BO.LocationFuncs.Distance(closestBase, new Location { Latitude = myCs.Latitude, Longitude = myCs.Longitude })
+                        * consumationFreeDrone + BatteryCons(new Location { Latitude = myCs.Latitude, Longitude = myCs.Longitude }, parcel)), 99) +
                         random.NextDouble();
                     int index = drones.FindIndex(dr => dr.Id == droneToList.Id);
                     drones[index] = droneToList;
@@ -110,7 +110,7 @@ namespace BL
                     DroneToList droneToList = drones.Find(dr => dr.Id == parcel.DroneId);
                     List<DO.Customer> customers = (List<DO.Customer>)myDal.GetCustomerList();
               
-                     BO.Location loci = new BO.Location { latitude = customers.Find(cs => cs.Id == parcel.SenderId).Latitude, longitude = customers.Find(cs => cs.Id == parcel.SenderId).Longitude };
+                     BO.Location loci = new BO.Location { Latitude = customers.Find(cs => cs.Id == parcel.SenderId).Latitude, Longitude = customers.Find(cs => cs.Id == parcel.SenderId).Longitude };
                     droneToList.DroneLocation = loci;
                     droneToList.BatteryStatus = random.Next((int)BatteryCons(droneToList.DroneLocation, parcel), 99) + random.NextDouble();
                     int index = drones.FindIndex(dr => dr.Id == droneToList.Id);
@@ -141,7 +141,7 @@ namespace BL
                 DO.Parcel p = finfClosestParcelToDrone(dr.DroneLocation, maxWeightParcels);
                 DO.Customer cs = myDal.GetCustomerList().First(cs => cs.Id == p.TargetId);
                 if (dr.BatteryStatus > BatteryCons(dr.DroneLocation, p)
-                    + BO.LocationFuncs.Distance(dr.DroneLocation, new Location { latitude = cs.Latitude, longitude = cs.Longitude }) * myDal.DroneElectricConsumations()[0])
+                    + BO.LocationFuncs.Distance(dr.DroneLocation, new Location { Latitude = cs.Latitude, Longitude = cs.Longitude }) * myDal.DroneElectricConsumations()[0])
                 {
                     return true;
 
@@ -171,8 +171,8 @@ namespace BL
                 DO.Customer cs = myDal.GetCustomerList().First(cs => cs.Id == onDrone[0].SenderId);
                 pid.Sender.Id = cs.Id;
                 pid.Sender.Name = cs.Name;
-                pid.PickUpLocation.latitude = cs.Latitude;
-                pid.PickUpLocation.longitude = cs.Longitude;
+                pid.PickUpLocation.Latitude = cs.Latitude;
+                pid.PickUpLocation.Longitude = cs.Longitude;
                 if (onDrone[0].Scheduled != DateTime.MinValue)
                 {
                     pid.Status = true;
@@ -181,8 +181,8 @@ namespace BL
                 cs = myDal.GetCustomerList().First(cs => cs.Id == onDrone[0].TargetId);
                 pid.Target.Id = cs.Id;
                 pid.Target.Name = cs.Name;
-                pid.TargetLocation.latitude = cs.Latitude;
-                pid.TargetLocation.longitude = cs.Longitude;
+                pid.TargetLocation.Latitude = cs.Latitude;
+                pid.TargetLocation.Longitude = cs.Longitude;
                 pid.Prioritie = (Enums.Priorities)onDrone[0].Priority; 
                 pid.Distance = BO.LocationFuncs.Distance(pid.PickUpLocation, pid.TargetLocation);
                 return (ParcelInDelivery)pid;
@@ -220,8 +220,8 @@ namespace BL
             {
                
                 Location lc = new();
-                lc.latitude = myDal.GetCustomerList().First(cs => cs.Id == parcels[i].SenderId).Latitude;
-                lc.longitude = myDal.GetCustomerList().First(cs => cs.Id == parcels[i].SenderId).Longitude;
+                lc.Latitude = myDal.GetCustomerList().First(cs => cs.Id == parcels[i].SenderId).Latitude;
+                lc.Longitude = myDal.GetCustomerList().First(cs => cs.Id == parcels[i].SenderId).Longitude;
                 if (BO.LocationFuncs.Distance(dronePlace, lc) < tmpLength)
                 {
                     tmpLength = BO.LocationFuncs.Distance(dronePlace, lc);
@@ -242,16 +242,16 @@ namespace BL
             double total = 0;
             double temp = 99999999999; ;
             DO.Customer cs = myDal.GetCustomerList().First(cs => cs.Id == parcel.TargetId);
-            total += BO.LocationFuncs.Distance(lc, new Location { latitude = cs.Latitude, longitude = cs.Longitude });
+            total += BO.LocationFuncs.Distance(lc, new Location { Latitude = cs.Latitude, Longitude = cs.Longitude });
             List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetAllBaseStations();
             Location closestBase = new();
             //look after closest baseStation
             for (int i = 0; i < bs.Count(); i++)
             {
-                if (BO.LocationFuncs.Distance(new Location { latitude = cs.Latitude, longitude = cs.Longitude }, new Location { latitude = bs[i].Latitude, longitude = bs[i].Longitude }) < temp)
+                if (BO.LocationFuncs.Distance(new Location { Latitude = cs.Latitude, Longitude = cs.Longitude }, new Location { Latitude = bs[i].Latitude, Longitude = bs[i].Longitude }) < temp)
                 {
-                    temp = BO.LocationFuncs.Distance(new Location { latitude = cs.Latitude, longitude = cs.Longitude }, new Location { latitude = bs[i].Latitude, longitude = bs[i].Longitude });
-                    closestBase = new Location { latitude = bs[i].Latitude, longitude = bs[i].Longitude };
+                    temp = BO.LocationFuncs.Distance(new Location { Latitude = cs.Latitude, Longitude = cs.Longitude }, new Location { Latitude = bs[i].Latitude, Longitude = bs[i].Longitude });
+                    closestBase = new Location { Latitude = bs[i].Latitude, Longitude = bs[i].Longitude };
                 }
             }//return amount of battery needed to the trip
             return (total * myDal.DroneElectricConsumations()[(int)(parcel.Weight + 1)] + temp * myDal.DroneElectricConsumations()[0]);
@@ -306,21 +306,21 @@ namespace BL
             int i = 0;
             for (; i < bs.Count(); i++)
             {
-                if (bs[i].NumOfSlots > 0 && BO.LocationFuncs.Distance(dr,new Location { latitude = bs[i].Latitude, longitude = bs[i].Longitude }) < shortest)
+                if (bs[i].NumOfSlots > 0 && BO.LocationFuncs.Distance(dr,new Location { Latitude = bs[i].Latitude, Longitude = bs[i].Longitude }) < shortest)
                 {
-                    shortest =BO. LocationFuncs.Distance(dr, new Location { latitude = bs[i].Latitude, longitude = bs[i].Longitude });
+                    shortest =BO. LocationFuncs.Distance(dr, new Location { Latitude = bs[i].Latitude, Longitude = bs[i].Longitude });
                     closestBase = bs[i];
                 }
             }
 
-           BO. BaseStation b = new BO.BaseStation { BaseStationLocation = new Location{ latitude=closestBase.Latitude, longitude=closestBase.Longitude  },
+           BO. BaseStation b = new BO.BaseStation { BaseStationLocation = new Location{ Latitude=closestBase.Latitude, Longitude=closestBase.Longitude  },
                 Id = closestBase.Id,
                 Name = closestBase.Name,
                 NumOfFreeSlots = closestBase.NumOfSlots };
             List<BO.DroneCharge> dc = new();
             foreach (var drone in drones)
             {
-                if (drone.DroneLocation == new Location { latitude = closestBase.Latitude, longitude = closestBase.Longitude })
+                if (drone.DroneLocation == new Location { Latitude = closestBase.Latitude, Longitude = closestBase.Longitude })
                 {
                    BO. DroneCharge d = new BO.DroneCharge { Id = drone.Id, BatteryStatus = drone.BatteryStatus };
                     dc.Add(d);
@@ -342,7 +342,7 @@ namespace BL
 
                 List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetAllBaseStations();
                 int rand = random.Next(bs.Count());
-                Location loc = new Location { latitude = bs[rand].Latitude, longitude = bs[rand].Longitude };
+                Location loc = new Location { Latitude = bs[rand].Latitude, Longitude = bs[rand].Longitude };
               ;
                 dronetolis.DroneLocation = loc;
                 dronetolis.BatteryStatus = 20 * random.NextDouble();
@@ -359,7 +359,7 @@ namespace BL
                         customersTmp.Add(c.Find(cs => cs.Id == it.TargetId));
                 }
                 List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetAllBaseStations();
-                Location lc = new Location { latitude = bs[0].Latitude, longitude = bs[0].Longitude };
+                Location lc = new Location { Latitude = bs[0].Latitude, Longitude = bs[0].Longitude };
 
                 dronetolis.DroneLocation = lc;
                 dronetolis.BatteryStatus = random.Next((int)(BO.LocationFuncs.Distance(dronetolis.DroneLocation, getClosestBase(dronetolis.DroneLocation).BaseStationLocation) * myDal.DroneElectricConsumations()[0]), 99) + random.NextDouble();

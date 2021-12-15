@@ -55,10 +55,10 @@ namespace BO
         /// <returns></returns>
         static internal double Distance(Location l1, Location l2)
         {
-            double lat1 = l1.latitude;
-            double lat2 = l2.latitude;
-            double lon1 = l1.longitude;
-            double lon2 = l2.longitude;
+            double lat1 = l1.Latitude;
+            double lat2 = l2.Latitude;
+            double lon1 = l1.Longitude;
+            double lon2 = l2.Longitude;
             double myPI = 0.017453292519943295;    // Math.PI / 180
             double a = 0.5 - Math.Cos((lat2 - lat1) * myPI) / 2 +
                     Math.Cos(lat1 * myPI) * Math.Cos(lat2 * myPI) *

@@ -115,13 +115,13 @@ namespace PL
                     MessageBox.Show("enter a name please");
                     return;
                 }
-                if (loc.latitude< 29.000000 || loc.latitude>34.000000)
+                if (loc.Latitude< 29.000000 || loc.Latitude>34.000000)
                 {
                     ChooseLatitude.Text = "";
                     ChooseLatitude.Background = Brushes.Red;
                     MessageBox.Show("enter a latitude between 29.000000 and 34.000000");
                 } 
-                if(loc.longitude < 34.000000 || loc.longitude > 35.000000)
+                if(loc.Longitude < 34.000000 || loc.Longitude > 35.000000)
                 {
                     
                     ChooseLongitude.Text = "";
@@ -276,10 +276,10 @@ namespace PL
 
                 if (s >= 0)
                 {
-                    loc.latitude = s;
+                    loc.Latitude = s;
                 }
             }
-            if (loc.latitude == 0)
+            if (loc.Latitude == 0)
             {
                 ChooseLatitude.Text = "";
                 MessageBox.Show("Please, number > 0");
@@ -299,10 +299,10 @@ namespace PL
                 if (s >= 0)
                 {
 
-                    loc.longitude = s;
+                    loc.Longitude = s;
                 }
             }
-            if (loc.longitude ==0)
+            if (loc.Longitude ==0)
           
             {
                 ChooseLongitude.Text = "";

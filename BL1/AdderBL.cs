@@ -36,8 +36,8 @@ namespace BL
                 myDal.AddCustomer(new DO.Customer
                 {
                     Id = customer.Id,
-                    Latitude = customer.Location.latitude,
-                    Longitude = customer.Location.longitude,
+                    Latitude = customer.Location.Latitude,
+                    Longitude = customer.Location.Longitude,
                     Name = customer.Name,
                     Phone = customer.Phone
                 });
@@ -66,8 +66,8 @@ namespace BL
                 myDal.AddBaseStation(new DO.BaseStation
                 {
                     Id = station.Id,
-                    Latitude = station.BaseStationLocation.latitude,
-                    Longitude = station.BaseStationLocation.longitude,
+                    Latitude = station.BaseStationLocation.Latitude,
+                    Longitude = station.BaseStationLocation.Longitude,
                     Name = station.Name,
                     NumOfSlots = station.NumOfFreeSlots
                 });
@@ -117,7 +117,7 @@ namespace BL
                 Model = drone.Model,
                 BatteryStatus = 20 + 20 * random.NextDouble(),
                 Status = Enums.DroneStatuses.Maintenance,
-                DroneLocation = new Location { latitude = bs.Find(b => b.Id == BaseStationNum).Latitude, longitude = bs.Find(b => b.Id == BaseStationNum).Longitude },
+                DroneLocation = new Location { Latitude = bs.Find(b => b.Id == BaseStationNum).Latitude, Longitude = bs.Find(b => b.Id == BaseStationNum).Longitude },
                 NumOfDeliveredParcel = 0
             };
             drones.Add(dr);
