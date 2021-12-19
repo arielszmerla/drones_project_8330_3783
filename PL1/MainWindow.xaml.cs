@@ -22,7 +22,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        enum listChoice { DRONEVIEW, BASESVIEW, CUSTOMERVIEW, PARCELVIEW };
+        enum listChoice { Drones, BaseStations, Customers, Parcels };
         IBL bl = BLFactory.GetBL();
         public MainWindow()
         {
@@ -42,16 +42,16 @@ namespace PL
             listChoice stat = (listChoice)((ComboBox)sender).SelectedItem;
             switch(stat)
             {
-                case listChoice.BASESVIEW:
+                case listChoice.BaseStations:
                     new BaseStationViewWindow(bl).Show();
                     break;
-                case listChoice.DRONEVIEW:
+                case listChoice.Drones:
                     new DroneListWindow1(bl).Show();
                     break;
-                case listChoice.CUSTOMERVIEW:
+                case listChoice.Customers:
                    new CustomerListWindow(bl).Show();
                     break;
-                case listChoice.PARCELVIEW:
+                case listChoice.Parcels:
                     new ParcelListWindow(bl).Show();
                     break;
             }

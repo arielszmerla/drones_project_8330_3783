@@ -65,7 +65,7 @@
             </Grid.ColumnDefinitions>
 
             <Label BorderBrush="Black" BorderThickness="5" Grid.Row="0" Foreground="BlanchedAlmond" VerticalContentAlignment="Center" FontSize="25" FontWeight="DemiBold" Content="BY STATUS" x:Name="Status_label" Grid.Column="1" Margin="0,0,28,0" />
-            <ComboBox  Opacity="0.8"   BorderBrush="Transparent" Background="Bisque" ToolTip="Drone Status" FontSize="10" Text="Drone Status" x:Name="StatusSelector"  Grid.Column="1" HorizontalAlignment= "Left" VerticalAlignment="Stretch" SelectionChanged="StatusSelector_SelectionChanged"  Margin="172,0,0,0"/>
+            <ComboBox  Opacity  ="0.8"   BorderBrush="Transparent" Background="Bisque" ToolTip="Drone Status" FontSize="10" Text="Drone Status" x:Name="StatusSelector"  Grid.Column="1" HorizontalAlignment= "Left" VerticalAlignment="Stretch" SelectionChanged="StatusSelector_SelectionChanged"  Margin="172,0,0,0"/>
             <Label Grid.Row="0" BorderBrush="Black" BorderThickness="5" VerticalContentAlignment="Center" Foreground="BlanchedAlmond" Grid.Column="2" FontSize="25" FontWeight="DemiBold" Content="BY WEIGHT" x:Name="Weight_label" Margin="0,0,28,0"  />
             <ComboBox FontSize="10" Background="Bisque"  BorderBrush="Transparent" Opacity="0.8" ToolTip="Drone weight" Text="Drone weight" x:Name="WeightChoise" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Stretch"  SelectionChanged="WeightChoise_SelectionChanged" Margin="172,0,0,0"/>
 
@@ -85,7 +85,7 @@
                     <GridViewColumn Header="Status:" DisplayMemberBinding="{Binding Status}"/>
                     <GridViewColumn Header="Battery:" DisplayMemberBinding="{Binding BatteryStatus , Converter={StaticResource ConverterDoubleToInt }}"/>
                     <GridViewColumn Header="Location:" DisplayMemberBinding="{Binding DroneLocation }"/>
-                </GridView> 
+                </GridView>
             </ListView.View>
 
             <ListView.GroupStyle>
@@ -100,7 +100,11 @@
             </ListView.GroupStyle>
         </ListView>
         <StackPanel Margin="644,47,0,46" Grid.Row="1" >
-            <Button Opacity="0.8" ToolTip="Click Here To Add" Margin="0,30,0,0" BorderBrush="Black" FontSize="16" Click="Button_Click" Height="59" Width="60"/>
+            <Button Opacity="0.8" ToolTip="Click Here To Add" Margin="0,30,0,0" BorderBrush="Black" FontSize="16" Click="Button_Click" Height="59" Width="60">
+                
+            </Button>
+
+
             <Button    BorderBrush="Transparent" Margin="0,30,0,0" Opacity="0.8" ToolTip="Click Here To view on map" FontSize="16" BorderThickness="0.5" x:Name="View_On_Map" Click="View_Map" Width="64" Height="68" RenderTransformOrigin="-0.208,-4.179">
                 <Button.Background>
                     <ImageBrush ImageSource="\images\Google_Maps_logo.png"/>
@@ -111,7 +115,7 @@
                     <ImageBrush ImageSource="\images\pngegg.png"/>
                 </Button.Background>
             </Button>
-         
+
         </StackPanel>
 
     </Grid>
