@@ -193,7 +193,7 @@ namespace BL
             return tmp.FindAll(bs => bs.NumOfFreeSlots > 0);
 
         }
-        public IEnumerable<ParcelToList> GetParcelList(Enums.WeightCategories? statuses = null)
+        public IEnumerable<ParcelToList>GetParcelList(Enums.WeightCategories? statuses = null)
         {
             List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList(null);
             List<ParcelToList> parcelTos = new();
