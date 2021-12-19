@@ -193,8 +193,7 @@ namespace BL
             return tmp.FindAll(bs => bs.NumOfFreeSlots > 0);
 
         }
-        public IEnumerable<ParcelToList> GetParcelList(Func<ParcelToList
-            , bool> predicat = null)
+        public IEnumerable<ParcelToList> GetParcelList(Enums.WeightCategories? statuses = null)
         {
             List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList();
             List<ParcelToList> parcelTos = new();
@@ -207,17 +206,17 @@ namespace BL
                     WeightCategorie = (Enums.WeightCategories)it.Weight
                 };
 
-                List<DO.Customer> customers = (List<DO.Customer>)myDal.GetCustomerList();
-                parcelToList.SenderName = customers.Find(s => s.Id == it.SenderId).Name;
-                parcelToList.TargetName = customers.Find(s => s.Id == it.TargetId).Name;
+         
+                parcelToList.SenderName =myDal.GetCustomerList().FirstOrDefault(s => s.Id == it.SenderId).Name;
+                parcelToList.TargetName = myDal.GetCustomerList().FirstOrDefault(s => s.Id == it.TargetId).Name;
                 parcelTos.Add(parcelToList);
             }
-            if (predicat == null)
+            if (statuses == null)
                 return parcelTos;
             else
-                //return drones.Where(predicate);
+                
                 return (from item in parcelTos
-                        where predicat(item)
+                        where item.WeightCategorie==statuses
                         select item);
 
         }

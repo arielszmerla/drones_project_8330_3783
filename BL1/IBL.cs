@@ -77,7 +77,7 @@ namespace BLAPI
         /// method to return a list of all the parcels in data base.
         /// </summary>
         /// <returns></returns>
-        IEnumerable<ParcelToList> GetParcelList(Func<ParcelToList, bool> predicat = null);
+        IEnumerable<ParcelToList> GetParcelList(Enums.WeightCategories? weight = null);
         /// <summary>
         /// method to return a list of all the drones in the data base.
         /// </summary>

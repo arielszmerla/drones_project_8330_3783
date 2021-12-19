@@ -24,7 +24,12 @@ namespace PL1
         {
            
             InitializeComponent();
-            CustomerViewList.ItemsSource = bl.GetParcelList();
+         ParcelViewList.ItemsSource= bl.GetParcelList();
+            DataContext = ParcelViewList.ItemsSource;
+            Weight_Choice.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ParcelViewList.ItemsSource);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("WeightCategorie");
+            view.GroupDescriptions.Add(groupDescription);
         }
 
         private void Closing_Button_Click(object sender, RoutedEventArgs e)
@@ -35,6 +40,12 @@ namespace PL1
         private void CustomerViewList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void Weight_Choice_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+           // IEnumerable <BO.ParcelToList> p= bl.GetParcelList((BO.Enums.WeightCategories)sender);
+          
         }
     }
 }

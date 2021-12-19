@@ -5,16 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL1"
         mc:Ignorable="d"
-        
         Title="ParcelListWindow" Height="450" Width="800">
     <Window.Background>
         <ImageBrush ImageSource="\images\parcel.png" />
     </Window.Background>
     <Grid>
-        <ListView x:Name="CustomerViewList" Background="Transparent" Margin="0,89,100,0" SelectionChanged="CustomerViewList_SelectionChanged">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"  />
+            <RowDefinition Height="370"  />
+        </Grid.RowDefinitions>
+        <ListView Grid.Row="1" x:Name="ParcelViewList" Background="Transparent" Margin="0,89,100,0" SelectionChanged="CustomerViewList_SelectionChanged">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID"  DisplayMemberBinding="{Binding Path=Id}" />
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Path=Id}" />
                     <GridViewColumn Header="Sender ID"  DisplayMemberBinding="{Binding Path=SenderName}" />
                     <GridViewColumn Header="target ID"  DisplayMemberBinding="{Binding Path=TargetName}" />
                     <GridViewColumn Header="Weight"  DisplayMemberBinding="{Binding Path=WeightCategorie}" />
@@ -38,7 +41,11 @@
                 <ImageBrush ImageSource="\images\pngegg.png" />
             </Button.Background>
         </Button>
-
+        <StackPanel Orientation="Horizontal">
+            <ListBox  x:Name="Weight_Choice" Width="100" SelectionChanged="Weight_Choice_SelectionChanged"  />
+            
+            
+        </StackPanel>
     </Grid>
 
 </Window>
