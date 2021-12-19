@@ -11,7 +11,7 @@
     <Window.Background>
         <ImageBrush ImageSource="\images\dronefon.jpg" />
     </Window.Background>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -20,37 +20,14 @@
         <Label FontStyle="Oblique"  Foreground="Black" BorderThickness="7" BorderBrush="Olive" FontWeight="Heavy"  Content="MY DRONE COMPANY " FontSize="20"  HorizontalAlignment="Left" Margin="275,76,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
         </Label>
 
-       
 
 
-        <Button x:Name="DronesList" RenderTransformOrigin="0.843,1.844" Content="CLICK HERE TO VIEW THE DRONES"  FontSize="20"  Background="Bisque" Margin="224,321,225,34" Grid.ColumnSpan="2"  Click="DronesList_Click_1" >
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Grid>
-                        <Ellipse Stroke="Black"
-                         StrokeThickness="2"   RenderTransformOrigin="0.967,1.89">
-                            <Ellipse.Fill>
-                                <RadialGradientBrush>
 
 
-                                    <GradientStop Offset="1"
-                                          Color="Bisque"  />
-                                    <RadialGradientBrush.Transform>
-                                        <TransformGroup>
-                                            <ScaleTransform ScaleY="0.65" />
-                                        </TransformGroup>
-                                    </RadialGradientBrush.Transform>
-                                </RadialGradientBrush>
 
-                            </Ellipse.Fill>
-                        </Ellipse>
-                        <ContentPresenter HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"/>
-                    </Grid>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
-        <ComboBox x:Name="ViewOptions" Text="View Choice" Grid.Column="1" HorizontalAlignment="Left" Margin="235,321,0,0" VerticalAlignment="Top" Width="150" Height="40" SelectionChanged="ViewOptions_SelectionChanged"/>
+        <ComboBox x:Name="ViewOptions" IsEditable="True" IsReadOnly="True" Text="View Choice" HorizontalAlignment="Left" Margin="305,349,0,0" VerticalAlignment="Top" Width="150" Height="40" SelectionChanged="ViewOptions_SelectionChanged" Grid.ColumnSpan="2"
+                 />
+
     </Grid>
 
 </Window>
