@@ -114,7 +114,7 @@ namespace BL
             {
                 Id = drone.Id,
                 MaxWeight = (Enums.WeightCategories)drone.MaxWeight,
-                Model = drone.Model,
+                Model = (Enums.DroneNames)drone.Model,
                 BatteryStatus = 20 + 20 * random.NextDouble(),
                 Status = Enums.DroneStatuses.Maintenance,
                 DroneLocation = new Location { Latitude = bs.Find(b => b.Id == BaseStationNum).Latitude, Longitude = bs.Find(b => b.Id == BaseStationNum).Longitude },
@@ -137,7 +137,7 @@ namespace BL
             {
                 Id = drone.Id,
                 MaxWeight = (DO.WeightCategories)drone.MaxWeight,
-                Model = drone.Model
+                Model = (DO.DroneNames)drone.Model
             };
             //drone1.Id = drone.Id;
 

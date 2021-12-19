@@ -105,7 +105,7 @@ namespace BLAPI
         /// </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
-        void UpdateNameDrone(int id, string name);
+        void UpdateNameDrone(int id, BO.Enums.DroneNames name);
         /// <summary>
         /// method to update name and/or phone number
         /// </summary>

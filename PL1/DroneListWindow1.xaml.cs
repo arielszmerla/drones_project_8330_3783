@@ -25,12 +25,19 @@ namespace PL
         private IBL bl1;
         public DroneListWindow1(IBL bl1)
         {
+
             InitializeComponent();
             this.bl1 = bl1;
-            DataContext = bl1.GetDroneList();
-            
+            DroneListView.ItemsSource = bl1.GetDroneList();
+         
+            DataContext = DroneListView.ItemsSource;
             StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
             WeightChoise.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
+
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(DroneListView.ItemsSource);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Model");
+            view.GroupDescriptions.Add(groupDescription);
+
         }
 
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -98,8 +105,13 @@ namespace PL
         {
             DroneListView.ItemsSource = bl1.GetDroneList();
             WeightChoise.SelectedItem = null;
-            StatusSelector.SelectedItem =null;
-         
+            StatusSelector.SelectedItem = null;
+
+        }
+
+        private void View_Map(object sender, RoutedEventArgs e)
+        {
+            new MapsDisplay(bl1).Show();
         }
     }
 }

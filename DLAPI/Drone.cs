@@ -11,7 +11,7 @@ using System.Threading.Tasks;
         public struct Drone
         {
             public int Id { get; set; }
-            public string Model { get; set; }
+            public DroneNames Model { get; set; }
             public WeightCategories MaxWeight { get; set; }
             public override string ToString()///toString erased func
             {

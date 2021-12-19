@@ -58,7 +58,7 @@ namespace DalObject
                 throw new DroneException($"invalid drone id {id}");
             int k = DataSource.Parcels.FindIndex(ps => ps.DroneId == id);
             if (k == -1)
-                throw new ParcelExeption("invalid parcel id");
+                throw new DLAPI.ParcelExeption("invalid parcel id");
             Parcel tmp = DataSource.Parcels[k];
             tmp.PickedUp = DateTime.Now;
             DataSource.Parcels[k] = tmp.Clone();

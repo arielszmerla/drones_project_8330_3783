@@ -27,22 +27,22 @@ namespace PL
         private Location loc = new();
         private IBL bl1;
 
-  
+
         public AddDrone(IBL bl1)
         {
 
             InitializeComponent();
             Title = "ADD A DRONE";
             this.bl1 = bl1;
-            WeightCategSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
-        
-            StatusSelectorToadd.ItemsSource= Enum.GetValues(typeof(BO.Enums.DroneStatuses));
+            WeightCategSelector.ItemsSource = Enum.GetValues(typeof(Enums.WeightCategories));
+            Choose_model.ItemsSource = Enum.GetValues(typeof(Enums.DroneNames));
+            StatusSelectorToadd.ItemsSource = Enum.GetValues(typeof(Enums.DroneStatuses));
             add_drone_stack.Visibility = Visibility.Visible;
             add_drone_titles.Visibility = Visibility.Visible;
             enter.Visibility = Visibility.Visible;
 
         }
-       BO.Drone dr = new();
+        BO.Drone dr = new();
         public AddDrone(IBL bl1, Drone drone)
         {
             this.bl1 = bl1;
@@ -60,7 +60,7 @@ namespace PL
         {
             BO.Enums.WeightCategories weightCategories = (BO.Enums.WeightCategories)WeightCategSelector.SelectedItem;
             drone.MaxWeight = weightCategories;
-            Categorie_weight.Background= Brushes.Transparent; 
+            Categorie_weight.Background = Brushes.Transparent;
 
         }
 
@@ -93,7 +93,7 @@ namespace PL
                 flag = false;
             }
 
-             if (this.Choose_model.Background == Brushes.Red)
+            if (this.Choose_model.Background == Brushes.Red)
             {
                 return;
             }
@@ -102,28 +102,28 @@ namespace PL
                 ID.Background = Brushes.Red;
                 flag = false;
             }
-       
-            if (flag ==true)
+
+            if (flag == true)
             {
                 Random rand = new Random();
                 dr.BatteryStatus = rand.Next(99) + rand.NextDouble();
 
-                if (Choose_model.Text=="")
+                if (Choose_model.Text == "")
                 {
-                    
+
                     Choose_model.Background = Brushes.Red;
                     MessageBox.Show("enter a name please");
                     return;
                 }
-                if (loc.Latitude< 29.000000 || loc.Latitude>34.000000)
+                if (loc.Latitude < 31.740967 || loc.Latitude > 31.815177)
                 {
                     ChooseLatitude.Text = "";
                     ChooseLatitude.Background = Brushes.Red;
                     MessageBox.Show("enter a latitude between 29.000000 and 34.000000");
-                } 
-                if(loc.Longitude < 34.000000 || loc.Longitude > 35.000000)
+                }
+                if (loc.Longitude < 35.171323 || loc.Longitude > 35202050)
                 {
-                    
+
                     ChooseLongitude.Text = "";
                     ChooseLatitude.Background = Brushes.Red;
                     MessageBox.Show("enter a latitude between 34.000000 and 35.000000");
@@ -143,7 +143,7 @@ namespace PL
                     MessageBox.Show("Managed Add");
                     enter.Visibility = Visibility.Hidden;
                     this.Close();
-          
+
 
                 }
                 catch (BO.AddException)
@@ -152,7 +152,7 @@ namespace PL
                 }
             }
             else
-             MessageBox.Show("you have to fill the red places");
+                MessageBox.Show("you have to fill the red places");
         }
 
         private void ShowDroneAdded_TextChanged(object sender, TextChangedEventArgs e)
@@ -161,6 +161,10 @@ namespace PL
             ShowDroneAdded.Text = dr.ToString();
 
 
+        }
+        private void View_Map(object sender, RoutedEventArgs e)
+        {
+            new MapsDisplay(dr, bl1).Show();
         }
 
         private void Update_Drone_Click(object sender, RoutedEventArgs e)
@@ -174,7 +178,7 @@ namespace PL
 
         private void Get_model_TextChanged(object sender, TextChangedEventArgs e)
         {
-            bl1.UpdateNameDrone(dr.Id, Get_model.Text);
+            bl1.UpdateNameDrone(dr.Id, (Enums.DroneNames)Choose_model.SelectedItem);
             Get_model.Visibility = Visibility.Hidden;
             this.dr = bl1.GetDrone(dr.Id);
             MessageBox.Show("Managed Update");
@@ -219,7 +223,7 @@ namespace PL
 
                     if (drone.PID != null)
                     {
-                       Parcel p = bl1.GetParcel(drone.PID.Id);
+                        Parcel p = bl1.GetParcel(drone.PID.Id);
                         if (p.PickedUp < DateTime.Now && p.Delivered > DateTime.Now)
                         {
                             bl1.UpdateDeliverParcel(dr.Id);
@@ -243,7 +247,7 @@ namespace PL
         private void End_the_page(object sender, RoutedEventArgs e)
         {
             enter.Visibility = Visibility.Hidden;
-           
+
             this.Close();
         }
         private void AddDrone_Closing(object sender, CancelEventArgs e)
@@ -290,7 +294,7 @@ namespace PL
 
         private void Longitude_input(object sender, TextChangedEventArgs e)
         {
-           
+
 
             TextBox t = (TextBox)sender;
             double s;
@@ -302,8 +306,8 @@ namespace PL
                     loc.Longitude = s;
                 }
             }
-            if (loc.Longitude ==0)
-          
+            if (loc.Longitude == 0)
+
             {
                 ChooseLongitude.Text = "";
                 MessageBox.Show("Please, number between 34.000000 and 35.000000");
@@ -313,16 +317,10 @@ namespace PL
 
         }
 
-        private void Name_input(object sender, TextChangedEventArgs e)
-        {
-            dr.Model =( (TextBox)sender).Text;
-            
-        }
-
         private void statust_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             stats.Background = Brushes.Transparent;
-            Enums.DroneStatuses stat= (Enums.DroneStatuses)((ComboBox)sender).SelectedItem;
+            Enums.DroneStatuses stat = (Enums.DroneStatuses)((ComboBox)sender).SelectedItem;
 
             if (stat == Enums.DroneStatuses.InDelivery)
             {
@@ -333,16 +331,13 @@ namespace PL
                 dr.Status = (Enums.DroneStatuses)StatusSelectorToadd.SelectedItem;
         }
 
-        private void Model_input(object sender, TextChangedEventArgs e)
+
+
+        private void Choose_model_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
             Choose_model.Background = Brushes.Transparent;
-            string s = ((TextBox)sender).Text;
-            if (s == "")
-            {
-                MessageBox.Show("Please enter a name");
-                Choose_model.Background = Brushes.Red;
-            }
-            else dr.Model = s;
+            dr.Model = (Enums.DroneNames)Choose_model.SelectedItem;
         }
     }
 }

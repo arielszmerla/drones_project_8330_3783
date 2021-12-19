@@ -15,7 +15,15 @@
         <ListView x:Name="CustomerViewList" Background="Transparent" Margin="0,94,80,0" SelectionChanged="ListView_SelectionChanged">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Path=Id}"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
+                    <GridViewColumn Header="PHONE" DisplayMemberBinding="{Binding Path=Phone}"/>
+                    <GridViewColumn Header="Phone" DisplayMemberBinding="{Binding Path=NumberOfParcelsSentAndDelivered}"/>
+
+                    <GridViewColumn Header="NumberOfParcelsSentButNotDelivered" DisplayMemberBinding="{Binding Path=NumberOfParcelsSentButNotDelivered}"/>
+                    <GridViewColumn Header="NumberOfParcelsSentAndDelivered" DisplayMemberBinding="{Binding Path=NumberOfParcelsSentAndDelivered}"/>
+                    <GridViewColumn Header="NumberOfParcelsReceived" DisplayMemberBinding="{Binding Path=NumberOfParcelsReceived}"/>
+                    <GridViewColumn Header="NumberOfParcelsonTheWay" DisplayMemberBinding="{Binding Path=NumberOfParcelsonTheWay}"/>
                 </GridView>
             </ListView.View>
         </ListView>

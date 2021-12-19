@@ -8,6 +8,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\net5.0-windows\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +20,7 @@
 
   <ItemGroup>
     <None Remove="images\dronefon.jpg" />
+    <None Remove="images\Google_Maps_logo.png" />
     <None Remove="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
     <None Remove="images\parcelpic.jpg" />
     <None Remove="images\pngegg.png" />
@@ -39,6 +41,7 @@
 
   <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
+    <PackageReference Include="Microsoft.Maps.MapControl.WPF" Version="1.0.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -47,6 +50,7 @@
 
   <ItemGroup>
     <Resource Include="images\dronefon.jpg" />
+    <Resource Include="images\Google_Maps_logo.png" />
     <Resource Include="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
     <Resource Include="images\pngegg.png" />
     <Resource Include="images\customerspic.png" />

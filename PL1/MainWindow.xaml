@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL"
+        xmlns:local="clr-namespace:PL" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         
         Title="APPLICATION WINDOW" Height="450" Width="800" Icon="\images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico">
@@ -11,14 +11,16 @@
     <Window.Background>
         <ImageBrush ImageSource="\images\dronefon.jpg" />
     </Window.Background>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Label FontStyle="Oblique" BorderThickness="7" BorderBrush="Black" FontWeight="Heavy"  Content="MY DRONE COMPANY " FontSize="20"  HorizontalAlignment="Left" Margin="275,76,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
-
+        <Label FontStyle="Oblique"  Foreground="Black" BorderThickness="7" BorderBrush="Olive" FontWeight="Heavy"  Content="MY DRONE COMPANY " FontSize="20"  HorizontalAlignment="Left" Margin="275,76,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
         </Label>
+
+       
 
 
         <Button x:Name="DronesList" RenderTransformOrigin="0.843,1.844" Content="CLICK HERE TO VIEW THE DRONES"  FontSize="20"  Background="Bisque" Margin="224,321,225,34" Grid.ColumnSpan="2"  Click="DronesList_Click_1" >

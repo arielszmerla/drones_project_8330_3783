@@ -15,10 +15,10 @@ namespace BL
 /// </summary>
     partial class BLImp : IBL
     {
-       private List<DroneToList> drones = new();
+        private List<DroneToList> drones = new();
         static Random random = new Random();
-      
-        
+
+
         IDal myDal;
         /// <summary>
         /// constructor BL
@@ -27,11 +27,13 @@ namespace BL
         class Nested
         {
             static Nested() { }
-            internal static readonly BLImp instance =new BLImp() ;
+            internal static readonly BLImp instance = new BLImp();
         }
         private static object syncRoot = new object();
         public static BLImp Instance
         {
+
+
             get
             {
                 if (Nested.instance == null)
@@ -42,13 +44,12 @@ namespace BL
                             return Nested.instance;
                     }
                 }
-
                 return Nested.instance;
             }
         }
-       
-    
-      
+
+
+
         #endregion
 
         private BLImp()
@@ -58,31 +59,30 @@ namespace BL
             {
                 myDal = DLFactory.GetDL("1");
             }
-            catch ( DLConfigException  ex) {
+            catch (DLConfigException ex)
+            {
                 throw new BLConfigException("", ex);
 
             }
-
-
 
             double consumationFreeDrone = myDal.DroneElectricConsumations()[0];
             double consumationLightCarrier = myDal.DroneElectricConsumations()[1];
             double consumationMediumCarrier = myDal.DroneElectricConsumations()[2];
             double consumationHeavyCarrier = myDal.DroneElectricConsumations()[3];
             double chargePerHour = myDal.DroneElectricConsumations()[4];
-            double shortest = 0;
+
 
             foreach (var dr in myDal.GetDroneList())
             {
                 DroneToList droneToList = new DroneToList
                 {
                     Id = dr.Id,
-                    Model = dr.Model,
+                    Model = (Enums.DroneNames)dr.Model,
                     MaxWeight = (Enums.WeightCategories)dr.MaxWeight
                 };
                 drones.Add(droneToList);
             }
-             foreach (var parcel in myDal.GetParcelList())
+            foreach (var parcel in myDal.GetParcelList())
             {
 
                 if (drones.Any(dr => dr.Id == parcel.DroneId) && parcel.PickedUp >= DateTime.Now)
@@ -107,20 +107,17 @@ namespace BL
                 }
                 if (drones.Any(dr => dr.Id == parcel.DroneId) && parcel.Delivered >= DateTime.Now && parcel.PickedUp < DateTime.Now)
                 {
-                    DroneToList droneToList = drones.Find(dr => dr.Id == parcel.DroneId);
-                    List<DO.Customer> customers = (List<DO.Customer>)myDal.GetCustomerList();
-              
-                     BO.Location loci = new BO.Location { Latitude = customers.Find(cs => cs.Id == parcel.SenderId).Latitude, Longitude = customers.Find(cs => cs.Id == parcel.SenderId).Longitude };
+                    DroneToList droneToList = drones.FirstOrDefault(dr => dr.Id == parcel.DroneId);
+                    BO.Location loci = new BO.Location { Latitude = myDal.GetCustomerList().FirstOrDefault(cs => cs.Id == parcel.SenderId).Latitude, Longitude = myDal.GetCustomerList().FirstOrDefault(cs => cs.Id == parcel.SenderId).Longitude };
                     droneToList.DroneLocation = loci;
                     droneToList.BatteryStatus = random.Next((int)BatteryCons(droneToList.DroneLocation, parcel), 99) + random.NextDouble();
                     int index = drones.FindIndex(dr => dr.Id == droneToList.Id);
                     drones[index] = droneToList;
                 }
-                List<DroneToList> temp = new();
+
                 for (int i = 0; i < drones.Count; i++)
-                {
                     drones[i] = updateDroneToList(drones[i]);
-                }
+
 
             }
         }
@@ -183,7 +180,7 @@ namespace BL
                 pid.Target.Name = cs.Name;
                 pid.TargetLocation.Latitude = cs.Latitude;
                 pid.TargetLocation.Longitude = cs.Longitude;
-                pid.Prioritie = (Enums.Priorities)onDrone[0].Priority; 
+                pid.Prioritie = (Enums.Priorities)onDrone[0].Priority;
                 pid.Distance = BO.LocationFuncs.Distance(pid.PickUpLocation, pid.TargetLocation);
                 return (ParcelInDelivery)pid;
             }
@@ -214,11 +211,11 @@ namespace BL
         private DO.Parcel finfClosestParcelToDrone(Location dronePlace, List<DO.Parcel> parcels)
         {
             double tmpLength = 40000000000000;
-           DO.Parcel tmpParcel = new();
+            DO.Parcel tmpParcel = new();
             //check all the parcels
             for (int i = 0; i < parcels.Count; i++)
             {
-               
+
                 Location lc = new();
                 lc.Latitude = myDal.GetCustomerList().First(cs => cs.Id == parcels[i].SenderId).Latitude;
                 lc.Longitude = myDal.GetCustomerList().First(cs => cs.Id == parcels[i].SenderId).Longitude;
@@ -257,39 +254,40 @@ namespace BL
             return (total * myDal.DroneElectricConsumations()[(int)(parcel.Weight + 1)] + temp * myDal.DroneElectricConsumations()[0]);
         }
 
- 
-       /// <summary>
-       /// Create the list of drone charging on a baseStation
-       /// </summary>
-       /// <param name="bs"></param>
-       /// <returns></returns>
+
+        /// <summary>
+        /// Create the list of drone charging on a baseStation
+        /// </summary>
+        /// <param name="bs"></param>
+        /// <returns></returns>
         private List<BO.DroneCharge> dronCharges(BO.BaseStation bs)
         {//find the relevant drones
-            List<DroneToList> drs = drones.FindAll(dr => dr.Status == Enums.DroneStatuses.Maintenance&& dr.DroneLocation == bs.BaseStationLocation);
+            List<DroneToList> drs = drones.FindAll(dr => dr.Status == Enums.DroneStatuses.Maintenance && dr.DroneLocation == bs.BaseStationLocation);
             List<BO.DroneCharge> droneCharges = new();
             foreach (DroneToList ds in drs)
             {
-                    droneCharges.Add(new BO.DroneCharge
-                    {
-                        Id = ds.Id,
-                        BatteryStatus = ds.BatteryStatus
-                    });
+                droneCharges.Add(new BO.DroneCharge
+                {
+                    Id = ds.Id,
+                    BatteryStatus = ds.BatteryStatus
+                });
             }
             return droneCharges;
         }
-     /// <summary>
-     /// calls func from dalObject to get customer with and Id 
-     /// </summary>
-     /// <param name="id"></param>
-     /// <returns></returns>
+        /// <summary>
+        /// calls func from dalObject to get customer with and Id 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public DO.Customer GetCust(int id)
         {
             try
             {
                 return myDal.GetCustomer(id);
             }
-            catch (CostumerExeption p) {
-                throw new GetException($"This Customer {id} does not exist",p);
+            catch (CostumerExeption p)
+            {
+                throw new GetException($"This Customer {id} does not exist", p);
             }
         }
         /// <summary>
@@ -299,30 +297,33 @@ namespace BL
         /// <returns></returns>
         private BO.BaseStation getClosestBase(Location dr)
         {
-            List <DO.BaseStation > bs = (List<DO.BaseStation>)myDal.GetAllBaseStations();
-           DO. BaseStation closestBase = new();
+            List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetAllBaseStations();
+            DO.BaseStation closestBase = new();
             double shortest = 99999999999999990;
             //find closest
             int i = 0;
             for (; i < bs.Count(); i++)
             {
-                if (bs[i].NumOfSlots > 0 && BO.LocationFuncs.Distance(dr,new Location { Latitude = bs[i].Latitude, Longitude = bs[i].Longitude }) < shortest)
+                if (bs[i].NumOfSlots > 0 && BO.LocationFuncs.Distance(dr, new Location { Latitude = bs[i].Latitude, Longitude = bs[i].Longitude }) < shortest)
                 {
-                    shortest =BO. LocationFuncs.Distance(dr, new Location { Latitude = bs[i].Latitude, Longitude = bs[i].Longitude });
+                    shortest = BO.LocationFuncs.Distance(dr, new Location { Latitude = bs[i].Latitude, Longitude = bs[i].Longitude });
                     closestBase = bs[i];
                 }
             }
 
-           BO. BaseStation b = new BO.BaseStation { BaseStationLocation = new Location{ Latitude=closestBase.Latitude, Longitude=closestBase.Longitude  },
+            BO.BaseStation b = new BO.BaseStation
+            {
+                BaseStationLocation = new Location { Latitude = closestBase.Latitude, Longitude = closestBase.Longitude },
                 Id = closestBase.Id,
                 Name = closestBase.Name,
-                NumOfFreeSlots = closestBase.NumOfSlots };
+                NumOfFreeSlots = closestBase.NumOfSlots
+            };
             List<BO.DroneCharge> dc = new();
             foreach (var drone in drones)
             {
                 if (drone.DroneLocation == new Location { Latitude = closestBase.Latitude, Longitude = closestBase.Longitude })
                 {
-                   BO. DroneCharge d = new BO.DroneCharge { Id = drone.Id, BatteryStatus = drone.BatteryStatus };
+                    BO.DroneCharge d = new BO.DroneCharge { Id = drone.Id, BatteryStatus = drone.BatteryStatus };
                     dc.Add(d);
                 }
             }
@@ -330,7 +331,8 @@ namespace BL
         }
 
 
-        private DroneToList updateDroneToList(DroneToList dronetolis) {
+        private DroneToList updateDroneToList(DroneToList dronetolis)
+        {
 
             if (dronetolis.Status != Enums.DroneStatuses.InDelivery)
             {
@@ -343,7 +345,7 @@ namespace BL
                 List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetAllBaseStations();
                 int rand = random.Next(bs.Count());
                 Location loc = new Location { Latitude = bs[rand].Latitude, Longitude = bs[rand].Longitude };
-              ;
+                ;
                 dronetolis.DroneLocation = loc;
                 dronetolis.BatteryStatus = 20 * random.NextDouble();
             }

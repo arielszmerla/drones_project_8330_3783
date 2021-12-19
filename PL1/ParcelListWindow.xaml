@@ -11,7 +11,11 @@
         <ListView x:Name="CustomerViewList" Background="Transparent" Margin="0,89,100,0" SelectionChanged="CustomerViewList_SelectionChanged">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn Header="ID"  DisplayMemberBinding="{Binding Path=Id}" />
+                    <GridViewColumn Header="Sender ID"  DisplayMemberBinding="{Binding Path=SenderName}" />
+                    <GridViewColumn Header="target ID"  DisplayMemberBinding="{Binding Path=TargetName}" />
+                    <GridViewColumn Header="Weight"  DisplayMemberBinding="{Binding Path=WeightCategorie}" />
+                    <GridViewColumn Header="Priority"  DisplayMemberBinding="{Binding Path=Priorities}" />
                 </GridView>
             </ListView.View>
         </ListView>

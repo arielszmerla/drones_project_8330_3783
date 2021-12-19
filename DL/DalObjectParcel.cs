@@ -20,7 +20,7 @@ namespace DalObject
         {
             if (DataSource.Parcels.Any(pr => pr.Id == parcel.Id))
             {
-                throw new ParcelExeption($"id { parcel.Id} already exist");
+                throw new DLAPI.ParcelExeption($"id { parcel.Id} already exist");
             }
             DataSource.Parcels.Add(parcel);
             DataSource.Config.totalNumOfParcels++;

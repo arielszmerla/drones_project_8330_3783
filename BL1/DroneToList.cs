@@ -1,10 +1,9 @@
-﻿using BO;
-namespace BO
+﻿namespace BO
 {
     public class DroneToList
     {
         public int Id { get; set; }
-        public string Model { get; set; }
+        public BO.Enums.DroneNames Model { get; set; }
         public BO.Enums.WeightCategories MaxWeight { get; set; }
         public double BatteryStatus { get; set; }
         public BO.Enums.DroneStatuses Status { get; set; }

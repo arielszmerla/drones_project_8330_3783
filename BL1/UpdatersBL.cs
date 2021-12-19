@@ -138,11 +138,10 @@ namespace BL
             else
                 drones[drones.FindIndex(dr => dr.Id == idC)].BatteryStatus += ((duration.TotalSeconds * 1 / 3600) + (duration.TotalMinutes * 1 / 60) + (duration.TotalHours)) * myDal.DroneElectricConsumations()[4];
             drones[drones.FindIndex(dr => dr.Id == idC)].Status = Enums.DroneStatuses.Vacant;
-            List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetAllBaseStations();
-            DO.BaseStation myBase = bs.Find(bas => bas.Latitude == drones[drones.FindIndex(dr => dr.Id == idC)].DroneLocation.Latitude&&
+         
+            DO.BaseStation myBase = myDal.GetAllBaseStations().FirstOrDefault(bas => bas.Latitude == drones[drones.FindIndex(dr => dr.Id == idC)].DroneLocation.Latitude&&
              bas.Latitude == drones[drones.FindIndex(dr => dr.Id == idC)].DroneLocation.Latitude);
             myBase.NumOfSlots++;
-
 
         }
         /// <summary>
@@ -162,8 +161,7 @@ namespace BL
                 return;
             }
             BO.BaseStation bc = getClosestBase(drone.DroneLocation);
-            List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetAllBaseStations();
-            DO.BaseStation myBase = bs.Find(bas => bas.Latitude == bc.BaseStationLocation.Latitude&&bas.Longitude==bc.BaseStationLocation.Longitude);
+            DO.BaseStation myBase = myDal.GetAllBaseStations().FirstOrDefault(bas => bas.Latitude == bc.BaseStationLocation.Latitude&&bas.Longitude==bc.BaseStationLocation.Longitude);
             if ((myDal.DroneElectricConsumations()[0]) *
                 BO.LocationFuncs.Distance(drone.DroneLocation,new Location { Latitude = myBase.Latitude, Longitude = myBase.Longitude }) <= drone.BatteryStatus)
             {
@@ -190,8 +188,8 @@ namespace BL
                 throw new GetException($"id {idC} doesn't exist ");
             }
             //do the wanted changes
-            List<DO.Customer> custom = (List<DO.Customer>)myDal.GetCustomerList();
-            DO.Customer bs = custom[custom.FindIndex(cus => cus.Id == idC)];
+  
+            DO.Customer bs =myDal.GetCustomerList().FirstOrDefault(cus => cus.Id == idC);
             if (name != " ")
                 bs.Name = name;
             if (phone != " ")
@@ -210,8 +208,7 @@ namespace BL
             {
                 throw new GetException ($"id {myId} doesn't exist ");
             }
-            List<DO.BaseStation> BaseS = (List<DO.BaseStation>)myDal.GetAllBaseStations();
-            DO.BaseStation bs = BaseS[BaseS.FindIndex(bs => bs.Id == myId)];
+            DO.BaseStation bs = myDal.GetAllBaseStations().FirstOrDefault(bs => bs.Id == myId);
             if (numOfSlots != null)
                 bs.NumOfSlots = numOfSlots;
             if (name != "Base ")
@@ -220,8 +217,9 @@ namespace BL
             {
                 myDal.UpdateBaseStationFromBl(bs);
             }
-            catch (BaseExeption p) {
-                throw new GetException($"The Base station {bs.Id} doesn't exist" ,p);
+            catch (BaseExeption p)
+            {
+                throw new GetException($"The Base station {bs.Id} doesn't exist", p);
             }
 
         }
@@ -230,17 +228,23 @@ namespace BL
         /// </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
-        public void UpdateNameDrone(int id, string name)
+        public void UpdateNameDrone(int id, BO.Enums.DroneNames name)
         {//if drone not found
             if (!myDal.GetDroneList().Any(dr => dr.Id == id))
             {
                 throw new GetException($"id {id} doesn't exist ");
             }
             //Update wanted rows
-            List<DO.Drone> drs = (List<DO.Drone>)myDal.GetDroneList();
-            DO.Drone dr = drs[drs.FindIndex(dr => dr.Id == id)];
-            dr.Model = name;
+         
+            DO.Drone dr = myDal.GetDroneList().FirstOrDefault(dr => dr.Id == id);
+            dr.Model = (DroneNames)name;
+                try { 
             myDal.UpdateDrone(dr);
+            }
+            catch (DroneException p)
+            {
+                throw new DroneException($"The Drone {dr.Id} doesn't exist", p);
+            }
             drones[drones.FindIndex(dr => dr.Id == id)].Model = name;
         }
     }

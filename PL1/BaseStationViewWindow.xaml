@@ -9,7 +9,15 @@
    
     <Grid>
         <ListView x:Name="BaseStationView"  DataContext="" Background="Transparent" Margin="0,74,70,10" SelectionChanged="ListView_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Path=Id}"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
+                    <GridViewColumn Header="NumOfFreeSlots" DisplayMemberBinding="{Binding Path=NumOfFreeSlots}"/>
+                    <GridViewColumn Header="NumOfSlotsInUse" DisplayMemberBinding="{Binding Path=NumOfSlotsInUse}"/>
 
+                </GridView>
+            </ListView.View>
         </ListView>
         <Button x:Name="PageStop"  Visibility="Visible" HorizontalAlignment="Left"  Margin="730,357,0,0" Click="End_the_page" Height="37" VerticalAlignment="Top" RenderTransformOrigin="0.526,0.522" Width="40">
             <Button.Background>
