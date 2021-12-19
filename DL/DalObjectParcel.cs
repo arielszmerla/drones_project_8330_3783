@@ -78,7 +78,7 @@ namespace DalObject
         /// func that returns list to print in console
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Parcel> GetParcelList(Func<Parcel, bool> predicate = null)
+        public IEnumerable<Parcel> GetParcelList(Predicate<Parcel> predicate)
         {
             if (predicate == null)
                 return DataSource.Parcels.ToList();

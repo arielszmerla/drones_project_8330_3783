@@ -29,7 +29,7 @@
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
-                            <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding WeightCategorie}"/>
+                            <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Path= you_want_grouping.SelectedItem}"/>
 
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
@@ -41,11 +41,8 @@
                 <ImageBrush ImageSource="\images\pngegg.png" />
             </Button.Background>
         </Button>
-        <StackPanel Orientation="Horizontal">
-            <ListBox  x:Name="Weight_Choice" Width="100" SelectionChanged="Weight_Choice_SelectionChanged"  />
-            
-            
-        </StackPanel>
+        <ComboBox x:Name="you_want_grouping"  Margin="0,0,703,10"  SelectionChanged="you_want_grouping_Checked"  />
+        <ComboBox  x:Name="Weight_Choice" SelectionChanged="Weight_Choice_SelectionChanged" Margin="350,14,400,10"  />
     </Grid>
 
 </Window>

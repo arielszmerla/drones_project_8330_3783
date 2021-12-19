@@ -44,7 +44,7 @@ namespace DLAPI
         /// method that returns all parcels in data base.
         /// </summary>
         /// <returns></returns>
-        IEnumerable<Parcel> GetParcelList(Func<Parcel, bool> predicat = null);
+        IEnumerable<Parcel> GetParcelList(Predicate<Parcel> predicate);
         /// <summary>
         /// holds array with electric cunsumption by weight of parcel
         /// </summary>

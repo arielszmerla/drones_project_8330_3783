@@ -23,7 +23,7 @@ namespace BL
         public Parcel GetParcel(int idP)
         {
             DO.Parcel parcel = new();
-            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList();
+            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList(null);
             if (parcels.Any(pc => pc.Id == idP))
             {
                 parcel = parcels.Find(pc => pc.Id == idP);
@@ -94,7 +94,7 @@ namespace BL
             customer.Location.Longitude = myCust.Longitude;
             customer.Name = myCust.Name;
             customer.Phone = myCust.Phone;
-            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList();
+            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList(null);
             List<DO.Parcel> parcelTo = parcels.FindAll(ps => ps.TargetId == customer.Id);
             List<DO.Parcel> parcelFrom = parcels.FindAll(ps => ps.SenderId == customer.Id);
             List<ParcelByCustomer> customerTmp = new();
@@ -195,7 +195,7 @@ namespace BL
         }
         public IEnumerable<ParcelToList> GetParcelList(Enums.WeightCategories? statuses = null)
         {
-            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList();
+            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList(null);
             List<ParcelToList> parcelTos = new();
             foreach (var it in parcels)
             {
@@ -223,7 +223,7 @@ namespace BL
 
         public IEnumerable<ParcelToList> GetParcelNotAssignedList()
         {
-            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList();
+            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList(null);
             List<ParcelToList> tmp = (List<ParcelToList>)GetParcelList();
             List<ParcelToList> toReturn = new();
             foreach (var t in parcels)
@@ -264,7 +264,7 @@ namespace BL
                 ct.Name = it.Name;
                 ct.Phone = it.Phone;
 
-                List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList();
+                List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList(null);
                 ct.NumberOfParcelsReceived = parcels.FindAll(pc => pc.TargetId == ct.Id && pc.Delivered <= DateTime.Now && pc.Delivered != DateTime.MinValue).Count;
                 ct.NumberOfParcelsonTheWay = parcels.FindAll(pc => pc.TargetId == ct.Id && pc.Delivered > DateTime.Now).Count;
                 ct.NumberOfParcelsSentAndDelivered = parcels.FindAll(pc => pc.SenderId == ct.Id && pc.Delivered <= DateTime.Now && pc.Delivered != DateTime.MinValue).Count;

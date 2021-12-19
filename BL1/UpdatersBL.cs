@@ -25,7 +25,7 @@ namespace BL
             if (!drones.Any(dr => dr.Id == id))
                 throw new GetException($"ID OF DRONE {id} DOESN'T EXIST\n");
             DroneToList dr = drones.Find(dr => dr.Id == id);
-            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList();
+            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList(null);
             //find all parcels that are connected to this drone
             List<DO.Parcel> parcelConnected = parcels.FindAll(pc => pc.DroneId == id);
             //if any of the drone's parcels is picked up but not delivered
@@ -62,7 +62,7 @@ namespace BL
             if (!drones.Any(dr => dr.Id == id))
                 throw new GetException("$ID OF DRONE {dr.Id} DOESN'T EXIST\n");
             DroneToList dr = drones.Find(dr => dr.Id == id);
-            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList();
+            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList(null);
             List<DO.Parcel> parcelConnected = parcels.FindAll(pc => pc.DroneId == id);
 
             int index = parcelConnected.FindIndex(pc => pc.Scheduled < DateTime.Now && pc.PickedUp > DateTime.Now);
@@ -97,7 +97,7 @@ namespace BL
             if (!drones.Any(dr => dr.Id == idC))
                 throw new GetException ($"ID OF DRONE {idC} DOESN'T EXIST\n");
             DroneToList dr = drones.Find(dr => dr.Id == idC);
-            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList();
+            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList(null);
             int found = -1;
             //find the heaviest parcel the drone can take
             for (int i = (int)dr.MaxWeight; i >= 0; i--)

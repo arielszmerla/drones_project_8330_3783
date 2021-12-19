@@ -82,7 +82,7 @@ namespace BL
                 };
                 drones.Add(droneToList);
             }
-            foreach (var parcel in myDal.GetParcelList())
+            foreach (var parcel in myDal.GetParcelList(null))
             {
 
                 if (drones.Any(dr => dr.Id == parcel.DroneId) && parcel.PickedUp >= DateTime.Now)
@@ -155,7 +155,7 @@ namespace BL
         /// <returns></returns>
         private ParcelInDelivery? findParcelOnDrone(BO.Drone dr)
         {
-            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList();
+            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList(null);
             DO.Parcel p = new();
             //find all the parcels on this drone
             List<DO.Parcel> onDrone = parcels.FindAll(pcs => (int)pcs.DroneId == dr.Id && pcs.PickedUp < DateTime.Now && pcs.Delivered > DateTime.Now);
@@ -352,7 +352,7 @@ namespace BL
             if (dronetolis.Status == Enums.DroneStatuses.Vacant)
             {
                 List<DO.Customer> c = (List<DO.Customer>)myDal.GetCustomerList();
-                List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList();
+                List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList(null);
                 List<DO.Parcel> tmp = parcels.FindAll(pc => pc.Delivered < DateTime.Now && pc.Delivered != DateTime.MinValue);
                 List<DO.Customer> customersTmp = new();
                 foreach (var it in tmp)
