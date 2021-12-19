@@ -24,6 +24,7 @@
     <None Remove="images\Google_Maps_logo.png" />
     <None Remove="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
     <None Remove="images\parcel.png" />
+    <None Remove="images\pluspic.png" />
     <None Remove="images\pngegg.png" />
     <None Remove="images\customerspic.png" />
     <None Remove="images\drone-icon.png" />
@@ -33,8 +34,6 @@
     <None Remove="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
     <None Remove="images\kindpng_797882.png" />
     <None Remove="images\kisspng-logo-arrow-5ae2d845df31d9.4342434915248159419142.png" />
-    <None Remove="images\plus-16.ico" />
-    <None Remove="images\plus-32.ico" />
     <None Remove="images\pngegg.png" />
     <None Remove="images\pngwing.com.png" />
     <None Remove="images\wifind_back.png" />
@@ -55,6 +54,7 @@
     <Resource Include="images\Google_Maps_logo.png" />
     <Resource Include="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
     <Resource Include="images\parcel.png" />
+    <Resource Include="images\pluspic.png" />
     <Resource Include="images\pngegg.png" />
     <Resource Include="images\customerspic.png" />
     <Resource Include="images\drone-icon.png" />
@@ -64,8 +64,6 @@
     <Resource Include="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
     <Resource Include="images\kindpng_797882.png" />
     <Resource Include="images\kisspng-logo-arrow-5ae2d845df31d9.4342434915248159419142.png" />
-    <Resource Include="images\plus-16.ico" />
-    <Resource Include="images\plus-32.ico" />
     <Resource Include="images\pngegg.png" />
     <Resource Include="images\pngwing.com.png" />
     <Resource Include="images\wifind_back.png" />

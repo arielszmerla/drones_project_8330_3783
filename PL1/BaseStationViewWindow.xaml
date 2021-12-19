@@ -25,7 +25,7 @@
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
-                            <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Path = NumOfFreeSlots.TextBox_TextChanged_1 }"/>
+                            <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Path = BaseOptions.SelectedItem}"/>
 
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
@@ -41,8 +41,14 @@
         </Button>
 
         <Button x:Name="ResetList" Content="Reset" Background="Beige"  HorizontalAlignment="Left" Margin="735,29,0,0" VerticalAlignment="Top" Click="ResetList_Click"/>
-        <TextBox x:Name="NumOfFreeSlots" Opacity="0.8"  BorderBrush="Transparent" Background="Bisque"  ToolTip="Enter amount of free slots needed"
-                 Text= "" TextChanged="TextBox_TextChanged_1" Width="147" Margin="490,22,163,365"/>
+        <ComboBox x:Name="BaseOptions" HorizontalAlignment="Left" Margin="105,33,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="BaseOptions_SelectionChanged"/>
+        <Button  HorizontalAlignment="Left" Margin="707,269,0,0" VerticalAlignment="Top" Height="65" RenderTransformOrigin="0.5,0.5" Width="86">
+            
+            <Button.Background>
+                <ImageBrush ImageSource="\images\pluspic.png" />
+            </Button.Background>
+        </Button>
+
 
 
 

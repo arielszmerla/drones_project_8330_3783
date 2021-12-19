@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Runtime.CompilerServices;
 
 namespace PL1
 {
@@ -27,13 +28,11 @@ namespace PL1
         {
             InitializeComponent();
             this.bl = bl;
-            // DataContext = DroneListView.ItemsSource;
-            // BaseViewOptions.ItemsSource = Enum.GetValues(typeof(options));
+        
             BaseStationView.ItemsSource = bl.GetBaseStationList();
             DataContext = BaseStationView.ItemsSource;
-
-            //StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
-            // WeightChoise.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
+            BaseOptions.Items.Add("NumOfFreeSlots");
+            BaseOptions.Items.Add("");
         }
 
         private void End_the_page(object sender, RoutedEventArgs e)
@@ -41,23 +40,7 @@ namespace PL1
             this.Close();
         }
 
-        //private void BaseViewOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    options stat = (options)((ComboBox)sender).SelectedItem;
-        //    switch(stat)
-        //    {
-        //        //case options.Regular:
-        //        //    //  BaseStationView.BindingGroup
-        //        //    //bl.GetBaseStationList();
-        //        //    //BaseStationView = ;
-        //        //    break;
-        //        case options.Free_Base_Stations:
 
-        //            break;
-        //        case options.Num_Of_Free_Bases:
-        //            break;
-        //    }
-        //}
 
         private void ResetList_Click(object sender, RoutedEventArgs e)
         {
@@ -69,20 +52,14 @@ namespace PL1
 
         }
 
-        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
+      
+
+        private void BaseOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int s;
-
-            if (int.TryParse(NumOfFreeSlots.Text, out s))
-            {
-                if (s < 0 || s > 10)
-              {
-                    NumOfFreeSlots.Text = "";
-                    MessageBox.Show("Please enter a number between 0 to 10");
-                    NumOfFreeSlots.Background = Brushes.Red;
-                }
-            }
-
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(BaseStationView.ItemsSource);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription(BaseOptions.SelectedItem.ToString());
+            view.GroupDescriptions.Add(groupDescription);
+            BaseStationView.Items.Refresh();
         }
     }
 }
