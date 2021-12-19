@@ -231,8 +231,7 @@ namespace BL
                 if (t.DroneId == 0)
                     toReturn.Add(tmp.Find(p => p.Id == t.Id));
             }
-          
-                return toReturn.ToList();
+          return toReturn.ToList();
 
             
         }

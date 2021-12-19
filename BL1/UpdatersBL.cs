@@ -101,13 +101,12 @@ namespace BL
             int found = -1;
             //find the heaviest parcel the drone can take
             for (int i = (int)dr.MaxWeight; i >= 0; i--)
-            {
                 if (searchParcel(dr, parcels, i) == true)
                 {
                     found = i;
                     break;
                 }
-            }
+            
             //if found a parcel that the drone can carry, update wanted states
             if (found != -1)
             {

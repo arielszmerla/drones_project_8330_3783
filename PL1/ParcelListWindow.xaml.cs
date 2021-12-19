@@ -22,9 +22,10 @@ namespace PL1
         BLAPI.IBL bl;
         public ParcelListWindow(BLAPI.IBL bl)
         {
-          this.bl = bl;
+
             InitializeComponent();
-         ParcelViewList.ItemsSource= bl.GetParcelList();
+            this.bl = bl;
+            ParcelViewList.ItemsSource = bl.GetParcelList();
             DataContext = ParcelViewList.ItemsSource;
             Weight_Choice.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
             you_want_grouping.Items.Add("SenderName");
@@ -37,23 +38,15 @@ namespace PL1
             this.Close();
         }
 
-        private void CustomerViewList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
 
         private void Weight_Choice_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-            ParcelViewList.ItemsSource =bl.GetParcelList((BO.Enums.WeightCategories?)Weight_Choice.SelectedItem);
-    
-           
+            ParcelViewList.ItemsSource = bl.GetParcelList((BO.Enums.WeightCategories?)Weight_Choice.SelectedItem);
+
+            reset.Visibility = Visibility.Visible;
         }
 
-        private void you_want_grouping_Checked(object sender, RoutedEventArgs e)
-        {
-         
-        }
 
         private void you_want_grouping_Checked(object sender, SelectionChangedEventArgs e)
         {
@@ -61,6 +54,37 @@ namespace PL1
             PropertyGroupDescription groupDescription = new PropertyGroupDescription(you_want_grouping.SelectedItem.ToString());
             view.GroupDescriptions.Add(groupDescription);
             ParcelViewList.Items.Refresh();
+        }
+
+        private void Reset_List(object sender, RoutedEventArgs e)
+        {
+
+            ParcelViewList.ItemsSource = (System.Collections.IEnumerable)DataContext;
+            reset.Visibility = Visibility.Collapsed;
+        }
+
+
+
+
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+            new ParcelActionWindow(bl).Show();
+        }
+
+
+        private void ParcelViewList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            BO.ParcelToList p = (BO.ParcelToList)ParcelViewList.SelectedItem;
+            if (p == null)
+            {
+                MessageBox.Show("click on a parcel please");
+            }
+            else
+            {
+                Closing_Button.Visibility = Visibility.Hidden;
+                new ParcelActionWindow(bl, p).Show();
+                Close();
+            }
         }
     }
 }

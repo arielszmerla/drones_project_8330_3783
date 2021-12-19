@@ -89,7 +89,7 @@ namespace DalObject
        
         }
 
-      public  void UpdateParcel(Parcel p) {
+      public void UpdateParcel(Parcel p) {
 
             int index = DataSource.Parcels.FindIndex(pc => pc.Id == p.Id);
             if (index == -1)

@@ -62,7 +62,7 @@ namespace PL
 
         }
 
-        private void drone_action(object sender, MouseButtonEventArgs e)
+        private void drone_action(object sender,  MouseButtonEventArgs e)
         {
             BO.DroneToList drone = (BO.DroneToList)DroneListView.SelectedItem;
             if (drone == null)
