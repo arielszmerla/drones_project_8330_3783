@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="images\baseStationPic.png" />
     <None Remove="images\dronefon.jpg" />
     <None Remove="images\Google_Maps_logo.png" />
     <None Remove="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
@@ -49,6 +50,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="images\baseStationPic.png" />
     <Resource Include="images\dronefon.jpg" />
     <Resource Include="images\Google_Maps_logo.png" />
     <Resource Include="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />

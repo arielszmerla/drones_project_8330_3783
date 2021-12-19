@@ -27,10 +27,13 @@ namespace PL1
         { 
             InitializeComponent();
             this.bl = bl;
+           // DataContext = DroneListView.ItemsSource;
             BaseViewOptions.ItemsSource = Enum.GetValues(typeof(options));
             BaseStationView.ItemsSource = bl.GetBaseStationList();
+            DataContext = BaseStationView.ItemsSource;
+            
             //StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
-           // WeightChoise.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
+            // WeightChoise.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
         }
 
         private void End_the_page(object sender, RoutedEventArgs e)
