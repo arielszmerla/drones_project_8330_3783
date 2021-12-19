@@ -89,12 +89,40 @@ namespace DalObject
        
         }
 
-      public void UpdateParcel(Parcel p) {
+      public void UpdateParcel(Parcel p) 
+        {
 
             int index = DataSource.Parcels.FindIndex(pc => pc.Id == p.Id);
             if (index == -1)
                 throw new ParcelExeption($"the parcel {p.Id} doesn't exists");
             DataSource.Parcels[index] = p;
         }
+        public void DeleteParcel(int id)
+        {
+            if (!DataSource.Parcels.Any(p => p.Id == id))
+                throw new DLAPI.DeleteException($"parcel with {id}as Id does not exist");
+            DataSource.Parcels.RemoveAll(p => p.Id == id);
+        }
+        public void DeleteDrone(int id)
+        {
+            if (!DataSource.Drones.Any(p => p.Id == id))
+                throw new DLAPI.DeleteException($"drone with {id}as Id does not exist");
+            DataSource.Drones.RemoveAll(p => p.Id == id);
+
+        }
+        public void DeleteCustomer(int id)
+        {
+            if (!DataSource.Customers.Any(p => p.Id == id))
+                throw new DLAPI.DeleteException($"Customer with {id}as Id does not exist");
+            DataSource.Customers.RemoveAll(p => p.Id == id);
+        }
+        public void DeleteBasestation(int id)
+        {
+            if (!DataSource.BaseStations.Any(p => p.Id == id))
+                throw new DLAPI.DeleteException($"BaseStation with {id}as Id does not exist");
+            DataSource.BaseStations.RemoveAll(p => p.Id == id);
+        }
     }
+
+
 }

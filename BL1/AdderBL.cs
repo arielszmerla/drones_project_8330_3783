@@ -53,7 +53,7 @@ namespace BL
         /// <param name="station"></param>
         public void AddBaseStation(BaseStation station)
         { //checks if exists already
-            foreach (var item in myDal.GetAllBaseStations())
+            foreach (var item in myDal.GetBaseStationsList())
             {
                 if (item.Id == station.Id)
                 {
@@ -93,7 +93,7 @@ namespace BL
                     throw new AddException($"id {drone.Id} exist already");
                 }
             } //checks if basestation to send drone exists 
-            if (!myDal.GetAllBaseStations().Any(ps => ps.Id == BaseStationNum))
+            if (!myDal.GetBaseStationsList().Any(ps => ps.Id == BaseStationNum))
             {
                 throw new GetException($"id {drone.Id} doesn't exist ");
             }
@@ -108,7 +108,7 @@ namespace BL
                 throw new AddException($"The drone {drone.Id} already exists ", d);
             }
 
-            List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetAllBaseStations();
+            List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetBaseStationsList();
             //put it in the BL droneList
             DroneToList dr = new DroneToList
             {
@@ -152,7 +152,7 @@ namespace BL
                 throw new AddException($"The drone {drone.Id} already exists ", d);
             }
 
-                List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetAllBaseStations();
+                List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetBaseStationsList();
             //put it in the BL droneList
             DroneToList dr = new DroneToList
             {

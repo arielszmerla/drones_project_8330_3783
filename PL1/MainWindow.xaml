@@ -19,13 +19,7 @@
         </Grid.ColumnDefinitions>
         <Label FontStyle="Oblique"  Foreground="Black" BorderThickness="7" BorderBrush="Olive" FontWeight="Heavy"  Content="MY DRONE COMPANY " FontSize="20"  HorizontalAlignment="Left" Margin="275,76,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
         </Label>
-
-
-
-
-
-
-        <ComboBox x:Name="ViewOptions" IsEditable="True" IsReadOnly="True" Text="View Choice" HorizontalAlignment="Left" Margin="305,349,0,0" VerticalAlignment="Top" Width="150" Height="40" SelectionChanged="ViewOptions_SelectionChanged" Grid.ColumnSpan="2"
+        <ComboBox IsEditable="True" IsEnabled="True" x:Name="ViewOptions"  HorizontalAlignment="Left" Text="Make Your Choice" Margin="305,349,0,0" VerticalAlignment="Top" Width="150" Height="40" SelectionChanged="ViewOptions_SelectionChanged" Grid.ColumnSpan="2"
                  />
 
     </Grid>

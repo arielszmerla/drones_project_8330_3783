@@ -28,7 +28,7 @@ namespace PL
         {
             InitializeComponent();
             ViewOptions.ItemsSource = Enum.GetValues(typeof(listChoice));
-       
+
         }
 
 
@@ -39,13 +39,14 @@ namespace PL
 
         private void ViewOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            listChoice stat = (listChoice)((ComboBox)sender).SelectedItem;
-            switch(stat)
-            {
-                case listChoice.BaseStations:
+            listChoice stat = (listChoice)ViewOptions.SelectedItem;
+            switch (stat)
+            {//Drones, BaseStations, Customers, Parcels
+                case
+                    listChoice.BaseStations:
                     new BaseStationViewWindow(bl).Show();
                     break;
-                case listChoice.Drones:
+                case listChoice.Drones :
                     new DroneListWindow1(bl).Show();
                     break;
                 case listChoice.Customers:
@@ -55,6 +56,7 @@ namespace PL
                     new ParcelListWindow(bl).Show();
                     break;
             }
+        
         }
     }
 }

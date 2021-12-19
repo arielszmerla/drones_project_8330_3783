@@ -43,7 +43,6 @@ namespace PL1
         {
 
             ParcelViewList.ItemsSource = bl.GetParcelList((BO.Enums.WeightCategories?)Weight_Choice.SelectedItem);
-
             reset.Visibility = Visibility.Visible;
         }
 
@@ -69,21 +68,31 @@ namespace PL1
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             new ParcelActionWindow(bl).Show();
+            ParcelViewList.Items.Refresh();
+            Close();
         }
 
 
         private void ParcelViewList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BO.ParcelToList p = (BO.ParcelToList)ParcelViewList.SelectedItem;
-            if (p == null)
-            {
-                MessageBox.Show("click on a parcel please");
-            }
-            else
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxResult result = MessageBox.Show("Do you want to update ?", "Make Your Choice", button);
+            if (result == MessageBoxResult.Yes)
             {
                 Closing_Button.Visibility = Visibility.Hidden;
                 new ParcelActionWindow(bl, p).Show();
                 Close();
+            }
+            else
+            {
+                result = MessageBox.Show("Do you want to delete?", "Make Your Choice", button);
+                if (result == MessageBoxResult.Yes)
+                {
+                    Closing_Button.Visibility = Visibility.Hidden;
+                    new ParcelActionWindow(bl, p, -1).Show();
+                   
+                }
             }
         }
     }

@@ -44,7 +44,7 @@ namespace BL
                  p.DIP.BatteryStatus = d.BatteryStatus;
              }*/
             p.PickedUp = parcel.PickedUp;
-            p.Priorities = (Enums.Priorities)parcel.Priority;
+            p.Priority = (Enums.Priorities)parcel.Priority;
             CustomerInParcel send = new CustomerInParcel { Id = parcel.SenderId, Name = customers.Find(cs => cs.Id == parcel.SenderId).Name };
             CustomerInParcel targ = new CustomerInParcel { Id = parcel.TargetId, Name = customers.Find(cs => cs.Id == parcel.TargetId).Name };
             p.Sender= send;
@@ -61,7 +61,7 @@ namespace BL
         public BaseStation GetBaseStation(int idP)
         {
             DO.BaseStation myBase = new();
-            List<DO.BaseStation> bases = (List<DO.BaseStation>)myDal.GetAllBaseStations();
+            List<DO.BaseStation> bases = (List<DO.BaseStation>)myDal.GetBaseStationsList();
             if (bases.Any(pc => pc.Id == idP))
             {
                 myBase = bases.Find(pc => pc.Id == idP);
@@ -164,11 +164,98 @@ namespace BL
             return dr;
         }
         #endregion
+
+
+        #region delete
+        /// <summary>
+        /// parcel to delete
+        /// </summary>
+        /// <param name="id"></delete>
+       public void DeleteParcel(int id) {
+            if (!myDal.GetParcelList(null).Any(c => c.Id == id))
+            {
+                throw new DeleteException($"parcel with {id}as Id does not exist");
+            }
+            else
+                try
+                {
+                    myDal.DeleteParcel(id);
+                }
+                catch (DLAPI.DeleteException d) {
+                    throw new DeleteException($"parcel with {id}as Id does not exist",d);
+                }
+        }
+        /// <summary>
+        /// delete an customer
+        /// </summary>
+        /// <param name="id"></id of customer to erase>
+        public void DeleteCustomer(int id)
+        {
+            if (!myDal.GetCustomerList(null).Any(c => c.Id == id))
+            {
+                throw new DeleteException($"Customer with {id}as Id does not exist");
+            }
+            else
+                try
+                {
+                    myDal.DeleteCustomer(id);
+                    
+                }
+
+
+                catch (DLAPI.DeleteException d)
+                {
+                    throw new DeleteException($"Customer with {id}as Id does not exist", d);
+                }
+        }
+        /// <summary>
+        /// delete an Drone
+        /// </summary>
+        /// <param name="id"></id of Drone to erase>
+        public void DeleteDrone(int id)
+        {
+            if (!myDal.GetDroneList(null).Any(c => c.Id == id))
+            {
+                throw new DeleteException($"Drone with {id}as Id does not exist");
+            }
+            else
+                try
+                {
+                    myDal.DeleteDrone(id);
+                    drones.RemoveAll(pc => pc.Id == id);
+                }
+                catch (DLAPI.DeleteException d)
+                {
+                    throw new DeleteException($"Drone with {id}as Id does not exist", d);
+                }
+        }
+        /// <summary>
+        /// delete an BaseStation
+        /// </summary>
+        /// <param name="id"></id of BaseStation to erase>
+        public void DeleteBasestation(int id)
+        {
+            if (!myDal.GetBaseStationsList(null).Any(c => c.Id == id))
+            {
+                throw new DeleteException($"BaseStation with {id}as Id does not exist");
+            }
+            else
+                try
+                {
+                    myDal.DeleteBasestation(id);
+                    drones.RemoveAll(pc => pc.Id == id);
+                }
+                catch (DLAPI.DeleteException d)
+                {
+                    throw new DeleteException($"BaseStation with {id}as Id does not exist", d);
+                }
+        }
+        #endregion
         #region
 
         public IEnumerable<BaseStationToList> GetBaseStationList(Func<BaseStationToList, bool> predicat = null)
         {
-            List<DO.BaseStation> bases = (List<DO.BaseStation>)myDal.GetAllBaseStations();
+            List<DO.BaseStation> bases = (List<DO.BaseStation>)myDal.GetBaseStationsList();
             List<BaseStationToList> baseStationTos = new();
             foreach (var it in bases)
             {

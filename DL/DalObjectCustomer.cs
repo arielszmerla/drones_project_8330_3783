@@ -54,6 +54,10 @@ namespace DalObject
                         select item);
 
         }
+ 
+
+
+
         public void UpdateCustomerInfoFromBL(Customer customer)
         {
             int index = DataSource.Customers.FindIndex(cs => cs.Id == customer.Id);

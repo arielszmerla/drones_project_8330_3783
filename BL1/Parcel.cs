@@ -12,7 +12,7 @@ namespace BO
         public CustomerInParcel Sender { get; set; }
         public CustomerInParcel Target { get; set; }
         public  BO.Enums.WeightCategories WeightCategories { get; set; }
-        public BO.Enums.Priorities Priorities { get; set; }
+        public BO.Enums.Priorities Priority { get; set; }
         public DroneInParcel DIP { get; set; }
         public DateTime? Created { get; set; }
         public DateTime? Assignment { get; set; }
@@ -29,7 +29,7 @@ namespace BO
             str += $"Sender is {Sender}\n";
             str += $"Target is {Target}\n";
             str += $"WeightCategorie is {WeightCategories}\n";
-            str += $"Priorities is {Priorities}\n";
+            str += $"Priorities is {Priority}\n";
             if (DIP != null)
                 str += $"Drone in parcel is {DIP}\n";
             str += $"Created time is {Created}\n";

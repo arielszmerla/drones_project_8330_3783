@@ -41,7 +41,7 @@ namespace DalObject
         /// get list of base stations
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<BaseStation> GetAllBaseStations(Func<BaseStation, bool> predicat = null)
+        public IEnumerable<BaseStation> GetBaseStationsList(Func<BaseStation, bool> predicat = null)
         {
             if (predicat == null)
                 return DataSource.BaseStations.ToList();

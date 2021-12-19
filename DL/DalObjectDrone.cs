@@ -67,7 +67,7 @@ namespace DalObject
         /// func that returns list to print in console
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Drone> GetDroneList(Func<Drone, bool> predicate = null)
+        public IEnumerable<Drone> GetDroneList(Predicate<Drone> predicate)
         {
             if (predicate == null)
                 return DataSource.Drones.ToList();

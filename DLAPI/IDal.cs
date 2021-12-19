@@ -34,7 +34,7 @@ namespace DLAPI
         /// method that returns all base stations in data base.
         /// </summary>
         /// <returns></returns>
-        IEnumerable<BaseStation> GetAllBaseStations(Func<BaseStation, bool> predicate = null);
+        IEnumerable<BaseStation> GetBaseStationsList(Func<BaseStation, bool> predicate = null);
         /// <summary>
         /// method that returns all customers in data base.
         /// </summary>
@@ -54,7 +54,7 @@ namespace DLAPI
         /// method to get list of drones
         /// </summary>
         /// <returns></returns>
-        IEnumerable<Drone> GetDroneList(Func<Drone, bool> predicat = null);
+        IEnumerable<Drone> GetDroneList(Predicate<Drone> predicate=null);
         #endregion
         #region get a single element 
         /// <summary>
@@ -132,10 +132,29 @@ namespace DLAPI
         /// </summary>
         /// <param name="p"></param>
         void UpdateParcel(Parcel p);
+
         #endregion
         #region delete
-        
-
+        /// <summary>
+        /// delete an parcel
+        /// </summary>
+        /// <param name="id"></id of parcel to erase>
+        void DeleteParcel(int id);
+        /// <summary>
+        /// delete an customer
+        /// </summary>
+        /// <param name="id"></id of customer to erase>
+        void DeleteCustomer(int id);
+        /// <summary>
+        /// delete an drone
+        /// </summary>
+        /// <param name="id"></id of drone to erase>
+        void DeleteDrone(int id);
+        /// <summary>
+        /// delete an drone
+        /// </summary>
+        /// <param name="id"></id of drone to erase>
+        void DeleteBasestation(int id);
 
         #endregion
     }

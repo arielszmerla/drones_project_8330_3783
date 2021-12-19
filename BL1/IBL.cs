@@ -48,6 +48,8 @@ namespace BLAPI
         /// <param name="idP"></param>
         /// <returns></returns>
         Parcel GetParcel(int idP);
+       
+
         /// <summary>
         /// method that returns a base station by Id
         /// </summary>
@@ -147,5 +149,28 @@ namespace BLAPI
         /// <param name="id"></param>
         void UpdateDeliverParcel(int id);
         #endregion
+        #region delete
+        /// <summary>
+        /// delete an parcel
+        /// </summary>
+        /// <param name="id"></id of parcel to erase>
+        void DeleteParcel(int id);
+        /// <summary>
+        /// delete an customer
+        /// </summary>
+        /// <param name="id"></id of customer to erase>
+        void DeleteCustomer(int id);
+        /// <summary>
+        /// delete an drone
+        /// </summary>
+        /// <param name="id"></id of drone to erase>
+        void DeleteDrone(int id);
+        /// <summary>
+        /// delete an drone
+        /// </summary>
+        /// <param name="id"></id of drone to erase>
+        void DeleteBasestation(int id);
+        #endregion
     }
 }
+
