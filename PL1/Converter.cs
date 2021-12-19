@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
-
 namespace PL
 {
     public sealed class ConverterDoubleToInt : IValueConverter
