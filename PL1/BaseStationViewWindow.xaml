@@ -10,7 +10,7 @@
         <ImageBrush ImageSource="\images\baseStationPic.png" />
     </Window.Background>
     <Grid>
-        <ListView x:Name="BaseStationView"  DataContext="" Background="Transparent" Margin="0,74,70,10" SelectionChanged="ListView_SelectionChanged">
+        <ListView x:Name="BaseStationView"  DataContext="" Background="Transparent" Margin="0,74,163,10" SelectionChanged="ListView_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Path=Id}"/>
@@ -19,21 +19,35 @@
                     <GridViewColumn Header="NumOfSlotsInUse" DisplayMemberBinding="{Binding Path=NumOfSlotsInUse}"/>
 
                 </GridView>
+
             </ListView.View>
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Path = NumOfFreeSlots.TextBox_TextChanged_1 }"/>
+
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ListView.GroupStyle>
         </ListView>
         <Button x:Name="PageStop"  Visibility="Visible" HorizontalAlignment="Left"  Margin="730,357,0,0" Click="End_the_page" Height="37" VerticalAlignment="Top" RenderTransformOrigin="0.526,0.522" Width="40">
             <Button.Background>
 
-                
+
                 <ImageBrush ImageSource="\images\pngegg.png" />
-        </Button.Background>
+            </Button.Background>
         </Button>
-        <ComboBox x:Name="BaseViewOptions" Text="View options" HorizontalAlignment="Left" Margin="435,29,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="BaseViewOptions_SelectionChanged"/>
+
         <Button x:Name="ResetList" Content="Reset" Background="Beige"  HorizontalAlignment="Left" Margin="735,29,0,0" VerticalAlignment="Top" Click="ResetList_Click"/>
-        <TextBox x:Name="BaseStationOptionsView"  HorizontalAlignment="Left" Margin="160,29,0,0" Text="View options" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
+        <TextBox x:Name="NumOfFreeSlots" Opacity="0.8"  BorderBrush="Transparent" Background="Bisque"  ToolTip="Enter amount of free slots needed"
+                 Text= "" TextChanged="TextBox_TextChanged_1" Width="147" Margin="490,22,163,365"/>
 
 
-        
+
+
+
     </Grid>
 
 </Window>

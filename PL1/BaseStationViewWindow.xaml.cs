@@ -21,17 +21,17 @@ namespace PL1
     public partial class BaseStationViewWindow : Window
     {
         private BLAPI.IBL bl;
-        enum options {Regular, Free_Base_Stations, Num_Of_Free_Bases }
+        // enum options {Free_Base_Stations, Num_Of_Free_Bases }
 
         public BaseStationViewWindow(BLAPI.IBL bl)
-        { 
+        {
             InitializeComponent();
             this.bl = bl;
-           // DataContext = DroneListView.ItemsSource;
-            BaseViewOptions.ItemsSource = Enum.GetValues(typeof(options));
+            // DataContext = DroneListView.ItemsSource;
+            // BaseViewOptions.ItemsSource = Enum.GetValues(typeof(options));
             BaseStationView.ItemsSource = bl.GetBaseStationList();
             DataContext = BaseStationView.ItemsSource;
-            
+
             //StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
             // WeightChoise.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
         }
@@ -41,22 +41,23 @@ namespace PL1
             this.Close();
         }
 
-        private void BaseViewOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            options stat = (options)((ComboBox)sender).SelectedItem;
-            switch(stat)
-            {
-                case options.Regular:
-                    //  BaseStationView.BindingGroup
-                    //bl.GetBaseStationList();
-                    //BaseStationView = ;
-                    break;
-                case options.Free_Base_Stations:
-                    break;
-                case options.Num_Of_Free_Bases:
-                    break;
-            }
-        }
+        //private void BaseViewOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    options stat = (options)((ComboBox)sender).SelectedItem;
+        //    switch(stat)
+        //    {
+        //        //case options.Regular:
+        //        //    //  BaseStationView.BindingGroup
+        //        //    //bl.GetBaseStationList();
+        //        //    //BaseStationView = ;
+        //        //    break;
+        //        case options.Free_Base_Stations:
+
+        //            break;
+        //        case options.Num_Of_Free_Bases:
+        //            break;
+        //    }
+        //}
 
         private void ResetList_Click(object sender, RoutedEventArgs e)
         {
@@ -68,8 +69,19 @@ namespace PL1
 
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
         {
+            int s;
+
+            if (int.TryParse(NumOfFreeSlots.Text, out s))
+            {
+                if (s < 0 || s > 10)
+              {
+                    NumOfFreeSlots.Text = "";
+                    MessageBox.Show("Please enter a number between 0 to 10");
+                    NumOfFreeSlots.Background = Brushes.Red;
+                }
+            }
 
         }
     }
