@@ -23,8 +23,6 @@ namespace PL1
     {
         private IBL bl;
         private ParcelToList p;
-    
-
         public ParcelActionWindow()
         {
             InitializeComponent();
@@ -72,7 +70,6 @@ namespace PL1
 
         }
         /*
-         
          
          public int Id { get; set; }
         public CustomerInParcel Sender { get; set; }
