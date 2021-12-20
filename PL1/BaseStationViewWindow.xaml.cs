@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Runtime.CompilerServices;
 
-namespace PL1
+namespace PL
 {
     /// <summary>
     /// Interaction logic for BaseStationViewWindow.xaml
@@ -60,6 +60,11 @@ namespace PL1
             PropertyGroupDescription groupDescription = new PropertyGroupDescription(BaseOptions.SelectedItem.ToString());
             view.GroupDescriptions.Add(groupDescription);
             BaseStationView.Items.Refresh();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
