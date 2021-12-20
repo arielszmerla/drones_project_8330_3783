@@ -27,11 +27,18 @@ namespace PL
         {
             Title = "ADD A BASE STATION";
             InitializeComponent();
-        }
+            this.bl = bl;
 
+        }
+        BO.BaseStation bs = new();
         private void End_the_page(object sender, RoutedEventArgs e)
         {
-            
+            this.Close();
+        }
+
+        private void View_Map(object sender, RoutedEventArgs e)
+        {
+            new MapsDisplay(bs, bl).Show();
         }
     }
 }

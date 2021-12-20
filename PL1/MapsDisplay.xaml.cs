@@ -24,6 +24,7 @@ namespace PL
         IBL bl;
         private BO.Drone drone;
         private IBL bl1;
+        private BO.BaseStation bs;
 
         public MapsDisplay(IBL IBL)
         {
@@ -58,6 +59,17 @@ namespace PL
             Pushpin pin = new();
             pin.Location = new(drone.DronePlace.Latitude, drone.DronePlace.Longitude);
             myMap.Children.Add(pin);
+        }
+        public MapsDisplay(BO.BaseStation bs, IBL bl1)
+        {
+            this.bs = bs;
+            this.bl1 = bl1;
+            bl = bl1;
+            InitializeComponent();
+
+            Pushpin pushpin = new();
+            pushpin.Location = new(bs.BaseStationLocation.Latitude, bs.BaseStationLocation.Longitude);
+            myMap.Children.Add(pushpin);
         }
     }
 
