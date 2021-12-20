@@ -71,7 +71,7 @@
 
 
             <Label  Content="MY DRONES"  FontStyle="Italic" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Black"  BorderThickness="5" FontSize="35" FontWeight="ExtraBlack" Grid.ColumnSpan="2" Grid.Column="1" Margin="0,53,0,-76"/>
-            <Button BorderBrush="Transparent"  Opacity="0.8" x:Name="reset" Content="Reset List" Visibility="Hidden" Grid.Column="3" HorizontalAlignment="Left" Margin="19,0,0,0" VerticalAlignment="Center" Height="72" Width="171" ToolTip="Reset List" Click="Reset_List"/>
+            <Button BorderBrush="Transparent"  Opacity="0.8" x:Name="reset" Visibility="Hidden" Content="Reset List"  Grid.Column="3" HorizontalAlignment="Left" Margin="19,0,0,0" VerticalAlignment="Center" Height="72" Width="171" ToolTip="Reset List" Click="Reset_List"/>
 
         </Grid>
 
@@ -101,7 +101,6 @@
         </ListView>
         <StackPanel Margin="644,47,0,46" Grid.Row="1" >
             <Button Opacity="0.8" ToolTip="Click Here To Add" Margin="0,30,0,0" BorderBrush="Black" FontSize="16" Click="Button_Click" Height="59" Width="60">
-                
             </Button>
 
 

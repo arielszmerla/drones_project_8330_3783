@@ -40,5 +40,33 @@ namespace PL
         {
             new MapsDisplay(bs, bl).Show();
         }
+
+        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+            int s;
+
+            if (int.TryParse(ChooseId.Text, out s))
+            {
+                if(s > 0)
+                {
+                    ID.Background = Brushes.Transparent;
+                    bs.Id = s;
+                }
+                else
+                {
+                    ChooseId.Text = "";
+                    MessageBox.Show("Please enter a positive number");
+                    ChooseId.Background = Brushes.Red;
+                }
+            }
+           
+        }
+
+        private void Name_input(object sender, TextChangedEventArgs e)
+        {
+            string name;
+            if()
+
+        }
     }
 }

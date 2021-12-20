@@ -105,9 +105,11 @@ namespace PL
 
         private void Reset_List(object sender, RoutedEventArgs e)
         {
+            
             DroneListView.ItemsSource = bl1.GetDroneList();
             WeightChoise.SelectedItem = null;
             StatusSelector.SelectedItem = null;
+            reset.Visibility = Visibility.Hidden;
 
         }
 

@@ -44,7 +44,35 @@ namespace PL
 
         private void ResetList_Click(object sender, RoutedEventArgs e)
         {
+            BaseStationView.ItemsSource = bl.GetBaseStationList();
+            ResetList.Visibility = Visibility.Hidden;
+        }
 
+        private void BaseStationView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+           BO.BaseStation bs = (BO.BaseStation)BaseStationView.SelectedItem;
+            BO.BaseStation baseStation = new BO.BaseStation
+            {
+                Id = bs.Id,
+                BaseStationLocation = bs.BaseStationLocation,
+                ChargingDrones = bs.ChargingDrones,
+                Name = bs.Name,
+                NumOfFreeSlots = bs.NumOfFreeSlots
+            };
+            
+            //BO.Drone dr = new BO.Drone
+            //{
+            //    Id = drone.Id,
+            //    BatteryStatus = drone.BatteryStatus,
+            //    DronePlace = drone.DroneLocation,
+            //    MaxWeight = drone.MaxWeight,
+            //    Model = drone.Model,
+            //    PID = null,
+            //    Status = drone.Status
+            //};
+            //Closing_Button.Visibility = Visibility.Hidden;
+            //new AddDrone(bl1, dr).Show();
+            //Close();
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -60,6 +88,7 @@ namespace PL
             PropertyGroupDescription groupDescription = new PropertyGroupDescription(BaseOptions.SelectedItem.ToString());
             view.GroupDescriptions.Add(groupDescription);
             BaseStationView.Items.Refresh();
+            ResetList.Visibility = Visibility.Visible;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -67,5 +96,7 @@ namespace PL
             Close();
             new AddBaseStation(bl).Show();
         }
+
+       
     }
 }
