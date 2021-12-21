@@ -257,17 +257,20 @@ namespace BL
             List<BaseStationToList> baseStationTos = new();
             foreach (var it in bases)
             {
-                BaseStationToList baseStationTo = new();
-                baseStationTo.Id = it.Id;
-                baseStationTo.Name = it.Name;
-                baseStationTo.NumOfSlotsInUse = dronCharges(GetBaseStation(it.Id)).Count;
-                baseStationTo.NumOfFreeSlots = it.NumOfSlots - baseStationTo.NumOfSlotsInUse;
-                baseStationTos.Add(baseStationTo);
+                if (it.Valid == true)//return only valid bases
+                {
+                    BaseStationToList baseStationTo = new();
+                    baseStationTo.Id = it.Id;
+                    baseStationTo.Name = it.Name;
+                    baseStationTo.NumOfSlotsInUse = dronCharges(GetBaseStation(it.Id)).Count;
+                    baseStationTo.NumOfFreeSlots = it.NumOfSlots - baseStationTo.NumOfSlotsInUse;
+                    baseStationTos.Add(baseStationTo);
+                }
+               
             }
             if (predicat == null)
                 return baseStationTos;
             else
-                //return drones.Where(predicate);
                 return (from item in baseStationTos
                         where predicat(item)
                         select item);
@@ -284,7 +287,8 @@ namespace BL
             List<ParcelToList> parcelTos = new();
             foreach (var it in parcels)
             {
-                ParcelToList parcelToList = new ParcelToList
+              
+                    ParcelToList parcelToList = new ParcelToList
                 {
                     Id = it.Id,
                     Priorities = (Enums.Priorities)it.Priority,
@@ -326,14 +330,13 @@ namespace BL
                 return drones.ToList();
             else if (statuses != null && weight == null)
             {
-                return drones.Where(d=>d.Status==statuses);
+                return drones.Where(d=>d.Status==statuses && d.Valid==true);
             }
             else if (statuses != null && weight != null)
             {
-                return drones.Where(d => d.Status == statuses && d.MaxWeight==weight);
+                return drones.Where(d => d.Status == statuses && d.MaxWeight== weight && d.Valid == true);
             }
-      
-                return drones.Where(d=>d.MaxWeight == weight);
+                return drones.Where(d=>d.MaxWeight == weight && d.Valid == true);
             
         }
 

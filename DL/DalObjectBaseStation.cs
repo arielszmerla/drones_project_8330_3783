@@ -31,11 +31,16 @@ namespace DalObject
         /// <param name="baseStation"></param>
         public void AddBaseStation(BaseStation baseStation)
         {
+            baseStation.Valid = true;
             if (DataSource.BaseStations.Any(bs => bs.Id == baseStation.Id))
             {
                 throw new BaseExeption("id allready exist");
             }
-            DataSource.BaseStations.Add(baseStation);
+            else
+            {
+                baseStation.Valid = true;
+                DataSource.BaseStations.Add(baseStation);
+            }
         }
         /// <summary>
         /// get list of base stations
