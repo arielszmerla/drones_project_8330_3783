@@ -20,6 +20,7 @@
         </Label>
         <ComboBox IsEditable="True" IsEnabled="True" x:Name="ViewOptions"  HorizontalAlignment="Left" Text="Make Your Choice" Margin="305,349,0,0" VerticalAlignment="Top" Width="150" Height="40" SelectionChanged="ViewOptions_SelectionChanged" Grid.ColumnSpan="2"
                  />
+        <Button  x:Name="Client_Entry" Content="CLIENT ENTRY" HorizontalAlignment="Left" Margin="115,217,0,0" VerticalAlignment="Top" Height="50" Width="82" Click="Client_Entry_Click"/>
 
     </Grid>
 

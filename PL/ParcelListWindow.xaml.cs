@@ -41,7 +41,6 @@ namespace PL
 
         private void Weight_Choice_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
             ParcelViewList.ItemsSource = bl.GetParcelList((BO.Enums.WeightCategories?)Weight_Choice.SelectedItem);
             reset.Visibility = Visibility.Visible;
         }
@@ -89,8 +88,15 @@ namespace PL
                 result = MessageBox.Show("Do you want to delete?", "Make Your Choice", button);
                 if (result == MessageBoxResult.Yes)
                 {
-                    Closing_Button.Visibility = Visibility.Hidden;
-                    new ParcelActionWindow(bl, p, -1).Show();
+                    try
+                    {
+                        bl.DeleteParcel(p.Id);
+                        MessageBox.Show("Delete done");
+                    } 
+            catch (BO.DeleteException exc)
+                { MessageBox.Show(exc.ToString()); }
+                Closing_Button.Visibility = Visibility.Hidden;
+                
                    
                 }
             }

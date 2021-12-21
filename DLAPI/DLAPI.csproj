@@ -9,6 +9,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\net5.0-windows\</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <DefineConstants />
   </PropertyGroup>
 
 </Project>

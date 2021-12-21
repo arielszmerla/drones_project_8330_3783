@@ -176,7 +176,7 @@ namespace DalObject
         {
             int k = DataSource.Parcels.FindIndex(ps => ps.DroneId == id);
             if (k == -1)
-                throw new ParcelExeption("invalid parcel id");
+                throw new ParcelExeption($"invalid parcel id {id}");
             Parcel tmp = DataSource.Parcels[k];
             tmp.Delivered = DateTime.Now;
             tmp.DroneId = 0;

@@ -47,7 +47,7 @@ namespace BL
             p.Priority = (Enums.Priorities)parcel.Priority;
             CustomerInParcel send = new CustomerInParcel { Id = parcel.SenderId, Name = customers.Find(cs => cs.Id == parcel.SenderId).Name };
             CustomerInParcel targ = new CustomerInParcel { Id = parcel.TargetId, Name = customers.Find(cs => cs.Id == parcel.TargetId).Name };
-            p.Sender= send;
+            p.Sender = send;
             p.Target = targ;
             p.Id = parcel.Id;
             p.WeightCategories = (Enums.WeightCategories)parcel.Weight;
@@ -61,14 +61,14 @@ namespace BL
         public BaseStation GetBaseStation(int idP)
         {
             DO.BaseStation myBase = new();
-         
+
             if (!myDal.GetBaseStationsList(null).Any(pc => pc.Id == idP))
             {
                 throw new GetException("id of BaseStation not found");
             }
             BaseStation bs = new();
             bs.BaseStationLocation = new Location { Latitude = myBase.Latitude, Longitude = myBase.Longitude };
-          
+
             bs.Id = myBase.Id;
             bs.Name = myBase.Name;
             bs.ChargingDrones = dronCharges(bs);
@@ -169,18 +169,24 @@ namespace BL
         /// parcel to delete
         /// </summary>
         /// <param name="id"></delete>
-       public void DeleteParcel(int id) {
+        public void DeleteParcel(int id)
+        {
             if (!myDal.GetParcelList(null).Any(c => c.Id == id))
             {
                 throw new DeleteException($"parcel with {id}as Id does not exist");
+            }
+            else if (myDal.GetParcelList(null).FirstOrDefault(c => c.Id == id).Delivered <= DateTime.Now)
+            {
+                throw new DeleteException($"parcel with {id}as Id has not yet been delivered");
             }
             else
                 try
                 {
                     myDal.DeleteParcel(id);
                 }
-                catch (DLAPI.DeleteException d) {
-                    throw new DeleteException($"parcel with {id}as Id does not exist",d);
+                catch (DLAPI.DeleteException d)
+                {
+                    throw new DeleteException($"parcel with {id}as Id does not exist", d);
                 }
         }
         /// <summary>
@@ -189,15 +195,18 @@ namespace BL
         /// <param name="id"></id of customer to erase>
         public void DeleteCustomer(int id)
         {
-            if (!myDal.GetCustomerList(null).Any(c => c.Id == id))
+            if (!myDal.GetCustomerList(c => c.Id == id).Any())
             {
                 throw new DeleteException($"Customer with {id}as Id does not exist");
+            }
+            else if (myDal.GetParcelList(c => c.TargetId == id && c.Scheduled <= DateTime.Now && c.Delivered == DateTime.MinValue).Any())
+            {
+                throw new DeleteException($"Customer with {id}as Id has yet more commands on way");
             }
             else
                 try
                 {
                     myDal.DeleteCustomer(id);
-                    
                 }
 
 
@@ -212,20 +221,23 @@ namespace BL
         /// <param name="id"></id of Drone to erase>
         public void DeleteDrone(int id)
         {
-            if (!myDal.GetDroneList(null).Any(c => c.Id == id))
+            if (!myDal.GetDroneList(c => c.Id == id).Any())
             {
                 throw new DeleteException($"Drone with {id}as Id does not exist");
             }
-            else
-                try
-                {
-                    myDal.DeleteDrone(id);
-                    drones.RemoveAll(pc => pc.Id == id);
-                }
-                catch (DLAPI.DeleteException d)
-                {
-                    throw new DeleteException($"Drone with {id}as Id does not exist", d);
-                }
+            else if (myDal.GetParcelList(c => c.DroneId == id && c.Scheduled <= DateTime.Now && c.Delivered == DateTime.MinValue).Any())
+            {
+                throw new DeleteException($"Drone with {id}is on  delivery");
+            }
+            try
+            {
+                myDal.DeleteDrone(id);
+                drones.RemoveAll(pc => pc.Id == id);
+            }
+            catch (DLAPI.DeleteException d)
+            {
+                throw new DeleteException($"Drone with {id}as Id does not exist", d);
+            }
         }
         /// <summary>
         /// delete an BaseStation
@@ -237,6 +249,9 @@ namespace BL
             {
                 throw new DeleteException($"BaseStation with {id}as Id does not exist");
             }
+            else
+                if (drones.Any(dr => dr.DroneLocation == new Location { Latitude = myDal.GetBaseStation(id).Latitude, Longitude = myDal.GetBaseStation(id).Longitude } && dr.Status == Enums.DroneStatuses.Maintenance))
+                throw new DeleteException($"BaseStation with {id}as Id is in use");
             else
                 try
                 {
@@ -266,7 +281,7 @@ namespace BL
                     baseStationTo.NumOfFreeSlots = it.NumOfSlots - baseStationTo.NumOfSlotsInUse;
                     baseStationTos.Add(baseStationTo);
                 }
-               
+
             }
             if (predicat == null)
                 return baseStationTos;
@@ -281,31 +296,31 @@ namespace BL
             return tmp.FindAll(bs => bs.NumOfFreeSlots > 0);
 
         }
-        public IEnumerable<ParcelToList>GetParcelList(Enums.WeightCategories? statuses = null)
+        public IEnumerable<ParcelToList> GetParcelList(Enums.WeightCategories? statuses = null)
         {
             List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList(null);
             List<ParcelToList> parcelTos = new();
             foreach (var it in parcels)
             {
-              
-                    ParcelToList parcelToList = new ParcelToList
+
+                ParcelToList parcelToList = new ParcelToList
                 {
                     Id = it.Id,
                     Priorities = (Enums.Priorities)it.Priority,
                     WeightCategorie = (Enums.WeightCategories)it.Weight
                 };
 
-         
-                parcelToList.SenderName =myDal.GetCustomerList().FirstOrDefault(s => s.Id == it.SenderId).Name;
+
+                parcelToList.SenderName = myDal.GetCustomerList().FirstOrDefault(s => s.Id == it.SenderId).Name;
                 parcelToList.TargetName = myDal.GetCustomerList().FirstOrDefault(s => s.Id == it.TargetId).Name;
                 parcelTos.Add(parcelToList);
             }
             if (statuses == null)
                 return parcelTos;
             else
-                
+
                 return (from item in parcelTos
-                        where item.WeightCategorie==statuses
+                        where item.WeightCategorie == statuses
                         select item);
 
         }
@@ -320,9 +335,9 @@ namespace BL
                 if (t.DroneId == 0)
                     toReturn.Add(tmp.Find(p => p.Id == t.Id));
             }
-          return toReturn.ToList();
+            return toReturn.ToList();
 
-            
+
         }
         public IEnumerable<DroneToList> GetDroneList(Enums.DroneStatuses? statuses = null, Enums.WeightCategories? weight = null)
         {
@@ -330,14 +345,14 @@ namespace BL
                 return drones.ToList();
             else if (statuses != null && weight == null)
             {
-                return drones.Where(d=>d.Status==statuses && d.Valid==true);
+                return drones.Where(d => d.Status == statuses && d.Valid == true);
             }
             else if (statuses != null && weight != null)
             {
-                return drones.Where(d => d.Status == statuses && d.MaxWeight== weight && d.Valid == true);
+                return drones.Where(d => d.Status == statuses && d.MaxWeight == weight && d.Valid == true);
             }
-                return drones.Where(d=>d.MaxWeight == weight && d.Valid == true);
-            
+            return drones.Where(d => d.MaxWeight == weight && d.Valid == true);
+
         }
 
         public IEnumerable<CustomerToList> GetCustomerList(Func<CustomerToList, bool> predicat = null)
@@ -361,7 +376,7 @@ namespace BL
             }
             if (predicat == null)
                 return customerTos.ToList();
-           
+
             return (from item in customerTos
                     where predicat(item)
                     select item);

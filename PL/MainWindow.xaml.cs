@@ -58,5 +58,10 @@ namespace PL
             }
         
         }
+
+        private void Client_Entry_Click(object sender, RoutedEventArgs e)
+        {
+            new UserMainWindow().Show();
+        }
     }
 }

@@ -156,12 +156,17 @@ namespace BL
         /// <returns></returns>
         private ParcelInDelivery? findParcelOnDrone(BO.Drone dr)
         {
-            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList(null);
-            DO.Parcel p = new();
-            //find all the parcels on this drone
-            List<DO.Parcel> onDrone = parcels.FindAll(pcs => (int)pcs.DroneId == dr.Id && pcs.PickedUp < DateTime.Now && pcs.Delivered > DateTime.Now);
 
-            if (onDrone.Count > 0)//if found, create the object relevant and return it
+            //List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList(null);
+
+            //find all the parcels on this drone
+            //  .FindAll(pcs => (int)pcs.DroneId == dr.Id && pcs.PickedUp < DateTime.Now && pcs.Delivered > DateTime.Now);
+            List<DO.Parcel> onDrone = (List<DO.Parcel>)(from parcel in myDal.GetParcelList(null)
+                                             where parcel.DroneId == dr.Id && parcel.PickedUp < DateTime.Now && parcel.Delivered > DateTime.Now
+                                             select parcel);
+  
+
+            if (onDrone.Count() > 0)//if found, create the object relevant and return it
             {
                 ParcelInDelivery pid = new ParcelInDelivery();
                 pid.Id = onDrone[0].Id;

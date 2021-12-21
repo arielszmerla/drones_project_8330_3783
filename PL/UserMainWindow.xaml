@@ -1,0 +1,43 @@
+﻿<Window x:Class="PL.UserMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"  
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"  
+        Title="MainWindow" Height="485" Width="525">
+    <Grid Margin="0,0,0,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ListView Name="UserGrid" Grid.Row="1" Margin="4,178,12,13"  ItemsSource="{Binding Users}"  >
+            <ListView.View>
+                <GridView x:Name="grdTest">
+                    
+                    <GridViewColumn Header="UserId" DisplayMemberBinding="{Binding UserId}"  Width="50"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"  Width="80" />
+                    <GridViewColumn Header="Phone" DisplayMemberBinding="{Binding Phone}" Width="100" />
+                    <GridViewColumn Header="NumberOfParcelsonTheWay" DisplayMemberBinding="{Binding NumberOfParcelsonTheWay}" Width="80" />
+                    <GridViewColumn Header="NumberOfParcelsReceived" DisplayMemberBinding="{Binding NumberOfParcelsReceived}" Width="80" />
+                    <GridViewColumn Header="NumberOfParcelsSentAndDelivered" DisplayMemberBinding="{Binding NumberOfParcelsSentAndDelivered}" Width="100" />
+                    <GridViewColumn Header="NumberOfParcelsSentButNotDelivered" DisplayMemberBinding="{Binding NumberOfParcelsSentButNotDelivered}" Width="100" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBox Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="90,7,0,0" Name="txtUserId" VerticalAlignment="Top" Width="178" Text="{Binding ElementName=UserGrid,Path=SelectedItem.UserId}" />
+        <TextBox Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="90,35,0,0" Name="txtFirstName" VerticalAlignment="Top" Width="178" Text="{Binding ElementName=UserGrid,Path=SelectedItem.Name}" />
+        <TextBox Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="90,62,0,0" Name="txtLastName" VerticalAlignment="Top" Width="178" Text="{Binding ElementName=UserGrid,Path=SelectedItem.Phone}" />
+        <Label Content="UserId" Grid.Row="1" HorizontalAlignment="Left" Margin="12,12,0,274" Name="label1" />
+        <Label Content="Last Name" Grid.Row="1" Height="28" HorizontalAlignment="Left" Margin="12,60,0,0" Name="label2" VerticalAlignment="Top" />
+        <Label Content="First Name" Grid.Row="1" Height="28" HorizontalAlignment="Left" Margin="12,35,0,0" Name="label3" VerticalAlignment="Top" />
+        <Button Content="Update" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="310,40,0,0" Name="btnUpdate"   
+                VerticalAlignment="Top" Width="141"  
+                Command="{Binding Path=UpdateCommad}" />
+        <TextBox Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="90,143,0,0" x:Name="txtCity" VerticalAlignment="Top" Width="178" Text="{Binding SelectedItem.NumberOfParcelsSentButNotDelivered, ElementName=UserGrid}" />
+        <Label Content="SentButNotDelivered" Grid.Row="1" Height="28" HorizontalAlignment="Left" Margin="12,141,0,0" x:Name="label2_Copy" VerticalAlignment="Top" />
+        <TextBox Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="90,88,0,0" x:Name="txtCountry" VerticalAlignment="Top" Width="178" Text="{Binding SelectedItem.NumberOfParcelsReceived, ElementName=UserGrid}" />
+        <Label Content="ParcelsReceived" Grid.Row="1" Height="28" HorizontalAlignment="Left" Margin="12,86,0,0" x:Name="label2_Copy1" VerticalAlignment="Top" />
+        <TextBox Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="90,115,0,0" x:Name="txtSTate" VerticalAlignment="Top" Width="178" Text="{Binding SelectedItem.NumberOfParcelsSentAndDelivered, ElementName=UserGrid}" />
+        <Label Content="ParcelsSentAndDelivered" Grid.Row="1" Height="28" HorizontalAlignment="Left" Margin="12,113,0,0" x:Name="label2_Copy2" VerticalAlignment="Top" />
+        <TextBox Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="90,115,0,0" x:Name="txtSTates" VerticalAlignment="Top" Width="178" Text="{Binding SelectedItem.NumberOfParcelsonTheWay, ElementName=UserGrid}" />
+        <Label Content="NumberOfParcelsonTheWay" Grid.Row="1" Height="28" HorizontalAlignment="Left" Margin="12,113,0,0" x:Name="label3_Copy3" VerticalAlignment="Top" />
+    </Grid>
+</Window>  
