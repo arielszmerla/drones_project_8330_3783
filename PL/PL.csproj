@@ -1,0 +1,74 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>PL</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\net5.0-windows\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <DefineConstants />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="NewFolder\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
+    <None Remove="NewFolder\**" />
+    <Page Remove="NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="images\baseStationPic.png" />
+    <None Remove="images\dronefon.jpg" />
+    <None Remove="images\Google_Maps_logo.png" />
+    <None Remove="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
+    <None Remove="images\parcel.png" />
+    <None Remove="images\pluspic.png" />
+    <None Remove="images\pngegg.png" />
+    <None Remove="images\customerspic.png" />
+    <None Remove="images\drone-icon.png" />
+    <None Remove="images\drone.png" />
+    <None Remove="images\dronefon.jpg" />
+    <None Remove="images\Icon1.ico" />
+    <None Remove="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
+    <None Remove="images\kindpng_797882.png" />
+    <None Remove="images\kisspng-logo-arrow-5ae2d845df31d9.4342434915248159419142.png" />
+    <None Remove="images\pngegg.png" />
+    <None Remove="images\pngwing.com.png" />
+    <None Remove="images\wifind_back.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
+    <PackageReference Include="Microsoft.Maps.MapControl.WPF" Version="1.0.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BL1\BL1.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\baseStationPic.png" />
+    <Resource Include="images\dronefon.jpg" />
+    <Resource Include="images\Google_Maps_logo.png" />
+    <Resource Include="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
+    <Resource Include="images\parcel.png" />
+    <Resource Include="images\pluspic.png" />
+    <Resource Include="images\pngegg.png" />
+    <Resource Include="images\customerspic.png" />
+    <Resource Include="images\drone-icon.png" />
+    <Resource Include="images\drone.png" />
+    <Resource Include="images\dronefon.jpg" />
+    <Resource Include="images\Icon1.ico" />
+    <Resource Include="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
+    <Resource Include="images\kindpng_797882.png" />
+    <Resource Include="images\kisspng-logo-arrow-5ae2d845df31d9.4342434915248159419142.png" />
+    <Resource Include="images\pngegg.png" />
+    <Resource Include="images\pngwing.com.png" />
+    <Resource Include="images\wifind_back.png" />
+  </ItemGroup>
+
+</Project>
