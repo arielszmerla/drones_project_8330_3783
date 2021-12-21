@@ -91,7 +91,7 @@ namespace BL
                     Location closestBase = new();
                     DroneToList droneToList = drones.Find(dr => dr.Id == parcel.DroneId);
                     droneToList.Status = Enums.DroneStatuses.InDelivery;
-                   // List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetBaseStationsList();
+              ;
                     List<DO.Customer> customers = (List<DO.Customer>)myDal.GetCustomerList();
                     DO.Customer cs = customers.Find(c => c.Id == parcel.SenderId);
                     //caculate the nearest station to customer
