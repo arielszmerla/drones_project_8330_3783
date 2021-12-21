@@ -61,13 +61,11 @@ namespace BL
         public BaseStation GetBaseStation(int idP)
         {
             DO.BaseStation myBase = new();
-            List<DO.BaseStation> bases = (List<DO.BaseStation>)myDal.GetBaseStationsList();
-            if (bases.Any(pc => pc.Id == idP))
+         
+            if (!myDal.GetBaseStationsList(null).Any(pc => pc.Id == idP))
             {
-                myBase = bases.Find(pc => pc.Id == idP);
-            }
-            else
                 throw new GetException("id of BaseStation not found");
+            }
             BaseStation bs = new();
             bs.BaseStationLocation = new Location { Latitude = myBase.Latitude, Longitude = myBase.Longitude };
           
@@ -255,7 +253,7 @@ namespace BL
 
         public IEnumerable<BaseStationToList> GetBaseStationList(Func<BaseStationToList, bool> predicat = null)
         {
-            List<DO.BaseStation> bases = (List<DO.BaseStation>)myDal.GetBaseStationsList();
+            List<DO.BaseStation> bases = (List<DO.BaseStation>)myDal.GetBaseStationsList(null);
             List<BaseStationToList> baseStationTos = new();
             foreach (var it in bases)
             {

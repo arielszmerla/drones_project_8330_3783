@@ -43,23 +43,25 @@ namespace DS
                     Longitude =
                     35.1751589,
                     Name = "Base " + (DO.BaseStationEmplacemt)(0), // baseInput,
-                    NumOfSlots = random.Next(2, 4)
+                    NumOfSlots = random.Next(2, 4),
+                    Valid = true,
                 };
                 BaseStations.Add(B);
                 B = new BaseStation()///create new objects as asked
-                {
+                { Valid=true,
                     Id = 2 + 9999,
                     //Israel coordinates range  31.740967, 35.171323
                     Latitude = 31.8099077,
                     Longitude = 35.1855049,
                     Name = "Base " + (DO.BaseStationEmplacemt)(1), // baseInput,
                     NumOfSlots = random.Next(2, 7)
+                        
                 };
                 BaseStations.Add(B);
                 B = new BaseStation()///create new objects as asked
                 {
                     Id = 3 + 9999,
-
+                    Valid = true,
                     Latitude = 31.7861624,
                     Longitude = 
                     35.1822896,
@@ -71,7 +73,7 @@ namespace DS
                 BaseStations.Add(new BaseStation
                 {
                     Id = 4 + 9999,
-
+                    Valid = true,
                     Latitude = 31.7897954,
                     Longitude =
                     35.202992,
@@ -81,7 +83,7 @@ namespace DS
                 BaseStations.Add(new BaseStation
                 {
                     Id = 5 + 9999,
-
+                    Valid = true,
                     Latitude = 31.7835426,
                     Longitude = 35.208293,
                     Name = "Base " + (DO.BaseStationEmplacemt)(5), // baseInput,
@@ -90,7 +92,7 @@ namespace DS
                 BaseStations.Add(new BaseStation
                 {
                     Id = 6 + 9999,
-
+                    Valid = true,
                     Latitude = 31.764764,
                     Longitude = 35.189358,
                     Name = "Base " + (DO.BaseStationEmplacemt)(4), // baseInput,
@@ -102,13 +104,14 @@ namespace DS
                     Id = 100001,
                     Model = ((DO.DroneNames)random.Next(3)),
                     MaxWeight = (DO.WeightCategories)random.Next(3),
-
+                    Valid = true,
                 };
                 Drones.Add(d);
                 d = new Drone()///create new objects as asked
                 {
                     Id = 100002,
                     Model = ((DO.DroneNames)random.Next(3)),
+                    Valid = true,
                     MaxWeight = (DO.WeightCategories)random.Next(3),
 
                 };
@@ -118,7 +121,7 @@ namespace DS
                     Id = 100003,
                     Model = ((DO.DroneNames)random.Next(3)),
                     MaxWeight = (DO.WeightCategories)random.Next(3),
-
+                    Valid = true,
                 };
                 Drones.Add(d);
                 d = new Drone()///create new objects as asked
@@ -126,6 +129,7 @@ namespace DS
                     Id = 100004,
                     Model = ((DO.DroneNames)random.Next(3)),
                     MaxWeight = (DO.WeightCategories)random.Next(3),
+                    Valid = true,
                 };
                 Drones.Add(d);
                 d = new Drone()///create new objects as asked
@@ -133,6 +137,7 @@ namespace DS
                     Id = 100005,
                     Model = ((DO.DroneNames)random.Next(3)),
                     MaxWeight = (DO.WeightCategories)random.Next(3),
+                    Valid = true,
 
                 };
                 Drones.Add(d);
@@ -141,6 +146,7 @@ namespace DS
                     Id = 100006,
                     Model = ((DO.DroneNames)random.Next(3)),
                     MaxWeight = (DO.WeightCategories)random.Next(3),
+                    Valid = true,
                 };
                 Drones.Add(d);
                 int customersInput;
@@ -155,8 +161,8 @@ namespace DS
                         Name = "myName" + customersInput,
                         Phone = $"{random.Next(100000000)}",
                     });
-                int parcelsInput = 101;
-                totalNumOfParcels += 102;
+                int parcelsInput = 51;
+                totalNumOfParcels += 52;
 
                 TimeSpan duration = new TimeSpan(random.Next(2), random.Next(60), random.Next(60));
                 for (int i = 0; i < parcelsInput; i++) // 10 min, 100-0 max values to initialize

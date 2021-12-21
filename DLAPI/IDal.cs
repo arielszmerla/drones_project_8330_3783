@@ -34,7 +34,7 @@ namespace DLAPI
         /// method that returns all base stations in data base.
         /// </summary>
         /// <returns></returns>
-        IEnumerable<BaseStation> GetBaseStationsList(Func<BaseStation, bool> predicate = null);
+        IEnumerable<BaseStation> GetBaseStationsList(Predicate<BaseStation> predicate);
         /// <summary>
         /// method that returns all customers in data base.
         /// </summary>

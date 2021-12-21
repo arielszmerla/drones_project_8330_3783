@@ -13,7 +13,8 @@ using System.Threading.Tasks;
             public int Id { get; set; }
             public DroneNames Model { get; set; }
             public WeightCategories MaxWeight { get; set; }
-            public override string ToString()///toString erased func
+            public bool Valid { get; set; }
+        public override string ToString()///toString erased func
             {
                 string result = "";
                 result += $"ID is {Id}\n";

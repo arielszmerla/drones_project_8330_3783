@@ -9,6 +9,7 @@
         public BO.Enums.DroneStatuses Status { get; set; }
         public Location DroneLocation { get; set; }
         public int NumOfDeliveredParcel { get; set; }
+        public bool Valid { get; set; }
         public override string ToString()///toString erased func
         {
             string result = "";

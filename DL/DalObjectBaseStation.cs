@@ -41,7 +41,7 @@ namespace DalObject
         /// get list of base stations
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<BaseStation> GetBaseStationsList(Func<BaseStation, bool> predicat = null)
+        public IEnumerable<BaseStation> GetBaseStationsList(Predicate<BaseStation> predicat)
         {
             if (predicat == null)
                 return DataSource.BaseStations.ToList();
@@ -64,7 +64,19 @@ namespace DalObject
             }
             DataSource.BaseStations[index] = bs;
         }
-
+        public void DeleteBasestation(int id)
+        {
+            if (!DataSource.BaseStations.Any(p => p.Id == id))
+                throw new DLAPI.DeleteException($"BaseStation with {id}as Id does not exist");
+            BaseStation b = DataSource.BaseStations.FirstOrDefault(p => p.Id == id);
+            b.Valid = false;
+            DataSource.BaseStations.RemoveAll(p => p.Id == id);
+            try
+            {
+                DataSource.BaseStations.Add(b);
+            }
+            catch (BaseExeption ex) { throw new BaseExeption("id allready exist"); }
+        }
 
     }
 

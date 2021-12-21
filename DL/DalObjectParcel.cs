@@ -116,12 +116,7 @@ namespace DalObject
                 throw new DLAPI.DeleteException($"Customer with {id}as Id does not exist");
             DataSource.Customers.RemoveAll(p => p.Id == id);
         }
-        public void DeleteBasestation(int id)
-        {
-            if (!DataSource.BaseStations.Any(p => p.Id == id))
-                throw new DLAPI.DeleteException($"BaseStation with {id}as Id does not exist");
-            DataSource.BaseStations.RemoveAll(p => p.Id == id);
-        }
+   
     }
 
 

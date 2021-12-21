@@ -8,6 +8,7 @@
         public string Name { get; set; }
         public int NumOfFreeSlots { get; set; }
         public int NumOfSlotsInUse { get; set; }
+        public bool Valid { get; set; }
         public override string ToString()
         {
             string str = "";

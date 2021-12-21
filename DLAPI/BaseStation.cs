@@ -17,6 +17,7 @@ namespace DO
         public double Longitude { get; set; }
         public double Latitude { get; set; }
         public int NumOfSlots { get; set; }
+        public bool Valid { get; set; }
         /// <summary>
         /// to string override
         /// </summary>

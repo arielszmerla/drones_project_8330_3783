@@ -90,7 +90,7 @@ namespace BL
                     Location closestBase = new();
                     DroneToList droneToList = drones.Find(dr => dr.Id == parcel.DroneId);
                     droneToList.Status = Enums.DroneStatuses.InDelivery;
-                    List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetBaseStationsList();
+                   // List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetBaseStationsList();
                     List<DO.Customer> customers = (List<DO.Customer>)myDal.GetCustomerList();
                     DO.Customer cs = customers.Find(c => c.Id == parcel.SenderId);
                     //caculate the nearest station to customer
@@ -240,7 +240,7 @@ namespace BL
             double temp = 99999999999; ;
             DO.Customer cs = myDal.GetCustomerList().First(cs => cs.Id == parcel.TargetId);
             total += BO.LocationFuncs.Distance(lc, new Location { Latitude = cs.Latitude, Longitude = cs.Longitude });
-            List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetBaseStationsList();
+            List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetBaseStationsList(null);
             Location closestBase = new();
             //look after closest baseStation
             for (int i = 0; i < bs.Count(); i++)
@@ -297,7 +297,7 @@ namespace BL
         /// <returns></returns>
         private BO.BaseStation getClosestBase(Location dr)
         {
-            List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetBaseStationsList();
+            List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetBaseStationsList(null);
             DO.BaseStation closestBase = new();
             double shortest = 99999999999999990;
             //find closest
@@ -342,7 +342,7 @@ namespace BL
             if (dronetolis.Status == Enums.DroneStatuses.Maintenance)
             {
 
-                List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetBaseStationsList();
+                List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetBaseStationsList(null);
                 int rand = random.Next(bs.Count());
                 Location loc = new Location { Latitude = bs[rand].Latitude, Longitude = bs[rand].Longitude };
                 ;
@@ -360,7 +360,7 @@ namespace BL
                     if (c.Any(cs => cs.Id == it.TargetId))
                         customersTmp.Add(c.Find(cs => cs.Id == it.TargetId));
                 }
-                List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetBaseStationsList();
+                List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetBaseStationsList(null);
                 Location lc = new Location { Latitude = bs[0].Latitude, Longitude = bs[0].Longitude };
 
                 dronetolis.DroneLocation = lc;

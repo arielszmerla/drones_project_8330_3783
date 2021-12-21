@@ -138,7 +138,7 @@ namespace BL
                 drones[drones.FindIndex(dr => dr.Id == idC)].BatteryStatus += ((duration.TotalSeconds * 1 / 3600) + (duration.TotalMinutes * 1 / 60) + (duration.TotalHours)) * myDal.DroneElectricConsumations()[4];
             drones[drones.FindIndex(dr => dr.Id == idC)].Status = Enums.DroneStatuses.Vacant;
          
-            DO.BaseStation myBase = myDal.GetBaseStationsList().FirstOrDefault(bas => bas.Latitude == drones[drones.FindIndex(dr => dr.Id == idC)].DroneLocation.Latitude&&
+            DO.BaseStation myBase = myDal.GetBaseStationsList(null).FirstOrDefault(bas => bas.Latitude == drones[drones.FindIndex(dr => dr.Id == idC)].DroneLocation.Latitude&&
              bas.Latitude == drones[drones.FindIndex(dr => dr.Id == idC)].DroneLocation.Latitude);
             myBase.NumOfSlots++;
 
@@ -160,7 +160,7 @@ namespace BL
                 return;
             }
             BO.BaseStation bc = getClosestBase(drone.DroneLocation);
-            DO.BaseStation myBase = myDal.GetBaseStationsList().FirstOrDefault(bas => bas.Latitude == bc.BaseStationLocation.Latitude&&bas.Longitude==bc.BaseStationLocation.Longitude);
+            DO.BaseStation myBase = myDal.GetBaseStationsList(null).FirstOrDefault(bas => bas.Latitude == bc.BaseStationLocation.Latitude&&bas.Longitude==bc.BaseStationLocation.Longitude);
             if ((myDal.DroneElectricConsumations()[0]) *
                 BO.LocationFuncs.Distance(drone.DroneLocation,new Location { Latitude = myBase.Latitude, Longitude = myBase.Longitude }) <= drone.BatteryStatus)
             {
@@ -203,11 +203,11 @@ namespace BL
         /// <param name="name"></param>
         public void UpdateBaseStation(int myId, int numOfSlots, string name)
         {//if BaseStation not found
-            if (!myDal.GetBaseStationsList().Any(bs => bs.Id == myId))
+            if (!myDal.GetBaseStationsList(null).Any(bs => bs.Id == myId))
             {
                 throw new GetException ($"id {myId} doesn't exist ");
             }
-            DO.BaseStation bs = myDal.GetBaseStationsList().FirstOrDefault(bs => bs.Id == myId);
+            DO.BaseStation bs = myDal.GetBaseStationsList(null).FirstOrDefault(bs => bs.Id == myId);
             if (numOfSlots != null)
                 bs.NumOfSlots = numOfSlots;
             if (name != "Base ")
