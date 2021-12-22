@@ -48,6 +48,7 @@ namespace PL
         private void End_the_page(object sender, RoutedEventArgs e)
         {
             PageStop.Visibility = Visibility.Hidden;
+            new BaseStationViewWindow(bl).Show();
             this.Close();
         }
 
@@ -55,8 +56,9 @@ namespace PL
         {
             if (PageStop.Visibility != Visibility.Hidden)
                 e.Cancel = true;
+
         }
-       
+
 
         private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
         {
@@ -100,7 +102,7 @@ namespace PL
         {
             int s;
             int.TryParse(ChooseNumOfFreeSlots.Text, out s);
-            if (s >= 2 && s <= 8)
+            if (s >= 1)
             {
                 Free_Slots.Background = Brushes.Transparent;
                 bs.NumOfFreeSlots = s;
@@ -202,6 +204,7 @@ namespace PL
                 catch (BO.AddException)
                 {
                     MessageBox.Show("Missed Add");
+                    PageStop.Visibility = Visibility.Hidden;
                 }
             }
             else
@@ -220,7 +223,14 @@ namespace PL
             SLOTS_UPDATE.Background = Brushes.Bisque;
             int s;
             int.TryParse(SLOTS_UPDATE.Text, out s);
-            bs.NumOfFreeSlots = s;
+            if (s >= 1)
+                bs.NumOfFreeSlots = s;
+            else
+            {
+                MessageBox.Show("invalid number of slots");
+                SLOTS_UPDATE.Background = Brushes.Red;
+            }
+
         }
 
         private void Update_Click(object sender, RoutedEventArgs e)
@@ -239,6 +249,7 @@ namespace PL
                 MessageBox.Show("Update failed");
             }
             PageStop.Visibility = Visibility.Hidden;
+            new BaseStationViewWindow(bl).Show();
             this.Close();
         }
 
@@ -248,11 +259,12 @@ namespace PL
             {
                 bl.DeleteBasestation(bs.Id);
             }
-            catch(DeleteException)
+            catch (DeleteException)
             {
                 MessageBox.Show("Delete failed");
             }
             PageStop.Visibility = Visibility.Hidden;
+            new BaseStationViewWindow(bl).Show();
             this.Close();
         }
     }

@@ -96,12 +96,14 @@ namespace DalObject
         /// <param name="bs"></param>
         public void UpdateBaseStationFromBl(BaseStation bs)
         {
-            int index = DataSource.BaseStations.FindIndex(ba => ba.Id == bs.Id).Clone();
-            if (index == -1)
+            
+            BaseStation? b = DataSource.BaseStations.FirstOrDefault(ba => ba.Id == bs.Id);//.Clone();
+            if ( b== null)
             {
                 throw new BaseExeption($"base station {bs.Id} not found\n");
             }
-            DataSource.BaseStations[index] = bs;
+            DataSource.BaseStations.Remove((BaseStation) b);
+            DataSource.BaseStations.Add(bs);
         }
         public void DeleteBasestation(int id)
         {

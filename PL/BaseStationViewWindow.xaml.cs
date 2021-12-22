@@ -39,11 +39,13 @@ namespace PL
         {
             PageStop.Visibility = Visibility.Hidden;
             Close();
+            new MainWindow().Show();
         }
         private void BaseSViewClosing(object sender, CancelEventArgs e)
         {
             if (PageStop.Visibility != Visibility.Hidden)
                 e.Cancel = true;
+                
         }
         
         private void View_Map(object sender, RoutedEventArgs e)
