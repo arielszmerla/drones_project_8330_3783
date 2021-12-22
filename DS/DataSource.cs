@@ -106,6 +106,7 @@ namespace DS
                     MaxWeight = (DO.WeightCategories)random.Next(3),
                     Valid = true,
                 };
+                
                 Drones.Add(d);
                 d = new Drone()///create new objects as asked
                 {
