@@ -43,6 +43,9 @@ namespace PL
             this.bl = bl;
             bs = baseStation;
             Update_BaseStation.Visibility = Visibility.Visible;
+            show_BaseStation_titles.Visibility = Visibility.Visible;
+            Show_BaseStation_stack.Visibility = Visibility.Visible;
+            DataContext = baseStation;
         }
 
         private void End_the_page(object sender, RoutedEventArgs e)
@@ -267,5 +270,7 @@ namespace PL
             new BaseStationViewWindow(bl).Show();
             this.Close();
         }
+
+      
     }
 }
