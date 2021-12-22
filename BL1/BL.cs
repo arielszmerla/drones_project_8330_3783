@@ -47,9 +47,6 @@ namespace BL
                 return Nested.instance;
             }
         }
-
-
-
         #endregion
 
         private BLImp()
@@ -79,7 +76,6 @@ namespace BL
                     Id = dr.Id,
                     Model = (Enums.DroneNames)dr.Model,
                     MaxWeight = (Enums.WeightCategories)dr.MaxWeight
-
                 };
                 drones.Add(droneToList);
             }
@@ -91,7 +87,7 @@ namespace BL
                     Location closestBase = new();
                     DroneToList droneToList = drones.Find(dr => dr.Id == parcel.DroneId);
                     droneToList.Status = Enums.DroneStatuses.InDelivery;
-              ;
+
                     List<DO.Customer> customers = (List<DO.Customer>)myDal.GetCustomerList();
                     DO.Customer cs = customers.Find(c => c.Id == parcel.SenderId);
                     //caculate the nearest station to customer
@@ -162,9 +158,9 @@ namespace BL
             //find all the parcels on this drone
             //  .FindAll(pcs => (int)pcs.DroneId == dr.Id && pcs.PickedUp < DateTime.Now && pcs.Delivered > DateTime.Now);
             List<DO.Parcel> onDrone = (List<DO.Parcel>)(from parcel in myDal.GetParcelList(null)
-                                             where parcel.DroneId == dr.Id && parcel.PickedUp < DateTime.Now && parcel.Delivered > DateTime.Now
-                                             select parcel);
-  
+                                                        where parcel.DroneId == dr.Id && parcel.PickedUp < DateTime.Now && parcel.Delivered > DateTime.Now
+                                                        select parcel);
+
 
             if (onDrone.Count() > 0)//if found, create the object relevant and return it
             {
