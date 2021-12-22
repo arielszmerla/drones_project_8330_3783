@@ -31,7 +31,7 @@ namespace PL
 
             BaseStationView.ItemsSource = bl.GetBaseStationList();
             DataContext = BaseStationView.ItemsSource;
-            BaseOptions.Items.Add("NumOfFreeSlots");
+            BaseOptions.Items.Add("NumbOfFreeSlots");
             BaseOptions.Items.Add("");
         }
 

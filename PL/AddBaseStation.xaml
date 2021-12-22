@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        Icon="\images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico"
         Closing="AddBaseStationClosing"
         Title="AddBaseStation" Height="450" Width="800">
     <Window.Background>
@@ -75,14 +76,17 @@
             <Button x:Name="Delete" Opacity="0.9" BorderBrush="Transparent" Visibility="Visible"  Margin="0,20,0,0" FontWeight="ExtraBlack" Content="Delete" Width="50" Height="30" Foreground="Red" Click="Delete_Click"/>
         </StackPanel>
 
-        <StackPanel x:Name="show_BaseStation_titles" Background="Transparent" Visibility="Collapsed" Orientation="Vertical" Grid.Column="0" Margin="10,-10,0,0" Height="434" VerticalAlignment="Top">
+        <StackPanel x:Name="show_BaseStation_titles" Background="Transparent" Visibility="Visible" Orientation="Vertical" Grid.Column="0" Margin="10,-10,0,0" Height="434" VerticalAlignment="Top">
             <Label x:Name="IsD_UUUUUU" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
             <Label x:Name="IsD_" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
 
-            <Label x:Name="ShowIsD"  FontSize="16" Foreground="Brown"  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0">
+            
+            <Label x:Name="ShowIsD"  FontSize="14" Foreground="Brown"  HorizontalAlignment="Center" Width="auto" Height="28" Margin="0,10,0,0">
                 <TextBlock TextDecorations="Underline" 
                Text="Updating Base station:"/>
             </Label>
+
+
             <Label x:Name="ShowID" FontSize="15" Content="Id" Width="auto" Height="27" HorizontalAlignment="Center"/>
 
             <Label   x:Name="ShowName" FontSize="15" Content="Name"  HorizontalAlignment="Center" Width="auto" Margin="0,10,0,0"/>
@@ -96,23 +100,25 @@
 
 
         </StackPanel>
-        <StackPanel x:Name="Show_BaseStation_stack" Background="Transparent"   Visibility="Collapsed"  Orientation="Vertical" Grid.Column="1"  Margin="0,29,63,-31">
+        <StackPanel x:Name="Show_BaseStation_stack" Background="Transparent"   Visibility="Visible"  Orientation="Vertical" Grid.Column="1"  Margin="0,29,63,-31">
 
             <Label x:Name="IsD_UUUU" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
             <Label x:Name="IsD_UUUUU" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
 
-            <TextBox  x:Name="Show_Id" Opacity="0.8"  BorderBrush="Transparent" Background="Azure"  Text= "{Binding Id}" Width="145" Height="28"/>
+            <TextBox  x:Name="Show_Id" Foreground="Red" IsReadOnly="True" Opacity="0.8"  BorderBrush="Transparent" Background="Transparent"  Text= "{Binding Id}" Width="145" Height="28"/>
 
 
-            <TextBox x:Name="Show_Name" Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Azure" Text= "{Binding Name}"  Width="147" Height="27" RenderTransformOrigin="0.502,1.282" />
+            <TextBox x:Name="Show_Name" Foreground="Red" IsReadOnly="True"  Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Transparent" Text= "{Binding Name}"  Width="147" Height="27" RenderTransformOrigin="0.502,1.282" />
 
-            <TextBox x:Name="ShowNumOfFreeSlots" Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Azure"    Text= "{Binding NumOfFreeSlots}" Width="147" Height="27" RenderTransformOrigin="0.502,1.282" />
+            <TextBox x:Name="ShowNumOfFreeSlots" Foreground="Red" IsReadOnly="True" Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Transparent"    Text= "{Binding NumOfFreeSlots}" Width="147" Height="27" RenderTransformOrigin="0.502,1.282" />
 
-            <TextBox x:Name="ShowNumOfSlotsInUse" Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Azure" Text= "{Binding NumOfSlotsInUse}" Width="147" Height="27" RenderTransformOrigin="0.502,1.282" />
+            <TextBox x:Name="ShowNumOfSlotsInUse" Foreground="Red" IsReadOnly="True"  Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Transparent" Text= "{Binding NumOfSlotsInUse}" Width="147" Height="27" RenderTransformOrigin="0.502,1.282" />
 
 
 
         </StackPanel>
+        <Button Content="Button" Grid.Column="2" HorizontalAlignment="Left" Margin="145,368,0,0" VerticalAlignment="Top"/>
+
 
     </Grid>
 </Window>
