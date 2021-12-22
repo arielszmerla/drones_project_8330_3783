@@ -45,6 +45,7 @@ namespace PL
                 case
                     listChoice.BaseStations:
                     new BaseStationViewWindow(bl).Show();
+                    Close();
                     break;
                 case listChoice.Drones :
                     new DroneListWindow1(bl).Show();

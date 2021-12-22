@@ -73,6 +73,7 @@ namespace PL
                     Name = bs.Name,
                     NumOfFreeSlots = bs.NumOfFreeSlots
                 };
+                PageStop.Visibility = Visibility.Hidden;
                 new AddBaseStation(bl, baseStation).Show();
                 Close();
             }

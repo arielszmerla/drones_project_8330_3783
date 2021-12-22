@@ -136,7 +136,7 @@ namespace PL
             double.TryParse(ChooseLongitude.Text, out s);
             if (s >= 0)
             {
-                loc.Latitude = s;
+                loc.Longitude = s;
             }
             else
             {
@@ -238,6 +238,7 @@ namespace PL
             {
                 MessageBox.Show("Update failed");
             }
+            PageStop.Visibility = Visibility.Hidden;
             this.Close();
         }
 
@@ -251,6 +252,7 @@ namespace PL
             {
                 MessageBox.Show("Delete failed");
             }
+            PageStop.Visibility = Visibility.Hidden;
             this.Close();
         }
     }
