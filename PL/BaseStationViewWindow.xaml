@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        Icon="\images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico"
         Closing="BaseSViewClosing"
         mc:Ignorable="d"
         Title="Base station view window" Height="450" Width="800">
