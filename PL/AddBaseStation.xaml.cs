@@ -56,10 +56,7 @@ namespace PL
             if (PageStop.Visibility != Visibility.Hidden)
                 e.Cancel = true;
         }
-        private void View_Map(object sender, RoutedEventArgs e)
-        {
-            new MapsDisplay(bs, bl).Show();
-        }
+       
 
         private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
         {

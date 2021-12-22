@@ -34,6 +34,11 @@
                 </GroupStyle>
             </ListView.GroupStyle>
         </ListView>
+        <Button    BorderBrush="Transparent" Margin="708,181,28,185" Opacity="0.8" ToolTip="Click Here To view on map" FontSize="16" BorderThickness="0.5" x:Name="View_On_Map" Click="View_Map" Width="64" Height="68" RenderTransformOrigin="-0.208,-4.179">
+            <Button.Background>
+                <ImageBrush ImageSource="\images\Google_Maps_logo.png"/>
+            </Button.Background>
+        </Button>
         <Button x:Name="PageStop"  Visibility="Visible" HorizontalAlignment="Left"  Margin="710,357,0,0" Click="End_the_page" Height="52" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="60">
             <Button.Background>
 

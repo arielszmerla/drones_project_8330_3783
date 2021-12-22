@@ -23,7 +23,7 @@ namespace PL
     {
         private BLAPI.IBL bl;
         // enum options {Free_Base_Stations, Num_Of_Free_Bases }
-
+        
         public BaseStationViewWindow(BLAPI.IBL bl)
         {
             InitializeComponent();
@@ -44,6 +44,11 @@ namespace PL
         {
             if (PageStop.Visibility != Visibility.Hidden)
                 e.Cancel = true;
+        }
+        
+        private void View_Map(object sender, RoutedEventArgs e)
+        {
+            new MapsDisplay(bl).Show();
         }
 
 

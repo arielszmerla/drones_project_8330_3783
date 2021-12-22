@@ -44,8 +44,15 @@ namespace PL
                 pin.Location = new(item., item.Latitude);
                 myMap.Children.Add(pin);
             }*/
+            /*
 
-
+            foreach (var item in bl.GetBaseStationList())
+            {
+                pin = new();
+                pin.Location = new(item.  .Latitude, item.DroneLocation.Longitude);
+                myMap.Children.Add(pin);
+            }
+            */
         }
 
         public MapsDisplay(BO.Drone drone, IBL bl1)
