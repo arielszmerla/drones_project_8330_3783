@@ -5,8 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using BO;
 using BLAPI;
-
-
 namespace BL
 {/// <summary>
 /// part of interface
@@ -277,12 +275,21 @@ namespace BL
                     BaseStationToList baseStationTo = new();
                     baseStationTo.Id = it.Id;
                     baseStationTo.Name = it.Name;
+                    Location loc = new Location { Latitude = it.Latitude, Longitude = it.Longitude };
+                    baseStationTo.BaseStationLocation = loc;
                     baseStationTo.NumOfSlotsInUse = dronCharges(GetBaseStation(it.Id)).Count;
                     baseStationTo.NumOfFreeSlots = it.NumOfSlots - baseStationTo.NumOfSlotsInUse;
+                    foreach (var dr in drones)
+                    {
+                        if (dr.Status == Enums.DroneStatuses.Maintenance && dr.DroneLocation == baseStationTo.BaseStationLocation)
+                            baseStationTo.ChargingDrones.Add(new DroneCharge { BatteryStatus = dr.BatteryStatus, Id = dr.Id });
+                    }
                     baseStationTos.Add(baseStationTo);
+                  
                 }
 
             }
+
             if (predicat == null)
                 return baseStationTos;
             else

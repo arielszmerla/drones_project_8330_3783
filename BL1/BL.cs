@@ -76,6 +76,7 @@ namespace BL
                     Id = dr.Id,
                     Model = (Enums.DroneNames)dr.Model,
                     MaxWeight = (Enums.WeightCategories)dr.MaxWeight
+ 
                 };
                 drones.Add(droneToList);
             }
