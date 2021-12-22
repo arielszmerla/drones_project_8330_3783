@@ -31,7 +31,7 @@
                 <ImageBrush ImageSource="\images\Google_Maps_logo.png"/>
             </Button.Background>
         </Button>
-        <StackPanel Background="Transparent"    Visibility="Visible" x:Name="add_drone_titles" Orientation="Vertical" Grid.Column="0" Margin="10,0,0,0" Height="434" VerticalAlignment="Center">
+        <StackPanel x:Name="add_BaseStation_titles" Background="Transparent"    Visibility="Visible" Orientation="Vertical" Grid.Column="0" Margin="10,0,0,0" Height="434" VerticalAlignment="Center">
 
             <Label x:Name="IsD" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
             <Label x:Name="ID" FontSize="15" Content="Enter id" Width="180" Height="27"/>
@@ -47,7 +47,7 @@
             <Label  x:Name="Longitude"  Background="Transparent" Width="180"  BorderBrush="Transparent"  Visibility="Visible" FontSize="15" Content="Enter Longitude" Margin="0,10,0,0"/>
 
         </StackPanel>
-        <StackPanel Background="Transparent"   Visibility="Visible" x:Name="add_drone_stack" Orientation="Vertical" Grid.Column="1"  Margin="0,35,63,-37">
+        <StackPanel x:Name="add_BaseStation_stack" Background="Transparent"   Visibility="Visible"  Orientation="Vertical" Grid.Column="1"  Margin="0,35,63,-37">
             <TextBox  x:Name="ChooseId" Opacity="0.8"  BorderBrush="Transparent" Background="Bisque" ToolTip="Enter Id"  Text= "" TextChanged="TextBox_TextChanged_1" Width="145" Height="28"/>
 
 
@@ -61,5 +61,23 @@
             <Button x:Name="enter" Opacity="0.9"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,20,0,0" FontWeight="ExtraBlack"  Content="ADD"  Click="enter_your_baseStation" Width="120" Height="84" RenderTransformOrigin="0.61,2.198"/>
 
         </StackPanel>
+        <StackPanel x:Name="Update_BaseStation" Background="Transparent"    Visibility="Visible"  Orientation="Vertical" Margin="10,0,0,0" Height="434" VerticalAlignment="Center" Grid.Column="2">
+            <Label x:Name="IsD_U" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
+            <Label x:Name="IsD_UU" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
+            
+            <Label Foreground= "Black" x:Name="Name_UP" FontSize="15" Content="Enter name" Width="145" Height="28"/>
+            
+            <TextBox  x:Name="Name_Update" Opacity="0.8"  BorderBrush="Transparent" Background="Bisque" ToolTip="Enter name to update"  Text= ""  Width="145" Height="28" TextChanged="Name_UPDATE_TextChanged"/>
+            
+            <Label x:Name="IsD_UUU" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
+            
+            <Label Foreground= "Black" x:Name="NUS_UP" FontSize="15" Content="Enter number of slots" Width="156" Height="28"/>
+            
+            <TextBox  x:Name="SLOTS_UPDATE" Opacity="0.8"  BorderBrush="Transparent" Background="Bisque" ToolTip="Enter number of slots to update"  Text= "" Width="145" Height="28" TextChanged="SLOTS_UPDATE_TextChanged"/>
+
+            <Button x:Name="Update" Opacity="0.9"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,20,0,0" FontWeight="ExtraBlack"  Content="Update"  Width="120" Height="84" RenderTransformOrigin="0.61,2.198" Click="Update_Click"/>
+            <Button x:Name="Delete" Opacity="0.9" BorderBrush="Transparent" Visibility="Visible"  Margin="0,20,0,0" FontWeight="ExtraBlack" Content="Delete" Width="50" Height="30" Foreground="Red" Click="Delete_Click"/>
+        </StackPanel>
+
     </Grid>
 </Window>

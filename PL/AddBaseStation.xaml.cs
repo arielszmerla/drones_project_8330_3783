@@ -29,26 +29,32 @@ namespace PL
             Title = "ADD A BASE STATION";
             InitializeComponent();
             this.bl = bl;
-
+            add_BaseStation_titles.Visibility = Visibility.Visible;
+            add_BaseStation_stack.Visibility = Visibility.Visible;
         }
+        /// <summary>
+        /// constructor for double click on updating base station
+        /// </summary>
         BO.BaseStation bs = new();
-        public AddBaseStation(IBL bl, BaseStation bs)
+        public AddBaseStation(IBL bl, BaseStation baseStation)
         {
-
+            Title = "UPDATE";
             InitializeComponent();
+            this.bl = bl;
+            bs = baseStation;
+            Update_BaseStation.Visibility = Visibility.Visible;
         }
+
         private void End_the_page(object sender, RoutedEventArgs e)
         {
-            enter.Visibility = Visibility.Hidden;
+            PageStop.Visibility = Visibility.Hidden;
             this.Close();
         }
 
         private void AddBaseStationClosing(object sender, CancelEventArgs e)
         {
-            if (this.enter.Visibility != Visibility.Hidden)
+            if (PageStop.Visibility != Visibility.Hidden)
                 e.Cancel = true;
-            else
-                new BaseStationViewWindow(bl).Show();
         }
         private void View_Map(object sender, RoutedEventArgs e)
         {
@@ -167,7 +173,7 @@ namespace PL
                     ChooseLatitude.Background = Brushes.Red;
                     MessageBox.Show("enter a latitude between 29.000000 and 34.000000");
                 }
-                if (loc.Longitude < 35.171323 || loc.Longitude > 35202050)
+                if (loc.Longitude < 35.171323 || loc.Longitude > 35.202050)
                 {
 
                     ChooseLongitude.Text = "";
@@ -203,6 +209,52 @@ namespace PL
             }
             else
                 MessageBox.Show("you have to fill the red places");
+        }
+
+        private void Name_UPDATE_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (Name_Update.Text != "")
+                bs.Name = Name_Update.Text;
+
+        }
+
+        private void SLOTS_UPDATE_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SLOTS_UPDATE.Background = Brushes.Bisque;
+            int s;
+            int.TryParse(SLOTS_UPDATE.Text, out s);
+            bs.NumOfFreeSlots = s;
+        }
+
+        private void Update_Click(object sender, RoutedEventArgs e)
+        {
+            if (bs.NumOfFreeSlots < 0)
+            {
+                MessageBox.Show("Invalid number, please enter a number between 3 to 8");
+                SLOTS_UPDATE.Background = Brushes.Red;
+            }
+            try
+            {
+                bl.UpdateBaseStation(bs.Id, bs.NumOfFreeSlots, bs.Name);
+            }
+            catch (BO.GetException)
+            {
+                MessageBox.Show("Update failed");
+            }
+            this.Close();
+        }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bl.DeleteBasestation(bs.Id);
+            }
+            catch(DeleteException)
+            {
+                MessageBox.Show("Delete failed");
+            }
+            this.Close();
         }
     }
 }

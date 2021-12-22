@@ -28,7 +28,7 @@ namespace PL
         {
             InitializeComponent();
             this.bl = bl;
-        
+
             BaseStationView.ItemsSource = bl.GetBaseStationList();
             DataContext = BaseStationView.ItemsSource;
             BaseOptions.Items.Add("NumOfFreeSlots");
@@ -37,9 +37,14 @@ namespace PL
 
         private void End_the_page(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            PageStop.Visibility = Visibility.Hidden;
+            Close();
         }
-
+        private void BaseSViewClosing(object sender, CancelEventArgs e)
+        {
+            if (PageStop.Visibility != Visibility.Hidden)
+                e.Cancel = true;
+        }
 
 
         private void ResetList_Click(object sender, RoutedEventArgs e)
@@ -50,29 +55,22 @@ namespace PL
 
         private void BaseStationView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-           BO.BaseStation bs = (BO.BaseStation)BaseStationView.SelectedItem;
-            BO.BaseStation baseStation = new BO.BaseStation
+            BO.BaseStationToList bs = (BO.BaseStationToList)BaseStationView.SelectedItem;
+            if (bs == null)
             {
-                Id = bs.Id,
-                BaseStationLocation = bs.BaseStationLocation,
-                ChargingDrones = bs.ChargingDrones,
-                Name = bs.Name,
-                NumOfFreeSlots = bs.NumOfFreeSlots
-            };
-            
-            //BO.Drone dr = new BO.Drone
-            //{
-            //    Id = drone.Id,
-            //    BatteryStatus = drone.BatteryStatus,
-            //    DronePlace = drone.DroneLocation,
-            //    MaxWeight = drone.MaxWeight,
-            //    Model = drone.Model,
-            //    PID = null,
-            //    Status = drone.Status
-            //};
-            //Closing_Button.Visibility = Visibility.Hidden;
-            //new AddDrone(bl1, dr).Show();
-            //Close();
+                MessageBox.Show("Please click on a base station");
+            }
+            else
+            {
+                BO.BaseStation baseStation = new BO.BaseStation
+                {
+                    Id = bs.Id,
+                    Name = bs.Name,
+                    NumOfFreeSlots = bs.NumOfFreeSlots
+                };
+                new AddBaseStation(bl, baseStation).Show();
+                Close();
+            }
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -80,7 +78,7 @@ namespace PL
 
         }
 
-      
+
 
         private void BaseOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -97,6 +95,6 @@ namespace PL
             new AddBaseStation(bl).Show();
         }
 
-       
+
     }
 }

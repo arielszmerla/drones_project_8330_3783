@@ -4,13 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        Closing="BaseSViewClosing"
         mc:Ignorable="d"
         Title="Base station view window" Height="450" Width="800">
     <Window.Background>
         <ImageBrush ImageSource="\images\baseStationPic.png" />
     </Window.Background>
     <Grid>
-        
+
         <ListView x:Name="BaseStationView"  DataContext="" MouseDoubleClick="BaseStationView_MouseDoubleClick"  Background="Transparent" Margin="0,74,163,10" SelectionChanged="ListView_SelectionChanged">
             <ListView.View>
                 <GridView>
@@ -33,7 +34,7 @@
                 </GroupStyle>
             </ListView.GroupStyle>
         </ListView>
-        <Button x:Name="PageStop"  Visibility="Visible" HorizontalAlignment="Left"  Margin="730,357,0,0" Click="End_the_page" Height="37" VerticalAlignment="Top" RenderTransformOrigin="0.526,0.522" Width="40">
+        <Button x:Name="PageStop"  Visibility="Visible" HorizontalAlignment="Left"  Margin="710,357,0,0" Click="End_the_page" Height="52" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="60">
             <Button.Background>
 
 

@@ -209,7 +209,7 @@ namespace BL
                 throw new GetException($"id {myId} doesn't exist ");
             }
             DO.BaseStation bs = myDal.GetBaseStationsList(null).FirstOrDefault(bs => bs.Id == myId);
-            if (numOfSlots != null)
+            if (numOfSlots != 0)
                 bs.NumOfSlots = numOfSlots;
             if (name != "Base ")
                 bs.Name = name;

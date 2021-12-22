@@ -122,12 +122,12 @@ namespace PL
                     ChooseLatitude.Background = Brushes.Red;
                     MessageBox.Show("enter a latitude between 29.000000 and 34.000000");
                 }
-                if (loc.Longitude < 35.171323 || loc.Longitude > 35202050)
+                if (loc.Longitude < 35.171323 || loc.Longitude > 35.202050)
                 {
 
                     ChooseLongitude.Text = "";
                     ChooseLatitude.Background = Brushes.Red;
-                    MessageBox.Show("enter a latitude between 34.000000 and 35.000000");
+                    MessageBox.Show("enter a Longitude between 34.000000 and 35.000000");
                 }
                 if (ChooseLongitude.Text == "" ||
                      ChooseLatitude.Text == "")
