@@ -1,4 +1,6 @@
-﻿namespace BO
+﻿using System.Collections.Generic;
+
+namespace BO
 {/// <summary>
 /// implement BaseStationToList class
 /// </summary>
@@ -8,6 +10,8 @@
         public string Name { get; set; }
         public int NumOfFreeSlots { get; set; }
         public int NumOfSlotsInUse { get; set; }
+        public Location BaseStationLocation { get; set; }
+        public List<DroneCharge> ChargingDrones { get; set; }
         public bool Valid { get; set; }
         public override string ToString()
         {

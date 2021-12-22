@@ -97,7 +97,7 @@ namespace DalObject
         public void UpdateBaseStationFromBl(BaseStation bs)
         {
             
-            BaseStation? b = DataSource.BaseStations.FirstOrDefault(ba => ba.Id == bs.Id);//.Clone();
+          BaseStation? b = DataSource.BaseStations.FirstOrDefault(ba => ba.Id == bs.Id);//.Clone();
             if ( b== null)
             {
                 throw new BaseExeption($"base station {bs.Id} not found\n");
