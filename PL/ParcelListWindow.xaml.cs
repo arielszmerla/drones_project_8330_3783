@@ -92,12 +92,12 @@ namespace PL
                     {
                         bl.DeleteParcel(p.Id);
                         MessageBox.Show("Delete done");
-                    } 
-            catch (BO.DeleteException exc)
-                { MessageBox.Show(exc.ToString()); }
-                Closing_Button.Visibility = Visibility.Hidden;
-                
-                   
+                    }
+                    catch (BO.DeleteException exc)
+                    { MessageBox.Show(exc.ToString()); }
+                    Closing_Button.Visibility = Visibility.Hidden;
+
+
                 }
             }
         }

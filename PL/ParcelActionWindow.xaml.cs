@@ -47,7 +47,7 @@ namespace PL
             this.p = p;
             try
             {
-                DataContext = bl.GetParcel(p.Id);
+                DataContext = p;
             }
             catch (BO.GetException g) { MessageBox.Show(g.ToString()); }
             set_parcel_Priority.Visibility = Visibility.Collapsed;
