@@ -18,9 +18,9 @@ namespace PL
         {
           
             base.OnStartup(e);
-            PL.UserMainWindow window = new UserMainWindow();
+          //  PL.UserMainWindow window = new UserMainWindow();
             UserViewModel VM = new UserViewModel();
-            window.DataContext = VM;
+        //   window.DataContext = VM;
          //   window.Show();
         }
     }
