@@ -8,9 +8,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\net5.0-windows\</OutputPath>
-    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>..\net5.0-windows\net5.0-windows\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DefineConstants />
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
   </PropertyGroup>
 
   <ItemGroup>

@@ -29,6 +29,11 @@ namespace BL
             {
                 throw new AddException($"id {customer.Id} exist already");
             }
+            if (customer.Id < 10000000 ||
+           customer.Id >999999999)
+                throw new AddException("Invalid id  ");
+            if (customer.Location.Latitude < 31.740967 || customer.Location.Latitude > 31.815177)
+                throw new AddException("Incorect Latitude, please enter correct Jerusalem coordinates");
 
             try
             {

@@ -194,6 +194,7 @@ namespace PL
                 txtphone.Background = Brushes.Transparent;
                 c.Phone = txtphone.Text;
             }
+            if (c.Id < 10000000)
             if (lat != 0 && longi != 0)
             {
                 loc.Latitude = lat;
@@ -208,7 +209,7 @@ namespace PL
                     new UserMainWindow(c.Id, bl).Show();
                 }
                 catch( BO.AddException ex) { 
-                    MessageBox.Show(ex.ToString());
+                    MessageBox.Show(ex.Message.ToString());
                 }
 
 
