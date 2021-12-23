@@ -21,13 +21,13 @@
         <ComboBox IsEditable="True"  Visibility="Collapsed" IsEnabled="True" x:Name="ViewOptions"  HorizontalAlignment="Left" Text="Make Your Choice" Margin="305,349,0,0" VerticalAlignment="Top" Width="150" Height="40" SelectionChanged="ViewOptions_SelectionChanged" Grid.ColumnSpan="2"
                  />
         <StackPanel Grid.Column="0" Margin="43,0,0,0">
-            <Button  x:Name="Client_Entry" Content="CLIENT ENTRY" HorizontalAlignment="Left" Margin="100
-                    ,217,0,0" VerticalAlignment="Top" Height="50" Width="82" Click="Client_Entry_Click"/>
+            <Button  x:Name="Client_Entry" Content="CLIENT ENTRY" HorizontalAlignment="Right" Margin="1,300,0,250"
+                     VerticalAlignment="Top" Height="50" Width="82" Click="Client_Entry_Click"/>
             <TextBox  x:Name="id_check" Visibility="Collapsed" Width="60" Margin="0,
                       15,0,0" TextChanged="client_id_TextChanged"  />
         </StackPanel>
-        <StackPanel Grid.Column="1" Margin="43,0,0,0">
-            <Button   x:Name="Manager_Entry" Content="MANAGER" Margin="246,217,0,0" VerticalAlignment="Top" Height="50" HorizontalAlignment="Center" Width="82" Grid.Column="1"   Click="Manager_Entry_Click"/>
+        <StackPanel Grid.Column="1" Margin="10,0,0,0">
+            <Button   x:Name="Manager_Entry" Content="MANAGER" Margin="1,300,200,0" VerticalAlignment="Top" Height="50" HorizontalAlignment="Left" Width="82" Grid.Column="1"   Click="Manager_Entry_Click"/>
             <TextBox  x:Name="password" Visibility="Collapsed" Width="60" Margin="246,
                       15,0,0" TextChanged="password_TextChanged"  />
         </StackPanel>
