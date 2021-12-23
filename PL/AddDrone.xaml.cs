@@ -51,6 +51,7 @@ namespace PL
             InitializeComponent();
             Title = "ACTIONS";
             update_drone.Visibility = Visibility.Visible;
+            DataContext = drone;
         }
 
         BO.Drone drone = new();
@@ -156,13 +157,7 @@ namespace PL
                 MessageBox.Show("you have to fill the red places");
         }
 
-        private void ShowDroneAdded_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-            ShowDroneAdded.Text = dr.ToString();
-
-
-        }
+        
         private void View_Map(object sender, RoutedEventArgs e)
         {
             new MapsDisplay(dr, bl1).Show();
@@ -183,8 +178,7 @@ namespace PL
             Get_model.Visibility = Visibility.Hidden;
             this.dr = bl1.GetDrone(dr.Id);
             MessageBox.Show("Managed Update");
-            this.ShowDroneAdded.Text = dr.ToString();
-            this.ShowDroneAdded.Visibility = Visibility.Visible;
+        
         }
 
 
@@ -207,8 +201,7 @@ namespace PL
             TimeSpan time = new TimeSpan(int.Parse(timespan_get.Text), 0, 0);
             bl1.UpdateReleaseDroneFromCharge(dr.Id, time);
             timespan_get.Visibility = Visibility.Hidden;
-            this.ShowDroneAdded.Text = dr.ToString();
-            this.ShowDroneAdded.Visibility = Visibility.Visible;
+    
         }
         private void DeliveryChanges_Click(object sender, RoutedEventArgs e)
         {
@@ -241,8 +234,7 @@ namespace PL
                 this.myEvent("Missed Update");
             }
             this.myEvent("Managed Update");
-            this.ShowDroneAdded.Text = dr.ToString();
-            this.ShowDroneAdded.Visibility = Visibility.Visible;
+           
         }
 
         private void End_the_page(object sender, RoutedEventArgs e)
@@ -266,7 +258,7 @@ namespace PL
         }
         private void Form2_FormClosing(object sender, CancelEventArgs e)
         {
-            this.ShowDroneAdded.Text = dr.ToString();
+     
             this.Show();
 
         }

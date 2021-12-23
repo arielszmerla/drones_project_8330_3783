@@ -33,14 +33,7 @@ namespace BL
             p.Assignment = parcel.Scheduled;
             p.Created = parcel.Requested;
             p.Delivered = parcel.Delivered;
-            /*if (p.Assignment != DateTime.MinValue)
-             {
-                 DroneToList d = drones.Find(dr => dr.Id == parcel.DroneId);
-                 int ids= d.Id;
-                 p.DIP.Id = ids;
-                 p.DIP.DronePlace = d.DroneLocation;
-                 p.DIP.BatteryStatus = d.BatteryStatus;
-             }*/
+           
             p.PickedUp = parcel.PickedUp;
             p.Priority = (Enums.Priorities)parcel.Priority;
             CustomerInParcel send = new CustomerInParcel { Id = parcel.SenderId, Name = customers.Find(cs => cs.Id == parcel.SenderId).Name };
@@ -77,17 +70,17 @@ namespace BL
         {
 
             DO.Customer myCust = new();
-            List<DO.Customer> customers = (List<DO.Customer>)myDal.GetCustomerList();
+            IEnumerable<DO.Customer> customers =myDal.GetCustomerList(c=>c.Id==idP);
             if (customers.Any(pc => pc.Id == idP))
             {
-                myCust = customers.Find(pc => pc.Id == idP);
+                myCust = customers.FirstOrDefault(pc => pc.Id == idP);
             }
             else
                 throw new GetException("id of Customer not found");
             Customer customer = new Customer();
             customer.Id = myCust.Id;
-            customer.Location.Latitude = myCust.Latitude;
-            customer.Location.Longitude = myCust.Longitude;
+
+            customer.Location = new Location { Latitude = myCust.Latitude, Longitude = myCust.Longitude };
             customer.Name = myCust.Name;
             customer.Phone = myCust.Phone;
             List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList(null);
@@ -107,8 +100,8 @@ namespace BL
                     tmp.ParcelStatus = Enums.ParcelStatus.Assigned;
                 else
                     tmp.ParcelStatus = Enums.ParcelStatus.Created;
-                tmp.CIP.Id = it.SenderId;
-                tmp.CIP.Name = customers.Find(pc => pc.Id == it.SenderId).Name;
+                tmp.CIP = new CustomerInParcel { Id = it.SenderId, Name = myDal.GetCustomer(it.SenderId).Name };
+              
                 tmp.WeightCategorie = (Enums.WeightCategories)it.Weight;
                 customerTmp.Add(tmp);
             }
@@ -127,8 +120,11 @@ namespace BL
                     tmp.ParcelStatus = Enums.ParcelStatus.Assigned;
                 else
                     tmp.ParcelStatus = Enums.ParcelStatus.Created;
+          
+                tmp.CIP=new CustomerInParcel { Id= it.TargetId , Name = myDal.GetCustomer(it.TargetId).Name
+            };
                 tmp.CIP.Id = it.TargetId;
-                tmp.CIP.Name = customers.Find(pc => pc.Id == it.TargetId).Name;
+                tmp.CIP.Name = customers.FirstOrDefault(pc => pc.Id == it.TargetId).Name;
                 tmp.WeightCategorie = (Enums.WeightCategories)it.Weight;
                 customerTmp.Add(tmp);
             }
@@ -313,7 +309,7 @@ namespace BL
                 ParcelToList parcelToList = new ParcelToList
                 {
                     Id = it.Id,
-                    Priorities = (Enums.Priorities)it.Priority,
+                    Priority = (Enums.Priorities)it.Priority,
                     WeightCategorie = (Enums.WeightCategories)it.Weight
                 };
 
@@ -328,6 +324,34 @@ namespace BL
 
                 return (from item in parcelTos
                         where item.WeightCategorie == statuses
+                        select item);
+
+        }
+        public IEnumerable<ParcelToList> GetParcelList(string name)
+        {
+            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList(null);
+            List<ParcelToList> parcelTos = new();
+            foreach (var it in parcels)
+            {
+
+                ParcelToList parcelToList = new ParcelToList
+                {
+                    Id = it.Id,
+                    Priority = (Enums.Priorities)it.Priority,
+                    WeightCategorie = (Enums.WeightCategories)it.Weight
+                };
+
+
+                parcelToList.SenderName = myDal.GetCustomerList().FirstOrDefault(s => s.Id == it.SenderId).Name;
+                parcelToList.TargetName = myDal.GetCustomerList().FirstOrDefault(s => s.Id == it.TargetId).Name;
+                parcelTos.Add(parcelToList);
+            }
+            if (name=="")
+                return parcelTos;
+            else
+
+                return (from item in parcelTos
+                        where item.SenderName== name || item.TargetName==name
                         select item);
 
         }

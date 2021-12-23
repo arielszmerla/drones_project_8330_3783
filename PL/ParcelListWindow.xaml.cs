@@ -20,12 +20,12 @@ namespace PL
     public partial class ParcelListWindow : Window
     {
         BLAPI.IBL bl;
-        public ParcelListWindow(BLAPI.IBL bl)
+        public ParcelListWindow(BLAPI.IBL bl,string name="")
         {
 
             InitializeComponent();
             this.bl = bl;
-            ParcelViewList.ItemsSource = bl.GetParcelList();
+            ParcelViewList.ItemsSource = bl.GetParcelList(name);
             DataContext = ParcelViewList.ItemsSource;
             Weight_Choice.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
             you_want_grouping.Items.Add("SenderName");
@@ -92,14 +92,15 @@ namespace PL
                     {
                         bl.DeleteParcel(p.Id);
                         MessageBox.Show("Delete done");
-                    } 
-            catch (BO.DeleteException exc)
-                { MessageBox.Show(exc.ToString()); }
-                Closing_Button.Visibility = Visibility.Hidden;
-                
-                   
+                    }
+                    catch (BO.DeleteException exc)
+                    { MessageBox.Show(exc.ToString()); }
+                    Closing_Button.Visibility = Visibility.Hidden;
+
+
                 }
             }
+          
         }
     }
 }

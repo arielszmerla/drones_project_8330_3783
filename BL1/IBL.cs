@@ -76,10 +76,15 @@ namespace BLAPI
         /// <returns></returns>
         IEnumerable<BaseStationToList> GetBaseStationList(Func<BaseStationToList, bool> predicat = null);
         /// <summary>
-        /// method to return a list of all the parcels in data base.
+        /// method to return a list of all the parcels in data base with a certain types.
         /// </summary>
         /// <returns></returns>
         IEnumerable<ParcelToList> GetParcelList(Enums.WeightCategories? weight = null);
+        /// <summary>
+        /// method to return a list of all the parcels of a client in data base.
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<ParcelToList> GetParcelList(string name);
         /// <summary>
         /// method to return a list of all the drones in the data base.
         /// </summary>

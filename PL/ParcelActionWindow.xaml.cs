@@ -47,13 +47,14 @@ namespace PL
             this.p = p;
             try
             {
-                DataContext = bl.GetParcel(p.Id);
+                DataContext = p;
             }
             catch (BO.GetException g) { MessageBox.Show(g.ToString()); }
             set_parcel_Priority.Visibility = Visibility.Collapsed;
             set_parcel_Weight.Visibility = Visibility.Collapsed;
             show_parcel_Weight.Visibility = Visibility.Visible;
             show_Priority.Visibility = Visibility.Visible;
+            parcel = bl.GetParcel(p.Id);
         }
 
         public ParcelActionWindow(IBL bl, ParcelToList p, int v)
@@ -69,18 +70,7 @@ namespace PL
             { MessageBox.Show(exc.ToString()); }
 
         }
-        /*
-         
-         public int Id { get; set; }
-        public CustomerInParcel Sender { get; set; }
-        public CustomerInParcel Target { get; set; }
-        public  BO.Enums.WeightCategories WeightCategories { get; set; }
-        public BO.Enums.Priorities Priority { get; set; }
-        public DroneInParcel DIP { get; set; }
-        public DateTime? Created { get; set; }
-        public DateTime? Assignment { get; set; }
-        public DateTime? PickedUp { get; set; }
-        public DateTime? Delivered { get; set; }*/
+
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             int s;
@@ -206,6 +196,21 @@ namespace PL
                     MessageBox.Show(exc.ToString());
                 }
             }
+
+        }
+
+        private void show_drone_Click(object sender, RoutedEventArgs e)
+        {
+            if (parcel.Assignment <= DateTime.Now && parcel.Delivered > DateTime.Now)
+            {
+                new AddDrone(bl, bl.GetDrone(parcel.DIP.Id)).Show();
+            }
+            else MessageBox.Show("not on drone");
+        }
+
+        private void show_client_Click(object sender, RoutedEventArgs e)
+        {
+            new CustomerActionWindow(bl, parcel.Sender.Id).Show();
 
         }
     }

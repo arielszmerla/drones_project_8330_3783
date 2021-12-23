@@ -19,11 +19,11 @@ namespace PL
     /// </summary>
     public partial class CustomerListWindow : Window
     {
-        BLAPI.IBL bl1;
+        BLAPI.IBL bl;
         public CustomerListWindow(BLAPI.IBL bl)
         {
             InitializeComponent();
-            bl1 = bl;
+            this.bl = bl;
             CustomerViewList.ItemsSource = bl.GetCustomerList();
         }
 
@@ -41,18 +41,26 @@ namespace PL
                 if (result == MessageBoxResult.Yes)
                 {
                     //Closing_Button.Visibility = Visibility.Hidden;
-                    new CustomerActionWindow(bl1, customer).Show();
+                    new CustomerActionWindow(bl, customer).Show();
                    
                 }
-                else
+                else if (result==MessageBoxResult.No)
                 {
                     result = MessageBox.Show("Do you want to delete?", "Make Your Choice", button);
                     if (result == MessageBoxResult.Yes)
                     {
                         //  Closing_Button.Visibility = Visibility.Hidden;
-                        new CustomerActionWindow(bl1, customer.Id).Show();
+                        new CustomerActionWindow(bl, customer.Id).Show();
                     }
                 }
+              
+                    result = MessageBox.Show("Do you want to see the parcels?", "Make Your Choice", button);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        new ParcelListWindow(bl, customer.Name).Show();
+    
+                }
+                
             }
         }
 

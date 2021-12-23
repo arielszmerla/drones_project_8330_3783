@@ -83,7 +83,7 @@ namespace DalObject
         public IEnumerable<BaseStation> GetBaseStationsList(Predicate<BaseStation> predicat)
         {
             if (predicat == null)
-                return DataSource.BaseStations.ToList();
+                return DataSource.BaseStations.Select(item => item).ToList();
             else
                 return (from item in DataSource.BaseStations
                         where predicat(item)
@@ -191,7 +191,7 @@ namespace DalObject
         public IEnumerable<Parcel> GetParcelList(Predicate<Parcel> predicate)
         {
             if (predicate == null)
-                return DataSource.Parcels.ToList();
+                return DataSource.Parcels.Select(item=>item).ToList();
             else
                 return (from item in DataSource.Parcels
                         where predicate(item)
@@ -277,7 +277,7 @@ namespace DalObject
         public IEnumerable<Drone> GetDroneList(Predicate<Drone> predicate)
         {
             if (predicate == null)
-                return DataSource.Drones.ToList();
+                return DataSource.Drones.Select(item => item).ToList();
             else
                 return (from item in DataSource.Drones
                         where predicate(item)
@@ -339,7 +339,7 @@ namespace DalObject
         {
 
             if (predicate == null)
-                return DataSource.Customers.ToList();
+                return DataSource.Customers.Select(item => item).ToList();
             else
                 //return drones.Where(predicate);
                 return (from item in DataSource.Customers

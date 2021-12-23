@@ -10,7 +10,7 @@ namespace BO
         public string SenderName { get; set; }
         public string TargetName { get; set; }
         public BO.Enums.WeightCategories WeightCategorie { get; set; }
-        public BO.Enums.Priorities Priorities { get; set; }
+        public BO.Enums.Priorities Priority { get; set; }
         /// <summary>
         /// to string override
         /// </summary>
@@ -22,7 +22,7 @@ namespace BO
             _result += $"Sender is {SenderName}\n";
             _result += $"Target is {TargetName}\n";
             _result += $"WeightCategorie is {WeightCategorie}\n";
-            _result += $"Priorities is {Priorities}\n";
+            _result += $"Priorities is {Priority}\n";
             return _result;
         }
     }
