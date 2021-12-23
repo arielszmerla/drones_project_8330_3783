@@ -370,6 +370,17 @@ namespace BL
 
 
         }
+
+        public IEnumerable<DroneToList> GetDronesInBaseStationList(int Id)
+        {
+            Location BaseLoc = new Location {Latitude = myDal.GetBaseStation(Id).Latitude ,
+                Longitude = myDal.GetBaseStation(Id).Longitude };
+            return (from item in drones
+                    where item.DroneLocation == BaseLoc &&
+                    item.Status == Enums.DroneStatuses.Maintenance
+                    select item);                        
+        }
+
         public IEnumerable<DroneToList> GetDroneList(Enums.DroneStatuses? statuses = null, Enums.WeightCategories? weight = null)
         {
             if (statuses == null && weight == null)

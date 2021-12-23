@@ -55,8 +55,13 @@ namespace BL
         { //checks if exists already
           if (myDal.GetBaseStationsList(null).Any(item =>item.Id == station.Id))
                     throw new AddException($"id {station.Id} exist already");
-                
-            
+
+            if (station.NumOfFreeSlots < 3 || station.NumOfFreeSlots > 20)
+                throw new AddException("Invalid amount of number of free slots ");
+            if (station.BaseStationLocation.Latitude < 31.740967 || station.BaseStationLocation.Latitude > 31.815177)
+                throw new AddException("Incorect Latitude, please enter correct Jerusalem coordinates");
+            if (station.BaseStationLocation.Longitude < 35.171323 || station.BaseStationLocation.Longitude > 35.202050)
+                throw new AddException("Incorect Longitude, please enter correct Jerusalem coordinates");
             try
             {
                 //calling mydal after mapping BO to DO
@@ -71,7 +76,6 @@ namespace BL
             }
             catch (BaseExeption d)
             {
-
                 throw new AddException($"The Base station {station.Id} already exists ", d);
             }
         }
