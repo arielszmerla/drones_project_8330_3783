@@ -193,7 +193,8 @@ namespace PL
                 {
                     bl.AddBaseStation(bs);
                     MessageBox.Show("Managed Add");
-                    enter.Visibility = Visibility.Hidden;
+                    PageStop.Visibility = Visibility.Hidden;
+                    new BaseStationViewWindow(bl).Show();
                     this.Close();
 
 
@@ -201,7 +202,7 @@ namespace PL
                 catch (BO.AddException)
                 {
                     MessageBox.Show("Missed Add");
-                    PageStop.Visibility = Visibility.Hidden;
+                    return;
                 }
             }
             else
