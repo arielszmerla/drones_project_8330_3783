@@ -75,18 +75,20 @@ namespace PL
         private void ParcelViewList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BO.ParcelToList p = (BO.ParcelToList)ParcelViewList.SelectedItem;
-            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxButton button  = MessageBoxButton.YesNo;
             MessageBoxResult result = MessageBox.Show("Do you want to update ?", "Make Your Choice", button);
             if (result == MessageBoxResult.Yes)
             {
                 Closing_Button.Visibility = Visibility.Hidden;
-                new ParcelActionWindow(bl, p).Show();
                 Close();
+                new ParcelActionWindow(bl, p).Show();
+            
+                return;
             }
             else
             {
-                result = MessageBox.Show("Do you want to delete?", "Make Your Choice", button);
-                if (result == MessageBoxResult.Yes)
+                MessageBoxResult res = MessageBox.Show("Do you want to delete?", "Make Your Choice", button);
+                if (res == MessageBoxResult.No)
                 {
                     try
                     {

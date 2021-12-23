@@ -25,23 +25,27 @@ namespace PL
 
 
 
-        public CustomerActionWindow(BLAPI.IBL bl, int n)
+        public CustomerActionWindow(BLAPI.IBL bl, int n, int v=0)
         {
             InitializeComponent();
             this.bl1 = bl;
-            try
+            if (v == 0)
             {
-                bl1.DeleteCustomer(n)
-                   ;
-                MessageBox.Show("Delete Done!");
-             
+                try
+                {
+                    bl1.DeleteCustomer(n)
+                       ;
+                    MessageBox.Show("Delete Done!");
 
+
+                }
+                catch (BO.DeleteException exc)
+                {
+                    MessageBox.Show(exc.ToString());
+                    Close();
+                }
             }
-            catch (BO.DeleteException exc)
-            {
-                MessageBox.Show(exc.ToString());
-                Close();
-            }
+            
 
         }
         int id = 0;
