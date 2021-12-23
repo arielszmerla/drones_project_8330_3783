@@ -53,7 +53,9 @@ namespace PL
             set_parcel_Priority.Visibility = Visibility.Collapsed;
             set_parcel_Weight.Visibility = Visibility.Collapsed;
             show_parcel_Weight.Visibility = Visibility.Visible;
+           // show_parcel_Weight.Text = p.SenderName;
             show_Priority.Visibility = Visibility.Visible;
+           // show_Priority.Text = p.Priority.ToString();
             parcel = bl.GetParcel(p.Id);
         }
 
@@ -210,8 +212,10 @@ namespace PL
 
         private void show_client_Click(object sender, RoutedEventArgs e)
         {
-            new CustomerActionWindow(bl, parcel.Sender.Id).Show();
+            new CustomerActionWindow(bl, parcel.Sender.Id,1).Show();
 
         }
+
+     
     }
 }
