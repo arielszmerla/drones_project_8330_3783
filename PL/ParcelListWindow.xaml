@@ -17,7 +17,7 @@
         <ListView Grid.Row="1" x:Name="ParcelViewList"  Background="Transparent" Margin="0,89,100,0" SelectionChanged="ParcelViewList_SelectionChanged" >
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Path=Id}" />
+                    <GridViewColumn  Header="ID" DisplayMemberBinding="{Binding Path=Id}" />
                     <GridViewColumn Header="Sender ID"  DisplayMemberBinding="{Binding Path=SenderName}" />
                     <GridViewColumn Header="target ID"  DisplayMemberBinding="{Binding Path=TargetName}" />
                     <GridViewColumn Header="Weight"  DisplayMemberBinding="{Binding Path=WeightCategorie}" />

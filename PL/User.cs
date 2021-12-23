@@ -8,10 +8,7 @@ namespace PO
 {
     public class User : INotifyPropertyChanged
     {
-        private int numberOfParcelsSentAndDelivered;
-        private int numberOfParcelsSentButNotDelivered;
-        private int numberOfParcelsReceived;
-        private int numberOfParcelsonTheWay;
+
         private int userId;
         private string name;
         private string phone;
@@ -52,56 +49,6 @@ namespace PO
                 OnPropertyChanged("Phone");
             }
         }
-        public int NumberOfParcelsSentAndDelivered
-        {
-            get
-            {
-                return numberOfParcelsSentAndDelivered;
-            }
-            set
-            {
-                numberOfParcelsSentAndDelivered = value;
-                OnPropertyChanged("NumberOfParcelsSentAndDelivered");
-            }
-        }
-
-        public int NumberOfParcelsSentButNotDelivered
-        {
-            get
-            {
-                return numberOfParcelsSentButNotDelivered;
-            }
-            set
-            {
-                numberOfParcelsSentButNotDelivered = value;
-                OnPropertyChanged("NumberOfParcelsSentButNotDelivered");
-            }
-        }
-        public int NumberOfParcelsReceived
-        {
-            get
-            {
-                return numberOfParcelsReceived;
-            }
-            set
-            {
-                numberOfParcelsReceived = value;
-                OnPropertyChanged("NumberOfParcelsReceived");
-            }
-        }
-        public int NumberOfParcelsonTheWay
-        {
-            get
-            {
-                return numberOfParcelsonTheWay;
-            }
-            set
-            {
-                numberOfParcelsonTheWay = value;
-                OnPropertyChanged("NumberOfParcelsonTheWay");
-            }
-        }
-
         #region INotifyPropertyChanged Members  
 
         public event PropertyChangedEventHandler PropertyChanged;

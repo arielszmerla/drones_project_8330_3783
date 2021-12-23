@@ -152,10 +152,10 @@ namespace DS
                 Drones.Add(d);
                 int customersInput;
 
-                for (customersInput = 11; customersInput >= 0; customersInput--)  // 10 min, 100 max values to initialize
+                for (customersInput = 9; customersInput >= 0; customersInput--)  // 10 min, 100 max values to initialize
                     Customers.Add(new Customer()///create new objects as asked
                     {
-                        Id = DO.StringAdapter.lastDigitID(customersInput),
+                        Id =(100000000+customersInput),
                         //Israel coordinates range  31.740967, 35.171323
                         Latitude = (double)random.Next(31740967, 31815177) / (double)1000000,
                         Longitude = (double)random.Next(35171323, 35202050) / (double)1000000,
