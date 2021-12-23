@@ -29,7 +29,7 @@ namespace BLAPI
         /// method to add a drone
         /// </summary>
         /// <param name="drone"></drone to be sent>
-      void AddDrone(Drone drone);
+        void AddDrone(Drone drone);
         /// <summary>
         /// mathod to add a parcel
         /// </summary>
@@ -48,7 +48,7 @@ namespace BLAPI
         /// <param name="idP"></param>
         /// <returns></returns>
         Parcel GetParcel(int idP);
-       
+
 
         /// <summary>
         /// method that returns a base station by Id
@@ -75,6 +75,12 @@ namespace BLAPI
         /// </summary>
         /// <returns></returns>
         IEnumerable<BaseStationToList> GetBaseStationList(Func<BaseStationToList, bool> predicat = null);
+        /// <summary>
+        /// returns list of all drones in a certain base station
+        /// </summary>
+        /// <param name="predicat"></param>
+        /// <returns></returns>
+        IEnumerable<DroneToList> GetDronesInBaseStationList(int Id);
         /// <summary>
         /// method to return a list of all the parcels in data base with a certain types.
         /// </summary>

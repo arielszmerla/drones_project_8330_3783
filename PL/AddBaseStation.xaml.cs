@@ -117,7 +117,7 @@ namespace PL
             }
             else
             {
-                ChooseName.Background = Brushes.Transparent;
+                ChooseName.Background = Brushes.Bisque;
                 bs.Name = ChooseName.Text;
             }
 
@@ -127,7 +127,7 @@ namespace PL
             int.TryParse(ChooseNumOfFreeSlots.Text, out s);
             if (s > 0)
             {
-                ChooseNumOfFreeSlots.Background = Brushes.Transparent;
+                ChooseNumOfFreeSlots.Background = Brushes.Bisque;
                 bs.NumOfFreeSlots = s;
             }
             else
@@ -143,7 +143,7 @@ namespace PL
             double.TryParse(ChooseLatitude.Text, out y);
             if (y >= 0)
             {
-                ChooseLatitude.Background = Brushes.Transparent;
+                ChooseLatitude.Background = Brushes.Bisque;
                 loc.Latitude = y;
             }
             else
@@ -199,9 +199,9 @@ namespace PL
 
 
                 }
-                catch (BO.AddException)
+                catch (BO.AddException x)
                 {
-                    MessageBox.Show("Missed Add");
+                    MessageBox.Show(x.ToString());
                     return;
                 }
             }
@@ -233,7 +233,7 @@ namespace PL
                 bs.Name = Name_Update.Text;
             if (bs.NumOfFreeSlots < 0)
             {
-                MessageBox.Show("Invalid number, please enter a number between 3 to 8");
+                MessageBox.Show("Please enter a positive number");
                 SLOTS_UPDATE.Text = "";
                 SLOTS_UPDATE.Background = Brushes.Red;
             }
@@ -241,9 +241,9 @@ namespace PL
             {
                 bl.UpdateBaseStation(bs.Id, bs.NumOfFreeSlots, bs.Name);
             }
-            catch (BO.GetException)
+            catch (BO.GetException x)
             {
-                MessageBox.Show("Update failed");
+                MessageBox.Show(x.ToString());
             }
             PageStop.Visibility = Visibility.Hidden;
             new BaseStationViewWindow(bl).Show();
@@ -256,15 +256,18 @@ namespace PL
             {
                 bl.DeleteBasestation(bs.Id);
             }
-            catch (DeleteException)
+            catch (DeleteException x)
             {
-                MessageBox.Show("Delete failed");
+                MessageBox.Show(x.ToString());
             }
             PageStop.Visibility = Visibility.Hidden;
             new BaseStationViewWindow(bl).Show();
             this.Close();
         }
 
-      
+        private void ViewDrones_Click(object sender, RoutedEventArgs e)
+        {
+            new DroneListWindow1(bs.Id,bl).Show();
+        }
     }
 }

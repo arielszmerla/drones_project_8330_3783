@@ -25,6 +25,9 @@ namespace PL
     {
 
         private IBL bl1;
+        private int id;
+        private IBL bl;
+
         public DroneListWindow1(IBL bl1)
         {
 
@@ -40,6 +43,13 @@ namespace PL
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("Model");
             view.GroupDescriptions.Add(groupDescription);
 
+        }
+
+        public DroneListWindow1(int id, IBL bl)
+        {
+            this.id = id;
+            this.bl = bl;
+            InitializeComponent();
         }
 
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
