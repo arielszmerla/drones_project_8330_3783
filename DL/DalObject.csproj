@@ -6,12 +6,11 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\net5.0-windows\</OutputPath>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DLAPI\DLAPI.csproj" />
-    <ProjectReference Include="..\DS\DS.csproj" />
   </ItemGroup>
 
 </Project>
