@@ -17,8 +17,7 @@
       },
       "DalObject/1.0.0": {
         "dependencies": {
-          "DLAPI": "1.0.0",
-          "DS": "1.0.0"
+          "DLAPI": "1.0.0"
         },
         "runtime": {
           "DalObject.dll": {}
@@ -27,14 +26,6 @@
       "DLAPI/1.0.0": {
         "runtime": {
           "DLAPI.dll": {}
-        }
-      },
-      "DS/1.0.0": {
-        "dependencies": {
-          "DLAPI": "1.0.0"
-        },
-        "runtime": {
-          "DS.dll": {}
         }
       }
     }
@@ -51,11 +42,6 @@
       "sha512": ""
     },
     "DLAPI/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "DS/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

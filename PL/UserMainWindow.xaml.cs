@@ -22,11 +22,14 @@ namespace PL
     public partial class UserMainWindow : Window
     {
 
-        public UserMainWindow()
+        public UserMainWindow(IBL bl,int a)
 
         {
+            this.bl = bl;
             InitializeComponent();
-
+            UserGrid.Visibility = Visibility.Collapsed;
+            btnUpdate.Visibility = Visibility.Collapsed;
+            
         }
         BLAPI.IBL bl;
         public UserMainWindow(IBL bl)
@@ -43,6 +46,7 @@ namespace PL
 
         }
         private int id;
+        private User user;
         public UserMainWindow(int id, IBL bl)
 
         {
@@ -84,6 +88,129 @@ namespace PL
             }
             else 
             {
+
+
+            }
+        }
+
+
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            int s;
+            BO.Customer c = new();
+            BO.Location loc = new();
+            double lat=0;
+            double longi=0;
+            // first we insert id into the base station
+            if (int.TryParse(txtUserId.Text, out s))
+            {
+                if (s > 0)
+                {
+                    txtUserId.Background = Brushes.Bisque;
+                    c.Id = s;
+                }
+                else
+                {
+                    txtUserId.Text = "";
+                    MessageBox.Show("Please enter a positive number");
+                    txtUserId.Background = Brushes.Red;
+                }
+            }
+            else {
+
+                txtUserId.Text = "";
+                MessageBox.Show("Please enter a positive number");
+                txtUserId.Background = Brushes.Red;
+
+            }
+            if (double.TryParse(latitue.Text, out lat))
+            {
+                if (lat > 0)
+                {
+                    latitue.Background = Brushes.Bisque;
+
+                }
+                else
+                {
+                    latitue.Text = "";
+                    MessageBox.Show("Please enter a positive number");
+                    latitue.Background = Brushes.Red;
+                }
+            }
+            else {
+
+                latitue.Text = "";
+                MessageBox.Show("Please enter a positive number");
+                latitue.Background = Brushes.Red;
+
+
+            }
+            if (double.TryParse(longitue.Text, out longi))
+            {
+                if (longi > 0)
+                {
+                    latitue.Background = Brushes.Bisque;
+                }
+                else
+                {
+                    longitue.Text = "";
+                    MessageBox.Show("Please enter a positive number");
+                    longitue.Background = Brushes.Red;
+                }
+            }
+            else
+            {
+
+                longitue.Text = "";
+                MessageBox.Show("Please enter a positive number");
+                longitue.Background = Brushes.Red;
+
+
+            }
+
+            // entering name into customer
+
+            if (txtFirstName.Text == "")
+            {
+                MessageBox.Show("Please enter a name");
+                txtFirstName.Background = Brushes.Red;
+            }
+            else
+            {
+                txtFirstName.Background = Brushes.Transparent;
+                c.Name = txtFirstName.Text;
+            }
+
+            // number phone
+
+            if (txtphone.Text == "")
+            {
+                MessageBox.Show("Please enter a phone number");
+                txtphone.Background = Brushes.Red;
+            }
+            else
+            {
+                txtphone.Background = Brushes.Transparent;
+                c.Phone = txtphone.Text;
+            }
+            if (c.Id < 10000000)
+            if (lat != 0 && longi != 0)
+            {
+                loc.Latitude = lat;
+                loc.Longitude = longi;
+            }
+            if (longi != 0 && lat != 0 && txtphone.Text != "" && txtUserId.Text != "" && txtFirstName.Text != "") 
+            {
+                c.Location = loc;
+                try {
+                    bl.AddCustomer(c);
+                    MessageBox.Show("signed in");
+                    new UserMainWindow(c.Id, bl).Show();
+                }
+                catch( BO.AddException ex) { 
+                    MessageBox.Show(ex.Message.ToString());
+                }
 
 
             }

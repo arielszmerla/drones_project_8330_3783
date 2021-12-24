@@ -19,16 +19,21 @@
             </ListView.View>
         </ListView>
         <TextBox Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="90,7,0,0" Name="txtUserId" VerticalAlignment="Top" Width="178" Text="{Binding ElementName=UserGrid,Path=SelectedItem.UserId}" />
-        <TextBox Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="90,35,0,0" Name="txtFirstName" VerticalAlignment="Top" Width="178" Text="{Binding ElementName=UserGrid,Path=SelectedItem.Name}" />
-        <TextBox Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="90,62,0,0" Name="txtLastName" VerticalAlignment="Top" Width="178" Text="{Binding ElementName=UserGrid,Path=SelectedItem.Phone}" />
-        <Label Content="UserId" Grid.Row="1" HorizontalAlignment="Left" Margin="12,12,0,274" Name="label1" />
-        <Label Content="Last Name" Grid.Row="1" Height="28" HorizontalAlignment="Left" Margin="12,60,0,0" Name="label2" VerticalAlignment="Top" />
-        <Label Content="First Name" Grid.Row="1" Height="28" HorizontalAlignment="Left" Margin="12,35,0,0" Name="label3" VerticalAlignment="Top" />
+        <TextBox Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="90,35,0,0" Name="txtFirstName" VerticalAlignment="Top" Width="178" Text="{Binding ElementName=UserGrid,Path=SelectedItem.Name}"  />
+        <TextBox Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="90,62,0,0" Name="txtphone" VerticalAlignment="Top" Width="178" Text="{Binding ElementName=UserGrid,Path=SelectedItem.Phone}"  />
+        <TextBox Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="90,89,0,0" Name="latitue" VerticalAlignment="Top" Width="178" />
+        <TextBox Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="90,120,0,0" Name="longitue" VerticalAlignment="Top" Width="178" />
+        <Label Content="User Id" Grid.Row="1" HorizontalAlignment="Left" Margin="12,12,0,274" Name="label1" />
+        <Label Content="PHONE NUM" Grid.Row="1" Height="28" HorizontalAlignment="Left" Margin="12,60,0,0" Name="label2" VerticalAlignment="Top" />
+        <Label Content="Last Name"  Grid.Row="1" Height="28" HorizontalAlignment="Left" Margin="12,35,0,0" Name="label3" VerticalAlignment="Top" />
+        <Label Content="Latitude"  Grid.Row="1" Height="28" HorizontalAlignment="Left" Margin="12,95,0,0" Name="label4" VerticalAlignment="Top" />
+        <Label Content="Longitude"  Grid.Row="1" Height="28" HorizontalAlignment="Left" Margin="12,120,0,0" Name="label5" VerticalAlignment="Top" />
         <StackPanel Orientation="Horizontal">
             <Button Content="Update" Grid.Row="1" Height="23" Margin="310,40,0,0" Name="btnUpdate"   
                 VerticalAlignment="Top" Width="90"  
                 Command="{Binding Path=UpdateCommand}" Click="btnUpdate_Click" />
             <ComboBox  x:Name="client_choices" Width="100" SelectionChanged="client_choices_SelectionChanged_1" />
         </StackPanel>
+        <Button Content="Sign in" HorizontalAlignment="Left" Margin="319,19,0,0" Grid.Row="1" VerticalAlignment="Top" Height="48" Width="51" Click="Button_Click"/>
     </Grid>
 </Window>  

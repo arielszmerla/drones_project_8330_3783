@@ -5,12 +5,14 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <RootNamespace>PL</RootNamespace>
+    <StartupObject>PL.App</StartupObject>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\net5.0-windows\</OutputPath>
-    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>C:\Users\ariel\source\repos\DotNet_5782_XXXX-YYYY\bin\net5.0\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DefineConstants />
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
 
   <ItemGroup>

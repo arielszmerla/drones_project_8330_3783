@@ -10,8 +10,4 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DLAPI\DLAPI.csproj" />
-  </ItemGroup>
-
 </Project>
