@@ -96,7 +96,7 @@ namespace PL
                         MessageBox.Show("Delete done");
                     }
                     catch (BO.DeleteException exc)
-                    { MessageBox.Show(exc.ToString()); }
+                    { MessageBox.Show(exc.Message); }
                     Closing_Button.Visibility = Visibility.Hidden;
 
 
