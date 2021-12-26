@@ -74,7 +74,7 @@ namespace BL
         /// </summary>
         /// <param name="baseStation"></pacel from DO>
         /// <returns></returns> new adapted parcel
-        private BO.BaseStationToList dOBaseStationToList(DO.BaseStation baseStation)
+        private BO.BaseStationToList adaptBaseStationToList(DO.BaseStation baseStation)
         {
 
             BaseStationToList baseStationTo = new();
