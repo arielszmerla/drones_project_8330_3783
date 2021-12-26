@@ -101,7 +101,7 @@ namespace BL
             {
                 Id = myDrone.Id,
                 BatteryStatus = myDrone.BatteryStatus,
-                DronePlace = myDrone.DroneLocation,
+                DronePlace = myDrone.Location,
                 MaxWeight = myDrone.MaxWeight,
                 Model = myDrone.Model,
                 PID = null,
@@ -200,7 +200,7 @@ namespace BL
                 throw new DeleteException($"BaseStation with {id}as Id does not exist");
             }
             else
-                if (drones.Any(dr => dr.DroneLocation == new Location { Latitude = myDal.GetBaseStation(id).Latitude, Longitude = myDal.GetBaseStation(id).Longitude } && dr.Status == Enums.DroneStatuses.Maintenance))
+                if (drones.Any(dr => dr.Location == new Location { Latitude = myDal.GetBaseStation(id).Latitude, Longitude = myDal.GetBaseStation(id).Longitude } && dr.Status == Enums.DroneStatuses.Maintenance))
                 throw new DeleteException($"BaseStation with {id}as Id is in use");
             else
                 try
@@ -305,8 +305,8 @@ namespace BL
                 Longitude = myDal.GetBaseStation(Id).Longitude
             };
             return (from item in drones
-                    where item.DroneLocation.Latitude == BaseLoc.Latitude &&
-                    item.DroneLocation.Longitude == BaseLoc.Longitude && 
+                    where item.Location.Latitude == BaseLoc.Latitude &&
+                    item.Location.Longitude == BaseLoc.Longitude && 
                     item.Status == Enums.DroneStatuses.Maintenance
                     select item);
         }
