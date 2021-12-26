@@ -26,27 +26,20 @@ namespace PL
     public partial class MainWindow : Window
     {
         enum listChoice { Drones, BaseStations, Customers, Parcels };
-       // private static MediaPlayer _backgroundMusic = new MediaPlayer();
+       private static SoundPlayer _backgroundMusic = new SoundPlayer();
+
         BLAPI.IBL bl = BLFactory.GetBL();
         public MainWindow()
         {
             InitializeComponent();
             ViewOptions.ItemsSource = Enum.GetValues(typeof(listChoice));
-           // StartBackgroundMusic();
+            string soundFilePath = "../../pl/hatikva.wav";
+            SoundPlayer player = new SoundPlayer(soundFilePath);
+        player.Play();
         }
-        /*
-        public static void StartBackgroundMusic()
-        {
-            string mp3FileName ="" ;
-            _backgroundMusic.Open(@"pack://siteoforigin:,,,/sound/cello.wav");
-            _backgroundMusic.MediaEnded += new EventHandler(BackgroundMusic_Ended);
-            _backgroundMusic.Play();
-        }
-        private static void BackgroundMusic_Ended(object sender, EventArgs e)
-        {
-            _backgroundMusic.Position = TimeSpan.Zero;
-            _backgroundMusic.Play();
-        }*/
+    
+        
+    
         private void DronesList_Click_1(object sender, RoutedEventArgs e)
         {
             new DroneListWindow1(bl).Show();
