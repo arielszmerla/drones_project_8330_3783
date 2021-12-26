@@ -150,7 +150,7 @@ namespace PL
                 }
                 catch (BO.AddException ex)
                 {
-                    MessageBox.Show(ex.Message,);
+                    MessageBox.Show(ex.Message);
                 }
             }
             else
