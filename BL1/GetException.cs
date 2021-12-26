@@ -17,9 +17,6 @@ namespace BO
         public GetException(string message, Exception innerException) : base(message, innerException)
         {
         }
-
-      
-
         protected GetException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }

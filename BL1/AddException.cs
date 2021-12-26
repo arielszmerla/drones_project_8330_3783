@@ -10,7 +10,8 @@ namespace BO
         {
         }
 
-        public AddException(string message) : base(message)
+        public AddException(string message) : 
+            base(message)
         {
         }
 

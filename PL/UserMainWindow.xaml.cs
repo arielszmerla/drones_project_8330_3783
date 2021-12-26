@@ -210,6 +210,7 @@ namespace PL
                 }
                 catch( BO.AddException ex) { 
                     MessageBox.Show(ex.Message.ToString());
+                    txtUserId.Text = "";
                 }
 
 

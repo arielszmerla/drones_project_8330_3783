@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>C:\Users\ariel\source\repos\DotNet_5782_XXXX-YYYY\bin\net5.0\</OutputPath>
+    <OutputPath>..\net5.0\</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DefineConstants />
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>

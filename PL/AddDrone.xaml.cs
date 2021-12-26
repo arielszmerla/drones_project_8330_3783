@@ -148,9 +148,9 @@ namespace PL
 
 
                 }
-                catch (BO.AddException)
+                catch (BO.AddException ex)
                 {
-                    MessageBox.Show("Missed Add");
+                    MessageBox.Show(ex.Message,);
                 }
             }
             else

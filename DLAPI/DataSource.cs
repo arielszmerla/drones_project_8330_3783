@@ -99,7 +99,7 @@ namespace DS
                     NumOfSlots = random.Next(2, 8)
                 });
 
-                DO.Drone d = new Drone()///create new objects as asked
+                DO.Drone d = new Drone///create new objects as asked
                 {
                     Id = 100001,
                     Model = ((DO.DroneNames)random.Next(3)),

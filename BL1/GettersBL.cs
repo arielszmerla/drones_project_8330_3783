@@ -33,7 +33,7 @@ namespace BL
             p.Assignment = parcel.Scheduled;
             p.Created = parcel.Requested;
             p.Delivered = parcel.Delivered;
-           
+
             p.PickedUp = parcel.PickedUp;
             p.Priority = (Enums.Priorities)parcel.Priority;
             CustomerInParcel send = new CustomerInParcel { Id = parcel.SenderId, Name = customers.Find(cs => cs.Id == parcel.SenderId).Name };
@@ -51,26 +51,21 @@ namespace BL
         /// <returns></returns>
         public BaseStation GetBaseStation(int idP)
         {
-            DO.BaseStation myBase = new();
-
             if (!myDal.GetBaseStationsList(null).Any(pc => pc.Id == idP))
-            {
                 throw new GetException("id of BaseStation not found");
-            }
-            BaseStation bs = new();
-            bs.BaseStationLocation = new Location { Latitude = myBase.Latitude, Longitude = myBase.Longitude };
 
-            bs.Id = myBase.Id;
-            bs.Name = myBase.Name;
-            bs.ChargingDrones = dronCharges(bs);
-            bs.NumOfFreeSlots = myBase.NumOfSlots - bs.ChargingDrones.Count;
-            return bs;
+            return dOBaseStation(myDal.GetBaseStation(idP));
         }
+        /// <summary>
+        /// get a customer selected by his id
+        /// </summary>
+        /// <param name="idP"></param>
+        /// <returns></returns>
         public Customer GetCustomer(int idP)
         {
 
             DO.Customer myCust = new();
-            IEnumerable<DO.Customer> customers =myDal.GetCustomerList(c=>c.Id==idP);
+            IEnumerable<DO.Customer> customers = myDal.GetCustomerList(c => c.Id == idP);
             if (customers.Any(pc => pc.Id == idP))
             {
                 myCust = customers.FirstOrDefault(pc => pc.Id == idP);
@@ -83,52 +78,14 @@ namespace BL
             customer.Location = new Location { Latitude = myCust.Latitude, Longitude = myCust.Longitude };
             customer.Name = myCust.Name;
             customer.Phone = myCust.Phone;
-            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList(null);
-            List<DO.Parcel> parcelTo = parcels.FindAll(ps => ps.TargetId == customer.Id);
-            List<DO.Parcel> parcelFrom = parcels.FindAll(ps => ps.SenderId == customer.Id);
-            List<ParcelByCustomer> customerTmp = new();
-            foreach (var it in parcelFrom)
-            {
-                ParcelByCustomer tmp = new();
-                tmp.Id = it.Id;
-                tmp.Priorities = (Enums.Priorities)it.Priority;
-                if (it.Delivered != DateTime.MinValue)
-                    tmp.ParcelStatus = Enums.ParcelStatus.Delivered;
-                else if (it.PickedUp != DateTime.MinValue)
-                    tmp.ParcelStatus = Enums.ParcelStatus.PickedUp;
-                else if (it.Requested != DateTime.MinValue)
-                    tmp.ParcelStatus = Enums.ParcelStatus.Assigned;
-                else
-                    tmp.ParcelStatus = Enums.ParcelStatus.Created;
-                tmp.CIP = new CustomerInParcel { Id = it.SenderId, Name = myDal.GetCustomer(it.SenderId).Name };
-              
-                tmp.WeightCategorie = (Enums.WeightCategories)it.Weight;
-                customerTmp.Add(tmp);
-            }
-            customer.To = customerTmp;
-            customerTmp = new();
-            foreach (var it in parcelTo)
-            {
-                ParcelByCustomer tmp = new();
-                tmp.Id = it.Id;
-                tmp.Priorities = (Enums.Priorities)it.Priority;
-                if (it.Delivered != DateTime.MinValue)
-                    tmp.ParcelStatus = Enums.ParcelStatus.Delivered;
-                else if (it.PickedUp != DateTime.MinValue)
-                    tmp.ParcelStatus = Enums.ParcelStatus.PickedUp;
-                else if (it.Requested != DateTime.MinValue)
-                    tmp.ParcelStatus = Enums.ParcelStatus.Assigned;
-                else
-                    tmp.ParcelStatus = Enums.ParcelStatus.Created;
-          
-                tmp.CIP=new CustomerInParcel { Id= it.TargetId , Name = myDal.GetCustomer(it.TargetId).Name
-            };
-                tmp.CIP.Id = it.TargetId;
-                tmp.CIP.Name = customers.FirstOrDefault(pc => pc.Id == it.TargetId).Name;
-                tmp.WeightCategorie = (Enums.WeightCategories)it.Weight;
-                customerTmp.Add(tmp);
-            }
-            customer.From = customerTmp;
+
+            customer.To = (List<ParcelByCustomer>)(from item in myDal.GetParcelList(ps => ps.TargetId == customer.Id)
+                              let parcelFR = dOparcelFROMbyCustomerBO(item)
+                              select parcelFR);
+           
+            customer.From = (List<ParcelByCustomer>)(from item in myDal.GetParcelList(ps => ps.TargetId == customer.Id)
+                                                     let parcelT = dOparcelTObyCustomerBO(item)
+                                                     select parcelT);
             return customer;
         }
         public Drone GetDrone(int id)
@@ -203,7 +160,6 @@ namespace BL
                     myDal.DeleteCustomer(id);
                 }
 
-
                 catch (DLAPI.DeleteException d)
                 {
                     throw new DeleteException($"Customer with {id}as Id does not exist", d);
@@ -259,39 +215,22 @@ namespace BL
         }
         #endregion
         #region
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicat"></param>
+        /// <returns></returns>
         public IEnumerable<BaseStationToList> GetBaseStationList(Func<BaseStationToList, bool> predicat = null)
         {
-            List<DO.BaseStation> bases = (List<DO.BaseStation>)myDal.GetBaseStationsList(null);
-            List<BaseStationToList> baseStationTos = new();
-            foreach (var it in bases)
-            {
-                if (it.Valid == true)//return only valid bases
-                {
-                    BaseStationToList baseStationTo = new();
-                    baseStationTo.Id = it.Id;
-                    baseStationTo.Name = it.Name;
-                    Location loc = new Location { Latitude = it.Latitude, Longitude = it.Longitude };
-                    baseStationTo.BaseStationLocation = loc;
-                    baseStationTo.NumOfSlotsInUse = dronCharges(GetBaseStation(it.Id)).Count;
-                    baseStationTo.NumOfFreeSlots = it.NumOfSlots - baseStationTo.NumOfSlotsInUse;
-                    foreach (var dr in drones)
-                    {
-                        if (dr.Status == Enums.DroneStatuses.Maintenance && dr.DroneLocation == baseStationTo.BaseStationLocation)
-                            baseStationTo.ChargingDrones.Add(new DroneCharge { BatteryStatus = dr.BatteryStatus, Id = dr.Id });
-                    }
-                    baseStationTos.Add(baseStationTo);
-                  
-                }
-
-            }
-
             if (predicat == null)
-                return baseStationTos;
+                return (from item in myDal.GetBaseStationsList(null)
+                        let DObaseStationBO = dOBaseStationToList(item)
+                        select DObaseStationBO);
             else
-                return (from item in baseStationTos
-                        where predicat(item)
-                        select item);
+                return (from item in myDal.GetBaseStationsList(null)
+                        let DObaseStationBO = dOBaseStationToList(item)
+                        where predicat(DObaseStationBO)
+                        select DObaseStationBO);
         }
         public IEnumerable<BaseStationToList> GetListOfBaseStationsWithFreeSlots()
         {
@@ -299,86 +238,71 @@ namespace BL
             return tmp.FindAll(bs => bs.NumOfFreeSlots > 0);
 
         }
+        /// <summary>
+        /// / return list of parcels mapped by status
+        /// </summary>
+        /// <param name="statuses"></param>
+        /// <returns></returns>
         public IEnumerable<ParcelToList> GetParcelList(Enums.WeightCategories? statuses = null)
         {
-            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList(null);
-            List<ParcelToList> parcelTos = new();
-            foreach (var it in parcels)
-            {
-
-                ParcelToList parcelToList = new ParcelToList
-                {
-                    Id = it.Id,
-                    Priority = (Enums.Priorities)it.Priority,
-                    WeightCategorie = (Enums.WeightCategories)it.Weight
-                };
-
-
-                parcelToList.SenderName = myDal.GetCustomerList().FirstOrDefault(s => s.Id == it.SenderId).Name;
-                parcelToList.TargetName = myDal.GetCustomerList().FirstOrDefault(s => s.Id == it.TargetId).Name;
-                parcelTos.Add(parcelToList);
-            }
             if (statuses == null)
-                return parcelTos;
-            else
-
-                return (from item in parcelTos
-                        where item.WeightCategorie == statuses
-                        select item);
+            {
+                return (from item in myDal.GetParcelList(null)
+                        let parcelBO = DOparcelBO(item)
+                        select parcelBO);
+            }
+            Enums.WeightCategories weight = (Enums.WeightCategories)statuses;
+            return (from item in myDal.GetParcelList(null)
+                    let parcelBO = DOparcelBO(item)
+                    where parcelBO.WeightCategorie == weight
+                    select parcelBO);
 
         }
+        /// <summary>
+        /// return list of parcels
+        /// </summary>
+        /// <param name="name"></name of sender/ target>
+        /// <returns></list of parcel>
         public IEnumerable<ParcelToList> GetParcelList(string name)
         {
-            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList(null);
-            List<ParcelToList> parcelTos = new();
-            foreach (var it in parcels)
+            if (name == "")
             {
-
-                ParcelToList parcelToList = new ParcelToList
-                {
-                    Id = it.Id,
-                    Priority = (Enums.Priorities)it.Priority,
-                    WeightCategorie = (Enums.WeightCategories)it.Weight
-                };
-
-
-                parcelToList.SenderName = myDal.GetCustomerList().FirstOrDefault(s => s.Id == it.SenderId).Name;
-                parcelToList.TargetName = myDal.GetCustomerList().FirstOrDefault(s => s.Id == it.TargetId).Name;
-                parcelTos.Add(parcelToList);
+                return (from item in myDal.GetParcelList(null)
+                        let parcelBO = DOparcelBO(item)
+                        select parcelBO);
             }
-            if (name=="")
-                return parcelTos;
-            else
 
-                return (from item in parcelTos
-                        where item.SenderName== name || item.TargetName==name
-                        select item);
+            return (from item in myDal.GetParcelList(null)
+                    let parcelBO = DOparcelBO(item)
+                    where parcelBO.SenderName == name || parcelBO.TargetName == name
+                    select parcelBO);
 
         }
-
+        /// <summary>
+        /// returns list on non assigned parcels
+        /// </summary>
+        /// <returns></list of non assigned parcel>
         public IEnumerable<ParcelToList> GetParcelNotAssignedList()
         {
-            List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList(null);
-            List<ParcelToList> tmp = (List<ParcelToList>)GetParcelList();
-            List<ParcelToList> toReturn = new();
-            foreach (var t in parcels)
-            {
-                if (t.DroneId == 0)
-                    toReturn.Add(tmp.Find(p => p.Id == t.Id));
-            }
-            return toReturn.ToList();
 
+            return (from item in myDal.GetParcelList(it => it.DroneId == 0)
+                    let parcelBO = DOparcelBO(item)
+                    select parcelBO
+                    );
 
         }
 
         public IEnumerable<DroneToList> GetDronesInBaseStationList(int Id)
         {
-            Location BaseLoc = new Location {Latitude = myDal.GetBaseStation(Id).Latitude ,
-                Longitude = myDal.GetBaseStation(Id).Longitude };
+            Location BaseLoc = new Location
+            {
+                Latitude = myDal.GetBaseStation(Id).Latitude,
+                Longitude = myDal.GetBaseStation(Id).Longitude
+            };
             return (from item in drones
                     where item.DroneLocation == BaseLoc &&
                     item.Status == Enums.DroneStatuses.Maintenance
-                    select item);                        
+                    select item);
         }
 
         public IEnumerable<DroneToList> GetDroneList(Enums.DroneStatuses? statuses = null, Enums.WeightCategories? weight = null)
@@ -396,33 +320,31 @@ namespace BL
             return drones.Where(d => d.MaxWeight == weight && d.Valid == true);
 
         }
-
+        /// <summary>
+        /// RETURN ienumerable of customerToList members
+        /// </summary>
+        /// <param name="predicat"></condition>
+        /// <returns></list mapped>
         public IEnumerable<CustomerToList> GetCustomerList(Func<CustomerToList, bool> predicat = null)
         {
-            List<DO.Customer> customers = (List<DO.Customer>)myDal.GetCustomerList();
-            List<CustomerToList> customerTos = new();
-            foreach (var it in customers)
+            if (predicat == null)
             {
-                CustomerToList ct = new();
-                ct.Id = it.Id;
-                ct.Name = it.Name;
-                ct.Phone = it.Phone;
-
-                List<DO.Parcel> parcels = (List<DO.Parcel>)myDal.GetParcelList(null);
-                ct.NumberOfParcelsReceived = parcels.FindAll(pc => pc.TargetId == ct.Id && pc.Delivered <= DateTime.Now && pc.Delivered != DateTime.MinValue).Count;
-                ct.NumberOfParcelsonTheWay = parcels.FindAll(pc => pc.TargetId == ct.Id && pc.Delivered > DateTime.Now).Count;
-                ct.NumberOfParcelsSentAndDelivered = parcels.FindAll(pc => pc.SenderId == ct.Id && pc.Delivered <= DateTime.Now && pc.Delivered != DateTime.MinValue).Count;
-                ct.NumberOfParcelsSentButNotDelivered = parcels.FindAll(pc => pc.SenderId == ct.Id && pc.Delivered > DateTime.Now).Count;
-                customerTos.Add(ct);
+                return (from item in myDal.GetCustomerList()
+                        let customerBO = DOcustomerBO(item)
+                        select customerBO);
 
             }
-            if (predicat == null)
-                return customerTos.ToList();
 
-            return (from item in customerTos
-                    where predicat(item)
-                    select item);
+            return from item in myDal.GetCustomerList()
+                   let customerBO = DOcustomerBO(item)
+                   where predicat(customerBO)
+                   select customerBO;
         }
         #endregion
+
+
+
+
+
     }
 }

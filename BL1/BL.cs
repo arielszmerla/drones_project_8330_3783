@@ -69,6 +69,7 @@ namespace BL
             double chargePerHour = myDal.DroneElectricConsumations()[4];
 
 
+            
             foreach (var dr in myDal.GetDroneList(null))
             {
                 DroneToList droneToList = new DroneToList
@@ -76,7 +77,7 @@ namespace BL
                     Id = dr.Id,
                     Model = (Enums.DroneNames)dr.Model,
                     MaxWeight = (Enums.WeightCategories)dr.MaxWeight
- 
+
                 };
                 drones.Add(droneToList);
             }
@@ -198,10 +199,8 @@ namespace BL
         /// <returns></returns>
         private DO.Parcel findParcel(DroneToList dr, List<DO.Parcel> parcels, int weight)
         {
-            DO.Parcel p = new();
             List<DO.Parcel> maxWeightParcels = parcels.FindAll(pcs => (int)pcs.Weight == weight && pcs.Scheduled == DateTime.MinValue);
-            p = finfClosestParcelToDrone(dr.DroneLocation, maxWeightParcels);
-            return p;
+            return finfClosestParcelToDrone(dr.DroneLocation, maxWeightParcels);
         }
 
 
@@ -265,17 +264,13 @@ namespace BL
         /// <returns></returns>
         private List<BO.DroneCharge> dronCharges(BO.BaseStation bs)
         {//find the relevant drones
-            List<DroneToList> drs = drones.FindAll(dr => dr.Status == Enums.DroneStatuses.Maintenance && dr.DroneLocation == bs.BaseStationLocation);
-            List<BO.DroneCharge> droneCharges = new();
-            foreach (DroneToList ds in drs)
-            {
-                droneCharges.Add(new BO.DroneCharge
-                {
-                    Id = ds.Id,
-                    BatteryStatus = ds.BatteryStatus
-                });
-            }
-            return droneCharges;
+
+            return (List<BO.DroneCharge>)(from item in drones.FindAll(dr => dr.Status == Enums.DroneStatuses.Maintenance && dr.DroneLocation == bs.BaseStationLocation)
+                                          select new  BO.DroneCharge
+                                          {
+                                              Id = item.Id,
+                                              BatteryStatus = item.BatteryStatus
+                                          });
         }
         /// <summary>
         /// calls func from dalObject to get customer with and Id 
@@ -322,14 +317,17 @@ namespace BL
                 NumOfFreeSlots = closestBase.NumOfSlots
             };
             List<BO.DroneCharge> dc = new();
-            foreach (var drone in drones)
-            {
-                if (drone.DroneLocation == new Location { Latitude = closestBase.Latitude, Longitude = closestBase.Longitude })
-                {
-                    BO.DroneCharge d = new BO.DroneCharge { Id = drone.Id, BatteryStatus = drone.BatteryStatus };
-                    dc.Add(d);
-                }
+            BO.DroneCharge droneCharge = new();
+                foreach (var drone in drones) {
+                if(drone.DroneLocation == new Location { Latitude = closestBase.Latitude, Longitude = closestBase.Longitude } && drone.Status==Enums.DroneStatuses.Maintenance)
+                    droneCharge= new BO.DroneCharge { Id = drone.Id, BatteryStatus = drone.BatteryStatus };
+                dc.Add(droneCharge);
+
             }
+            b.ChargingDrones = dc;
+                                
+     
+            
             return b;
         }
 

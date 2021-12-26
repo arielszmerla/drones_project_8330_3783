@@ -27,10 +27,8 @@ namespace PL
         BLAPI.IBL bl = BLFactory.GetBL();
         public MainWindow()
         {
-      
             InitializeComponent();
             ViewOptions.ItemsSource = Enum.GetValues(typeof(listChoice));
-       
         }
 
 
