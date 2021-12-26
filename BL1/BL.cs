@@ -268,7 +268,7 @@ namespace BL
             List<BO.DroneCharge> droneCharges = new();
             IEnumerable<BO.DroneToList> dr = drones.FindAll(dr => dr.Status == Enums.DroneStatuses.Maintenance && dr.DroneLocation == bs.BaseStationLocation);
             foreach (var item in dr) {
-                BO.DroneCharge d = new BO.DroneCharge { Id = d.Id, BatteryStatus = d.BatteryStatus };
+                BO.DroneCharge d = new BO.DroneCharge { Id = item.Id, BatteryStatus = item.BatteryStatus };
                 droneCharges.Add(d);
             }
             return droneCharges;                    
