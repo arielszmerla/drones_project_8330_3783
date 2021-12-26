@@ -305,7 +305,8 @@ namespace BL
                 Longitude = myDal.GetBaseStation(Id).Longitude
             };
             return (from item in drones
-                    where item.DroneLocation == BaseLoc &&
+                    where item.DroneLocation.Latitude == BaseLoc.Latitude &&
+                    item.DroneLocation.Longitude == BaseLoc.Longitude && 
                     item.Status == Enums.DroneStatuses.Maintenance
                     select item);
         }
