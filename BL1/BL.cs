@@ -265,12 +265,14 @@ namespace BL
         private List<BO.DroneCharge> dronCharges(BO.BaseStation bs)
         {//find the relevant drones
 
-            return (List<BO.DroneCharge>)(from item in drones.FindAll(dr => dr.Status == Enums.DroneStatuses.Maintenance && dr.DroneLocation == bs.BaseStationLocation)
-                                          select new  BO.DroneCharge
-                                          {
-                                              Id = item.Id,
-                                              BatteryStatus = item.BatteryStatus
-                                          });
+            List<BO.DroneCharge> droneCharges = new();
+            IEnumerable<BO.DroneToList> dr = drones.FindAll(dr => dr.Status == Enums.DroneStatuses.Maintenance && dr.DroneLocation == bs.BaseStationLocation);
+            foreach (var item in dr) {
+                BO.DroneCharge d = new BO.DroneCharge { Id = d.Id, BatteryStatus = d.BatteryStatus };
+                droneCharges.Add(d);
+            }
+            return droneCharges;                    
+
         }
         /// <summary>
         /// calls func from dalObject to get customer with and Id 
