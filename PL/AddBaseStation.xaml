@@ -21,7 +21,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Button x:Name="PageStop"  Visibility="Visible" Grid.Column="3"  Margin="120,335,10,34" Click="End_the_page" RenderTransformOrigin="0.526,0.522">
+        <Button x:Name="PageStop"  Visibility="Visible" Grid.Column="3" Width="60" Height="50" Margin="125,343,10,44" Click="End_the_page" RenderTransformOrigin="0.526,0.522">
 
             <Button.Background>
                 <ImageBrush ImageSource="\images\pngegg.png"/>
@@ -74,7 +74,7 @@
 
             <Button x:Name="Update" Opacity="0.9"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,20,0,0" FontWeight="ExtraBlack"  Content="Update"  Width="120" Height="84" RenderTransformOrigin="0.61,2.198" Click="Update_Click"/>
             
-            <Button x:Name="DeleteBasestation" Opacity="0.9" BorderBrush="Transparent" Visibility="Visible"  Margin="0,18,0,0" FontWeight="ExtraBlack" Content="Delete" Width="50" Height="30" Foreground="Red" Click="Delete_Click"/>
+            <Button x:Name="DeleteBasestation" Opacity="0.9" BorderBrush="Transparent" Visibility="Visible"  Margin="0,18,0,0" FontWeight="ExtraBlack" Content="Delete" Width="80" Height="30" Foreground="Red" Click="Delete_Click"/>
 
             <Button x:Name="ViewDrones" Margin="0,18,0,0" Content="Veiw drones" Foreground="Green" Width="115" Click="ViewDrones_Click"/>
 
