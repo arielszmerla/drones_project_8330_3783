@@ -82,17 +82,21 @@ namespace BL
             baseStationTo.Name = baseStation.Name;
             Location loc = new Location { Latitude = baseStation.Latitude, Longitude = baseStation.Longitude };
             baseStationTo.Location = loc;
-            baseStationTo.NumOfSlotsInUse = dronCharges(GetBaseStation(baseStation.Id)).Count;
-            baseStationTo.NumOfFreeSlots = baseStation.NumOfSlots - baseStationTo.NumOfSlotsInUse;
+            baseStationTo.ChargingDrones = dronCharges(GetBaseStation(baseStation.Id));
+            baseStationTo.NumOfSlotsInUse = baseStationTo.ChargingDrones.Count;
             foreach (var dr in drones)
             {
-                if (dr.Status == Enums.DroneStatuses.Maintenance && dr.Location.Latitude == baseStationTo.Location.Latitude )
+                if (dr.Status == Enums.DroneStatuses.Maintenance && dr.Location.Latitude == baseStationTo.Location.Latitude && dr.Location.Longitude == baseStationTo.Location.Longitude)
                     baseStationTo.ChargingDrones.Add(new DroneCharge
                     {
                         BatteryStatus = dr.BatteryStatus,
                         Id = dr.Id
                     });
             }
+
+
+            baseStationTo.NumOfFreeSlots = baseStation.NumOfSlots - baseStationTo.NumOfSlotsInUse;
+
             return baseStationTo;
         }
         /// <summary>
