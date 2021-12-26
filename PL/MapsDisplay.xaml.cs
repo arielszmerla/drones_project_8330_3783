@@ -35,7 +35,7 @@ namespace PL
             foreach (var item in bl.GetDroneList())
             {
                 pin = new();
-                pin.Location = new(item.DroneLocation.Latitude, item.DroneLocation.Longitude);
+                pin.Location = new(item.Location.Latitude, item.Location.Longitude);
                 myMap.Children.Add(pin);
             }
             /*foreach (var item in bl.GetCustomerList())

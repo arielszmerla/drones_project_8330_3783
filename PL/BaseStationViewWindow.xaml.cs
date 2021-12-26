@@ -74,7 +74,7 @@ namespace PL
                     Id = bs.Id,
                     Name = bs.Name,
                     NumOfFreeSlots = bs.NumOfFreeSlots,
-                    BaseStationLocation = bs.BaseStationLocation,
+                    BaseStationLocation = bs.Location,
                     ChargingDrones = bs.ChargingDrones
                 };
                 PageStop.Visibility = Visibility.Hidden;

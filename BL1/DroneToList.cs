@@ -7,7 +7,7 @@
         public BO.Enums.WeightCategories MaxWeight { get; set; }
         public double BatteryStatus { get; set; }
         public BO.Enums.DroneStatuses Status { get; set; }
-        public Location DroneLocation { get; set; }
+        public Location Location { get; set; }
         public int NumOfDeliveredParcel { get; set; }
         public bool Valid { get; set; }
         public override string ToString()///toString erased func
@@ -18,7 +18,7 @@
             result += $"{"Maximal transported Weight:",-30} {MaxWeight,30}\n";
             result += $"{"Status is:",-30} {Status,44}\n";
             result += $"{"Battery level is:",-30} {(int)BatteryStatus,40}%\n";
-            result += $"Emplacement is: \n" + DroneLocation;
+            result += $"Emplacement is: \n" + Location;
             result += $"{"Number of delivered parcels is:",-30} {NumOfDeliveredParcel,30}\n";
             for (int i = 0; i < 60; i++)
             {
