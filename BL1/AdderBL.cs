@@ -123,7 +123,7 @@ namespace BL
                 Model = (Enums.DroneNames)drone.Model,
                 BatteryStatus = 20 + 20 * random.NextDouble(),
                 Status = Enums.DroneStatuses.Maintenance,
-                DroneLocation = new Location { Latitude = bs.Find(b => b.Id == BaseStationNum).Latitude, Longitude = bs.Find(b => b.Id == BaseStationNum).Longitude },
+                Location = new Location { Latitude = bs.Find(b => b.Id == BaseStationNum).Latitude, Longitude = bs.Find(b => b.Id == BaseStationNum).Longitude },
                 NumOfDeliveredParcel = 0
             };
             drones.Add(dr);
@@ -164,7 +164,7 @@ namespace BL
             {
                 Id = drone.Id,
                 BatteryStatus = drone.BatteryStatus,
-                DroneLocation = drone.DronePlace,
+                Location = drone.DronePlace,
                 MaxWeight = drone.MaxWeight,
                 Model = drone.Model,
                 NumOfDeliveredParcel = 0,

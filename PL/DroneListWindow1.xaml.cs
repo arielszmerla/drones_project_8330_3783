@@ -92,7 +92,7 @@ namespace PL
                 {
                     Id = drone.Id,
                     BatteryStatus = drone.BatteryStatus,
-                    DronePlace = drone.DroneLocation,
+                    DronePlace = drone.Location,
                     MaxWeight = drone.MaxWeight,
                     Model = drone.Model,
                     PID = null,
