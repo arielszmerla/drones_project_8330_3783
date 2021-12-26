@@ -6,17 +6,56 @@
         xmlns:local="clr-namespace:PL" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="APPLICATION WINDOW" Height="450" Width="800" Icon="\images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico">
-  <!--  <Window.Resources>
-        <Style x:Key = "TriggerStyle" TargetType = "Button">
+    <Window.Resources>
+        <!--   <Style x:Key = "TriggerStyle" TargetType = "Button">
             <Setter Property = "Foreground" Value = "Blue" />
             <Style.Triggers>
                 <Trigger Property = "IsMouseOver" Value = "True">
                     <Setter Property = "Foreground" Value = "Green" />
                 </Trigger>
             </Style.Triggers>
+        </Style>-->
+        <Style TargetType="{x:Type Button}" x:Key="MaterialDesignMenuCommandButtonStyle">
+        
+            <Setter Property="Background" Value="Beige"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Opacity" Value=".8"/>
+            <Setter Property="Width" Value="24"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" TargetName="border" Value=".5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    
+                    <Setter Property="Foreground" Value="{x:Static SystemColors.HighlightTextBrush}" />
+                </Trigger>
+                <Trigger Property="IsPressed" Value="true">
+                    <Setter Property="Opacity" Value="1"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
-       
-    </Window.Resources>-->
+
+    </Window.Resources>
     <Window.Background>
        
         <ImageBrush ImageSource="images/dronefon.jpg"     />
@@ -34,15 +73,15 @@
         <ComboBox IsEditable="True" BorderThickness="2"  Visibility="Collapsed" IsEnabled="True" x:Name="ViewOptions"  HorizontalAlignment="Left" Text="Make Your Choice" Margin="324,295,0,0" VerticalAlignment="Top" Width="150" Height="40" SelectionChanged="ViewOptions_SelectionChanged" Grid.ColumnSpan="2"
                  />
         <StackPanel Grid.Column="0" Margin="43,0,103,0">
-            <Button
+            <Button Style="{StaticResource MaterialDesignMenuCommandButtonStyle}"
          x:Name="Client_Entry" Content="CLIENT LOG IN" HorizontalAlignment="Right" Margin="1,250,0,20" Height="49" Width="136" Click="Client_Entry_Click" RenderTransformOrigin="0.506,0.531"/>
             <TextBox  x:Name="id_check" Visibility="Collapsed" HorizontalAlignment="Right" Width="60" TextChanged="client_id_TextChanged"  />
-            <Button x:Name="Sign_In" Content="CLIENT SIGN IN" Height="52" HorizontalAlignment="Right" Width="136" Click="Sign_In_Click" 
+            <Button  Style="{StaticResource MaterialDesignMenuCommandButtonStyle}" x:Name="Sign_In" Content="CLIENT SIGN IN" Height="52" HorizontalAlignment="Right" Width="136" Click="Sign_In_Click" 
          />
         </StackPanel>
         <StackPanel Grid.Column="1" Margin="95,0,0,0">
-            <Button 
-          x:Name="Manager_Entry" Content="MANAGER" Margin="1,250,200,0" Height="50" HorizontalAlignment="Left" Width="109" Grid.Column="1"   Click="Manager_Entry_Click"/>
+            <Button    Style="{StaticResource MaterialDesignMenuCommandButtonStyle}"
+          x:Name="Manager_Entry" Content="MANAGER" Margin="1,250,200,0" Height="50" HorizontalAlignment="Left" Width="86" Grid.Column="1"   Click="Manager_Entry_Click"/>
             <TextBox BorderThickness="2"  x:Name="password" Visibility="Collapsed" Width="108" TextChanged="password_TextChanged"  HorizontalAlignment="Left"  Margin="0,16,0,0" Height="32" RenderTransformOrigin="0.276,0.602"  />
         </StackPanel>
 
