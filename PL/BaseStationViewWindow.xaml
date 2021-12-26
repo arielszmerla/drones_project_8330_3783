@@ -14,7 +14,7 @@
     <Grid>
 
         <ListView x:Name="BaseStationView"  DataContext="" MouseDoubleClick="BaseStationView_MouseDoubleClick"  Background="Transparent" Margin="0,74,163,10" SelectionChanged="ListView_SelectionChanged">
-            
+
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Path=Id}"/>
@@ -32,7 +32,7 @@
                             <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Path = BaseOptions.SelectedItem}"/>
 
                         </DataTemplate>
-                        
+
                     </GroupStyle.HeaderTemplate>
                 </GroupStyle>
             </ListView.GroupStyle>
@@ -51,7 +51,7 @@
         </Button>
 
         <Button x:Name="ResetList" Content="Reset List" Background="Beige" Visibility="Hidden"  HorizontalAlignment="Left" Margin="710,10,0,0" VerticalAlignment="Top" Click="ResetList_Click" Height="39" Width="80"/>
-        <ComboBox x:Name="BaseOptions" HorizontalAlignment="Left" Margin="105,33,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="BaseOptions_SelectionChanged"/>
+        <ComboBox x:Name="BaseOptions" BorderBrush="Black"  IsEnabled="True"  IsEditable="True" Text="grouping by" HorizontalAlignment="Left" Margin="102,33,0,0" VerticalAlignment="Top" Width="123" SelectionChanged="BaseOptions_SelectionChanged"/>
         <Button Margin="690,269,0,0" VerticalAlignment="Top" Height="65" RenderTransformOrigin="0.5,0.5" Click="Button_Click">
 
             <Button.Background>

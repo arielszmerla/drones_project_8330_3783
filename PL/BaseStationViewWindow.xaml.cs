@@ -92,6 +92,7 @@ namespace PL
 
         private void BaseOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(BaseStationView.ItemsSource);
   
             PropertyGroupDescription groupDescription = new PropertyGroupDescription(BaseOptions.SelectedItem.ToString());

@@ -76,7 +76,9 @@ namespace BL
                 {
                     Id = dr.Id,
                     Model = (Enums.DroneNames)dr.Model,
-                    MaxWeight = (Enums.WeightCategories)dr.MaxWeight
+                    MaxWeight = (Enums.WeightCategories)dr.MaxWeight,
+                    Valid = true
+                   
 
                 };
                 drones.Add(droneToList);
