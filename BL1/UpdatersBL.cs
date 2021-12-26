@@ -161,7 +161,7 @@ namespace BL
                 return;
             }
             BO.BaseStation bc = getClosestBase(drone.Location);
-            DO.BaseStation myBase = myDal.GetBaseStationsList(null).FirstOrDefault(bas => bas.Latitude == bc.BaseStationLocation.Latitude && bas.Longitude == bc.BaseStationLocation.Longitude);
+            DO.BaseStation myBase = myDal.GetBaseStationsList(null).FirstOrDefault(bas => bas.Latitude == bc.Location.Latitude && bas.Longitude == bc.Location.Longitude);
             if ((myDal.DroneElectricConsumations()[0]) *
                 BO.LocationFuncs.Distance(drone.Location, new Location { Latitude = myBase.Latitude, Longitude = myBase.Longitude }) <= drone.BatteryStatus)
             {

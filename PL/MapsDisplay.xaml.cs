@@ -75,7 +75,7 @@ namespace PL
             InitializeComponent();
 
             Pushpin pushpin = new();
-            pushpin.Location = new(bs.BaseStationLocation.Latitude, bs.BaseStationLocation.Longitude);
+            pushpin.Location = new(bs.Location.Latitude, bs.Location.Longitude);
             myMap.Children.Add(pushpin);
         }
     }

@@ -18,18 +18,18 @@
         </Grid.ColumnDefinitions>
         <Label FontStyle="Oblique"  Foreground="Black" BorderThickness="7" BorderBrush="Olive" FontWeight="Heavy"  Content="MY DRONE COMPANY " FontSize="20"  HorizontalAlignment="Left" Margin="275,76,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2">
         </Label>
-        <ComboBox IsEditable="True"  Visibility="Collapsed" IsEnabled="True" x:Name="ViewOptions"  HorizontalAlignment="Left" Text="Make Your Choice" Margin="305,349,0,0" VerticalAlignment="Top" Width="150" Height="40" SelectionChanged="ViewOptions_SelectionChanged" Grid.ColumnSpan="2"
+        <ComboBox IsEditable="True" BorderThickness="2"  Visibility="Collapsed" IsEnabled="True" x:Name="ViewOptions"  HorizontalAlignment="Left" Text="Make Your Choice" Margin="324,295,0,0" VerticalAlignment="Top" Width="150" Height="40" SelectionChanged="ViewOptions_SelectionChanged" Grid.ColumnSpan="2"
                  />
-        <StackPanel Grid.Column="0" Margin="43,0,64,0">
-            <Button  x:Name="Client_Entry" Content="CLIENT LOG IN" HorizontalAlignment="Right" Margin="1,300,0,50"
-                     VerticalAlignment="Top" Height="50" Width="82" Click="Client_Entry_Click"/>
+        <StackPanel Grid.Column="0" Margin="43,0,103,0">
+            <Button  x:Name="Client_Entry" Content="CLIENT LOG IN" HorizontalAlignment="Right" Margin="1,250,0,20" Height="49" Width="136" Click="Client_Entry_Click" RenderTransformOrigin="0.506,0.531"/>
             <TextBox  x:Name="id_check" Visibility="Collapsed" HorizontalAlignment="Right" Width="60" TextChanged="client_id_TextChanged"  />
+            <Button x:Name="Sign_In" Content="CLIENT SIGN IN" Height="52" HorizontalAlignment="Right" Width="136" Click="Sign_In_Click"/>
         </StackPanel>
-        <StackPanel Grid.Column="1" Margin="61,0,0,0">
-            <Button   x:Name="Manager_Entry" Content="MANAGER" Margin="1,300,200,0" VerticalAlignment="Top" Height="50" HorizontalAlignment="Left" Width="82" Grid.Column="1"   Click="Manager_Entry_Click"/>
-            <TextBox  x:Name="password" Visibility="Collapsed" Width="96" TextChanged="password_TextChanged"  HorizontalAlignment="Left"  Margin="0,20,0,0" Height="20" RenderTransformOrigin="0.276,0.602"  />
+        <StackPanel Grid.Column="1" Margin="95,0,0,0">
+            <Button   x:Name="Manager_Entry" Content="MANAGER" Margin="1,250,200,0" Height="50" HorizontalAlignment="Left" Width="109" Grid.Column="1"   Click="Manager_Entry_Click"/>
+            <TextBox BorderThickness="2"  x:Name="password" Visibility="Collapsed" Width="108" TextChanged="password_TextChanged"  HorizontalAlignment="Left"  Margin="0,16,0,0" Height="32" RenderTransformOrigin="0.276,0.602"  />
         </StackPanel>
-        <Button x:Name="Sign_In" Content="CLIENT SIGN IN" HorizontalAlignment="Left" Margin="359,303,0,0" VerticalAlignment="Top" Height="48" Width="78" Grid.ColumnSpan="2" Click="Sign_In_Click"/>
+      
 
     </Grid>
 

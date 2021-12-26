@@ -97,7 +97,7 @@ namespace BL
                     DO.Customer cs = customers.Find(c => c.Id == parcel.SenderId);
                     //caculate the nearest station to customer
 
-                    droneToList.Location = getClosestBase(new Location { Latitude = cs.Latitude, Longitude = cs.Longitude }).BaseStationLocation;
+                    droneToList.Location = getClosestBase(new Location { Latitude = cs.Latitude, Longitude = cs.Longitude }).Location;
 
                     List<DO.Customer> custom = (List<DO.Customer>)myDal.GetCustomerList();
                     DO.Customer myCs = custom.Find(cs => cs.Id == parcel.SenderId);
@@ -270,7 +270,7 @@ namespace BL
         {//find the relevant drones
 
             List<BO.DroneCharge> droneCharges = new();
-            IEnumerable<BO.DroneToList> dr = drones.FindAll(dr => dr.Status == Enums.DroneStatuses.Maintenance && dr.Location.Latitude == bs.BaseStationLocation.Latitude);
+            IEnumerable<BO.DroneToList> dr = drones.FindAll(dr => dr.Status == Enums.DroneStatuses.Maintenance && dr.Location.Latitude == bs.Location.Latitude);
             foreach (var item in dr) {
                 BO.DroneCharge d = new BO.DroneCharge { Id = item.Id, BatteryStatus = item.BatteryStatus };
                 droneCharges.Add(d);
@@ -317,7 +317,7 @@ namespace BL
 
             BO.BaseStation b = new BO.BaseStation
             {
-                BaseStationLocation = new Location { Latitude = closestBase.Latitude, Longitude = closestBase.Longitude },
+                Location = new Location { Latitude = closestBase.Latitude, Longitude = closestBase.Longitude },
                 Id = closestBase.Id,
                 Name = closestBase.Name,
                 NumOfFreeSlots = closestBase.NumOfSlots
@@ -372,7 +372,7 @@ namespace BL
                 Location lc = new Location { Latitude = bs[0].Latitude, Longitude = bs[0].Longitude };
 
                 dronetolis.Location = lc;
-                dronetolis.BatteryStatus = random.Next((int)(BO.LocationFuncs.Distance(dronetolis.Location, getClosestBase(dronetolis.Location).BaseStationLocation) * myDal.DroneElectricConsumations()[0]), 99) + random.NextDouble();
+                dronetolis.BatteryStatus = random.Next((int)(BO.LocationFuncs.Distance(dronetolis.Location, getClosestBase(dronetolis.Location).Location) * myDal.DroneElectricConsumations()[0]), 99) + random.NextDouble();
             }
             return dronetolis;
         }
