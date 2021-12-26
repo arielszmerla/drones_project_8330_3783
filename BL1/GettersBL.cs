@@ -12,7 +12,7 @@ namespace BL
     partial class BLImp : IBL
     {
 
-        #region
+        #region gets
         /// <summary>
         /// method to get a parcel
         /// </summary>
@@ -45,11 +45,28 @@ namespace BL
             return p;
         }
         /// <summary>
-        /// method that return a certain base station by id
+        /// method to get a parcel on drone
         /// </summary>
-        /// <param name="idP"></param>
-        /// <returns></returns>
-        public BaseStation GetBaseStation(int idP)
+        /// <param name="idP"></id drone>
+        /// <returns></returns parcel on delivery>
+        public ParcelToList GetParcelonDrone(int idP)
+        {
+
+           DO. Parcel? p= myDal.GetParcelList(d => d.DroneId == idP && d.Delivered >= DateTime.Now).FirstOrDefault();
+            if (p == null)
+                throw new GetException($"the drone with id: {idP} is not on delivery");
+            else { return DOparcelBO((DO.Parcel)p); }
+        }
+
+
+
+
+            /// <summary>
+            /// method that return a certain base station by id
+            /// </summary>
+            /// <param name="idP"></param>
+            /// <returns></returns>
+            public BaseStation GetBaseStation(int idP)
         {
             if (!myDal.GetBaseStationsList(null).Any(pc => pc.Id == idP))
                 throw new GetException("id of BaseStation not found");

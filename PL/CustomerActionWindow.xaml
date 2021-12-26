@@ -12,7 +12,7 @@
         <ImageBrush ImageSource="\images\customerspic.png"/>
     </Window.Background>
     <Grid>
-        <ListView x:Name="CustomerView" Background="Transparent" Margin="0,94,80,278" >
+        <ListView x:Name="CustomerView" Background="Transparent" Margin="0,94,80,222" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Path=Id}"/>
@@ -27,12 +27,12 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <StackPanel x:Name="updates" Orientation="Horizontal" Margin="0,217,80,173">
+        <StackPanel x:Name="updates" Orientation="Horizontal" Margin="0,217,80,0">
             <Label Content="Phone to Update:" FontWeight="DemiBold" BorderBrush="Black" FontSize="20" BorderThickness="0.5" Height="51"/>
-            <TextBox x:Name="Phone" Text="" Width="67" TextChanged="Phone_TextChanged"/>
-            <Label Content="Phone to Update:" FontWeight="DemiBold" BorderBrush="Black" FontSize="20" BorderThickness="0.5" Height="51"/>
-            <TextBox x:Name="Name_update" Width="62" TextChanged="Name_update_TextChanged" />
-            <Label Content="Phone to Update:" FontWeight="DemiBold" BorderBrush="Black" FontSize="20" BorderThickness="0.5" Height="51"/>
+            <TextBox x:Name="Phone" Text="" BorderThickness="2" Width="67" TextChanged="Phone_TextChanged" Height="54"/>
+            <Label Content="Name to Update:" FontWeight="DemiBold" BorderBrush="Black" FontSize="20" BorderThickness="0.5" Height="51"/>
+            <TextBox x:Name="Name_update" Width="62" BorderThickness="2" TextChanged="Name_update_TextChanged" Height="51" />
+            <Label Content="click to to Update:" FontWeight="DemiBold" BorderBrush="Black" FontSize="20" BorderThickness="0.5" Height="51"/>
             <Button  x:Name="UpdateS" Width="80" Content="UPDATE" Click="Update"        />
 
 

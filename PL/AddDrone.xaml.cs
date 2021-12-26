@@ -333,9 +333,15 @@ namespace PL
             dr.Model = (Enums.DroneNames)Choose_model.SelectedItem;
         }
 
-        private void Show_Parcels(object sender, RoutedEventArgs e)
+        private void show_parcel_inDrone(object sender, RoutedEventArgs e)
         {
-           // new ParcelActionWindow(bl, bl.GetParcelList(p=>p.id==dr.PID.Id).FirstOrDefault);
+            try
+            {
+                new ParcelActionWindow(bl, bl.GetParcelonDrone(dr.Id)).Show();
+            }
+            catch (BO.GetException ex) {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

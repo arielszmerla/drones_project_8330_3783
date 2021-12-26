@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,6 +17,7 @@ using System.Windows.Shapes;
 using BLAPI;
 using PL;
 
+
 namespace PL
 {
     /// <summary>
@@ -23,15 +26,27 @@ namespace PL
     public partial class MainWindow : Window
     {
         enum listChoice { Drones, BaseStations, Customers, Parcels };
-   
+       // private static MediaPlayer _backgroundMusic = new MediaPlayer();
         BLAPI.IBL bl = BLFactory.GetBL();
         public MainWindow()
         {
             InitializeComponent();
             ViewOptions.ItemsSource = Enum.GetValues(typeof(listChoice));
+           // StartBackgroundMusic();
         }
-
-
+        /*
+        public static void StartBackgroundMusic()
+        {
+            string mp3FileName ="" ;
+            _backgroundMusic.Open(@"pack://siteoforigin:,,,/sound/cello.wav");
+            _backgroundMusic.MediaEnded += new EventHandler(BackgroundMusic_Ended);
+            _backgroundMusic.Play();
+        }
+        private static void BackgroundMusic_Ended(object sender, EventArgs e)
+        {
+            _backgroundMusic.Position = TimeSpan.Zero;
+            _backgroundMusic.Play();
+        }*/
         private void DronesList_Click_1(object sender, RoutedEventArgs e)
         {
             new DroneListWindow1(bl).Show();
@@ -138,9 +153,6 @@ namespace PL
 
                 }
                 
-                
-                
-            
             }
         }
 

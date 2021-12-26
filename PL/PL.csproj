@@ -23,8 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Golden_State.mp3" />
     <None Remove="images\baseStationPic.png" />
     <None Remove="images\dronefon.jpg" />
+    <None Remove="images\Golden_State.mp3" />
     <None Remove="images\Google_Maps_logo.png" />
     <None Remove="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
     <None Remove="images\parcel.png" />
@@ -53,8 +55,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Golden_State.mp3" />
     <Resource Include="images\baseStationPic.png" />
     <Resource Include="images\dronefon.jpg" />
+    <EmbeddedResource Include="images\Golden_State.mp3" />
     <Resource Include="images\Google_Maps_logo.png" />
     <Resource Include="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
     <Resource Include="images\parcel.png" />
@@ -71,6 +75,21 @@
     <Resource Include="images\pngegg.png" />
     <Resource Include="images\pngwing.com.png" />
     <Resource Include="images\wifind_back.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
