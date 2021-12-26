@@ -30,8 +30,7 @@ namespace PL
             Weight_Choice.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
             you_want_grouping.Items.Add("SenderName");
             you_want_grouping.Items.Add("TargetName");
-            System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"c:\windows\media\YouAreCorrect.wav");
-            player.Play();
+         
 
         }
 
