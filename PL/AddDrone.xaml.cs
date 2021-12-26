@@ -26,15 +26,15 @@ namespace PL
     {
 
         private Location loc = new();
-        private IBL bl1;
+        private IBL bl;
 
 
-        public AddDrone(IBL bl1)
+        public AddDrone(IBL bl)
         {
 
             InitializeComponent();
             Title = "ADD A DRONE";
-            this.bl1 = bl1;
+            this.bl = bl;
             WeightCategSelector.ItemsSource = Enum.GetValues(typeof(Enums.WeightCategories));
             Choose_model.ItemsSource = Enum.GetValues(typeof(Enums.DroneNames));
             StatusSelectorToadd.ItemsSource = Enum.GetValues(typeof(Enums.DroneStatuses));
@@ -46,7 +46,7 @@ namespace PL
         BO.Drone dr = new();
         public AddDrone(IBL bl1, Drone drone)
         {
-            this.bl1 = bl1;
+            this.bl = bl1;
             dr = drone;
             InitializeComponent();
             Title = "ACTIONS";
@@ -141,7 +141,7 @@ namespace PL
                 try
                 {
 
-                    bl1.AddDrone(dr);
+                    bl.AddDrone(dr);
                     MessageBox.Show("Managed Add");
                     enter.Visibility = Visibility.Hidden;
                     this.Close();
@@ -160,7 +160,7 @@ namespace PL
         
         private void View_Map(object sender, RoutedEventArgs e)
         {
-            new MapsDisplay(dr, bl1).Show();
+            new MapsDisplay(dr, bl).Show();
         }
 
         private void Update_Drone_Click(object sender, RoutedEventArgs e)
@@ -174,9 +174,9 @@ namespace PL
 
         private void Get_model_TextChanged(object sender, TextChangedEventArgs e)
         {
-            bl1.UpdateNameDrone(dr.Id, (Enums.DroneNames)Choose_model.SelectedItem);
+            bl.UpdateNameDrone(dr.Id, (Enums.DroneNames)Choose_model.SelectedItem);
             Get_model.Visibility = Visibility.Hidden;
-            this.dr = bl1.GetDrone(dr.Id);
+            this.dr = bl.GetDrone(dr.Id);
             MessageBox.Show("Managed Update");
         
         }
@@ -186,7 +186,7 @@ namespace PL
         private void SendTo_charge(object sender, RoutedEventArgs e)
         {
             if (dr.Status == Enums.DroneStatuses.Vacant)
-                bl1.UpdateDroneSentToCharge(dr.Id);
+                bl.UpdateDroneSentToCharge(dr.Id);
             else
             {
 
@@ -199,7 +199,7 @@ namespace PL
         private void timespan_get_TextChanged(object sender, TextChangedEventArgs e)
         {
             TimeSpan time = new TimeSpan(int.Parse(timespan_get.Text), 0, 0);
-            bl1.UpdateReleaseDroneFromCharge(dr.Id, time);
+            bl.UpdateReleaseDroneFromCharge(dr.Id, time);
             timespan_get.Visibility = Visibility.Hidden;
     
         }
@@ -209,22 +209,22 @@ namespace PL
             {
                 if (dr.Status == Enums.DroneStatuses.Vacant)
                 {
-                    bl1.UpdateAssignParcelToDrone(dr.Id);
+                    bl.UpdateAssignParcelToDrone(dr.Id);
                 }
                 else if (dr.Status == Enums.DroneStatuses.InDelivery)
                 {
-                    BO.Drone drone = bl1.GetDrone(dr.Id);
+                    BO.Drone drone = bl.GetDrone(dr.Id);
 
                     if (drone.PID != null)
                     {
-                        Parcel p = bl1.GetParcel(drone.PID.Id);
+                        Parcel p = bl.GetParcel(drone.PID.Id);
                         if (p.PickedUp < DateTime.Now && p.Delivered > DateTime.Now)
                         {
-                            bl1.UpdateDeliverParcel(dr.Id);
+                            bl.UpdateDeliverParcel(dr.Id);
                         }
                         if (p.PickedUp > DateTime.Now)
                         {
-                            bl1.UpdateDroneToPickUpAParcel(dr.Id);
+                            bl.UpdateDroneToPickUpAParcel(dr.Id);
                         }
                     }
                 }
@@ -248,7 +248,7 @@ namespace PL
             if (this.enter.Visibility != Visibility.Hidden)
                 e.Cancel = true;
             else
-                new DroneListWindow1(bl1).Show();
+                new DroneListWindow1(bl).Show();
         }
 
 
@@ -331,6 +331,11 @@ namespace PL
 
             Choose_model.Background = Brushes.Transparent;
             dr.Model = (Enums.DroneNames)Choose_model.SelectedItem;
+        }
+
+        private void Show_Parcels(object sender, RoutedEventArgs e)
+        {
+           // new ParcelActionWindow(bl, bl.GetParcelList(p=>p.id==dr.PID.Id).FirstOrDefault);
         }
     }
 }

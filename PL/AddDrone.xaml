@@ -16,11 +16,10 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
-
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Button x:Name="PageStop"  Visibility="Visible" Grid.Column="3" HorizontalAlignment="Left"  Margin="105,334,0,26" Click="End_the_page" RenderTransformOrigin="0.526,0.522" Width="74">
+        <Button x:Name="PageStop"  Visibility="Visible" Grid.Column="3" HorizontalAlignment="Left"  Margin="105,357,0,44" Click="End_the_page" RenderTransformOrigin="0.568,0.613" Width="37">
 
             <Button.Background>
                 <ImageBrush ImageSource="\images\pngegg.png"/>
@@ -60,33 +59,30 @@
 
             <Label  Background="Transparent"   BorderBrush="Transparent"  Visibility="Visible" x:Name="Longitude" FontSize="15" Content="Enter Longitude" Width="127" Margin="0,10,0,0"/>
 
-
-
-
-
-
         </StackPanel>
-        <StackPanel Background="Transparent" Visibility="Collapsed"  x:Name="update_drone" Orientation="Vertical" Grid.Column="2" Margin="20,47,0,-261">
-            <Grid Height="450">
+        <StackPanel Background="Transparent" Visibility="Visible"  x:Name="update_drone" Orientation="Vertical" Grid.Column="2" Margin="20,0,69,111" Grid.ColumnSpan="2">
+            <Grid Height="450" Width="321">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="0"  x:Name="Name_Updater" Content="Name Update"/>
-                <TextBox  BorderBrush="Transparent" Background="Bisque" Text="" Grid.Column="1" x:Name="Get_model" IsReadOnly="False" HorizontalAlignment="Center" Margin="0,10,0,420" TextWrapping="Wrap" Width="70" TextChanged="Get_model_TextChanged" RenderTransformOrigin="0.5,0.5"/>
+                <Label Grid.Column="0"  Margin="0,50,0,0"  x:Name="Name_Updater" Content="Name Update"/>
+                <TextBox  BorderThickness="2" Background="Transparent" Text="" x:Name="Get_model" IsReadOnly="False" HorizontalAlignment="Left" Margin="90,50,0,369" TextWrapping="Wrap" Width="70" TextChanged="Get_model_TextChanged" RenderTransformOrigin="0.5,0.5"/>
 
-                <Button  BorderBrush="Transparent" Background="Bisque"  Visibility="Visible" x:Name="DeliveryChanges" Content="deliverychange" HorizontalAlignment="Center"  VerticalAlignment="Top" Click="DeliveryChanges_Click" Height="23" Margin="0,86,0,0"/>
-                <Button  BorderBrush="Transparent" Background="Bisque"  Visibility="Visible" x:Name="Update_Drone" Content="Update a drone" HorizontalAlignment="Center" Click="Update_Drone_Click" Margin="0,145,0,282"/>
 
-                <Button  BorderBrush="Transparent" Background="Bisque" x:Name="sendDrone"  Content="sendTocharge" Click="SendTo_charge" Margin="0,86,0,341" Grid.Column="1"/>
+                <Button  BorderBrush="Transparent" Background="Bisque"  Visibility="Visible" x:Name="DeliveryChanges" Content="deliverychange" HorizontalAlignment="Right"  VerticalAlignment="Top" Click="DeliveryChanges_Click" Height="46" Margin="0,86,14,0" Width="131"/>
+                <Button  BorderBrush="Transparent" Background="Bisque"  Visibility="Visible" x:Name="Update_Drone" Content="Update a drone" HorizontalAlignment="Center"  Width="131"  Height="46" Click="Update_Drone_Click" Margin="0,145,0,249"/>
+                <Button  BorderBrush="Transparent" Background="Bisque" x:Name="sendDrone"  Content="sendTocharge" Click="SendTo_charge"  HorizontalAlignment="Center"  Height="46" Width="130" Margin="0,213,0,191" />
+
                 <TextBox  BorderBrush="Transparent" Background="Bisque" Grid.Column="1" Visibility="Hidden" TextChanged="timespan_get_TextChanged" x:Name="timespan_get" Text="" TextWrapping="Wrap" Margin="5,114,10,318" />
-               
-                <Button    BorderBrush="Transparent" Margin="0,30,0,0" Opacity="0.8" ToolTip="Click Here To view on map" FontSize="16" BorderThickness="0.5" x:Name="View_On_Map" Click="View_Map" Width="64" Height="68" RenderTransformOrigin="-0.208,-4.179">
+
+                <Button  BorderBrush="Transparent" Margin="38,105,59,277" Opacity="0.8" ToolTip="Click Here To view on map" FontSize="16" BorderThickness="0.5" x:Name="View_On_Map" Click="View_Map" Width="64" Height="68" RenderTransformOrigin="-0.208,-4.179" Grid.Column="1">
                     <Button.Background>
                         <ImageBrush ImageSource="\images\Google_Maps_logo.png"/>
                     </Button.Background>
                 </Button>
+                <Button  BorderBrush="Transparent" Background="Bisque" x:Name="Show_Parcel"  Content="Show Parcels" Click="Show_Parcels"  HorizontalAlignment="Left"  Height="46" Width="130" Margin="20,213,0,191" Grid.Column="1" />
             </Grid>
 
         </StackPanel>
@@ -117,9 +113,8 @@
             <TextBox x:Name="ShowNumOfFreeSlots" Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Azure"    Text= "{Binding BatteryStatus }" Width="147" Height="27" RenderTransformOrigin="0.502,1.282" />
             <TextBox x:Name="ShowNumOfSlotsInUse" Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Azure" Text= "{Binding NumOfDeliveredParcel}" Width="147" Height="27" RenderTransformOrigin="0.502,1.282" />
             <TextBox x:Name="DroneLocation" Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Azure" Text= "{Binding DroneLocation}" Width="147" Height="27" RenderTransformOrigin="0.502,1.282" />
-            
 
         </StackPanel>
-        
+
     </Grid>
 </Window>

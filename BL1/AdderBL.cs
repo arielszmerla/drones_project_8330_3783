@@ -63,9 +63,9 @@ namespace BL
 
             if (station.NumOfFreeSlots < 3 || station.NumOfFreeSlots > 20)
                 throw new AddException("Invalid amount of number of free slots ");
-            if (station.BaseStationLocation.Latitude < 31.740967 || station.BaseStationLocation.Latitude > 31.815177)
+            if (station.Location.Latitude < 31.740967 || station.Location.Latitude > 31.815177)
                 throw new AddException("Incorect Latitude, please enter correct Jerusalem coordinates");
-            if (station.BaseStationLocation.Longitude < 35.171323 || station.BaseStationLocation.Longitude > 35.202050)
+            if (station.Location.Longitude < 35.171323 || station.Location.Longitude > 35.202050)
                 throw new AddException("Incorect Longitude, please enter correct Jerusalem coordinates");
             try
             {
@@ -73,8 +73,8 @@ namespace BL
                 myDal.AddBaseStation(new DO.BaseStation
                 {
                     Id = station.Id,
-                    Latitude = station.BaseStationLocation.Latitude,
-                    Longitude = station.BaseStationLocation.Longitude,
+                    Latitude = station.Location.Latitude,
+                    Longitude = station.Location.Longitude,
                     Name = station.Name,
                     NumOfSlots = station.NumOfFreeSlots
                 });

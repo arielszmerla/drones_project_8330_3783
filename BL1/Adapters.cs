@@ -59,7 +59,7 @@ namespace BL
         {
             BaseStation bs = new BaseStation
             {
-                BaseStationLocation = new Location { Latitude = myBase.Latitude, Longitude = myBase.Longitude },
+                Location = new Location { Latitude = myBase.Latitude, Longitude = myBase.Longitude },
 
                 Id = myBase.Id,
                 Name = myBase.Name
@@ -84,19 +84,7 @@ namespace BL
             baseStationTo.Location = loc;
             baseStationTo.ChargingDrones = dronCharges(GetBaseStation(baseStation.Id));
             baseStationTo.NumOfSlotsInUse = baseStationTo.ChargingDrones.Count;
-            foreach (var dr in drones)
-            {
-                if (dr.Status == Enums.DroneStatuses.Maintenance && dr.Location.Latitude == baseStationTo.Location.Latitude && dr.Location.Longitude == baseStationTo.Location.Longitude)
-                    baseStationTo.ChargingDrones.Add(new DroneCharge
-                    {
-                        BatteryStatus = dr.BatteryStatus,
-                        Id = dr.Id
-                    });
-            }
-
-
             baseStationTo.NumOfFreeSlots = baseStation.NumOfSlots - baseStationTo.NumOfSlotsInUse;
-
             return baseStationTo;
         }
         /// <summary>

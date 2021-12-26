@@ -187,7 +187,7 @@ namespace PL
                 
                 int.TryParse(ChooseNumOfFreeSlots.Text, out s);
                 
-                bs.BaseStationLocation = loc;
+                bs.Location = loc;
 
                 try
                 {
