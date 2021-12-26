@@ -75,7 +75,11 @@ namespace BLAPI
         /// </summary>
         /// <returns></returns>
         IEnumerable<BaseStationToList> GetBaseStationList(Func<BaseStationToList, bool> predicat = null);
-
+        /// <summary>
+        /// groups between base stations with and without free slots
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<IGrouping<bool, BaseStationToList>> GetWithWithoutFreeSlotsBaseStationgroup();
         /// <summary>
         /// returns list of all drones in a certain base station
         /// </summary>

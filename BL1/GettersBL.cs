@@ -232,6 +232,18 @@ namespace BL
                         where predicat(DObaseStationBO)
                         select DObaseStationBO);
         }
+        
+        /// <summary>
+        /// returns two groups one with base stations with free slots and one without
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<IGrouping<bool, BaseStationToList>> GetWithWithoutFreeSlotsBaseStationgroup()
+        {
+            return (from item in myDal.GetBaseStationsList(null)
+                    let DObaseStationBo = adaptBaseStationToList(item)
+                    group DObaseStationBo by DObaseStationBo.NumOfFreeSlots == 0 into gs
+                    select gs);
+        }
 
     
 
@@ -347,6 +359,7 @@ namespace BL
                    select customerBO;
         }
         #endregion
+         
 
 
 

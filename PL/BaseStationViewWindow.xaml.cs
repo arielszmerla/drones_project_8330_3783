@@ -32,14 +32,15 @@ namespace PL
             BaseStationView.ItemsSource = bl.GetBaseStationList();
             DataContext = BaseStationView.ItemsSource;
             BaseOptions.Items.Add("NumbOfFreeSlots");
-            BaseOptions.Items.Add("");
+            BaseOptions.Items.Add("GetWithWithoutFreeSlotsBaseStationgroup");
         }
 
         private void End_the_page(object sender, RoutedEventArgs e)
         {
             PageStop.Visibility = Visibility.Hidden;
-            Close();
             new MainWindow().Show();
+            Close();
+            
         }
         private void BaseSViewClosing(object sender, CancelEventArgs e)
         {
