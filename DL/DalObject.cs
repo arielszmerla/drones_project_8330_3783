@@ -341,7 +341,7 @@ namespace DalObject
             if (predicate == null)
                 return DataSource.Customers.Select(item => item).ToList();
             else
-                //return drones.Where(predicate);
+               // return drones.Where(predicate);
                 return (from item in DataSource.Customers
                         where predicate(item)
                         select item);
