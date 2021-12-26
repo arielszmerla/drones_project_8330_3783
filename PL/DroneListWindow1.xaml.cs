@@ -50,6 +50,12 @@ namespace PL
             this.id = id;
             this.bl = bl;
             InitializeComponent();
+            DroneListView.ItemsSource = bl.GetDronesInBaseStationList(id);
+            StatusSelector.Visibility = Visibility.Hidden;
+            Status_label.Visibility = Visibility.Hidden;
+            Weight_label.Visibility = Visibility.Hidden;
+            WeightChoise.Visibility = Visibility.Hidden;
+            
         }
 
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)

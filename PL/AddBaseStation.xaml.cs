@@ -206,7 +206,7 @@ namespace PL
                 }
             }
             else
-                MessageBox.Show("you have to fill the red places");
+                MessageBox.Show("Fill out missing data");
         }
 
         /// <summary>

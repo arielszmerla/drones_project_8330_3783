@@ -80,9 +80,9 @@ namespace BL
             customer.Phone = myCust.Phone;
 
             customer.To = (List<ParcelByCustomer>)(from item in myDal.GetParcelList(ps => ps.TargetId == customer.Id)
-                                                   let parcelFR = dOparcelFROMbyCustomerBO(item)
-                                                   select parcelFR);
-
+                              let parcelFR = dOparcelFROMbyCustomerBO(item)
+                              select parcelFR);
+           
             customer.From = (List<ParcelByCustomer>)(from item in myDal.GetParcelList(ps => ps.TargetId == customer.Id)
                                                      let parcelT = dOparcelTObyCustomerBO(item)
                                                      select parcelT);
@@ -222,23 +222,21 @@ namespace BL
         /// <returns></returns>
         public IEnumerable<BaseStationToList> GetBaseStationList(Func<BaseStationToList, bool> predicat = null)
         {
-
             if (predicat == null)
                 return (from item in myDal.GetBaseStationsList(null)
                         let DObaseStationBO = adaptBaseStationToList(item)
                         select DObaseStationBO);
-
             else
                 return (from item in myDal.GetBaseStationsList(null)
                         let DObaseStationBO = adaptBaseStationToList(item)
                         where predicat(DObaseStationBO)
-                        orderby (DObaseStationBO.Id)
                         select DObaseStationBO);
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
+
+    
+
+
+
         public IEnumerable<BaseStationToList> GetListOfBaseStationsWithFreeSlots()
         {
             List<BaseStationToList> tmp = (List<BaseStationToList>)GetBaseStationList();
