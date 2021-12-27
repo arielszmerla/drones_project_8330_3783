@@ -37,25 +37,19 @@
                 </GroupStyle>
             </ListView.GroupStyle>
         </ListView>
-        <Button    BorderBrush="Transparent" Margin="708,181,28,185" Opacity="0.8" ToolTip="Click Here To view on map" FontSize="16" BorderThickness="0.5" x:Name="View_On_Map" Click="View_Map" Width="64" Height="68" RenderTransformOrigin="-0.208,-4.179">
-            <Button.Background>
-                <ImageBrush ImageSource="\images\Google_Maps_logo.png"/>
-            </Button.Background>
-        </Button>
+       
         <Button x:Name="PageStop" ToolTip="close page"  Visibility="Visible" HorizontalAlignment="Left"  Margin="720,357,0,0" Click="End_the_page"  VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="60" Height="50">
             <Button.Background>
-
-
                 <ImageBrush ImageSource="\images\pngegg.png" />
             </Button.Background>
         </Button>
 
         <Button x:Name="ResetList" Content="Reset List" Background ="BurlyWood"  Visibility="Collapsed"  HorizontalAlignment="Left" Margin="690,10,0,0" VerticalAlignment="Top" Click="ResetList_Click" Height="30" Width="100"/>
         <ComboBox x:Name="BaseOptions" HorizontalAlignment="Left" Margin="105,33,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="BaseOptions_SelectionChanged"/>
-        <Button Margin="700,269,0,0" VerticalAlignment="Top" Width="60" Height="50" RenderTransformOrigin="0.5,0.5" Click="Button_Click">
+        <Button Margin="700,275,5,0" VerticalAlignment="Top" Width="60" Height="50" RenderTransformOrigin="0.5,0.5" Click="Button_Click">
 
             <Button.Background>
-                <ImageBrush ImageSource="\images\pluspic.png" />
+                <ImageBrush ImageSource="\images\plussignpic.png" />
             </Button.Background>
         </Button>
 

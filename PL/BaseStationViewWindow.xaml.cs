@@ -29,7 +29,7 @@ namespace PL
             InitializeComponent();
             this.bl = bl;
 
-            BaseStationView.ItemsSource = bl.GetBaseStationList();
+            BaseStationView.ItemsSource = bl.GetBaseStationList(bs => bs.Valid == true);
             DataContext = BaseStationView.ItemsSource;
             BaseOptions.Items.Add("NumbOfFreeSlots");
             BaseOptions.Items.Add("GetWithWithoutFreeSlotsBaseStationgroup");
@@ -40,7 +40,7 @@ namespace PL
             PageStop.Visibility = Visibility.Hidden;
             new MainWindow().Show();
             Close();
-            
+
         }
         private void BaseSViewClosing(object sender, CancelEventArgs e)
         {
@@ -94,10 +94,16 @@ namespace PL
         private void BaseOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(BaseStationView.ItemsSource);
-  
-            PropertyGroupDescription groupDescription = new PropertyGroupDescription(BaseOptions.SelectedItem.ToString());
-            view.GroupDescriptions.Add(groupDescription);
+            //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(BaseStationView.ItemsSource);
+
+            //PropertyGroupDescription groupDescription = new PropertyGroupDescription(BaseOptions.SelectedItem.ToString());
+            //view.GroupDescriptions.Add(groupDescription);
+            if (BaseOptions.SelectedItem.ToString() == "NumbOfFreeSlots")
+            {
+                BaseStationView.ItemsSource =
+                bl.GetBaseStationListGroup();
+            }
+
             BaseStationView.Items.Refresh();
             ResetList.Visibility = Visibility.Visible;
         }
