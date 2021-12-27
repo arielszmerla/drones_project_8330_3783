@@ -10,7 +10,7 @@
         public double BatteryStatus { get; set; }
         public BO.Enums.DroneStatuses Status { get; set; }//
         public ParcelInDelivery PID { get; set; }
-        public Location DronePlace { get; set; }
+        public Location Location { get; set; }
         public override string ToString()///toString erased func
         {
             string result = "";
@@ -23,7 +23,7 @@
             {
                 result += $"Parcel in delivery is {PID}\n";
             }
-            result += $"Location is {DronePlace}\n";
+            result += $"Location is {Location}\n";
 
             return result;
         }

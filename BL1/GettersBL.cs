@@ -118,7 +118,7 @@ namespace BL
             {
                 Id = myDrone.Id,
                 BatteryStatus = myDrone.BatteryStatus,
-                DronePlace = myDrone.Location,
+                Location = myDrone.Location,
                 MaxWeight = myDrone.MaxWeight,
                 Model = myDrone.Model,
                 PID = null,

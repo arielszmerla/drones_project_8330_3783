@@ -145,7 +145,10 @@ namespace BL
                 MaxWeight = (DO.WeightCategories)drone.MaxWeight,
                 Model = (DO.DroneNames)drone.Model
             };
-            //drone1.Id = drone.Id;
+            if (drone.Location.Latitude < 31.740967 || drone.Location.Latitude > 31.815177)
+                throw new AddException("Incorect Latitude, please enter correct Jerusalem coordinates");
+            if (drone.Location.Longitude < 35.171323 || drone.Location.Longitude > 35.202050)
+                throw new AddException("Incorect Longitude, please enter correct Jerusalem coordinates");
 
             //calling mydal after mapping BO to DO
             try
@@ -164,7 +167,7 @@ namespace BL
             {
                 Id = drone.Id,
                 BatteryStatus = drone.BatteryStatus,
-                Location = drone.DronePlace,
+                Location = drone.Location,
                 MaxWeight = drone.MaxWeight,
                 Model = drone.Model,
                 NumOfDeliveredParcel = 0,
