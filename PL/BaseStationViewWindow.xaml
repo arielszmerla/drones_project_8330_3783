@@ -49,7 +49,7 @@
         <Button Margin="700,275,5,0" VerticalAlignment="Top" Width="60" Height="50" RenderTransformOrigin="0.5,0.5" Click="Button_Click">
 
             <Button.Background>
-                <ImageBrush ImageSource="\images\plussignpic.png" />
+                <ImageBrush ImageSource="\images\pluspic.png" />
             </Button.Background>
         </Button>
 
