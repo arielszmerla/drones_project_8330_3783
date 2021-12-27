@@ -30,7 +30,7 @@ namespace BL
                 throw new AddException($"id {customer.Id} exist already");
             }
             if (customer.Id < 10000000 ||
-           customer.Id >999999999)
+           customer.Id > 999999999)
                 throw new AddException("Invalid id  ");
             if (customer.Location.Latitude < 31.740967 || customer.Location.Latitude > 31.815177)
                 throw new AddException("Incorect Latitude, please enter correct Jerusalem coordinates");
@@ -58,8 +58,8 @@ namespace BL
         /// <param name="station"></param>
         public void AddBaseStation(BaseStation station)
         { //checks if exists already
-          if (myDal.GetBaseStationsList(null).Any(item =>item.Id == station.Id))
-                    throw new AddException($"id {station.Id} exist already");
+            if (myDal.GetBaseStationsList(null).Any(item => item.Id == station.Id))
+                throw new AddException($"id {station.Id} exist already");
 
             if (station.NumOfFreeSlots < 3 || station.NumOfFreeSlots > 20)
                 throw new AddException("Invalid amount of number of free slots ");
@@ -145,68 +145,81 @@ namespace BL
                 MaxWeight = (DO.WeightCategories)drone.MaxWeight,
                 Model = (DO.DroneNames)drone.Model
             };
-            if (drone.Location.Latitude < 31.740967 || drone.Location.Latitude > 31.815177)
-                throw new AddException("Incorect Latitude, please enter correct Jerusalem coordinates");
-            if (drone.Location.Longitude < 35.171323 || drone.Location.Longitude > 35.202050)
-                throw new AddException("Incorect Longitude, please enter correct Jerusalem coordinates");
-
-            //calling mydal after mapping BO to DO
-            try
-            {
-                myDal.AddDrone(drone1);
-            }
-            catch (DroneException d)
+            if (drone.Status == Enums.DroneStatuses.Maintenance)
             {
 
-                throw new AddException($"The drone {drone.Id} already exists ", d);
-            }
 
-          
-            //put it in the BL droneList
-            DroneToList dr = new DroneToList
-            {
-                Id = drone.Id,
-                BatteryStatus = drone.BatteryStatus,
-                Location = drone.Location,
-                MaxWeight = drone.MaxWeight,
-                Model = drone.Model,
-                NumOfDeliveredParcel = 0,
-                Status = drone.Status
-            };
-            drones.Add(dr);
-
-        }
-        /// <summary>
-        /// adds new  parcel to datasource
-        /// </summary>
-        /// <param name="parcel"></param>
-        public void AddParcel(Parcel parcel)
-        {//check if exits already
-            if (!myDal.GetCustomerList().Any(c => c.Id == parcel.Sender.Id))
-                throw new GetException($"id sender {parcel.Sender.Id} doesn't exist ");
-            if (!myDal.GetCustomerList().Any(c => c.Id == parcel.Target.Id))
-                throw new GetException($"id target {parcel.Target.Id} doesn't exist ");
-            //calling mydal after mapping BO to DO
-            try
-            {
-                myDal.AddParcel(new DO.Parcel
+                BaseStationToList b = this.GetBaseStationList().Where(c => c.Valid == true && c.NumOfFreeSlots > 0).FirstOrDefault();
+                if (b == null)
                 {
-                    Id = parcel.Id,
-                    Delivered = parcel.Delivered,
-                    DroneId = parcel.DIP.Id,
-                    PickedUp = parcel.PickedUp,
-                    Requested = parcel.Created,
-                    Scheduled = parcel.Assignment,
-                    SenderId = parcel.Sender.Id,
-                    TargetId = parcel.Target.Id,
-                    Weight = (DO.WeightCategories)parcel.WeightCategories
-                });
-            }
-            catch (ParcelExeption pr)
-            {
-                throw new AddException($"The parcel {parcel.Id} alreaedy exists.", pr);
-            }
-        }
+                    throw new AddException("can not add a new charging drone");
 
+                }
+            } 
+                if (drone.Location.Latitude < 31.740967 || drone.Location.Latitude > 31.815177)
+                    throw new AddException("Incorect Latitude, please enter correct Jerusalem coordinates");
+                if (drone.Location.Longitude < 35.171323 || drone.Location.Longitude > 35.202050)
+                    throw new AddException("Incorect Longitude, please enter correct Jerusalem coordinates");
+                if (drone.Status == Enums.DroneStatuses.InDelivery)
+                    throw new AddException("cannot add a drone in delivery");
+
+                //calling mydal after mapping BO to DO
+                try
+                {
+                    myDal.AddDrone(drone1);
+                }
+                catch (DroneException d)
+                {
+
+                    throw new AddException($"The drone {drone.Id} already exists ", d);
+                }
+
+
+                //put it in the BL droneList
+                DroneToList dr = new DroneToList
+                {
+                    Id = drone.Id,
+                    BatteryStatus = drone.BatteryStatus,
+                    Location = drone.Location,
+                    MaxWeight = drone.MaxWeight,
+                    Model = drone.Model,
+                    NumOfDeliveredParcel = 0,
+                    Status = drone.Status
+                };
+                drones.Add(dr);
+
+            }
+            /// <summary>
+            /// adds new  parcel to datasource
+            /// </summary>
+            /// <param name="parcel"></param>
+            public void AddParcel(Parcel parcel)
+            {//check if exits already
+                if (!myDal.GetCustomerList().Any(c => c.Id == parcel.Sender.Id))
+                    throw new GetException($"id sender {parcel.Sender.Id} doesn't exist ");
+                if (!myDal.GetCustomerList().Any(c => c.Id == parcel.Target.Id))
+                    throw new GetException($"id target {parcel.Target.Id} doesn't exist ");
+                //calling mydal after mapping BO to DO
+                try
+                {
+                    myDal.AddParcel(new DO.Parcel
+                    {
+                        Id = parcel.Id,
+                        Delivered = parcel.Delivered,
+                        DroneId = parcel.DIP.Id,
+                        PickedUp = parcel.PickedUp,
+                        Requested = parcel.Created,
+                        Scheduled = parcel.Assignment,
+                        SenderId = parcel.Sender.Id,
+                        TargetId = parcel.Target.Id,
+                        Weight = (DO.WeightCategories)parcel.WeightCategories
+                    });
+                }
+                catch (ParcelExeption pr)
+                {
+                    throw new AddException($"The parcel {parcel.Id} alreaedy exists.", pr);
+                }
+            }
+
+        }
     }
-}
