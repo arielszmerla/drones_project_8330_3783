@@ -29,7 +29,7 @@ namespace PL
             InitializeComponent();
             this.bl = bl;
 
-            BaseStationView.ItemsSource = bl.GetBaseStationList();
+            BaseStationView.ItemsSource = bl.GetBaseStationList(bs => bs.Valid == true);
             DataContext = BaseStationView.ItemsSource;
             BaseOptions.Items.Add("NumbOfFreeSlots");
             BaseOptions.Items.Add("GetWithWithoutFreeSlotsBaseStationgroup");

@@ -255,17 +255,30 @@ namespace BL
         /// </summary>
         /// <param name="predicat"></param>
         /// <returns></returns>
-        public IEnumerable<IGrouping<int, BaseStationToList>> GetBaseStationListGroup()
+        public IEnumerable<BaseStationToList> GetBaseStationListGroup()
         {
             IEnumerable<BaseStationToList> b = (from item in myDal.GetBaseStationsList(null)
                                                 let DObaseStationB = adaptBaseStationToList(item)
                                                 select DObaseStationB);
 
-            return (from item in b
-                    group item by item.NumOfFreeSlots 
+            IEnumerable<IGrouping<bool, BaseStationToList>> e =from item in b
+                    group item by item.NumOfSlotsInUse == 0
                         into j
-                    select j);
-
+                    select j;
+            List<BaseStationToList> ToReturn = new();
+            foreach(IGrouping<bool,BaseStationToList> mashehu in e)
+                switch (mashehu.Key)
+                {
+                    case true:
+                        foreach (BaseStationToList bs in mashehu)
+                            ToReturn.Add(bs);
+                        break;
+                    case false:
+                        foreach (BaseStationToList bs in mashehu)
+                            ToReturn.Add(bs);
+                        break;
+                }
+            return ToReturn;
         }
         /// <summary>
         /// returns two groups one with base stations with free slots and one without
