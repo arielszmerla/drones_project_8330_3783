@@ -35,7 +35,7 @@ namespace PL
             ViewOptions.ItemsSource = Enum.GetValues(typeof(listChoice));
             //string soundFilePath = "../../pl/hatikva.wav";
           //  SoundPlayer player = new SoundPlayer(soundFilePath);
-        player.Play();
+      //  player.Play();
         }
     
         

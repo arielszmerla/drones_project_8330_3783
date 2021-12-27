@@ -14,7 +14,7 @@
                     <Setter Property = "Foreground" Value = "Green" />
                 </Trigger>
             </Style.Triggers>
-        </Style>-->
+        </Style>  -->
         <Style TargetType="{x:Type Button}" x:Key="MaterialDesignMenuCommandButtonStyle">
         
             <Setter Property="Background" Value="Beige"/>
