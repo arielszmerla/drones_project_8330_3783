@@ -76,7 +76,7 @@
         </Grid>
 
 
-        <ListView  Background="Transparent"  Foreground="Black" x:Name="DroneListView" MouseDoubleClick="drone_action" FontSize="15" FontWeight="ExtraBlack" SelectionChanged="DroneListView_SelectionChanged" Margin="0,129,135,10" Grid.Row="1">
+        <ListView  Background="Transparent"  Foreground="Black" x:Name="DroneListView"  MouseDoubleClick="drone_action" FontSize="15" FontWeight="ExtraBlack" SelectionChanged="DroneListView_SelectionChanged" Margin="0,129,135,10" Grid.Row="1">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID:" DisplayMemberBinding="{Binding Id}"/>
@@ -99,7 +99,7 @@
                 </GroupStyle>
             </ListView.GroupStyle>
         </ListView>
-        <StackPanel Margin="644,47,0,46" Grid.Row="1" >
+        <StackPanel x:Name="actions" Margin="644,30,0,133" Grid.Row="1" >
             <Button Opacity="0.8" ToolTip="Click Here To Add" Margin="0,30,0,0" BorderBrush="Black" FontSize="16" Click="Button_Click" Height="59" Width="60">
             </Button>
 
@@ -109,6 +109,8 @@
                     <ImageBrush ImageSource="\images\Google_Maps_logo.png"/>
                 </Button.Background>
             </Button>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Margin="644,250,0,25">
             <Button    BorderBrush="Red" Margin="0,30,0,0" Opacity="0.8" ToolTip="Click Here To Close" FontSize="16" BorderThickness="0.5" x:Name="Closing_Button" Click="Closing_Button_Click" Width="64" Height="68" RenderTransformOrigin="-0.208,-4.179">
                 <Button.Background>
                     <ImageBrush ImageSource="\images\pngegg.png"/>

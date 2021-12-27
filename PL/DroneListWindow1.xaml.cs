@@ -55,7 +55,10 @@ namespace PL
             Status_label.Visibility = Visibility.Hidden;
             Weight_label.Visibility = Visibility.Hidden;
             WeightChoise.Visibility = Visibility.Hidden;
-            
+            actions.Visibility = Visibility.Hidden;
+          
+
+
         }
 
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)

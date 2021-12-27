@@ -21,7 +21,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Button x:Name="PageStop"  Visibility="Visible" Grid.Column="3" Width="60" Height="50" Margin="130,310,10,74" Click="End_the_page" RenderTransformOrigin="0.526,0.522">
+        <Button x:Name="PageStop"  Visibility="Visible" Grid.Column="3" Width="50" Height="40" Margin="110,337,10,29" Click="End_the_page" RenderTransformOrigin="0.526,0.522">
 
             <Button.Background>
                 <ImageBrush ImageSource="\images\pngegg.png"/>
