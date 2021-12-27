@@ -64,7 +64,7 @@ namespace PL
 
 
             Pushpin pin = new();
-            pin.Location = new(drone.DronePlace.Latitude, drone.DronePlace.Longitude);
+            pin.Location = new(drone.Location.Latitude, drone.Location.Longitude);
             myMap.Children.Add(pin);
         }
         public MapsDisplay(BO.BaseStation bs, IBL bl1)

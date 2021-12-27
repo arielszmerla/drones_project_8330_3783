@@ -41,6 +41,7 @@ namespace PL
             add_drone_stack.Visibility = Visibility.Visible;
             add_drone_titles.Visibility = Visibility.Visible;
             enter.Visibility = Visibility.Visible;
+            update_drone.Visibility = Visibility.Collapsed; Show_BaseStation_stack.Visibility = Visibility.Collapsed; show_Drone_titles.Visibility = Visibility.Collapsed;
 
         }
         BO.Drone dr = new();
@@ -55,27 +56,17 @@ namespace PL
         }
 
         BO.Drone drone = new();
-
-
-
-        private void cmbWeight_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void enter_your_drone(object sender, RoutedEventArgs e)
         {
-            BO.Enums.WeightCategories weightCategories = (BO.Enums.WeightCategories)WeightCategSelector.SelectedItem;
-            drone.MaxWeight = weightCategories;
-            Categorie_weight.Background = Brushes.Transparent;
 
-        }
+            int i;
 
-        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
-        {
-            int s;
-
-            if (int.TryParse(ChooseId.Text, out s))
+            if (int.TryParse(ChooseId.Text, out i))
             {
-                if (s > 0)
+                if (i > 0)
                 {
-                    ID.Background = Brushes.Transparent;
-                    dr.Id = s;
+
+                    dr.Id = i;
                 }
             }
             else
@@ -84,58 +75,58 @@ namespace PL
                 MessageBox.Show("Please enter a positive number");
                 ChooseId.Background = Brushes.Red;
             }
-        }
 
-        private void enter_your_drone(object sender, RoutedEventArgs e)
-        {
+
+            double s;
+            if (double.TryParse(ChooseLatitude.Text, out s))
+            {
+
+                if (i >= 0)
+                {
+                    loc.Latitude = i;
+                }
+            }
+            if (ChooseLatitude.Text == "")
+            {
+                ;
+                MessageBox.Show("Please, number > 0");
+                ChooseLatitude.Background = Brushes.Red;
+            }
+
+            if (double.TryParse(ChooseLongitude.Text, out s))
+            {
+                if (s >= 0)
+                {
+
+                    loc.Longitude = s;
+                }
+            }
+            if (ChooseLongitude.Text == "")
+            {
+                MessageBox.Show("Please, number > 0");
+                ChooseLongitude.Background = Brushes.Red;
+
+            }
             bool flag = true;
-            if (WeightCategSelector.SelectedItem == null)
+            if (WeightCategSelector.SelectedItem == null || Choose_model.SelectedItem == null || StatusSelectorToadd.SelectedItem == null ||
+              ChooseLongitude.Text == "" || ChooseLatitude.Text == "" || Choose_model.SelectedItem == null || ChooseId.Text == "")
             {
-                Categorie_weight.Background = Brushes.Red;
+
                 flag = false;
             }
+            else
+            {
+                dr.MaxWeight = (BO.Enums.WeightCategories)WeightCategSelector.SelectedItem;
+                dr.Model = (Enums.DroneNames)Choose_model.SelectedItem;
+                dr.Id = i;
+                dr.Status = (Enums.DroneStatuses)StatusSelectorToadd.SelectedItem;
+                dr.Location = loc;
 
-            if (this.Choose_model.Background == Brushes.Red)
-            {
-                return;
-            }
-            if (ChooseId.Text == "")
-            {
-                ID.Background = Brushes.Red;
-                flag = false;
-            }
 
-            if (flag == true)
-            {
                 Random rand = new Random();
                 dr.BatteryStatus = rand.Next(99) + rand.NextDouble();
 
-                if (Choose_model.Text == "")
-                {
-
-                    Choose_model.Background = Brushes.Red;
-                    MessageBox.Show("enter a name please");
-                    return;
-                }
-                if (loc.Latitude < 31.740967 || loc.Latitude > 31.815177)
-                {
-                    ChooseLatitude.Text = "";
-                    ChooseLatitude.Background = Brushes.Red;
-                    MessageBox.Show("enter a latitude between 29.000000 and 34.000000");
-                }
-                if (loc.Longitude < 35.171323 || loc.Longitude > 35.202050)
-                {
-
-                    ChooseLongitude.Text = "";
-                    ChooseLatitude.Background = Brushes.Red;
-                    MessageBox.Show("enter a Longitude between 34.000000 and 35.000000");
-                }
-                if (ChooseLongitude.Text == "" ||
-                     ChooseLatitude.Text == "")
-                    return;
-                if (stats.Background == Brushes.Red)
-                    return;
-                dr.DronePlace = loc;
+                dr.Location = loc;
                 dr.PID = null;
 
                 try
@@ -152,36 +143,34 @@ namespace PL
                 {
                     MessageBox.Show(ex.Message);
                 }
+
             }
-            else
-                MessageBox.Show("you have to fill the red places");
         }
 
-        
-        private void View_Map(object sender, RoutedEventArgs e)
-        {
-            new MapsDisplay(dr, bl).Show();
-        }
-
-        private void Update_Drone_Click(object sender, RoutedEventArgs e)
-        {
-            if (dr.Status == Enums.DroneStatuses.Vacant || dr.Status == Enums.DroneStatuses.Maintenance)
+            private void View_Map(object sender, RoutedEventArgs e)
             {
-                sendDrone.Visibility = Visibility.Visible;
+                new MapsDisplay(dr, bl).Show();
             }
-            Get_model.Visibility = Visibility.Visible;
-        }
 
-        private void Get_model_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            bl.UpdateNameDrone(dr.Id, (Enums.DroneNames)Choose_model.SelectedItem);
-            Get_model.Visibility = Visibility.Hidden;
-            this.dr = bl.GetDrone(dr.Id);
-            MessageBox.Show("Managed Update");
+            private void Update_Drone_Click(object sender, RoutedEventArgs e)
+            {
+                if (dr.Status == Enums.DroneStatuses.Vacant || dr.Status == Enums.DroneStatuses.Maintenance)
+                {
+                    sendDrone.Visibility = Visibility.Visible;
+                }
+                Get_model.Visibility = Visibility.Visible;
+            }
+
+            private void Get_model_TextChanged(object sender, TextChangedEventArgs e)
+            {
+                bl.UpdateNameDrone(dr.Id, (Enums.DroneNames)Choose_model.SelectedItem);
+                Get_model.Visibility = Visibility.Hidden;
+                this.dr = bl.GetDrone(dr.Id);
+                MessageBox.Show("Managed Update");
+
+            }
+
         
-        }
-
-
 
         private void SendTo_charge(object sender, RoutedEventArgs e)
         {
@@ -263,53 +252,7 @@ namespace PL
 
         }
 
-        private void Latitude_input(object sender, TextChangedEventArgs e)
-        {
-
-            TextBox t = (TextBox)sender;
-            double s;
-            if (double.TryParse(t.Text, out s))
-            {
-
-                if (s >= 0)
-                {
-                    loc.Latitude = s;
-                }
-            }
-            if (loc.Latitude == 0)
-            {
-                ChooseLatitude.Text = "";
-                MessageBox.Show("Please, number > 0");
-                ChooseLatitude.Background = Brushes.Red;
-            }
-
-        }
-
-        private void Longitude_input(object sender, TextChangedEventArgs e)
-        {
-
-
-            TextBox t = (TextBox)sender;
-            double s;
-            if (double.TryParse(t.Text, out s))
-            {
-                if (s >= 0)
-                {
-
-                    loc.Longitude = s;
-                }
-            }
-            if (loc.Longitude == 0)
-
-            {
-                ChooseLongitude.Text = "";
-                MessageBox.Show("Please, number between 34.000000 and 35.000000");
-                ChooseLongitude.Background = Brushes.Red;
-
-            }
-
-        }
-
+  
         private void statust_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             stats.Background = Brushes.Transparent;
