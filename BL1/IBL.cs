@@ -81,6 +81,11 @@ namespace BLAPI
         /// <returns></returns>
         IEnumerable<BaseStationToList> GetBaseStationList(Func<BaseStationToList, bool> predicat = null);
         /// <summary>
+        /// returns grouped base station list by num of free 
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<IGrouping<int, BaseStationToList>> GetBaseStationListGroup();
+        /// <summary>
         /// groups between base stations with and without free slots
         /// </summary>
         /// <returns></returns>

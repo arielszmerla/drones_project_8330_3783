@@ -56,7 +56,7 @@ namespace PL
             Weight_label.Visibility = Visibility.Hidden;
             WeightChoise.Visibility = Visibility.Hidden;
             actions.Visibility = Visibility.Hidden;
-          
+            DroneListView.MouseDoubleClick -= drone_action;
 
 
         }

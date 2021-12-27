@@ -52,7 +52,7 @@ namespace BL
         public ParcelToList GetParcelonDrone(int idP)
         {
 
-           DO. Parcel? p= myDal.GetParcelList(d => d.DroneId == idP && d.Delivered >= DateTime.Now).FirstOrDefault();
+            DO.Parcel? p = myDal.GetParcelList(d => d.DroneId == idP && d.Delivered >= DateTime.Now).FirstOrDefault();
             if (p == null)
                 throw new GetException($"the drone with id: {idP} is not on delivery");
             else { return DOparcelBO((DO.Parcel)p); }
@@ -61,12 +61,12 @@ namespace BL
 
 
 
-            /// <summary>
-            /// method that return a certain base station by id
-            /// </summary>
-            /// <param name="idP"></param>
-            /// <returns></returns>
-            public BaseStation GetBaseStation(int idP)
+        /// <summary>
+        /// method that return a certain base station by id
+        /// </summary>
+        /// <param name="idP"></param>
+        /// <returns></returns>
+        public BaseStation GetBaseStation(int idP)
         {
             if (!myDal.GetBaseStationsList(null).Any(pc => pc.Id == idP))
                 throw new GetException("id of BaseStation not found");
@@ -97,9 +97,9 @@ namespace BL
             customer.Phone = myCust.Phone;
 
             customer.To = (List<ParcelByCustomer>)(from item in myDal.GetParcelList(ps => ps.TargetId == customer.Id)
-                              let parcelFR = dOparcelFROMbyCustomerBO(item)
-                              select parcelFR);
-           
+                                                   let parcelFR = dOparcelFROMbyCustomerBO(item)
+                                                   select parcelFR);
+
             customer.From = (List<ParcelByCustomer>)(from item in myDal.GetParcelList(ps => ps.TargetId == customer.Id)
                                                      let parcelT = dOparcelTObyCustomerBO(item)
                                                      select parcelT);
@@ -249,7 +249,24 @@ namespace BL
                         where predicat(DObaseStationBO)
                         select DObaseStationBO);
         }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicat"></param>
+        /// <returns></returns>
+        public IEnumerable<IGrouping<int, BaseStationToList>> GetBaseStationListGroup()
+        {
+            IEnumerable<BaseStationToList> b = (from item in myDal.GetBaseStationsList(null)
+                                                let DObaseStationB = adaptBaseStationToList(item)
+                                                select DObaseStationB);
+
+            return (from item in b
+                    group item by item.NumOfFreeSlots 
+                        into j
+                    select j);
+
+        }
         /// <summary>
         /// returns two groups one with base stations with free slots and one without
         /// </summary>
@@ -262,7 +279,7 @@ namespace BL
                     select gs);
         }
 
-    
+
 
 
 
@@ -335,7 +352,7 @@ namespace BL
             };
             return (from item in drones
                     where item.Location.Latitude == BaseLoc.Latitude &&
-                    item.Location.Longitude == BaseLoc.Longitude && 
+                    item.Location.Longitude == BaseLoc.Longitude &&
                     item.Status == Enums.DroneStatuses.Maintenance
                     select item);
         }
@@ -376,7 +393,7 @@ namespace BL
                    select customerBO;
         }
         #endregion
-         
+
 
 
 
