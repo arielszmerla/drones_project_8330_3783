@@ -67,6 +67,7 @@ namespace BL
             };
             bs.ChargingDrones = dronCharges(bs);
             bs.NumOfFreeSlots = myBase.NumOfSlots - bs.ChargingDrones.Count;
+            
             return bs;
         }
         /// <summary>
@@ -85,6 +86,7 @@ namespace BL
             baseStationTo.ChargingDrones = dronCharges(GetBaseStation(baseStation.Id));
             baseStationTo.NumOfSlotsInUse = baseStationTo.ChargingDrones.Count;
             baseStationTo.NumOfFreeSlots = baseStation.NumOfSlots - baseStationTo.NumOfSlotsInUse;
+            baseStationTo.Valid = baseStation.Valid;
             return baseStationTo;
         }
         /// <summary>
