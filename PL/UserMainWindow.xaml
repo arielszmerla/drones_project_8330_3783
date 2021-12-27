@@ -11,7 +11,6 @@
         <ListView Name="UserGrid" Grid.Row="1" Margin="4,247,12,13"  ItemsSource="{Binding l}"  >
             <ListView.View>
                 <GridView x:Name="grdTest">
-
                     <GridViewColumn Header="UserId" DisplayMemberBinding="{Binding UserId}"  Width="50"/>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"  Width="80" />
                     <GridViewColumn Header="Phone" DisplayMemberBinding="{Binding Phone}" Width="100" />
