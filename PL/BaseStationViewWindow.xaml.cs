@@ -91,7 +91,7 @@ namespace PL
 
     
         private void Button_Click(object sender, RoutedEventArgs e)
-        {
+        SystemSounds.Beep.Play();{
             PageStop.Visibility = Visibility.Hidden;
             new AddBaseStation(bl).Show();
             Close();

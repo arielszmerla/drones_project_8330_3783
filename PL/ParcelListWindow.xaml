@@ -21,7 +21,7 @@
                     <GridViewColumn Header="Sender ID"  DisplayMemberBinding="{Binding Path=SenderName}" />
                     <GridViewColumn Header="target ID"  DisplayMemberBinding="{Binding Path=TargetName}" />
                     <GridViewColumn Header="Weight"  DisplayMemberBinding="{Binding Path=WeightCategorie}" />
-                    <GridViewColumn Header="Priority"  DisplayMemberBinding="{Binding Path=Priorities}" />
+                    <GridViewColumn Header="Priority"  DisplayMemberBinding="{Binding Path=Priority}" />
                 </GridView>
             </ListView.View>
 

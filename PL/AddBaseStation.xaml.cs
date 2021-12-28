@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using BO;
 using BLAPI;
 using System.ComponentModel;
+using System.Media;
 
 namespace PL
 {
@@ -201,7 +202,9 @@ namespace PL
                 }
                 catch (BO.AddException x)
                 {
-                    MessageBox.Show(x.ToString());
+
+                    SystemSounds.Beep.Play();
+                    MessageBox.Show(x.Message);
                     return;
                 }
             }
@@ -269,5 +272,11 @@ namespace PL
         {
             new DroneListWindow1(bs.Id,bl).Show();
         }
+
+        private void View_Map(object sender, RoutedEventArgs e)
+        {
+            new MapsDisplay(bs, bl).Show();
+        }
+
     }
 }
