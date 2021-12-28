@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Icon="\images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico"
         Closing="AddBaseStationClosing"
-        Title="AddBaseStation" Height="450" Width="800">
+        Title="Add BaseStation" Height="450" Width="800">
     <Window.Background>
         <ImageBrush ImageSource = "\images\baseStationPic.png"/>
     </Window.Background>

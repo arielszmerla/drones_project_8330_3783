@@ -33,9 +33,9 @@ namespace PL
         {
             InitializeComponent();
             ViewOptions.ItemsSource = Enum.GetValues(typeof(listChoice));
-            //string soundFilePath = "../../pl/hatikva.wav";
-          //  SoundPlayer player = new SoundPlayer(soundFilePath);
-      //  player.Play();
+            string soundFilePath = "../../pl/hatikva.wav";
+            SoundPlayer player = new SoundPlayer(soundFilePath);
+        player.Play();
         }
     
         
@@ -76,36 +76,27 @@ namespace PL
         }
         private void Manager_Entry_Click(object sender, RoutedEventArgs e)
         {
-            this.password.Visibility = Visibility.Visible;
-            MessageBox.Show("ENTER YOUR PASSWORD PLEASE");
+            password.Visibility = Visibility.Visible;
+            LogIn.Visibility = Visibility.Visible;
+            enterPassword.Visibility = Visibility.Visible;
         }
 
         private void password_TextChanged(object sender, TextChangedEventArgs e)
         {
-            int s;
-
-            if (int.TryParse(password.Text, out s))
-            {
-                if (s < 0)
-                {
-                    password.Background = Brushes.Red;
-                    MessageBox.Show("Please try again");
-                }
-            }
-
-            chek(s,1000);
-               
-        
+            password.Background = Brushes.Transparent;
         }
         private void chek(int s,int sum) {
 
             if (s == 1234) {
                 password.Text = "";
-                MessageBox.Show("done");
-                this.ViewOptions.Visibility = Visibility.Visible;
+                MessageBox.Show("Welcome sir!");
+                ViewOptions.Visibility = Visibility.Visible;
                 password.Visibility = Visibility.Collapsed;
                 Manager_Entry.Visibility = Visibility.Collapsed;
                 Client_Entry.Visibility = Visibility.Collapsed;
+                LogIn.Visibility = Visibility.Collapsed;
+                enterPassword.Visibility = Visibility.Collapsed;
+                Sign_In.Visibility = Visibility.Collapsed;
             }
             if (s > sum && s != 1234) {
                 password.Text = "";
@@ -136,7 +127,7 @@ namespace PL
                 BO.Customer? b = bl.GetCustomer(s);
                 if (b == null)
                 {
-                    MessageBox.Show("this address do not exist");
+                    MessageBox.Show("this address doesn't exist");
                     id_check.Text = "";
 
                 }
@@ -153,6 +144,23 @@ namespace PL
         private void Sign_In_Click(object sender, RoutedEventArgs e)
         {
             new UserMainWindow(bl, 2).Show();
+        }
+
+        private void LogIn_Click(object sender, RoutedEventArgs e)
+        {
+            int s;
+
+            if (int.TryParse(password.Text, out s))
+            {
+                if (s < 0)
+                {
+                    password.Background = Brushes.Red;
+                    MessageBox.Show("Please try again");
+                }
+            }
+
+            chek(s, 1000);
+
         }
     }
 }

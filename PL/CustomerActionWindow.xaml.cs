@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -22,9 +23,6 @@ namespace PL
     {
 
         private BLAPI.IBL bl1;
-
-
-
         public CustomerActionWindow(BLAPI.IBL bl, int n, int v=0)
         {
             InitializeComponent();
@@ -67,9 +65,9 @@ namespace PL
             Close();
         }
 
-        private void Phone_TextChanged(object sender, TextChangedEventArgs e)
-        {
 
+        private void Update(object sender, RoutedEventArgs e)
+        {
             if (Phone.Text != "\r") //checks that key wasn't enter
             {
                 Regex myReg = new Regex("[^0-9]+"); //gets regular expression that allows only digits
@@ -82,14 +80,8 @@ namespace PL
                     Phone.Background = Brushes.Red;
                 }
             }
-        }
-        private void Name_update_TextChanged(object sender, TextChangedEventArgs e)
-        {
             customer.Name = Name_update.Text;
-        }
 
-        private void Update(object sender, RoutedEventArgs e)
-        {
             if (Name_update.Text == "" && Phone.Text == "")
             {
                 MessageBoxButton b = MessageBoxButton.YesNo;
@@ -113,7 +105,10 @@ namespace PL
                     Close();
 
                 }
-                catch (BO.GetException exc) { MessageBox.Show(exc.ToString()); }
+                catch (BO.GetException exc) {
+                    SystemSounds.Beep.Play();
+                    MessageBox.Show(exc.ToString());
+                }
 
             }
         }
