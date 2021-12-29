@@ -79,7 +79,7 @@ namespace BL
                     NumOfSlots = station.NumOfFreeSlots
                 });
             }
-            catch (BaseExeption d)
+            catch (DO.BaseExeption d)
             {
                 throw new AddException($"The Base station {station.Id} already exists ", d);
             }
