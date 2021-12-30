@@ -69,7 +69,15 @@
           "DalObject.dll": {}
         }
       },
+      "DalXML/1.0.0": {
+        "runtime": {
+          "DalXML.dll": {}
+        }
+      },
       "DLAPI/1.0.0": {
+        "dependencies": {
+          "DalXML": "1.0.0"
+        },
         "runtime": {
           "DLAPI.dll": {}
         }
@@ -116,6 +124,11 @@
       "sha512": ""
     },
     "DalObject/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DalXML/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

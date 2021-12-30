@@ -182,6 +182,7 @@ namespace DS
                         Delivered = new DateTime(2021, 12, 30, 12, 0, 00) + duration
                     };
                     Parcels.Add(p);
+                    //DataSourceXML da= new DataSourceXML();
                 }
             }
         }
