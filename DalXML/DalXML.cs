@@ -64,7 +64,7 @@ namespace DalXML
             List<Customer> cus = XMLTolls.LoadListFromXMLSerializer<Customer>(@"customer.xml");
             if (!cus.Any(cos => cos.Id == id))
             {
-                throw new DLAPI.DeleteException($"Customer with {id}as Id does not exist");
+                throw new DLAPI.DeleteException($"Customer with {id} as Id does not exist");
             }
             cus.RemoveAll(p => p.Id == id);
             XMLTolls.SaveListToXMLSerializer(cus, @"customer.xml");
@@ -77,18 +77,12 @@ namespace DalXML
         /// <returns></the customer got>
         public Customer GetCustomer(int id)
         {
-            List<Customer> cus = XMLTolls.LoadListFromXMLSerializer<Customer>(@"customer.xml");
-            if (!(cus.Any(customer => customer.Id == id)))
+            List<Customer> customer = XMLTolls.LoadListFromXMLSerializer<Customer>(@"customer.xml");
+            if (!(customer.Any(customer => customer.Id == id)))
             {
-                throw new DLAPI.CostumerExeption()
+                throw new DLAPI.CostumerExeption($"Customer with {id} as Id does not exist");
             }
-
-            Customer? costumer = null;
-
-            costumer = DataSource.Customers.Find(cs => cs.Id == id);
-            if (costumer == null)
-                throw new CostumerExeption($"id {id}of customer not found");
-            return (Customer)costumer;
+            return customer.Find(cus => cus.Id == id);
         }
 
 
