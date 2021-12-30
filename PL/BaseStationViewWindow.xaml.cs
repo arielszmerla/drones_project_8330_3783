@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Runtime.CompilerServices;
+using System.Media;
 
 namespace PL
 {
@@ -90,8 +91,8 @@ namespace PL
 
 
     
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
+        private void Button_Click(object sender, RoutedEventArgs e) { 
+               
             PageStop.Visibility = Visibility.Hidden;
             new AddBaseStation(bl).Show();
             Close();
@@ -106,3 +107,4 @@ namespace PL
         }
     }
 }
+

@@ -116,7 +116,7 @@ namespace DalObject
             {
                 DataSource.BaseStations.Add(b);
             }
-            catch (BaseExeption ex) { throw new BaseExeption("id allready exist"); }
+            catch (DO.BaseExeption ex) { throw new BaseExeption("id allready exist"); }
         }
 
 

@@ -84,7 +84,9 @@
           x:Name="Manager_Entry" Content="MANAGER" Margin="1,250,200,0" Height="50" HorizontalAlignment="Left" Width="86" Grid.Column="1" Click="Manager_Entry_Click"/>
             <Label x:Name="enterPassword" Content="Enter password" Visibility="Collapsed" HorizontalAlignment="Left" Width="108" FontWeight="ExtraBlack" Margin="0,5,0,0" >
             </Label>
-            <TextBox BorderThickness="2"  x:Name="password" Visibility="Collapsed" Width="108"  TextChanged="password_TextChanged"  HorizontalAlignment="Left"  Margin="0,5,0,0" Height="32" RenderTransformOrigin="0.276,0.602"  />
+ 
+
+            <PasswordBox  BorderThickness="2"  x:Name="password" Visibility="Collapsed" Width="108"   HorizontalAlignment="Left"  Margin="0,5,0,0" Height="32" RenderTransformOrigin="0.276,0.602" Password=""  />
             <Button Content="Log in" x:Name="LogIn" Visibility="Collapsed" Width="108" Margin="0,5,0,0" HorizontalAlignment="Left" Grid.Column="1" Click="LogIn_Click"  />
         </StackPanel>
 

@@ -43,6 +43,7 @@
     <None Remove="images\pngegg.png" />
     <None Remove="images\pngwing.com.png" />
     <None Remove="images\wifind_back.png" />
+    <None Remove="marseillaise.wav" />
   </ItemGroup>
 
   <ItemGroup>
@@ -76,6 +77,9 @@
     <Resource Include="images\pngegg.png" />
     <Resource Include="images\pngwing.com.png" />
     <Resource Include="images\wifind_back.png" />
+    <Resource Include="marseillaise.wav">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

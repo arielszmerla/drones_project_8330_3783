@@ -36,6 +36,9 @@ namespace PL
             {
                 pin = new();
                 pin.Location = new(item.Location.Latitude, item.Location.Longitude);
+                ToolTipService.SetToolTip(pin, item);
+                MapLayer.SetPosition(pin, pin.Location);
+        
                 myMap.Children.Add(pin);
             }
             /*foreach (var item in bl.GetCustomerList())
@@ -66,6 +69,9 @@ namespace PL
             Pushpin pin = new();
             pin.Location = new(drone.Location.Latitude, drone.Location.Longitude);
             myMap.Children.Add(pin);
+            ToolTipService.SetToolTip(pin, pin.Location);
+            MapLayer.SetPosition(pin, pin.Location);
+
         }
         public MapsDisplay(BO.BaseStation bs, IBL bl1)
         {
@@ -74,9 +80,12 @@ namespace PL
             bl = bl1;
             InitializeComponent();
 
-            Pushpin pushpin = new();
-            pushpin.Location = new(bs.Location.Latitude, bs.Location.Longitude);
-            myMap.Children.Add(pushpin);
+            Pushpin pin = new();
+            pin.Location = new(bs.Location.Latitude, bs.Location.Longitude);
+            myMap.Children.Add(pin);
+            ToolTipService.SetToolTip(pin, pin.Location);
+            MapLayer.SetPosition(pin, pin.Location);
+
         }
     }
 

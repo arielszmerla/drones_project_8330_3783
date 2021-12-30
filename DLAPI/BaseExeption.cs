@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace DLAPI
-
+namespace DO
 {
     [Serializable]
-    public class BaseExeption : Exception
+    public  class BaseExeption : Exception
     {
         public BaseExeption()
         {
         }
 
-        public BaseExeption(string message) : base("Base station exeption: "+message)
+        public BaseExeption(string message) : base(message)
         {
         }
 

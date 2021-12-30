@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
-        mc:Ignorable="d"
+        mc:Ignorable="d"  Icon="\images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico"
         Title="Customer  List" Height="450" Width="800">
     <Window.Background>
 
@@ -12,6 +12,7 @@
         <ImageBrush ImageSource="\images\customerspic.png"/>
     </Window.Background>
     <Grid>
+        
         <ListView x:Name="CustomerViewList" Background="Transparent" Margin="0,94,80,0" SelectionChanged="ListView_SelectionChanged">
             <ListView.View>
                 <GridView>
