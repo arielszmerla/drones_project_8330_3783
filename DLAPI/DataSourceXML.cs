@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using DO;
-using DalXML;
+//using DalXML;
 using DLAPI;
 
 namespace DS
@@ -25,10 +25,10 @@ namespace DS
             
         }
       public DataSourceXML() {
-            XMLTolls.SaveListToXMLSerializer(DS.DataSource.Drones, dronesPath);
-            XMLTolls.SaveListToXMLSerializer(DS.DataSource.Parcels, parcelsPath);
-            XMLTolls.SaveListToXMLSerializer(DS.DataSource.Customers, customersPath);
-            SaveBaseList(DS.DataSource.BaseStations);
+            //XMLTolls.SaveListToXMLSerializer(DS.DataSource.Drones, dronesPath);
+            //XMLTolls.SaveListToXMLSerializer(DS.DataSource.Parcels, parcelsPath);
+            //XMLTolls.SaveListToXMLSerializer(DS.DataSource.Customers, customersPath);
+            //SaveBaseList(DS.DataSource.BaseStations);
         }
 
         public void SaveBaseList(List<DO.BaseStation> List)
