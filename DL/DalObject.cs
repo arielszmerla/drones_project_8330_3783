@@ -221,7 +221,11 @@ namespace DalObject
      
         #endregion
 
-        #region Drone 
+        #region Drone
+        /// <summary>
+        /// update drone frome bl to data source
+        /// </summary>
+        /// <param name="dr"></param>
         public void UpdateDrone(Drone dr)
         {
             int index = DataSource.Drones.FindIndex(drone => drone.Id == dr.Id);
@@ -341,7 +345,6 @@ namespace DalObject
             if (predicate == null)
                 return DataSource.Customers.Select(item => item).ToList();
             else
-               // return drones.Where(predicate);
                 return (from item in DataSource.Customers
                         where predicate(item)
                         select item);
@@ -350,7 +353,10 @@ namespace DalObject
 
 
 
-
+        /// <summary>
+        /// update a customer from bl to data saurce
+        /// </summary>
+        /// <param name="customer"></param>
         public void UpdateCustomerInfoFromBL(Customer customer)
         {
             int index = DataSource.Customers.FindIndex(cs => cs.Id == customer.Id);
