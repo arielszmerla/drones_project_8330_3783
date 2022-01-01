@@ -421,10 +421,9 @@ namespace DalObject
                         if (Base.Name == baseName)//make the asked changes and create anobject of Drone to charge
                         {
                             // after finding base and drone we do the following
-                            // take a space off of the base station
                             // set the drone status to be maintenance
                             // set a slot in dronecharge with the drone and base stations ID;
-                            Base.NumOfSlots--;
+                           
                             /* Drone temp = DataSource.Drones[k];
                              temp.Status = DroneStatuses.Maintenance;
                              DataSource.Drones[k] = temp;*/

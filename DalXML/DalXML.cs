@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using DLAPI;
 using DO;
 using DS;
@@ -45,9 +46,9 @@ namespace DalXML
         /// method to add a customer
         /// </summary>
         /// <param name="customer"></param>
-        void AddCustomer(Customer customer)
+        public void AddCustomer(Customer customer)
         {
-           List<Customer> cus=  XMLTolls.LoadListFromXMLSerializer<Customer>(@"customer.xml");
+            List<Customer> cus = XMLTolls.LoadListFromXMLSerializer<Customer>(@"customer.xml");
             if (cus.Any(cos => cos.Id == customer.Id))
             {
                 throw new CostumerExeption("id already exist");
@@ -117,7 +118,7 @@ namespace DalXML
             int index = customers.FindIndex(cus => cus.Id == customer.Id);
             customers[index] = customer;
             XMLTolls.SaveListToXMLSerializer(customers, @"customer.xml");
-        
+
         }
         #endregion
 
@@ -152,7 +153,7 @@ namespace DalXML
 
         }
 
-       public double[] DroneElectricConsumations()
+        public double[] DroneElectricConsumations()
         {
             double[] returnedArray ={ DataSource.Config.powerUseFreeDrone, DataSource.Config.powerUseLightCarrying,
                 DataSource.Config.powerUseMediumCarrying, DataSource.Config.powerUseHeavyCarrying,
@@ -172,7 +173,7 @@ namespace DalXML
                 throw new DroneException($"Drone with {id} as Id does not exist");
             }
             return drones.Find(dr => dr.Id == id);
-           
+
         }
         /// <summary>
         /// func that returns list to print in console
@@ -215,7 +216,7 @@ namespace DalXML
             {
                 throw new DLAPI.DeleteException($"Drone with {id} as Id does not exist");
             }
-           
+
             int k = parcels.FindIndex(ps => ps.DroneId == id);
             if (k == -1)
                 throw new ParcelExeption("invalid parcel id");
@@ -223,9 +224,34 @@ namespace DalXML
             tmp.PickedUp = DateTime.Now;
             parcels[k] = tmp;
             XMLTolls.SaveListToXMLSerializer(drones, @"drone.xml");
-            XMLTolls.SaveListToXMLSerializer(drones, @"parcel.xml");
+            XMLTolls.SaveListToXMLSerializer(parcels, @"parcel.xml");
+        }
+        /// <summary>
+        /// send a drone to charge
+        /// </summary>
+        /// <param name="idD"></param>
+        /// <param name="baseName"></param>
+        public void UpdateDroneToCharge(int idD, string baseName)
+        {
+            List<Drone> drones = XMLTolls.LoadListFromXMLSerializer<Drone>(@"drone.xml");
+            List<BaseStation> baseStations = XMLTolls.LoadListFromXMLSerializer<BaseStation>(@"stations.xml");
+            Drone? dr;
+            dr = (from dro in drones
+                  where dro.Valid == true && dro.Id == idD
+                  select dro).FirstOrDefault();
+            BaseStation? bs;
+            bs = (from bas in baseStations
+                  where bas.Valid == true && bas.Name == baseName
+                  select bas).FirstOrDefault();
+            if (dr == null)
+                throw new DroneException("id of drone not found");
+            if (bs == null)
+                throw new BaseExeption("id of base station not found");
+            //dr.Value
+            // need to finish this function
         }
         #endregion
+
 
         #region Parcel
         public int AddParcel(Parcel parcel)
@@ -330,6 +356,217 @@ namespace DalXML
             parcels.RemoveAll(p => p.Id == id);
             XMLTolls.SaveListToXMLSerializer(parcels, @"parcel.xml");
         }
+        #endregion
+
+
+        #region BaseStation
+
+
+        /// <summary>
+        /// gets basestation from database and return it to main
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns the basestation got>
+        public BaseStation GetBaseStation(int id)
+        {
+            XElement baseRoot = XMLTolls.LoadListFromXMLElement(@"BaseStations");
+            BaseStation? bs;
+            try
+            {
+                bs = (from basestation in baseRoot.Elements()
+                      where bool.Parse(basestation.Element("Valid").Value) == true
+                      where int.Parse(basestation.Element("Id").Value) == id
+                      select new BaseStation()
+                      {
+                          Id = int.Parse(basestation.Element("Id").Value),
+                          Latitude = double.Parse(basestation.Element("Latitude").Value),
+                          Longitude = double.Parse(basestation.Element("Longitude").Value),
+                          Name = basestation.Element("Name").Value,
+                          NumOfSlots = int.Parse(basestation.Element("NumOfSlots").Value),
+                          Valid = bool.Parse(basestation.Element("Valid").Value)
+                      }).FirstOrDefault();
+            }
+            catch
+            {
+                bs = null;
+            }
+            if (bs == null)
+                throw new BaseExeption("id of base not found");
+
+            return (BaseStation)bs;
+        }
+
+        /// <summary>
+        /// send a new base to database by XElement
+        /// </summary>
+        /// <param name="baseStation"></param>
+        public void AddBaseStation(BaseStation baseStation)
+        {
+            XElement baseRoot = XMLTolls.LoadListFromXMLElement(@"BaseStations");
+            BaseStation? bs;
+            try
+            {
+                bs = (from basestation in baseRoot.Elements()
+                      where int.Parse(basestation.Element("Id").Value) == baseStation.Id
+                      select new BaseStation()
+                      {
+                          Id = int.Parse(basestation.Element("Id").Value),
+                          Latitude = double.Parse(basestation.Element("Latitude").Value),
+                          Longitude = double.Parse(basestation.Element("Longitude").Value),
+                          Name = basestation.Element("Name").Value,
+                          NumOfSlots = int.Parse(basestation.Element("NumOfSlots").Value),
+                          Valid = bool.Parse(basestation.Element("Valid").Value)
+                      }).FirstOrDefault();
+            }
+            catch
+            {
+                bs = null;
+            }
+            if (bs == null)
+            {
+                XElement Id = new XElement("Id", baseStation.Id);
+                XElement Latitude = new XElement("Latitude", baseStation.Latitude);
+                XElement Longitude = new XElement("Longitude", baseStation.Longitude);
+                XElement Name = new XElement("Name", baseStation.Name);
+                XElement NumOfSlots = new XElement("NumOfSlots", baseStation.NumOfSlots);
+                XElement Valid = new XElement("Valid", baseStation.Valid);
+                baseRoot.Add(new XElement("baseStation", Id, Name, NumOfSlots, Latitude, Longitude, Valid));
+                XMLTolls.SaveListToXMLElement(baseRoot, @"BaseStations");
+            }
+            throw new BaseExeption("id already exists");
+
+        }
+        /// <summary>
+        /// get list of base stations
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<BaseStation> GetBaseStationsList(Predicate<BaseStation> predicat)
+        {
+            XElement baseRoot = XMLTolls.LoadListFromXMLElement(@"BaseStations");
+         
+            if (predicat == null)
+                return (from bas in baseRoot.Elements()
+                        where bool.Parse(bas.Element("Valid").Value) == true
+                        select new BaseStation()
+                        {
+                            Id = int.Parse(bas.Element("Id").Value),
+                            Latitude = double.Parse(bas.Element("Latitude").Value),
+                            Longitude = double.Parse(bas.Element("Longitude").Value),
+                            Name = bas.Element("Name").Value,
+                            NumOfSlots = int.Parse(bas.Element("NumOfSlots").Value),
+                            Valid = bool.Parse(bas.Element("Valid").Value)
+                        }).ToList();
+
+           else
+                return (from bas in baseRoot.Elements()
+                        where bool.Parse(bas.Element("Valid").Value) == true
+                        let baseStation = new BaseStation()
+                        {
+                            Id = int.Parse(bas.Element("Id").Value),
+                            Latitude = double.Parse(bas.Element("Latitude").Value),
+                            Longitude = double.Parse(bas.Element("Longitude").Value),
+                            Name = bas.Element("Name").Value,
+                            NumOfSlots = int.Parse(bas.Element("NumOfSlots").Value),
+                            Valid = bool.Parse(bas.Element("Valid").Value)
+                        }
+                        where predicat(baseStation)
+                        select baseStation);
+        }
+        /// <summary>
+        /// update in dal a basestation
+        /// </summary>
+        /// <param name="bs"></param>
+        public void UpdateBaseStationFromBl(BaseStation bs)
+        {
+            XElement baseRoot = XMLTolls.LoadListFromXMLElement(@"BaseStations");
+            BaseStation? bas;
+            // first we search for old base station in the list
+            try
+            {
+                bas = (from basestation in baseRoot.Elements()
+                       where bool.Parse(basestation.Element("Valid").Value) == true
+                       where int.Parse(basestation.Element("Id").Value) == bs.Id
+                       select new BaseStation()
+                       {
+                           Id = int.Parse(basestation.Element("Id").Value),
+                           Latitude = double.Parse(basestation.Element("Latitude").Value),
+                           Longitude = double.Parse(basestation.Element("Longitude").Value),
+                           Name = basestation.Element("Name").Value,
+                           NumOfSlots = int.Parse(basestation.Element("NumOfSlots").Value),
+                           Valid = bool.Parse(basestation.Element("Valid").Value)
+                       }).FirstOrDefault();
+            }
+            catch
+            {
+                bas = null;
+            }
+            // if the base station doesn't exist we throw exception
+            if (bas == null)
+                throw new BaseExeption("id of base not found");
+            // we delete old base station with same id from the list
+            XElement xElement = (from basestation in baseRoot.Elements()
+                                 where bool.Parse(basestation.Element("Valid").Value) == true
+                                 where int.Parse(basestation.Element("Id").Value) == bs.Id
+                                 select basestation).FirstOrDefault();
+            xElement.Remove();
+      
+            // then we add updated base station to the list and update the file
+            XElement Id = new XElement("Id", bs.Id);
+            XElement Latitude = new XElement("Latitude", bs.Latitude);
+            XElement Longitude = new XElement("Longitude", bs.Longitude);
+            XElement Name = new XElement("Name", bs.Name);
+            XElement NumOfSlots = new XElement("NumOfSlots", bs.NumOfSlots);
+            XElement Valid = new XElement("Valid", bs.Valid);
+            baseRoot.Add(new XElement("baseStation", Id, Name, NumOfSlots, Latitude, Longitude, Valid));
+            XMLTolls.SaveListToXMLElement(baseRoot, @"BaseStations");
+          
+        }
+
+
+
+
+        /// <summary>
+        /// delete base station XElement
+        /// </summary>
+        /// <param name="id"></param>
+        public void DeleteBasestation(int id)
+        {
+            XElement baseRoot = XMLTolls.LoadListFromXMLElement(@"BaseStations");
+            BaseStation? bas;
+            // first we search for old base station in the list
+            try
+            {
+                bas = (from basestation in baseRoot.Elements()
+                       where bool.Parse(basestation.Element("Valid").Value) == true
+                       where int.Parse(basestation.Element("Id").Value) == id
+                       select new BaseStation()
+                       {
+                           Id = int.Parse(basestation.Element("Id").Value),
+                           Latitude = double.Parse(basestation.Element("Latitude").Value),
+                           Longitude = double.Parse(basestation.Element("Longitude").Value),
+                           Name = basestation.Element("Name").Value,
+                           NumOfSlots = int.Parse(basestation.Element("NumOfSlots").Value),
+                           Valid = bool.Parse(basestation.Element("Valid").Value)
+                       }).FirstOrDefault();
+            }
+            catch
+            {
+                bas = null;
+            }
+            // if the base station doesn't exist we throw exception
+            if (bas == null)
+                throw new BaseExeption("id of base not found");
+            // we delete old base station with same id from the list
+            XElement xElement = (from basestation in baseRoot.Elements()
+                                 where bool.Parse(basestation.Element("Valid").Value) == true
+                                 where int.Parse(basestation.Element("Id").Value) == id
+                                 select basestation).FirstOrDefault();
+           xElement.Element("Valid").Value = false.ToString();
+           XMLTolls.SaveListToXMLElement(baseRoot, @"BaseStations");
+        }
+
+
+
 
 
         #endregion
