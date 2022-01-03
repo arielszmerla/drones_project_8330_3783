@@ -28,6 +28,12 @@ namespace DLAPI
         /// <param name="parcel"></param>
         /// <returns></returns>
         int AddParcel(Parcel parcel);
+        /// <summary>
+        /// method to add a dronecharge unit.
+        /// </summary>
+        /// <param "id drone, id parcel"></param>
+        void AddDroneCharge(int idDrone, int idBase);
+
         #endregion
         #region get list options
         /// <summary>
@@ -155,7 +161,11 @@ namespace DLAPI
         /// </summary>
         /// <param name="id"></id of drone to erase>
         void DeleteBasestation(int id);
-
+        /// <summary>
+        /// method to delete a dronecharge unit.
+        /// </summary>
+        /// <param "id drone, id parcel"></param>
+        void DeleteDroneCharge(int idDrone);
         #endregion
     }
 }

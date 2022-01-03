@@ -11,51 +11,31 @@ namespace DLAPI
     {
         internal static string DalName;
         internal static Dictionary<string, string> DalPackages;
+
+        /// <summary>
+        /// Static constructor extracts Dal packages list and Dal type from
+        /// Dal configuration file config.xml
+        /// </summary>
         static DLConfig()
         {
-            XElement dalConfig = XElement.Load(@"config.xml");
+            XElement dalConfig = XElement.Load(@"xml\config.xml");
             DalName = dalConfig.Element("dl").Value;
             DalPackages = (from pkg in dalConfig.Element("dl-packages").Elements()
                            select pkg
             ).ToDictionary(p => "" + p.Name, p => p.Value);
         }
     }
-      
-}
 
-/*
-static class DLConfig
-{
-
-    internal static string DLName;/*
-        public string PkgName;
-        public string NameSpace;
-        public string ClassName;
-
-
-
-    internal static string DLName;*/
-/*
-    internal static Dictionary<string, string> DLPackages;
-    static DLConfig()
+    /// <summary>
+    /// Represents errors during DalApi initialization
+    /// </summary>
+    [Serializable]
+    public class DLConfigException : Exception
     {
-        XElement dlConfig = XElement.Load(@"config.xml");
-        DLName = dlConfig.Element("dl").Value;
-        DLPackages = (from pkg in dlConfig.Element("dl-packages").Elements()
-                      select pkg).ToDictionary(p => p.Name.ToString(), p => p.Value);
-
-        /*
-        let tmp1 = pkg.Attribute("namespace")
-        let nameSpace = tmp1 == null ? "DL" : tmp1.Value
-        let tmp2 = pkg.Attribute("class")
-        let className = tmp2 == null ? pkg.Value : tmp2.Value
-        select new DLPackage()
-        {
-            Name = "" + pkg.Name,
-            PkgName = pkg.Value,
-            NameSpace = nameSpace,
-            ClassName = className
-        }).ToDictionary(p => "" + p.Name, p => p);*/
+        public DLConfigException(string message) : base(message) { }
+        public DLConfigException(string message, Exception inner) : base(message, inner) { }
+    }
+}
 
 
 

@@ -92,40 +92,7 @@ namespace PL
             }
         }
 
-        private void set_parcel_Weight_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            parcel.WeightCategories = (BO.Enums.WeightCategories)set_parcel_Weight.SelectedItem;
-        }
-
-        private void set_parcel_Priority_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            parcel.Priority = (BO.Enums.Priorities)set_parcel_Priority.SelectedItem;
-        }
-
-        private void TextBox_set_target_id(object sender, TextChangedEventArgs e)
-        {
-
-            int s;
-            int idNew = 0;
-            if (int.TryParse(show_parcel_target.Text, out s))
-            {
-                if (s > 0)
-                {
-                   idNew = s;
-                }
-                parcel.Target = new CustomerInParcel();
-                parcel.Target.Id = idNew;
-
-            }
-            else
-            {
-                show_parcel_target.Text = "";
-                MessageBox.Show("Please enter a positive number");
-                show_parcel_target.Background = Brushes.Red;
-            }
-        }
-
-        private void TextBox_set_sender_id(object sender, TextChangedEventArgs e)
+        private void enter_your_parcel(object sender, RoutedEventArgs e)
         {
             int s;
             int idNew = 0;
@@ -145,10 +112,38 @@ namespace PL
                 MessageBox.Show("Please enter a positive number");
                 show_parcel_sender.Background = Brushes.Red;
             }
-        }
+            if (int.TryParse(show_parcel_target.Text, out s))
+            {
+                if (s > 0)
+                {
+                    idNew = s;
+                }
+                parcel.Target = new CustomerInParcel();
+                parcel.Target.Id = idNew;
 
-        private void enter_your_parcel(object sender, RoutedEventArgs e)
-        {
+            }
+            else
+            {
+                show_parcel_target.Text = "";
+                MessageBox.Show("Please enter a positive number");
+                show_parcel_target.Background = Brushes.Red;
+            }
+            parcel.Priority = (BO.Enums.Priorities)set_parcel_Priority.SelectedItem;
+            parcel.WeightCategories = (BO.Enums.WeightCategories)set_parcel_Weight.SelectedItem;
+            if (int.TryParse(this.show_parcel_id.Text, out s))
+            {
+                if (s > 0)
+                {
+                    parcel.Id = s;
+                }
+            }
+            else
+            {
+                show_parcel_id.Text = "";
+                MessageBox.Show("Please enter a positive number");
+                show_parcel_id.Background = Brushes.Red;
+            }
+
             bool flag = false;
             if (set_parcel_Priority.SelectedItem == null)
             {
@@ -191,11 +186,11 @@ namespace PL
                 }
                 catch (BO.AddException exc)
                 {
-                    MessageBox.Show(exc.ToString());
+                    MessageBox.Show(exc.Message);
                 }
                 catch (BO.GetException exc)
                 {
-                    MessageBox.Show(exc.ToString());
+                    MessageBox.Show(exc.Message);
                 }
             }
 

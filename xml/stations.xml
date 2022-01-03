@@ -1,13 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<BaseStations>
-  <baseStation>
-    <id>10000</id>
-    <name>Base YAFA_CENTER</name>
-    <numOfSlots>3</numOfSlots>
-    <latitude>31.745156</latitude>
-    <longitude>35.1751589</longitude>
-    <valid>true</valid>
-  </baseStation>
+<BaseStations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <baseStation>
     <id>10001</id>
     <name>Base Ramot</name>
@@ -22,7 +14,7 @@
     <numOfSlots>5</numOfSlots>
     <latitude>31.7861624</latitude>
     <longitude>35.1822896</longitude>
-    <valid>true</valid>
+    <valid>false</valid>
   </baseStation>
   <baseStation>
     <id>10003</id>
@@ -46,6 +38,14 @@
     <numOfSlots>6</numOfSlots>
     <latitude>31.764764</latitude>
     <longitude>35.189358</longitude>
+    <valid>true</valid>
+  </baseStation>
+  <baseStation>
+    <id>10000</id>
+    <name>jean marc</name>
+    <numOfSlots>8</numOfSlots>
+    <latitude>31.745156</latitude>
+    <longitude>35.1751589</longitude>
     <valid>true</valid>
   </baseStation>
 </BaseStations>

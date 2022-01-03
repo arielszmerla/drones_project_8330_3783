@@ -40,7 +40,7 @@ namespace BL
                 {
                     lock (syncRoot)
                     {
-                        if (Nested.instance == null)
+                        if (Nested.instance == null) 
                             return Nested.instance;
                     }
                 }
@@ -54,7 +54,7 @@ namespace BL
 
             try
             {
-                myDal = DLFactory.GetDL("1");
+                myDal = DLFactory.GetDL("2");
             }
             catch (DLConfigException ex)
             {
@@ -69,8 +69,8 @@ namespace BL
             double chargePerHour = myDal.DroneElectricConsumations()[4];
 
 
-            
-            foreach (var dr in myDal.GetDroneList(null))
+
+            foreach (var dr in myDal.GetDroneList(d => d.Valid == true))
             {
                 DroneToList droneToList = new DroneToList
                 {
@@ -78,10 +78,8 @@ namespace BL
                     Model = (Enums.DroneNames)dr.Model,
                     MaxWeight = (Enums.WeightCategories)dr.MaxWeight,
                     Valid = true
-                   
-
                 };
-               
+
                 drones.Add(droneToList);
             }
             foreach (var parcel in myDal.GetParcelList(null))
@@ -116,13 +114,14 @@ namespace BL
                     int index = drones.FindIndex(dr => dr.Id == droneToList.Id);
                     drones[index] = droneToList;
                 }
-             
 
-                for (int i = 0; i < drones.Count; i++)
-                    drones[i] = updateDroneToList(drones[i]);
+
 
 
             }
+
+            for (int i = 0; i < drones.Count; i++)
+                drones[i] = updateDroneToList(drones[i]);
         }
         /// <summary>
         /// func that search if any parcel with a certain weigth category is set to be sent py a certain drone 
@@ -271,11 +270,12 @@ namespace BL
 
             List<BO.DroneCharge> droneCharges = new();
             IEnumerable<BO.DroneToList> dr = drones.FindAll(dr => dr.Status == Enums.DroneStatuses.Maintenance && dr.Location.Latitude == bs.Location.Latitude);
-            foreach (var item in dr) {
+            foreach (var item in dr)
+            {
                 BO.DroneCharge d = new BO.DroneCharge { Id = item.Id, BatteryStatus = item.BatteryStatus };
                 droneCharges.Add(d);
             }
-            return droneCharges;                    
+            return droneCharges;
 
         }
         /// <summary>
@@ -324,16 +324,17 @@ namespace BL
             };
             List<BO.DroneCharge> dc = new();
             BO.DroneCharge droneCharge = new();
-                foreach (var drone in drones) {
-                if(drone.Location == new Location { Latitude = closestBase.Latitude, Longitude = closestBase.Longitude } && drone.Status==Enums.DroneStatuses.Maintenance)
-                    droneCharge= new BO.DroneCharge { Id = drone.Id, BatteryStatus = drone.BatteryStatus };
+            foreach (var drone in drones)
+            {
+                if (drone.Location == new Location { Latitude = closestBase.Latitude, Longitude = closestBase.Longitude } && drone.Status == Enums.DroneStatuses.Maintenance)
+                    droneCharge = new BO.DroneCharge { Id = drone.Id, BatteryStatus = drone.BatteryStatus };
                 dc.Add(droneCharge);
 
             }
             b.ChargingDrones = dc;
-                                
-     
-            
+
+
+
             return b;
         }
 
@@ -348,14 +349,13 @@ namespace BL
             }
             if (dronetolis.Status == Enums.DroneStatuses.Maintenance)
             {
-
                 List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetBaseStationsList(null);
-                int rand = random.Next(bs.Count());
+                int rand = random.Next(bs.Count()-1);
                 Location loc = new Location { Latitude = bs[rand].Latitude, Longitude = bs[rand].Longitude };
-                ;
                 dronetolis.Location = loc;
                 dronetolis.BatteryStatus = 20 * random.NextDouble();
-                
+                myDal.AddDroneCharge(dronetolis.Id, bs[rand].Id);
+
             }
             if (dronetolis.Status == Enums.DroneStatuses.Vacant)
             {
@@ -370,7 +370,6 @@ namespace BL
                 }
                 List<DO.BaseStation> bs = (List<DO.BaseStation>)myDal.GetBaseStationsList(null);
                 Location lc = new Location { Latitude = bs[0].Latitude, Longitude = bs[0].Longitude };
-
                 dronetolis.Location = lc;
                 dronetolis.BatteryStatus = random.Next((int)(BO.LocationFuncs.Distance(dronetolis.Location, getClosestBase(dronetolis.Location).Location) * myDal.DroneElectricConsumations()[0]), 99) + random.NextDouble();
             }

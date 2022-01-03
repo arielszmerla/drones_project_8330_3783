@@ -13,6 +13,9 @@ namespace DS
     public class DataSourceXML
     {
         static string stationsPath = @"xml\stations.xml";
+        static string dronesPath = @"drones.xml";
+        static string parcelsPath = @"parcels.xml";
+        static string customersPath = @"customer.xml";
         XElement stationRoot;
         public XElement BaseStations
         {
@@ -49,12 +52,10 @@ namespace DS
             stationRoot.Save(stationsPath);
 
         }
-        static string dronesPath = @"drones.xml";
-        static string parcelsPath = @"parcels.xml";
-        static string customersPath = @"customer.xml";
+ 
+   //     static string droneChargePath = @"droneCharge.xml";
 
 
-        
 
 
     }

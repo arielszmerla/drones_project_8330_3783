@@ -43,6 +43,45 @@ namespace DalObject
         {
             DataSource.Config.Initialize();
         }
+
+
+        #region dronecharge
+        /// <summary>
+        /// method to add a dronecharge unit.
+        /// </summary>
+        /// <param "id drone, id parcel"></param>
+       public void AddDroneCharge(int idDrone, int idBase) 
+       {
+            BaseStation? myBase = null;
+            myBase = DataSource.BaseStations.Find(bs => bs.Id == idBase);
+            if (myBase == null)
+                throw new BaseExeption("id of base not found");
+            Drone ? myDrone = null;
+            myDrone = DataSource.Drones.Find(dr => dr.Id == idBase);
+            if (myDrone == null)
+                throw new DroneException("id of drone not found");
+            if(!DataSource.DroneCharges.Any(d => d.DroneId == idDrone))
+                DataSource.DroneCharges.Add(new DroneCharge { DroneId = idDrone, StationId = idBase });
+
+        }
+        /// <summary>
+        /// method to delete a dronecharge unit.
+        /// </summary>
+        /// <param "id drone></param>
+        public void DeleteDroneCharge(int idDrone) {
+            DroneCharge? myDrone = null;
+            myDrone = DataSource.DroneCharges.Find(dr => dr.DroneId == idDrone);
+            if (myDrone == null)
+                throw new DroneChargeException("id of drone not found");
+            DataSource.DroneCharges.RemoveAll(d => d.DroneId==idDrone);
+            BaseStation b = DataSource.BaseStations.Find(bs => bs.Id == myDrone.Value.StationId);
+            DataSource.BaseStations.Remove(b);
+            b.NumOfSlots++;
+            DataSource.BaseStations.Add(b);
+        }
+        #endregion
+
+
         #region BaseStation
 
 
@@ -96,13 +135,13 @@ namespace DalObject
         /// <param name="bs"></param>
         public void UpdateBaseStationFromBl(BaseStation bs)
         {
-            
-          BaseStation? b = DataSource.BaseStations.FirstOrDefault(ba => ba.Id == bs.Id);//.Clone();
-            if ( b== null)
+
+            BaseStation? b = DataSource.BaseStations.FirstOrDefault(ba => ba.Id == bs.Id);//.Clone();
+            if (b == null)
             {
                 throw new BaseExeption($"base station {bs.Id} not found\n");
             }
-            DataSource.BaseStations.Remove((BaseStation) b);
+            DataSource.BaseStations.Remove((BaseStation)b);
             DataSource.BaseStations.Add(bs);
         }
         public void DeleteBasestation(int id)
@@ -191,7 +230,7 @@ namespace DalObject
         public IEnumerable<Parcel> GetParcelList(Predicate<Parcel> predicate)
         {
             if (predicate == null)
-                return DataSource.Parcels.Select(item=>item).ToList();
+                return DataSource.Parcels.Select(item => item).ToList();
             else
                 return (from item in DataSource.Parcels
                         where predicate(item)
@@ -218,7 +257,7 @@ namespace DalObject
             DataSource.Parcels.RemoveAll(p => p.Id == id);
         }
 
-     
+
         #endregion
 
         #region Drone
@@ -229,7 +268,7 @@ namespace DalObject
         public void UpdateDrone(Drone dr)
         {
             int index = DataSource.Drones.FindIndex(drone => drone.Id == dr.Id);
-            DataSource.Drones[index] = dr.Clone();
+            DataSource.Drones[index] = dr;
         }
         /// <summary>
         /// send a new drone to database
@@ -241,7 +280,7 @@ namespace DalObject
             {
                 throw new DroneException($"id {drone.Id} allready exist");
             }
-            DataSource.Drones.Add(drone.Clone());
+            DataSource.Drones.Add(drone);
         }
         /// <summary>
         /// gets drone from database and return it to main
@@ -255,7 +294,9 @@ namespace DalObject
             myDrone = DataSource.Drones.Find(dr => dr.Id == id);
             if (myDrone == null)
                 throw new DroneException("id of drone not found");
-            return (Drone)myDrone.Clone();
+            if (DataSource.Drones.Where(d => d.Id == id).FirstOrDefault().Valid == false)
+                throw new DroneException($"Drone with {id} as Id is already deleted");
+            return (Drone)myDrone;
         }
 
         /// <summary>
@@ -272,7 +313,7 @@ namespace DalObject
                 throw new DLAPI.ParcelExeption("invalid parcel id");
             Parcel tmp = DataSource.Parcels[k];
             tmp.PickedUp = DateTime.Now;
-            DataSource.Parcels[k] = tmp.Clone();
+            DataSource.Parcels[k] = tmp;
         }
         /// <summary>
         /// func that returns list to print in console
@@ -281,13 +322,16 @@ namespace DalObject
         public IEnumerable<Drone> GetDroneList(Predicate<Drone> predicate)
         {
             if (predicate == null)
-                return DataSource.Drones.Select(item => item).ToList();
+                return DataSource.Drones.Where(item => item.Valid==true).ToList();
             else
                 return (from item in DataSource.Drones
-                        where predicate(item)
-                        select item.Clone());
+                        where predicate(item) && item.Valid==true
+                        select item);
         }
-
+        /// <summary>
+        /// return list of consumation data
+        /// </summary>
+        /// <returns></returns>
         public double[] DroneElectricConsumations()
         {
             double[] returnedArray ={ DataSource.Config.powerUseFreeDrone, DataSource.Config.powerUseLightCarrying,
@@ -303,6 +347,8 @@ namespace DalObject
         {
             if (!DataSource.Drones.Any(p => p.Id == id))
                 throw new DLAPI.DeleteException($"drone with {id}as Id does not exist");
+            if (DataSource.Drones.Where(d => d.Id == id).FirstOrDefault().Valid == false)
+                throw new DLAPI.DeleteException($"Drone with {id} as Id is alredy deleted");
             DataSource.Drones.RemoveAll(p => p.Id == id);
 
         }
@@ -371,38 +417,25 @@ namespace DalObject
         public void UpdateReleasDroneCharge(int idD, string baseName)
         {
             // first we search for the drone requested
-            for (int k = 0; k < DataSource.Drones.Count; k++)
-            {
-                if (DataSource.Drones[k].Id == idD)
-                {
-                    // next 'for' iterarion to find base station
-                    for (int i = 0; i < DataSource.BaseStations.Count; i++)
-                    {
-                        if (DataSource.BaseStations[i].Name == baseName)
-                        {
-                            // after finding both base station and id we do the folowing
-                            // 1) make room for a new drone to charge in the base station
-                            // 2) change the drone status tp vacant
-                            // 3) remove the drone charge from the droneCharge list
-                            BaseStation Base = DataSource.BaseStations[i];
-                            Base.NumOfSlots++;
-                            DataSource.BaseStations[i] = Base;
-                            /*Drone temp = DataSource.Drones[k];
-                            temp.Status = DroneStatuses.Vacant;
-                            DataSource.Drones[k] = temp;*/
-                            for (int h = 0; h < DataSource.DroneCharges.Count; h++)
-                            {
-                                if (DataSource.DroneCharges[i].DroneId == idD)
-                                {
-                                    DataSource.DroneCharges.RemoveAt(i);
-                                }
-                            }
-                        }
-                    }
+            if (!DataSource.Drones.Any(dr => dr.Id == idD))
+                throw new DroneException("id of drone not found");
+            if (!DataSource.BaseStations.Any(b => b.Name == baseName))
+                throw new BaseExeption("id of base station not found");
 
+            BaseStation basest = DataSource.BaseStations.Where(b => b.Name == baseName).FirstOrDefault();
+            basest.NumOfSlots++;
+            DataSource.BaseStations.RemoveAll(b => b.Name == baseName);
+            DataSource.BaseStations.Add(basest);
+
+            for (int i = 0; i < DataSource.DroneCharges.Count; i++)
+            {
+                if (DataSource.DroneCharges[i].DroneId == idD)
+                {
+                    DataSource.DroneCharges.RemoveAt(i);
                 }
             }
         }
+
         /// <summary>
         /// send a drone to charge
         /// </summary>
@@ -410,32 +443,18 @@ namespace DalObject
         /// <param name="baseName"></param>
         public void UpdateDroneToCharge(int idD, string baseName)
         {
-
-            for (int k = 0; k < DataSource.Drones.Count(); k++)
-            {
-                if (DataSource.Drones[k].Id == idD)
-                {
-                    for (int i = 0; i < DataSource.BaseStations.Count; i++)//look for the right base
-                    {
-                        BaseStation Base = DataSource.BaseStations[i];
-                        if (Base.Name == baseName)//make the asked changes and create anobject of Drone to charge
-                        {
-                            // after finding base and drone we do the following
-                            // set the drone status to be maintenance
-                            // set a slot in dronecharge with the drone and base stations ID;
-                           
-                            /* Drone temp = DataSource.Drones[k];
-                             temp.Status = DroneStatuses.Maintenance;
-                             DataSource.Drones[k] = temp;*/
-                            DroneCharge dc = new DroneCharge();
-                            dc.DroneId = idD;
-                            dc.StationId = DataSource.BaseStations[i].Id; DataSource.DroneCharges.Add(dc);
-                        }
-                    }
-                }
-            }
+            if (!DataSource.Drones.Any(dr => dr.Id == idD))
+                throw new DroneException("id of drone not found");
+            if (!DataSource.BaseStations.Any(b => b.Name == baseName))
+                throw new BaseExeption("id of base station not found");
+            if (DataSource.BaseStations.Where(b => b.Name == baseName).FirstOrDefault().NumOfSlots == 0)
+                throw new BaseExeption("base station already full");
+            DroneCharge dc = new DroneCharge();
+            dc.DroneId = idD;
+            dc.StationId = DataSource.BaseStations.Where(b => b.Name == baseName).FirstOrDefault().Id;
+            DataSource.DroneCharges.Add(dc);
         }
-    
+
         /// <summary>
         /// detele element
         /// </summary>

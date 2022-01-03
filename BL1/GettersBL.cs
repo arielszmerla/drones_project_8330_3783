@@ -68,7 +68,7 @@ namespace BL
         /// <returns></returns>
         public BaseStation GetBaseStation(int idP)
         {
-            if (!myDal.GetBaseStationsList(null).Any(pc => pc.Id == idP))
+            if (!myDal.GetBaseStationsList(null).Any(pc => pc.Id == idP && pc.Valid == true))
                 throw new GetException("id of BaseStation not found");
 
             return dOBaseStation(myDal.GetBaseStation(idP));
@@ -241,10 +241,12 @@ namespace BL
         {
             if (predicat == null)
                 return (from item in myDal.GetBaseStationsList(null)
+                        where item.Valid == true
                         let DObaseStationBO = adaptBaseStationToList(item)
                         select DObaseStationBO);
             else
                 return (from item in myDal.GetBaseStationsList(null)
+                        where item.Valid == true
                         let DObaseStationBO = adaptBaseStationToList(item)
                         where predicat(DObaseStationBO)
                         select DObaseStationBO);
@@ -258,15 +260,17 @@ namespace BL
         public IEnumerable<BaseStationToList> GetBaseStationListGroup()
         {
             IEnumerable<BaseStationToList> b = (from item in myDal.GetBaseStationsList(null)
+                                                where item.Valid == true
                                                 let DObaseStationB = adaptBaseStationToList(item)
                                                 select DObaseStationB);
 
-            IEnumerable<IGrouping<bool, BaseStationToList>> e =from item in b
-                    group item by item.NumOfSlotsInUse == 0
+            IEnumerable<IGrouping<bool, BaseStationToList>> e = from item in b
+                                                                where item.Valid == true
+                                                                group item by item.NumOfSlotsInUse == 0
                         into j
-                    select j;
+                                                                select j;
             List<BaseStationToList> ToReturn = new();
-            foreach(IGrouping<bool,BaseStationToList> mashehu in e)
+            foreach (IGrouping<bool, BaseStationToList> mashehu in e)
                 switch (mashehu.Key)
                 {
                     case true:
@@ -287,6 +291,7 @@ namespace BL
         public IEnumerable<IGrouping<bool, BaseStationToList>> GetWithWithoutFreeSlotsBaseStationgroup()
         {
             return (from item in myDal.GetBaseStationsList(null)
+                    where item.Valid == true
                     let DObaseStationBo = adaptBaseStationToList(item)
                     group DObaseStationBo by DObaseStationBo.NumOfFreeSlots == 0 into gs
                     select gs);
@@ -299,7 +304,7 @@ namespace BL
         public IEnumerable<BaseStationToList> GetListOfBaseStationsWithFreeSlots()
         {
             List<BaseStationToList> tmp = (List<BaseStationToList>)GetBaseStationList();
-            return tmp.FindAll(bs => bs.NumOfFreeSlots > 0);
+            return tmp.FindAll(bs => bs.NumOfFreeSlots > 0 && bs.Valid == true);
 
         }
         /// <summary>
@@ -366,7 +371,8 @@ namespace BL
             return (from item in drones
                     where item.Location.Latitude == BaseLoc.Latitude &&
                     item.Location.Longitude == BaseLoc.Longitude &&
-                    item.Status == Enums.DroneStatuses.Maintenance
+                    item.Status == Enums.DroneStatuses.Maintenance 
+                    && item.Valid == true
                     select item);
         }
 
@@ -399,7 +405,6 @@ namespace BL
                         select customerBO);
 
             }
-
             return from item in myDal.GetCustomerList()
                    let customerBO = DOcustomerBO(item)
                    where predicat(customerBO)

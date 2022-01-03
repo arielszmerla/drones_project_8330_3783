@@ -195,6 +195,7 @@ namespace BL
             /// <param name="parcel"></param>
             public void AddParcel(Parcel parcel)
             {//check if exits already
+           
                 if (!myDal.GetCustomerList().Any(c => c.Id == parcel.Sender.Id))
                     throw new GetException($"id sender {parcel.Sender.Id} doesn't exist ");
                 if (!myDal.GetCustomerList().Any(c => c.Id == parcel.Target.Id))
@@ -212,7 +213,9 @@ namespace BL
                         Scheduled = parcel.Assignment,
                         SenderId = parcel.Sender.Id,
                         TargetId = parcel.Target.Id,
-                        Weight = (DO.WeightCategories)parcel.WeightCategories
+                        Weight = (DO.WeightCategories)parcel.WeightCategories,
+                         Priority= (DO.Priorities)parcel.Priority
+
                     });
                 }
                 catch (ParcelExeption pr)

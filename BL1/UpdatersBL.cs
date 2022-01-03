@@ -128,9 +128,9 @@ namespace BL
         public void UpdateReleaseDroneFromCharge(int idC, TimeSpan duration)
         {
             if (!drones.Any(dr => dr.Id == idC))
-                throw new GetException($"ID OF DRONE {idC} DOESN'T EXIST\n");
+                throw new GetException($"ID OF DRONE {idC} DOESN'T EXIST");
             if (drones[drones.FindIndex(dr => dr.Id == idC)].Status != Enums.DroneStatuses.Maintenance)
-                throw new GetException($"THE DRONE {idC} ISN'T IN MAINTENANCE\n");
+                throw new GetException($"THE DRONE {idC} ISN'T IN MAINTENANCE");
             if ((drones[drones.FindIndex(dr => dr.Id == idC)].BatteryStatus + ((duration.TotalSeconds * 1 / 3600) + (duration.TotalMinutes * 1 / 60) + (duration.TotalHours)) * myDal.DroneElectricConsumations()[4]) > 100)
             {
                 drones[drones.FindIndex(dr => dr.Id == idC)].BatteryStatus = 100;
@@ -138,11 +138,7 @@ namespace BL
             else
                 drones[drones.FindIndex(dr => dr.Id == idC)].BatteryStatus += ((duration.TotalSeconds * 1 / 3600) + (duration.TotalMinutes * 1 / 60) + (duration.TotalHours)) * myDal.DroneElectricConsumations()[4];
             drones[drones.FindIndex(dr => dr.Id == idC)].Status = Enums.DroneStatuses.Vacant;
-
-            DO.BaseStation myBase = myDal.GetBaseStationsList(null).FirstOrDefault(bas => bas.Latitude == drones[drones.FindIndex(dr => dr.Id == idC)].Location.Latitude &&
-             bas.Latitude == drones[drones.FindIndex(dr => dr.Id == idC)].Location.Latitude);
-            myBase.NumOfSlots++;
-
+            myDal.DeleteDroneCharge(idC);
         }
         /// <summary>
         /// Send a drone to charge
