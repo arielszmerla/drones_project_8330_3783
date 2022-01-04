@@ -6,7 +6,7 @@
     <numOfSlots>2</numOfSlots>
     <latitude>31.8099077</latitude>
     <longitude>35.1855049</longitude>
-    <valid>true</valid>
+    <valid>false</valid>
   </baseStation>
   <baseStation>
     <id>10002</id>
@@ -14,7 +14,7 @@
     <numOfSlots>5</numOfSlots>
     <latitude>31.7861624</latitude>
     <longitude>35.1822896</longitude>
-    <valid>false</valid>
+    <valid>true</valid>
   </baseStation>
   <baseStation>
     <id>10003</id>
@@ -22,7 +22,7 @@
     <numOfSlots>4</numOfSlots>
     <latitude>31.7897954</latitude>
     <longitude>35.202992</longitude>
-    <valid>true</valid>
+    <valid>false</valid>
   </baseStation>
   <baseStation>
     <id>10004</id>

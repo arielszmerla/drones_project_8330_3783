@@ -94,12 +94,13 @@ namespace DalXML
         public IEnumerable<Customer> GetCustomerList(Func<Customer, bool> predicate = null)
         {
             List<Customer> customers = XMLTolls.LoadListFromXMLSerializer<Customer>(@"customer.xml");
-            if (predicate == null)
-                return customers;
-            else
-                return (from item in customers
-                        where predicate(item)
-                        select item);
+
+            IEnumerable<Customer> d = (from item in customers
+                                       where predicate == null ? true : predicate(item)
+                                       select item);
+            if (d == null)
+                throw new DroneException("empty list");
+            return d.ToList();
         }
 
 
@@ -128,15 +129,6 @@ namespace DalXML
         public double[] DroneElectricConsumations()
         {
             List<double> returnedArrays = XMLTolls.LoadListFromXMLSerializer<double>(@"configs.xml");
-            /*  returnedArrays.Add(0.5);
-              returnedArrays.Add(0.7);
-              returnedArrays.Add(0.9); 
-              returnedArrays.Add(1);
-              returnedArrays.Add(35);
-              XMLTolls.SaveListToXMLSerializer(returnedArrays, @"configs.xml");
-              double[] returnedArray ={ DataSource.Config.powerUseFreeDrone, DataSource.Config.powerUseLightCarrying,
-              DataSource.Config.powerUseMediumCarrying, DataSource.Config.powerUseHeavyCarrying,
-               DataSource.Config.chargePerHour };*/
             return returnedArrays.ToArray();
         }
         #endregion
@@ -159,8 +151,8 @@ namespace DalXML
             if (myDrone == null)
                 throw new DroneException("id of drone not found");
             List<DroneCharge> drones1 = XMLTolls.LoadListFromXMLSerializer<DroneCharge>(@"droneCharge.xml");
-           
-            if (!drones1.Any(c=>c.DroneId==idDrone))
+
+            if (!drones1.Any(c => c.DroneId == idDrone))
                 drones1.Add(new DroneCharge { DroneId = idDrone, StationId = idBase });
             XMLTolls.SaveListToXMLSerializer(drones1, @"droneCharge.xml");
         }
@@ -214,13 +206,13 @@ namespace DalXML
             {
                 throw new DroneException($"Drone with {id} as Id does not exist");
             }
-            if (drones.Where(d=>d.Id==id).FirstOrDefault().Valid==false)
+            if (drones.Where(d => d.Id == id).FirstOrDefault().Valid == false)
                 throw new DroneException($"Drone with {id} as Id is alredy deleted");
             drones.RemoveAll(p => p.Id == id);
             XMLTolls.SaveListToXMLSerializer(drones, @"drones.xml");
         }
-     
-   
+
+
         /// <summary>
         /// gets drone from database and return it to main
         /// </summary>
@@ -242,12 +234,13 @@ namespace DalXML
         public IEnumerable<Drone> GetDroneList(Predicate<Drone> predicate)
         {
             List<Drone> drones = XMLTolls.LoadListFromXMLSerializer<Drone>(@"drones.xml");
-            if (predicate == null)
-                return drones.Where(dr=>dr.Valid==true);
-            else
-                return (from item in drones
-                        where predicate(item) &&item.Valid==true
-                        select item);
+
+            IEnumerable<Drone> d = (from item in drones
+                                    where predicate == null ? true : predicate(item) && item.Valid == true
+                                    select item);
+            if (d == null)
+                throw new DroneException("empty list");
+            return d.ToList();
         }
         /// <summary>
         /// update drone frome bl to data source
@@ -376,7 +369,7 @@ namespace DalXML
             parcels.Add(parcel);
             XMLTolls.SaveListToXMLSerializer(parcels, @"parcels.xml");
             //need to be implemented on configs.xml
-         List<double> vs = XMLTolls.LoadListFromXMLSerializer<double>(@"configs.xml");
+            List<double> vs = XMLTolls.LoadListFromXMLSerializer<double>(@"configs.xml");
             vs[5]++;
             XMLTolls.SaveListToXMLSerializer(vs, @"configs.xml");
             return 1;
@@ -408,7 +401,7 @@ namespace DalXML
             {
                 throw new ParcelExeption($"Parcel with {idP} as Id does not exist");
             }
-            if (!drones.Any(d=>d.Id==idD))
+            if (!drones.Any(d => d.Id == idD))
             {
                 throw new DroneException($" Id {idD} of drone not found\n");
             }
@@ -444,12 +437,13 @@ namespace DalXML
         public IEnumerable<Parcel> GetParcelList(Predicate<Parcel> predicate)
         {
             List<Parcel> parcels = XMLTolls.LoadListFromXMLSerializer<Parcel>(@"parcels.xml");
-            if (predicate == null)
-                return parcels;
-            else
-                return (from item in parcels
-                        where predicate(item)
-                        select item);
+
+            IEnumerable<Parcel> p = (from item in parcels
+                                     where predicate == null ? true : predicate(item)
+                                     select item);
+            if (p == null)
+                throw new ParcelExeption("empty list");
+            return p.ToList();
         }
 
         public void UpdateParcel(Parcel p)
@@ -491,7 +485,7 @@ namespace DalXML
             try
             {
                 bs = (from basestation in baseRoot.Elements()
-                      where (basestation.Element("valid").Value) == true.ToString()
+                      where (basestation.Element("valid").Value) == "true"
                       where int.Parse(basestation.Element("id").Value) == id
                       select new BaseStation()
                       {
@@ -559,37 +553,26 @@ namespace DalXML
         public IEnumerable<BaseStation> GetBaseStationsList(Predicate<BaseStation> predicat)
         {
             XElement baseRoot = XMLTolls.LoadListFromXMLElement(@"stations.xml");
+            IEnumerable<BaseStation> b = from bas in baseRoot.Elements()
 
-            if (predicat == null)
-                return (from bas in baseRoot.Elements()
-                        
-                        let da =  new BaseStation
-                        {
-                            Id = int.Parse(bas.Element("id").Value),
-                            Latitude = double.Parse(bas.Element("latitude").Value),
-                            Longitude = double.Parse(bas.Element("longitude").Value),
-                            Name = bas.Element("name").Value,
-                            NumOfSlots = int.Parse(bas.Element("numOfSlots").Value),
-                            Valid = bool.Parse(bas.Element("valid").Value)
-                        }
-                        where da.Valid == true
-                        select da
-                        ).ToList();
+                                         let da = new BaseStation
+                                         {
+                                             Id = int.Parse(bas.Element("id").Value),
+                                             Latitude = double.Parse(bas.Element("latitude").Value),
+                                             Longitude = double.Parse(bas.Element("longitude").Value),
+                                             Name = bas.Element("name").Value,
+                                             NumOfSlots = int.Parse(bas.Element("numOfSlots").Value),
+                                             Valid = bool.Parse(bas.Element("valid").Value)
+                                         }
+                                         where predicat == null ? true : predicat(da)
+                                     && da.Valid == true
+                                         select da;
+            if (b == null)
+            {
+                throw new CostumerExeption("empty list");
+            }
+            return b.ToList();
 
-            else
-                return (from bas in baseRoot.Elements()
-                        where (bas.Element("valid").Value) == true.ToString()
-                        let baseStation = new BaseStation()
-                        {
-                          Id = int.Parse(bas.Element("id").Value),
-                            Latitude = double.Parse(bas.Element("latitude").Value),
-                            Longitude = double.Parse(bas.Element("longitude").Value),
-                            Name = bas.Element("name").Value,
-                            NumOfSlots = int.Parse(bas.Element("numOfSlots").Value),
-                            Valid = bool.Parse(bas.Element("valid").Value)
-                        }
-                        where predicat(baseStation)
-                        select baseStation);
         }
         /// <summary>
         /// update in dal a basestation

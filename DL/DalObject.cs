@@ -50,17 +50,17 @@ namespace DalObject
         /// method to add a dronecharge unit.
         /// </summary>
         /// <param "id drone, id parcel"></param>
-       public void AddDroneCharge(int idDrone, int idBase) 
-       {
+        public void AddDroneCharge(int idDrone, int idBase)
+        {
             BaseStation? myBase = null;
             myBase = DataSource.BaseStations.Find(bs => bs.Id == idBase);
             if (myBase == null)
                 throw new BaseExeption("id of base not found");
-            Drone ? myDrone = null;
+            Drone? myDrone = null;
             myDrone = DataSource.Drones.Find(dr => dr.Id == idBase);
             if (myDrone == null)
                 throw new DroneException("id of drone not found");
-            if(!DataSource.DroneCharges.Any(d => d.DroneId == idDrone))
+            if (!DataSource.DroneCharges.Any(d => d.DroneId == idDrone))
                 DataSource.DroneCharges.Add(new DroneCharge { DroneId = idDrone, StationId = idBase });
 
         }
@@ -68,12 +68,13 @@ namespace DalObject
         /// method to delete a dronecharge unit.
         /// </summary>
         /// <param "id drone></param>
-        public void DeleteDroneCharge(int idDrone) {
+        public void DeleteDroneCharge(int idDrone)
+        {
             DroneCharge? myDrone = null;
             myDrone = DataSource.DroneCharges.Find(dr => dr.DroneId == idDrone);
             if (myDrone == null)
                 throw new DroneChargeException("id of drone not found");
-            DataSource.DroneCharges.RemoveAll(d => d.DroneId==idDrone);
+            DataSource.DroneCharges.RemoveAll(d => d.DroneId == idDrone);
             BaseStation b = DataSource.BaseStations.Find(bs => bs.Id == myDrone.Value.StationId);
             DataSource.BaseStations.Remove(b);
             b.NumOfSlots++;
@@ -122,11 +123,18 @@ namespace DalObject
         public IEnumerable<BaseStation> GetBaseStationsList(Predicate<BaseStation> predicat)
         {
             if (predicat == null)
-                return DataSource.BaseStations.Select(item => item).ToList();
+                if (DataSource.BaseStations.Select(item => item).ToList().Count == 0)
+                    throw new BaseExeption("empty list");
+                else return DataSource.BaseStations.Select(item => item).ToList();
             else
-                return (from item in DataSource.BaseStations
-                        where predicat(item)
-                        select item);
+            {
+                IEnumerable<BaseStation> b = (from item in DataSource.BaseStations
+                                              where predicat(item)
+                                              select item);
+                if (b == null)
+                    throw new BaseExeption("empty list");
+                return b.ToList();
+            }
 
         }
         /// <summary>
@@ -234,13 +242,12 @@ namespace DalObject
             else
                 return (from item in DataSource.Parcels
                         where predicate(item)
-                        select item);
+                        select item).ToList();
 
         }
 
         public void UpdateParcel(Parcel p)
         {
-
             int index = DataSource.Parcels.FindIndex(pc => pc.Id == p.Id);
             if (index == -1)
                 throw new ParcelExeption($"the parcel {p.Id} doesn't exists");
@@ -321,12 +328,13 @@ namespace DalObject
         /// <returns></returns>
         public IEnumerable<Drone> GetDroneList(Predicate<Drone> predicate)
         {
-            if (predicate == null)
-                return DataSource.Drones.Where(item => item.Valid==true).ToList();
-            else
-                return (from item in DataSource.Drones
-                        where predicate(item) && item.Valid==true
-                        select item);
+
+            IEnumerable<Drone> d = (from item in DataSource.Drones
+                                    where predicate == null ? true : predicate(item) && item.Valid == true
+                                    select item);
+            if (d == null)
+                throw new DroneException("empty list");
+            else return d.ToList();
         }
         /// <summary>
         /// return list of consumation data
@@ -388,13 +396,14 @@ namespace DalObject
         public IEnumerable<Customer> GetCustomerList(Func<Customer, bool> predicate = null)
         {
 
-            if (predicate == null)
-                return DataSource.Customers.Select(item => item).ToList();
-            else
-                return (from item in DataSource.Customers
-                        where predicate(item)
-                        select item);
-
+            IEnumerable<Customer> c = (from item in DataSource.Customers
+                                       where predicate == null ? true : predicate(item)
+                                       select item);
+            if (c == null)
+            {
+                throw new CostumerExeption("empty list");
+            }
+            return c;
         }
 
 
@@ -406,6 +415,10 @@ namespace DalObject
         public void UpdateCustomerInfoFromBL(Customer customer)
         {
             int index = DataSource.Customers.FindIndex(cs => cs.Id == customer.Id);
+            if (index == -1)
+            {
+                throw new CostumerExeption("customer do not exist");
+            }
             DataSource.Customers[index] = customer;
         }
         #endregion

@@ -231,7 +231,7 @@ namespace BL
                 }
         }
         #endregion
-        #region
+        #region getlists
         /// <summary>
         /// 
         /// </summary>
@@ -239,19 +239,37 @@ namespace BL
         /// <returns></returns>
         public IEnumerable<BaseStationToList> GetBaseStationList(Func<BaseStationToList, bool> predicat = null)
         {
-            if (predicat == null)
-                return (from item in myDal.GetBaseStationsList(null)
-                        where item.Valid == true
-                        let DObaseStationBO = adaptBaseStationToList(item)
-                        select DObaseStationBO);
-            else
-                return (from item in myDal.GetBaseStationsList(null)
-                        where item.Valid == true
-                        let DObaseStationBO = adaptBaseStationToList(item)
-                        where predicat(DObaseStationBO)
-                        select DObaseStationBO);
-        }
+            try
+            {
+                if (predicat == null)
+                {
+                    IEnumerable<BaseStationToList> b = (from item in myDal.GetBaseStationsList(null)
+                                                        where item.Valid == true
+                                                        let DObaseStationBO = adaptBaseStationToList(item)
+                                                        select DObaseStationBO);
 
+                    if (b == null)
+                        throw new GetException("empty list");
+                    return b.ToList();
+                }
+                else
+                {
+                    IEnumerable<BaseStationToList> b = (from item in myDal.GetBaseStationsList(null)
+                                                        where item.Valid == true
+                                                        let DObaseStationBO = adaptBaseStationToList(item)
+                                                        where predicat(DObaseStationBO)
+                                                        select DObaseStationBO);
+
+                    if (b == null)
+                        throw new GetException("empty list");
+                    return b.ToList();
+                }
+            }
+            catch (DO.BaseExeption ex)
+            {
+                throw new GetException("empty list", ex);
+            }
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -295,17 +313,28 @@ namespace BL
                     let DObaseStationBo = adaptBaseStationToList(item)
                     group DObaseStationBo by DObaseStationBo.NumOfFreeSlots == 0 into gs
                     select gs);
+
         }
 
 
 
-
-
+        /// <summary>
+        /// / return list of Base mapped by free slots
+        /// </summary>
+        /// <param name="statuses"></param>
+        /// <returns></returns>
         public IEnumerable<BaseStationToList> GetListOfBaseStationsWithFreeSlots()
         {
+            try { 
             List<BaseStationToList> tmp = (List<BaseStationToList>)GetBaseStationList();
+            if (tmp.FindAll(bs => bs.NumOfFreeSlots > 0 && bs.Valid == true).Count == 0) ;
+            throw new GetException("empty list");
             return tmp.FindAll(bs => bs.NumOfFreeSlots > 0 && bs.Valid == true);
-
+            }
+            catch (DO.BaseExeption ex)
+            {
+                throw new GetException("empty list", ex);
+            }
         }
         /// <summary>
         /// / return list of parcels mapped by status
@@ -314,19 +343,31 @@ namespace BL
         /// <returns></returns>
         public IEnumerable<ParcelToList> GetParcelList(Enums.WeightCategories? statuses = null)
         {
+            try { 
             if (statuses == null)
             {
-                return (from item in myDal.GetParcelList(null)
-                        let parcelBO = DOparcelBO(item)
-                        select parcelBO);
+                IEnumerable<ParcelToList> p = (from item in myDal.GetParcelList(null)
+                                               let parcelBO = DOparcelBO(item)
+                                               select parcelBO);
+                if (p == null)
+                    throw new GetException("empty list");
+                return p.ToList();
             }
             Enums.WeightCategories weight = (Enums.WeightCategories)statuses;
-            return (from item in myDal.GetParcelList(null)
-                    let parcelBO = DOparcelBO(item)
-                    where parcelBO.WeightCategorie == weight
-                    select parcelBO);
-
+            IEnumerable<ParcelToList> b = (from item in myDal.GetParcelList(null)
+                                           let parcelBO = DOparcelBO(item)
+                                           where parcelBO.WeightCategorie == weight
+                                           select parcelBO);
+            if (b == null)
+                throw new GetException("empty list");
+            return b.ToList();
         }
+            catch (DLAPI.ParcelExeption ex)
+            {
+                throw new GetException("empty list", ex);
+    }
+
+}
         /// <summary>
         /// return list of parcels
         /// </summary>
@@ -334,31 +375,52 @@ namespace BL
         /// <returns></list of parcel>
         public IEnumerable<ParcelToList> GetParcelList(string name)
         {
+            try {
             if (name == "")
             {
-                return (from item in myDal.GetParcelList(null)
-                        let parcelBO = DOparcelBO(item)
-                        select parcelBO);
+                IEnumerable<ParcelToList> b = (from item in myDal.GetParcelList(null)
+                                               let parcelBO = DOparcelBO(item)
+                                               select parcelBO);
+                if (b == null)
+                    throw new GetException("empty list");
+                return b.ToList();
             }
 
-            return (from item in myDal.GetParcelList(null)
-                    let parcelBO = DOparcelBO(item)
-                    where parcelBO.SenderName == name || parcelBO.TargetName == name
-                    select parcelBO);
-
+            IEnumerable<ParcelToList> p = (from item in myDal.GetParcelList(null)
+                                           let parcelBO = DOparcelBO(item)
+                                           where parcelBO.SenderName == name || parcelBO.TargetName == name
+                                           select parcelBO);
+            if (p == null)
+                throw new GetException("empty list");
+            return p.ToList();
         }
+    
+            catch (DLAPI.ParcelExeption ex)
+            {
+                throw new GetException("empty list", ex);
+    }
+}
         /// <summary>
         /// returns list on non assigned parcels
         /// </summary>
         /// <returns></list of non assigned parcel>
         public IEnumerable<ParcelToList> GetParcelNotAssignedList()
         {
+            try
+            {
+                IEnumerable<ParcelToList> p = (from item in myDal.GetParcelList(it => it.DroneId == 0)
+                                               let parcelBO = DOparcelBO(item)
+                                               select parcelBO
+                        );
 
-            return (from item in myDal.GetParcelList(it => it.DroneId == 0)
-                    let parcelBO = DOparcelBO(item)
-                    select parcelBO
-                    );
-
+                if (p == null)
+                    throw new GetException("empty list");
+                return p.ToList();
+            }
+            catch (DLAPI.ParcelExeption ex)
+            {
+                throw new GetException("empty list", ex);
+            }
         }
 
         public IEnumerable<DroneToList> GetDronesInBaseStationList(int Id)
@@ -398,24 +460,23 @@ namespace BL
         /// <returns></list mapped>
         public IEnumerable<CustomerToList> GetCustomerList(Func<CustomerToList, bool> predicat = null)
         {
-            if (predicat == null)
+            try
             {
-                return (from item in myDal.GetCustomerList()
-                        let customerBO = DOcustomerBO(item)
-                        select customerBO);
+                IEnumerable<CustomerToList> c = from item in myDal.GetCustomerList()
+                                                let customerBO = DOcustomerBO(item)
+                                                where predicat == null ? true : predicat(customerBO)
+                                                select customerBO;
 
+                if (c.Count() == 0)
+                    throw new GetException("empty list");
+                return c;
             }
-            return from item in myDal.GetCustomerList()
-                   let customerBO = DOcustomerBO(item)
-                   where predicat(customerBO)
-                   select customerBO;
+            catch (DLAPI.CostumerExeption ex) {
+                throw new GetException("empty list", ex);
+            }
+
         }
         #endregion
-
-
-
-
-
 
     }
 }

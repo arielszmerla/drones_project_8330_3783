@@ -132,13 +132,12 @@ namespace BL
         public void AddDrone(Drone drone)
         {
             //checks if exists already
-            foreach (var item in myDal.GetDroneList())
-            {
-                if (item.Id == drone.Id)
+           
+                if (myDal.GetDroneList().Any(dr=>dr.Id==drone.Id))
                 {
                     throw new AddException($"id {drone.Id} exist already");
                 }
-            } //checks if basestation to send drone exists 
+            //checks if basestation to send drone exists 
             DO.Drone drone1 = new DO.Drone
             {
                 Id = drone.Id,
@@ -149,7 +148,7 @@ namespace BL
             {
 
 
-                BaseStationToList b = this.GetBaseStationList().Where(c => c.Valid == true && c.NumOfFreeSlots > 0).FirstOrDefault();
+                BaseStationToList? b = GetBaseStationList().Where(c => c.Valid == true && c.NumOfFreeSlots > 0).FirstOrDefault();
                 if (b == null)
                 {
                     throw new AddException("can not add a new charging drone");
@@ -170,7 +169,6 @@ namespace BL
                 }
                 catch (DroneException d)
                 {
-
                     throw new AddException($"The drone {drone.Id} already exists ", d);
                 }
 

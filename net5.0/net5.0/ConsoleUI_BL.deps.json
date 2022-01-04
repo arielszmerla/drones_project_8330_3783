@@ -17,7 +17,8 @@
       "BL1/1.0.0": {
         "dependencies": {
           "DLAPI": "1.0.0",
-          "DalObject": "1.0.0"
+          "DalObject": "1.0.0",
+          "DalXML": "1.0.0"
         },
         "runtime": {
           "BL1.dll": {}
@@ -29,6 +30,14 @@
         },
         "runtime": {
           "DalObject.dll": {}
+        }
+      },
+      "DalXML/1.0.0": {
+        "dependencies": {
+          "DLAPI": "1.0.0"
+        },
+        "runtime": {
+          "DalXML.dll": {}
         }
       },
       "DLAPI/1.0.0": {
@@ -50,6 +59,11 @@
       "sha512": ""
     },
     "DalObject/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DalXML/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

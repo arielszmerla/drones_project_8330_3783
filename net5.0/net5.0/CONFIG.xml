@@ -1,16 +1,10 @@
-﻿
+
 
 <config>
 
-	<dl>data</dl>
-
-
+	<dl>list</dl>
 	<dl-packages>
-
-		<data>DalObject</data>
-
-		<xml>DalXml</xml>
-
+		<list>DalObject</list>
+		<xml namespace="DalXML" class="DalXML">DalXML</xml>
 	</dl-packages>
-
 </config>
