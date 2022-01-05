@@ -7,6 +7,7 @@ using BLAPI;
 using DLAPI;
 using DO;
 using BO;
+using System.Runtime.CompilerServices;
 
 namespace BL
 {/// <summary>
@@ -164,7 +165,7 @@ namespace BL
             //  .FindAll(pcs => (int)pcs.DroneId == dr.Id && pcs.PickedUp < DateTime.Now && pcs.Delivered > DateTime.Now);
             List<DO.Parcel> onDrone = (List<DO.Parcel>)(from parcel in myDal.GetParcelList(null)
                                                         where parcel.DroneId == dr.Id && parcel.PickedUp < DateTime.Now && parcel.Delivered > DateTime.Now
-                                                        select parcel);
+                                                        select parcel).ToList();
 
 
             if (onDrone.Count() > 0)//if found, create the object relevant and return it

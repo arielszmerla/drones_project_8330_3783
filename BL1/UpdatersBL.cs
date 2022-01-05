@@ -1,4 +1,4 @@
-﻿
+﻿using System.Runtime.CompilerServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +20,7 @@ namespace BL
         /// Update that parcel was delivered
         /// </summary>
         /// <param name="id"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDeliverParcel(int id)
         {//if drone not found
             if (!drones.Any(dr => dr.Id == id))
@@ -58,6 +59,7 @@ namespace BL
         /// put the parcel in the drone
         /// </summary>
         /// <param name="id"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDroneToPickUpAParcel(int id)
         {//if drone not found
             if (!drones.Any(dr => dr.Id == id))
@@ -92,6 +94,7 @@ namespace BL
         /// assign a parcel to a drone
         /// </summary>
         /// <param name="idC"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateAssignParcelToDrone(int idC)
         {
             //if drone not found
@@ -125,6 +128,7 @@ namespace BL
         /// </summary>
         /// <param name="idC"></param>
         /// <param name="duration"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateReleaseDroneFromCharge(int idC, TimeSpan duration)
         {
             if (!drones.Any(dr => dr.Id == idC))
@@ -144,6 +148,7 @@ namespace BL
         /// Send a drone to charge
         /// </summary>
         /// <param name="id"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDroneSentToCharge(int id)
         {//if drone not found
             if (!myDal.GetDroneList().Any(dr => dr.Id == id))
@@ -175,6 +180,7 @@ namespace BL
         /// <param name="idC"></param>
         /// <param name="name"></param>
         /// <param name="phone"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomerInfo(int idC, string name, string phone)
         {//if customer not found
             if (!myDal.GetCustomerList().Any(cu => cu.Id == idC))
@@ -196,6 +202,7 @@ namespace BL
         /// <param name="myId"></param>
         /// <param name="numOfSlots"></param>
         /// <param name="name"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateBaseStation(int myId, int numOfSlots, string name)
         {//if BaseStation not found
             if (!myDal.GetBaseStationsList(null).Any(bs => bs.Id == myId))
@@ -222,6 +229,7 @@ namespace BL
         /// </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateNameDrone(int id, BO.Enums.DroneNames name)
         {//if drone not found
             if (!myDal.GetDroneList().Any(dr => dr.Id == id))

@@ -38,8 +38,8 @@
             </Button>
         </StackPanel>
         <StackPanel Margin="300,130,261,0" Visibility="Visible" Grid.RowSpan="2" RenderTransformOrigin="0.5,0.5">
-            <Button x:Name="show_drone" Content="SHOW DRONE" Margin="0,10,0,0" Height="52" Width="94" Click="show_drone_Click"/>
-            <Button x:Name="show_client" Content="SHOW CLIENT" Margin="0,10,0,0" Height="52" Width="94" Click="show_client_Click"/>
+            <Button x:Name="show_drone" Content="SHOW DRONE" Margin="0,10,0,0" Height="52" Width="141" Click="show_drone_Click"/>
+            <Button x:Name="show_client" Content="SHOW CLIENT" Margin="0,10,0,0" Height="52" Width="140" Click="show_client_Click"/>
 
         </StackPanel>
 

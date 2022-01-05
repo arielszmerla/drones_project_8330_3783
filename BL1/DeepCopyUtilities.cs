@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -6,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace BLAPI
+namespace BL
 {
     public static class DeepCopyUtilities
     {
@@ -18,7 +19,7 @@ namespace BLAPI
                 if (propFrom == null)
                     continue;
                 var value = propFrom.GetValue(from, null);
-                if (value is ValueType || value is string )
+                if (value is ValueType || value is string || value is Location)
                     propTo.SetValue(to, value);
             }
         }
@@ -29,7 +30,5 @@ namespace BLAPI
             from.CopyPropertiesTo(to);
             return to;
         }
-
-
     }
 }

@@ -25,7 +25,7 @@ namespace BO
             int sec = (int)second;
             double secs = sec / 10;
             secs /= 1000;
-            return hours + "° " + minute + "' " + secs + (char)34 + " " + coordin;
+            return hours + "°" + minute + "'" + secs + (char)34 + "" + coordin;
         }
         static internal string printLong(double num)
         {
@@ -44,7 +44,7 @@ namespace BO
             int sec = (int)second;
             double secs = sec / 10;
             secs /= 1000;
-            return hours + "° " + minute + "' " + secs + (char)34 + " " + coordin;
+            return hours + "°" + minute + "'" + secs + (char)34 + "" + coordin;
         }
         /// <summary>
         /// func that calculates distance betweeen two points on the earth globus

@@ -47,12 +47,14 @@ namespace PL
         BO.Drone dr = new();
         public AddDrone(IBL bl1, Drone drone)
         {
-            this.bl = bl1;
+                        InitializeComponent();
             dr = drone;
-            InitializeComponent();
+            this.bl = bl1;
+
+            Choose_models.ItemsSource = Enum.GetValues(typeof(Enums.DroneNames));
             Title = "ACTIONS";
             update_drone.Visibility = Visibility.Visible;
-            DataContext = drone;
+            DataContext = dr;
         }
 
         BO.Drone drone = new();
@@ -158,17 +160,12 @@ namespace PL
                 {
                     sendDrone.Visibility = Visibility.Visible;
                 }
-                Get_model.Visibility = Visibility.Visible;
+              
             }
 
-            private void Get_model_TextChanged(object sender, TextChangedEventArgs e)
-            {
-                bl.UpdateNameDrone(dr.Id, (Enums.DroneNames)Choose_model.SelectedItem);
-                Get_model.Visibility = Visibility.Hidden;
-                this.dr = bl.GetDrone(dr.Id);
-                MessageBox.Show("Managed Update");
+         
+       
 
-            }
 
         
 
@@ -285,6 +282,14 @@ namespace PL
             catch (BO.GetException ex) {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void Choose_models_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            bl.UpdateNameDrone(dr.Id, (Enums.DroneNames)Choose_models.SelectedItem);
+
+            this.dr = bl.GetDrone(dr.Id);
+            MessageBox.Show("Managed Update");
         }
     }
 }

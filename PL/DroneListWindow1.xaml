@@ -11,6 +11,7 @@
 
     <Window.Resources>
         <local:ConverterDoubleToInt x:Key="ConverterDoubleToInt"/>
+        <local:ConverterLatitude x:Key="ConverterLatitude"/>
         <DataTemplate x:Key="MyDataTemplate"
                   DataType="local:MyData">
             <Grid>
@@ -84,7 +85,7 @@
                     <GridViewColumn Header="Weight:" DisplayMemberBinding="{Binding MaxWeight}"/>
                     <GridViewColumn Header="Status:" DisplayMemberBinding="{Binding Status}"/>
                     <GridViewColumn Header="Battery:" DisplayMemberBinding="{Binding BatteryStatus , Converter={StaticResource ConverterDoubleToInt }}"/>
-                    <GridViewColumn Header="Location:" DisplayMemberBinding="{Binding Location }"/>
+                    <GridViewColumn Header="Location:" DisplayMemberBinding="{Binding Location  , Converter={StaticResource  ConverterLatitude}}"/>
                 </GridView>
             </ListView.View>
 

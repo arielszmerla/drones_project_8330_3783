@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 using DLAPI;
 using DO;
@@ -47,6 +48,7 @@ namespace DalXML
         /// method to add a customer
         /// </summary>
         /// <param name="customer"></param>
+         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(Customer customer)
         {
             List<Customer> cus = XMLTolls.LoadListFromXMLSerializer<Customer>(@"customer.xml");
@@ -61,6 +63,7 @@ namespace DalXML
         /// detele element
         /// </summary>
         /// <param name="id"></id element>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteCustomer(int id)
         {
             List<Customer> customers = XMLTolls.LoadListFromXMLSerializer<Customer>(@"customer.xml");
@@ -77,6 +80,7 @@ namespace DalXML
         /// </summary>
         /// <param name="id"></param>
         /// <returns></the customer got>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer GetCustomer(int id)
         {
             List<Customer> customers = XMLTolls.LoadListFromXMLSerializer<Customer>(@"customer.xml");
@@ -91,6 +95,7 @@ namespace DalXML
         /// func that returns list to print in console
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> GetCustomerList(Func<Customer, bool> predicate = null)
         {
             List<Customer> customers = XMLTolls.LoadListFromXMLSerializer<Customer>(@"customer.xml");
@@ -108,6 +113,7 @@ namespace DalXML
         /// update a customer from bl to data saurce
         /// </summary>
         /// <param name="customer"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomerInfoFromBL(Customer customer)
         {
             List<Customer> customers = XMLTolls.LoadListFromXMLSerializer<Customer>(@"customer.xml");
@@ -126,6 +132,7 @@ namespace DalXML
         /// return list of consumation data
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double[] DroneElectricConsumations()
         {
             List<double> returnedArrays = XMLTolls.LoadListFromXMLSerializer<double>(@"configs.xml");
@@ -137,6 +144,7 @@ namespace DalXML
         /// method to add a dronecharge unit.
         /// </summary>
         /// <param "id drone, id parcel"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDroneCharge(int idDrone, int idBase)
         {
             //XElement baseRoot = XMLTolls.LoadListFromXMLElement(@"stations.xml");
@@ -157,12 +165,11 @@ namespace DalXML
             XMLTolls.SaveListToXMLSerializer(drones1, @"droneCharge.xml");
         }
 
-
-
         /// <summary>
         /// method to delete a dronecharge unit.
         /// </summary>
         /// <param "id drone></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteDroneCharge(int idDrone)
         {
             DroneCharge? myDrone = null;
@@ -185,6 +192,7 @@ namespace DalXML
         /// send a new drone to database
         /// </summary>
         /// <param name="drone"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(Drone drone)
         {
             List<Drone> drones = XMLTolls.LoadListFromXMLSerializer<Drone>(@"drones.xml");
@@ -199,6 +207,7 @@ namespace DalXML
         /// detele element
         /// </summary>
         /// <param name="id"></id element>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteDrone(int id)
         {
             List<Drone> drones = XMLTolls.LoadListFromXMLSerializer<Drone>(@"drones.xml");
@@ -211,13 +220,12 @@ namespace DalXML
             drones.RemoveAll(p => p.Id == id);
             XMLTolls.SaveListToXMLSerializer(drones, @"drones.xml");
         }
-
-
         /// <summary>
         /// gets drone from database and return it to main
         /// </summary>
         /// <param name="id"></param>
         /// <returns></drone>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int id)
         {
             List<Drone> drones = XMLTolls.LoadListFromXMLSerializer<Drone>(@"drones.xml");
@@ -231,6 +239,7 @@ namespace DalXML
         /// func that returns list to print in console
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> GetDroneList(Predicate<Drone> predicate)
         {
             List<Drone> drones = XMLTolls.LoadListFromXMLSerializer<Drone>(@"drones.xml");
@@ -246,6 +255,7 @@ namespace DalXML
         /// update drone frome bl to data source
         /// </summary>
         /// <param name="dr"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDrone(Drone dr)
         {
             List<Drone> drones = XMLTolls.LoadListFromXMLSerializer<Drone>(@"drones.xml");
@@ -263,6 +273,7 @@ namespace DalXML
         /// to set a time for when the drone pick's up a packet
         /// </summary>
         /// <param name="id"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDronePickUp(int id)
         {
             List<Drone> drones = XMLTolls.LoadListFromXMLSerializer<Drone>(@"drones.xml");
@@ -287,6 +298,7 @@ namespace DalXML
         /// </summary>
         /// <param name="idD"></param>
         /// <param name="baseName"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDroneToCharge(int idD, string baseName)
         {
             List<Drone> drones = XMLTolls.LoadListFromXMLSerializer<Drone>(@"drones.xml");
@@ -314,13 +326,12 @@ namespace DalXML
             XMLTolls.SaveListToXMLSerializer(droneCharges, @"droneCharge.xml");
             XMLTolls.SaveListToXMLSerializer(baseStations, @"stations.xml");
         }
-
-
         /// <summary>
         /// method to release a charging drone from a base station
         /// </summary>
         /// <param name="idD"></param>
         /// <param name="baseName"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateReleasDroneCharge(int idD, string baseName)
         {
             List<Drone> drones = XMLTolls.LoadListFromXMLSerializer<Drone>(@"drones.xml");
@@ -353,12 +364,12 @@ namespace DalXML
 
         #endregion
 
-
         #region Parcel
         /// <summary>
         /// send a new parcel to database
         /// </summary>
         /// <param name="parcel"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int AddParcel(Parcel parcel)
         {
             List<Parcel> parcels = XMLTolls.LoadListFromXMLSerializer<Parcel>(@"parcels.xml");
@@ -379,6 +390,7 @@ namespace DalXML
         /// </summary>
         /// <param name="id"></param>
         /// <returns></the parcel got >
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel GetParcel(int id)
         {
             List<Parcel> parcels = XMLTolls.LoadListFromXMLSerializer<Parcel>(@"parcels.xml");
@@ -393,6 +405,7 @@ namespace DalXML
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateParcelToDrone(int idP, int idD)
         {
             List<Parcel> parcels = XMLTolls.LoadListFromXMLSerializer<Parcel>(@"parcels.xml");
@@ -418,6 +431,7 @@ namespace DalXML
         /// method that sets the delivery time 
         /// </summary>
         /// <param name="id"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdatesParcelDelivery(int id)
         {
             List<Parcel> parcels = XMLTolls.LoadListFromXMLSerializer<Parcel>(@"parcels.xml");
@@ -434,6 +448,7 @@ namespace DalXML
         /// func that returns list to print in console
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> GetParcelList(Predicate<Parcel> predicate)
         {
             List<Parcel> parcels = XMLTolls.LoadListFromXMLSerializer<Parcel>(@"parcels.xml");
@@ -445,7 +460,11 @@ namespace DalXML
                 throw new ParcelExeption("empty list");
             return p.ToList();
         }
-
+        /// <summary>
+        /// update a parcel
+        /// </summary>
+        /// <param name="p"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateParcel(Parcel p)
         {
             List<Parcel> parcels = XMLTolls.LoadListFromXMLSerializer<Parcel>(@"parcels.xml");
@@ -459,6 +478,7 @@ namespace DalXML
         /// detele element
         /// </summary>
         /// <param name="id"></id element>
+       [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteParcel(int id)
         {
             List<Parcel> parcels = XMLTolls.LoadListFromXMLSerializer<Parcel>(@"parcels.xml");
@@ -469,15 +489,14 @@ namespace DalXML
         }
         #endregion
 
-
         #region BaseStation
-
 
         /// <summary>
         /// gets basestation from database and return it to main
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns the basestation got>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BaseStation GetBaseStation(int id)
         {
             XElement baseRoot = XMLTolls.LoadListFromXMLElement(@"stations.xml");
@@ -510,6 +529,7 @@ namespace DalXML
         /// send a new base to database by XElement
         /// </summary>
         /// <param name="baseStation"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddBaseStation(BaseStation baseStation)
         {
             XElement baseRoot = XMLTolls.LoadListFromXMLElement(@"stations.xml");
@@ -550,6 +570,7 @@ namespace DalXML
         /// get list of base stations
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStation> GetBaseStationsList(Predicate<BaseStation> predicat)
         {
             XElement baseRoot = XMLTolls.LoadListFromXMLElement(@"stations.xml");
@@ -578,6 +599,7 @@ namespace DalXML
         /// update in dal a basestation
         /// </summary>
         /// <param name="bs"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateBaseStationFromBl(BaseStation bs)
         {
             XElement baseRoot = XMLTolls.LoadListFromXMLElement(@"stations.xml");
@@ -624,12 +646,11 @@ namespace DalXML
         }
 
 
-
-
         /// <summary>
         /// delete base station XElement
         /// </summary>
         /// <param name="id"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteBasestation(int id)
         {
             XElement baseRoot = XMLTolls.LoadListFromXMLElement(@"stations.xml");

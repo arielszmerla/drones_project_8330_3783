@@ -4,20 +4,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BO;
+using System.Runtime.CompilerServices;
 using BLAPI;
+
+
+
+
 namespace BL
 {/// <summary>
-/// part of interface
+/// part of interface BL
 /// </summary>
     partial class BLImp : IBL
     {
-
+        Drone droneBODOadpater(DO.Drone busDO)
+        {
+            Drone busBO = new Drone();
+            busDO.CopyPropertiesTo(busBO);
+            return busBO;
+        }
         #region gets
         /// <summary>
         /// method to get a parcel
         /// </summary>
         /// <param name="idP"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel GetParcel(int idP)
         {
             DO.Parcel parcel = new();
@@ -49,6 +60,7 @@ namespace BL
         /// </summary>
         /// <param name="idP"></id drone>
         /// <returns></returns parcel on delivery>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public ParcelToList GetParcelonDrone(int idP)
         {
 
@@ -57,20 +69,16 @@ namespace BL
                 throw new GetException($"the drone with id: {idP} is not on delivery");
             else { return DOparcelBO((DO.Parcel)p); }
         }
-
-
-
-
         /// <summary>
         /// method that return a certain base station by id
         /// </summary>
         /// <param name="idP"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BaseStation GetBaseStation(int idP)
         {
             if (!myDal.GetBaseStationsList(null).Any(pc => pc.Id == idP && pc.Valid == true))
                 throw new GetException("id of BaseStation not found");
-
             return dOBaseStation(myDal.GetBaseStation(idP));
         }
         /// <summary>
@@ -78,6 +86,7 @@ namespace BL
         /// </summary>
         /// <param name="idP"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer GetCustomer(int idP)
         {
 
@@ -98,36 +107,53 @@ namespace BL
 
             customer.To = (List<ParcelByCustomer>)(from item in myDal.GetParcelList(ps => ps.TargetId == customer.Id)
                                                    let parcelFR = dOparcelFROMbyCustomerBO(item)
-                                                   select parcelFR);
+                                                   select parcelFR).ToList();
 
             customer.From = (List<ParcelByCustomer>)(from item in myDal.GetParcelList(ps => ps.TargetId == customer.Id)
                                                      let parcelT = dOparcelTObyCustomerBO(item)
-                                                     select parcelT);
+                                                     select parcelT).ToList();
             return customer;
         }
+        /// <summary>
+        /// get a single drone
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int id)
         {
-            DroneToList? myDrone = null;
-            if (drones.Any(pc => pc.Id == id))
-            {
-                myDrone = drones.Find(pc => pc.Id == id);
-            }
-            if (myDrone == null)
-                throw new GetException("id of drone not found");
-            Drone dr = new Drone
-            {
-                Id = myDrone.Id,
-                BatteryStatus = myDrone.BatteryStatus,
-                Location = myDrone.Location,
-                MaxWeight = myDrone.MaxWeight,
-                Model = myDrone.Model,
-                PID = null,
-                Status = myDrone.Status
-            };
-            if (findParcelOnDrone(dr) != null && dr.Status == Enums.DroneStatuses.InDelivery)
 
-                dr.PID = findParcelOnDrone(dr);
-            return dr;
+            DO.Drone busDO;
+            try
+            {
+                busDO = myDal.GetDrone(id);
+                return droneBODOadpater(busDO);
+            }
+            catch (DLAPI.DroneException e)
+            {
+                throw new GetException(e.Message);
+            }
+            /* DroneToList? myDrone = null;
+             if (drones.Any(pc => pc.Id == id))
+             {
+                 myDrone = drones.Find(pc => pc.Id == id);
+             }
+             if (myDrone == null)
+                 throw new GetException("id of drone not found");
+             Drone dr = new Drone
+             {
+                 Id = myDrone.Id,
+                 BatteryStatus = myDrone.BatteryStatus,
+                 Location = myDrone.Location,
+                 MaxWeight = myDrone.MaxWeight,
+                 Model = myDrone.Model,
+                 PID = null,
+                 Status = myDrone.Status
+             };
+             if (findParcelOnDrone(dr) != null && dr.Status == Enums.DroneStatuses.InDelivery)
+
+                 dr.PID = findParcelOnDrone(dr);
+             return dr;*/
         }
         #endregion
 
@@ -237,6 +263,7 @@ namespace BL
         /// </summary>
         /// <param name="predicat"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStationToList> GetBaseStationList(Func<BaseStationToList, bool> predicat = null)
         {
             try
@@ -275,6 +302,7 @@ namespace BL
         /// </summary>
         /// <param name="predicat"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStationToList> GetBaseStationListGroup()
         {
             IEnumerable<BaseStationToList> b = (from item in myDal.GetBaseStationsList(null)
@@ -306,6 +334,7 @@ namespace BL
         /// returns two groups one with base stations with free slots and one without
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<IGrouping<bool, BaseStationToList>> GetWithWithoutFreeSlotsBaseStationgroup()
         {
             return (from item in myDal.GetBaseStationsList(null)
@@ -316,20 +345,20 @@ namespace BL
 
         }
 
-
-
         /// <summary>
         /// / return list of Base mapped by free slots
         /// </summary>
         /// <param name="statuses"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStationToList> GetListOfBaseStationsWithFreeSlots()
         {
-            try { 
-            List<BaseStationToList> tmp = (List<BaseStationToList>)GetBaseStationList();
-            if (tmp.FindAll(bs => bs.NumOfFreeSlots > 0 && bs.Valid == true).Count == 0) ;
-            throw new GetException("empty list");
-            return tmp.FindAll(bs => bs.NumOfFreeSlots > 0 && bs.Valid == true);
+            try
+            {
+                List<BaseStationToList> tmp = (List<BaseStationToList>)GetBaseStationList();
+                if (tmp.FindAll(bs => bs.NumOfFreeSlots > 0 && bs.Valid == true).Count == 0) ;
+                throw new GetException("empty list");
+                return tmp.FindAll(bs => bs.NumOfFreeSlots > 0 && bs.Valid == true);
             }
             catch (DO.BaseExeption ex)
             {
@@ -341,69 +370,74 @@ namespace BL
         /// </summary>
         /// <param name="statuses"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ParcelToList> GetParcelList(Enums.WeightCategories? statuses = null)
         {
-            try { 
-            if (statuses == null)
+            try
             {
-                IEnumerable<ParcelToList> p = (from item in myDal.GetParcelList(null)
-                                               let parcelBO = DOparcelBO(item)
-                                               select parcelBO);
-                if (p == null)
-                    throw new GetException("empty list");
-                return p.ToList();
-            }
-            Enums.WeightCategories weight = (Enums.WeightCategories)statuses;
-            IEnumerable<ParcelToList> b = (from item in myDal.GetParcelList(null)
-                                           let parcelBO = DOparcelBO(item)
-                                           where parcelBO.WeightCategorie == weight
-                                           select parcelBO);
-            if (b == null)
-                throw new GetException("empty list");
-            return b.ToList();
-        }
-            catch (DLAPI.ParcelExeption ex)
-            {
-                throw new GetException("empty list", ex);
-    }
-
-}
-        /// <summary>
-        /// return list of parcels
-        /// </summary>
-        /// <param name="name"></name of sender/ target>
-        /// <returns></list of parcel>
-        public IEnumerable<ParcelToList> GetParcelList(string name)
-        {
-            try {
-            if (name == "")
-            {
+                if (statuses == null)
+                {
+                    IEnumerable<ParcelToList> p = (from item in myDal.GetParcelList(null)
+                                                   let parcelBO = DOparcelBO(item)
+                                                   select parcelBO);
+                    if (p == null)
+                        throw new GetException("empty list");
+                    return p.ToList();
+                }
+                Enums.WeightCategories weight = (Enums.WeightCategories)statuses;
                 IEnumerable<ParcelToList> b = (from item in myDal.GetParcelList(null)
                                                let parcelBO = DOparcelBO(item)
+                                               where parcelBO.WeightCategorie == weight
                                                select parcelBO);
                 if (b == null)
                     throw new GetException("empty list");
                 return b.ToList();
             }
-
-            IEnumerable<ParcelToList> p = (from item in myDal.GetParcelList(null)
-                                           let parcelBO = DOparcelBO(item)
-                                           where parcelBO.SenderName == name || parcelBO.TargetName == name
-                                           select parcelBO);
-            if (p == null)
-                throw new GetException("empty list");
-            return p.ToList();
-        }
-    
             catch (DLAPI.ParcelExeption ex)
             {
                 throw new GetException("empty list", ex);
-    }
-}
+            }
+
+        }
+        /// <summary>
+        /// return list of parcels
+        /// </summary>
+        /// <param name="name"></name of sender/ target>
+        /// <returns></list of parcel>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<ParcelToList> GetParcelList(string name)
+        {
+            try
+            {
+                if (name == "")
+                {
+                    IEnumerable<ParcelToList> b = (from item in myDal.GetParcelList(null)
+                                                   let parcelBO = DOparcelBO(item)
+                                                   select parcelBO);
+                    if (b == null)
+                        throw new GetException("empty list");
+                    return b.ToList();
+                }
+
+                IEnumerable<ParcelToList> p = (from item in myDal.GetParcelList(null)
+                                               let parcelBO = DOparcelBO(item)
+                                               where parcelBO.SenderName == name || parcelBO.TargetName == name
+                                               select parcelBO);
+                if (p == null)
+                    throw new GetException("empty list");
+                return p.ToList();
+            }
+
+            catch (DLAPI.ParcelExeption ex)
+            {
+                throw new GetException("empty list", ex);
+            }
+        }
         /// <summary>
         /// returns list on non assigned parcels
         /// </summary>
         /// <returns></list of non assigned parcel>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ParcelToList> GetParcelNotAssignedList()
         {
             try
@@ -433,11 +467,18 @@ namespace BL
             return (from item in drones
                     where item.Location.Latitude == BaseLoc.Latitude &&
                     item.Location.Longitude == BaseLoc.Longitude &&
-                    item.Status == Enums.DroneStatuses.Maintenance 
+                    item.Status == Enums.DroneStatuses.Maintenance
                     && item.Valid == true
                     select item);
         }
 
+        /// <summary>
+        /// get dronelist filtered by status or weight categ
+        /// </summary>
+        /// <param name="statuses"></param>
+        /// <param name="weight"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> GetDroneList(Enums.DroneStatuses? statuses = null, Enums.WeightCategories? weight = null)
         {
             if (statuses == null && weight == null)
@@ -458,6 +499,7 @@ namespace BL
         /// </summary>
         /// <param name="predicat"></condition>
         /// <returns></list mapped>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<CustomerToList> GetCustomerList(Func<CustomerToList, bool> predicat = null)
         {
             try
@@ -471,7 +513,8 @@ namespace BL
                     throw new GetException("empty list");
                 return c;
             }
-            catch (DLAPI.CostumerExeption ex) {
+            catch (DLAPI.CostumerExeption ex)
+            {
                 throw new GetException("empty list", ex);
             }
 

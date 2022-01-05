@@ -7,8 +7,7 @@
         public override string ToString()///toString erased func
         {
             string _result = "";
-            _result += "Long:"+ $"{LocationFuncs.printLong(Longitude)}"+
-            $"    Lat:{ LocationFuncs.printLat(Latitude)}";
+            _result += $"{LocationFuncs.printLong(Longitude)} "+" " + $"{ LocationFuncs.printLat(Latitude)}";
             return _result;
         }
     }
