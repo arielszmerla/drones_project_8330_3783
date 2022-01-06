@@ -126,7 +126,7 @@ namespace PL
 
 
                 Random rand = new Random();
-                dr.BatteryStatus = rand.Next(99) + rand.NextDouble();
+                dr.Battery = rand.Next(99) + rand.NextDouble();
 
                 dr.Location = loc;
                 dr.PID = null;

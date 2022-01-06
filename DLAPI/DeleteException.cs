@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace DLAPI
+namespace DO
 {
     [Serializable]
     public class DeleteException : Exception

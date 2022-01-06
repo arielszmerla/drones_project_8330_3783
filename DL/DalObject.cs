@@ -207,7 +207,7 @@ namespace DalObject
         public void DeleteBasestation(int id)
         {
             if (!DataSource.BaseStations.Any(p => p.Id == id))
-                throw new DLAPI.DeleteException($"BaseStation with {id}as Id does not exist");
+                throw new DeleteException($"BaseStation with {id}as Id does not exist");
             BaseStation b = DataSource.BaseStations.FirstOrDefault(p => p.Id == id);
             b.Valid = false;
             DataSource.BaseStations.RemoveAll(p => p.Id == id);
@@ -216,6 +216,14 @@ namespace DalObject
                 DataSource.BaseStations.Add(b);
             }
             catch (DO.BaseExeption ex) { throw new BaseExeption("id allready exist"); }
+        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IEnumerable<DroneCharge> GetDroneCharges(int idBase)
+        {
+          var b =  DataSource.DroneCharges.Where(b => b.StationId == idBase);
+            if (b != null)
+                return b;
+            throw new DroneChargeException("empty list");
         }
         #endregion
 
@@ -231,7 +239,7 @@ namespace DalObject
         {
             if (DataSource.Parcels.Any(pr => pr.Id == parcel.Id))
             {
-                throw new DLAPI.ParcelExeption($"id { parcel.Id} already exist");
+                throw new ParcelExeption($"id { parcel.Id} already exist");
             }
             DataSource.Parcels.Add(parcel);
             DataSource.Config.totalNumOfParcels++;
@@ -304,6 +312,14 @@ namespace DalObject
                         select item).ToList();
 
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public int GetDroneChargeBaseStationId(int droneId) {
+       DroneCharge? d=DataSource.DroneCharges.Find(dc => dc.DroneId == droneId);
+            if(d==null)
+          throw new DroneChargeException($"Drone is not being charged {droneId}");
+            return d.Value.StationId;
+
+        }
         /// <summary>
         /// method to update a parcel
         /// </summary>
@@ -325,7 +341,7 @@ namespace DalObject
         public void DeleteParcel(int id)
         {
             if (!DataSource.Parcels.Any(p => p.Id == id))
-                throw new DLAPI.DeleteException($"parcel with {id}as Id does not exist");
+                throw new ParcelExeption($"parcel with {id}as Id does not exist");
             DataSource.Parcels.RemoveAll(p => p.Id == id);
         }
         #endregion
@@ -384,7 +400,7 @@ namespace DalObject
                 throw new DroneException($"invalid drone id {id}");
             int k = DataSource.Parcels.FindIndex(ps => ps.DroneId == id);
             if (k == -1)
-                throw new DLAPI.ParcelExeption("invalid parcel id");
+                throw new ParcelExeption("invalid parcel id");
             Parcel tmp = DataSource.Parcels[k];
             tmp.PickedUp = DateTime.Now;
             DataSource.Parcels[k] = tmp;
@@ -413,9 +429,9 @@ namespace DalObject
         public void DeleteDrone(int id)
         {
             if (!DataSource.Drones.Any(p => p.Id == id))
-                throw new DLAPI.DeleteException($"drone with {id}as Id does not exist");
+                throw new DeleteException($"drone with {id}as Id does not exist");
             if (DataSource.Drones.Where(d => d.Id == id).FirstOrDefault().Valid == false)
-                throw new DLAPI.DeleteException($"Drone with {id} as Id is alredy deleted");
+                throw new DeleteException($"Drone with {id} as Id is alredy deleted");
             DataSource.Drones.RemoveAll(p => p.Id == id);
 
         }
@@ -496,7 +512,7 @@ namespace DalObject
         public void DeleteCustomer(int id)
         {
             if (!DataSource.Customers.Any(p => p.Id == id))
-                throw new DLAPI.DeleteException($"Customer with {id}as Id does not exist");
+                throw new DeleteException($"Customer with {id}as Id does not exist");
             DataSource.Customers.RemoveAll(p => p.Id == id);
         }
 
