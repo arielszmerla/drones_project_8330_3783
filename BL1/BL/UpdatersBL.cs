@@ -25,13 +25,13 @@ namespace BL
             if (!drones.Any(dr => dr.Id == id))
                 throw new GetException($"ID OF DRONE {id} DOESN'T EXIST\n");
             DroneToList dr = drones.Find(dr => dr.Id == id);
-            List<DO.Parcel> parcels = (List<DO.Parcel>)Dal.GetParcelList(null);
+            DO.Parcel? parcelConnected = Dal.GetParcelList(pc => pc.DroneId == id && pc.PickedUp <= DateTime.Now && pc.Delivered == null).FirstOrDefault();
             //find all parcels that are connected to this drone
-            List<DO.Parcel> parcelConnected = parcels.FindAll(pc => pc.DroneId == id);
+
             //if any of the drone's parcels is picked up but not delivered
-            if (parcelConnected.Any(ps => ps.PickedUp <= DateTime.Now && ps.Delivered == DateTime.MinValue))
+            if (parcelConnected!=null)
             {
-                DO.Parcel p = parcelConnected.Find(ps => ps.PickedUp <= DateTime.Now && ps.Delivered == DateTime.MinValue);
+                DO.Parcel p = (DO.Parcel)parcelConnected;
                 p.Delivered = DateTime.Now;
                 DO.Customer cs = Dal.GetCustomerList().First(cs => cs.Id == p.TargetId);
                 //if the drone can deliver it taking in account his battery status
@@ -43,6 +43,9 @@ namespace BL
                 Location l1 = new Location { Latitude = cs.Latitude, Longitude = cs.Longitude };
                 dr.Location = l1;
                 dr.Status = Enums.DroneStatuses.Vacant;
+               dr.NumOfDeliveredParcel++;
+               dr.DeliveryId = 0;
+           
                 drones[drones.FindIndex(dr => dr.Id == id)] = dr;
                 try
                 {
@@ -64,10 +67,10 @@ namespace BL
             if (!drones.Any(dr => dr.Id == id))
                 throw new GetException("$ID OF DRONE {dr.Id} DOESN'T EXIST\n");
             DroneToList dr = drones.Find(dr => dr.Id == id);
-            List<DO.Parcel> parcels = (List<DO.Parcel>)Dal.GetParcelList(null);
-            List<DO.Parcel> parcelConnected = parcels.FindAll(pc => pc.DroneId == id);
+            List<DO.Parcel> parcelConnected = (List<DO.Parcel>)Dal.GetParcelList(pc => pc.DroneId == id);
+   
 
-            int index = parcelConnected.FindIndex(pc => pc.Scheduled < DateTime.Now && pc.PickedUp > DateTime.Now);
+            int index = parcelConnected.FindIndex(pc => pc.Scheduled < DateTime.Now && pc.PickedUp ==null);
             //if any parcel has to be delivered
             if (index != -1)
             {
@@ -96,32 +99,31 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateAssignParcelToDrone(int idC)
         {
-            //if drone not found
-            if (!drones.Any(dr => dr.Id == idC))
-                throw new GetException($"ID OF DRONE {idC} DOESN'T EXIST\n");
-            DroneToList dr = drones.Find(dr => dr.Id == idC);
-            List<DO.Parcel> parcels = (List<DO.Parcel>)Dal.GetParcelList(null);
-            int found = -1;
-            //find the heaviest parcel the drone can take
-            for (int i = (int)dr.MaxWeight; i >= 0; i--)
-                if (searchParcel(dr, parcels, i) == true)
-                {
-                    found = i;
-                    break;
-                }
-
-            //if found a parcel that the drone can carry, update wanted states
-            if (found != -1)
+            try
             {
-                DO.Parcel p = findParcel(dr, parcels, found);
-                p.DroneId = dr.Id;
-                dr.Status = Enums.DroneStatuses.InDelivery;
-                p.Scheduled = DateTime.Now;
-                Dal.UpdateParcel(p);
-                drones[drones.FindIndex(dr => dr.Id == idC)] = dr;
-            }
+                //if drone not found
+                if (!drones.Any(dr => dr.Id == idC))
+                    throw new GetException($"ID OF DRONE {idC} DOESN'T EXIST\n");
+                DroneToList drone = drones.Find(d => d.Id == idC);
+                if (drone.Status != Enums.DroneStatuses.Vacant)
+                    throw new BadStatusException("Drone is not available for delivery");
+                //find the heaviest parcel the drone can take
+                var parcelId = nextParcel(drone);
+                if (parcelId == null)
+                    throw new BadStatusException("Can't do it - battery is too low, please send to charge");
 
+
+                //if found a parcel that the drone can carry, update wanted states
+                drone.DeliveryId = parcelId;
+                drone.Status = Enums.DroneStatuses.InDelivery;
+                Dal.UpdateParcelToDrone((int)parcelId, drone.Id);
+            }
+            catch (DO.ParcelExeption ex)
+            {
+                throw new GetException("Problem with parcel scheduling", ex);
+            }
         }
+   
         /// <summary>
         /// function to release a drone from charging
         /// </summary>
@@ -150,7 +152,7 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDroneSentToCharge(int id)
         {//if drone not found
-            if (!Dal.GetDroneList().Any(dr => dr.Id == id))
+            if (!Dal.GetDroneList(dr => dr.Id == id).Any())
             {
                 throw new GetException($"id {id} doesn't exist ");
             }
@@ -161,15 +163,16 @@ namespace BL
                 return;
             }
             BO.BaseStation bc = getClosestBase(drone.Location);
-            DO.BaseStation myBase = Dal.GetBaseStationsList(null).FirstOrDefault(bas => bas.Latitude == bc.Location.Latitude && bas.Longitude == bc.Location.Longitude);
+            DO.BaseStation myBase = Dal.GetBaseStationsList(bas => bas.Latitude == bc.Location.Latitude && bas.Longitude == bc.Location.Longitude).FirstOrDefault();
             if ((Dal.DroneElectricConsumations()[0]) *
-                BO.LocationFuncs.Distance(drone.Location, new Location { Latitude = myBase.Latitude, Longitude = myBase.Longitude }) <= drone.Battery)
+               bc.Distances(drone) <= drone.Battery)
             {
                 drone.Battery -= (Dal.DroneElectricConsumations()[0]) *
                 BO.LocationFuncs.Distance(drone.Location, new Location { Latitude = myBase.Latitude, Longitude = myBase.Longitude });
                 drone.Location = new Location { Latitude = myBase.Latitude, Longitude = myBase.Longitude };
                 drone.Status = Enums.DroneStatuses.Maintenance;
                 drones[drones.FindIndex(dr => dr.Id == drone.Id)] = drone;
+                Dal.AddDroneCharge(drone.Id, bc.Id);
             }
             else throw new BatteryException($"The drone {drone.Id} doesn't have enough battery to get to the close station.");
         }
@@ -248,6 +251,18 @@ namespace BL
                 throw new GetException($"The Drone {dr.Id} doesn't exist", p);
             }
             drones[drones.FindIndex(dr => dr.Id == id)].Model = name;
+        }
+        internal int? nextParcel(DroneToList drone)
+        {
+            lock (Dal)
+            {
+                return Dal.GetParcelList(p => p.Scheduled == null
+                                           && (Enums.WeightCategories)(p.Weight) <= drone.MaxWeight
+                                           && drone.RequiredBattery(this, (int)p.Id) < drone.Battery)
+                          .OrderByDescending(p => p.Priority)
+                          .ThenByDescending(p => p.Weight)
+                          .FirstOrDefault().Id;
+            }
         }
     }
 }

@@ -25,15 +25,15 @@
     <Valid>true</Valid>
   </Drone>
   <Drone>
-    <Id>100004</Id>
-    <Model>RIZY</Model>
-    <MaxWeight>Light</MaxWeight>
-    <Valid>true</Valid>
-  </Drone>
-  <Drone>
     <Id>100005</Id>
     <Model>RIZY</Model>
     <MaxWeight>Middle</MaxWeight>
+    <Valid>true</Valid>
+  </Drone>
+  <Drone>
+    <Id>100004</Id>
+    <Model>PHANTOM</Model>
+    <MaxWeight>Light</MaxWeight>
     <Valid>true</Valid>
   </Drone>
 </ArrayOfDrone>

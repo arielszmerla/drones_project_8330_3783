@@ -84,7 +84,7 @@
                     <GridViewColumn Header="MODEL:" DisplayMemberBinding="{Binding Model}"/>
                     <GridViewColumn Header="Weight:" DisplayMemberBinding="{Binding MaxWeight}"/>
                     <GridViewColumn Header="Status:" DisplayMemberBinding="{Binding Status}"/>
-                    <GridViewColumn Header="Battery:" DisplayMemberBinding="{Binding BatteryStatus , Converter={StaticResource ConverterDoubleToInt }}"/>
+                    <GridViewColumn Header="Battery:" DisplayMemberBinding="{Binding Battery , Converter={StaticResource ConverterDoubleToInt }}"/>
                     <GridViewColumn Header="Location:" DisplayMemberBinding="{Binding Location  , Converter={StaticResource  ConverterLatitude}}"/>
                 </GridView>
             </ListView.View>

@@ -67,13 +67,50 @@ namespace BL
             };
             bs.ChargingDrones = dronCharges(bs);
             bs.NumOfFreeSlots = myBase.NumOfSlots - bs.ChargingDrones.Count;
-            
+
+            return bs;
+        }
+        /// <summary>
+        /// convert basestation DO to basestationtolist BO 
+        /// </summary>
+        /// <param name="myBase"></pacel from DO>
+        /// <returns></returns> new adapted parcel    
+        private Drone dODrone(DO.Drone dr)
+        {
+            Drone bs = new Drone
+            {
+                Location = drones.Find(dr => dr.Id == dr.Id).Location,
+                MaxWeight = (Enums.WeightCategories)dr.MaxWeight,
+                Id = dr.Id,
+                Model = (Enums.DroneNames)dr.Model,
+                Battery = drones.Find(dr => dr.Id == dr.Id).Battery,
+                PID = null,
+                Status = drones.Find(dr => dr.Id == dr.Id).Status
+            };
+
+            DO.Parcel parce = new();
+            if (Dal.GetParcelList(p => p.DroneId == dr.Id && p.Delivered == null && p.Scheduled != null).Any())
+            {
+                parce = Dal.GetParcelList(p => p.DroneId == dr.Id && p.Delivered == null && p.Scheduled != null).FirstOrDefault();
+                bs.PID = new ParcelInDelivery();
+                bs.PID.Id = parce.Id;
+                bs.PID.Prioritie = (Enums.Priorities)parce.Priority;
+                bs.PID.Target = new CustomerInParcel { Id = parce.SenderId, Name = Dal.GetCustomer(parce.SenderId).Name };
+                bs.PID.Sender = new CustomerInParcel { Id = parce.TargetId, Name = Dal.GetCustomer(parce.TargetId).Name };
+                bs.PID.TargetLocation = GetCustomer(parce.TargetId).Location;
+                bs.PID.Location = GetCustomer(parce.SenderId).Location;
+                bs.PID.WeightCategorie = (Enums.WeightCategories)parce.Weight;
+                bs.PID.Distance = bs.PID.Distances(GetCustomer(parce.TargetId));
+
+            }
+         
             return bs;
         }
         /// <summary>
         /// convert basestation DO to basestationtolist BO 
         /// </summary>
         /// <param name="baseStation"></pacel from DO>
+        /// 
         /// <returns></returns> new adapted parcel
         private BO.BaseStationToList adaptBaseStationToList(DO.BaseStation baseStation)
         {

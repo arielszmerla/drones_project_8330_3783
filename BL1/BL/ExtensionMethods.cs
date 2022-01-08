@@ -7,7 +7,7 @@ namespace BL
 {
     internal static class ExtensionMethods
     {
-        internal static double Distance(this ILocatable from, ILocatable to)
+        internal static double Distances(this ILocatable from, ILocatable to)
         {
             int R = 6371 * 1000; // metres
             double phi1 = from.Location.Latitude * Math.PI / 180; // φ, λ in radians
@@ -45,10 +45,10 @@ namespace BL
             DO.Parcel parcel = bl.Dal.GetParcel(parcelId);
             Customer sender = bl.GetCustomer(parcel.SenderId);
             Customer target = bl.GetCustomer(parcel.TargetId);
-            double battery = bl.BatteryUsages[(int)Enum.Parse(typeof(Enums.BatteryUsage), parcel.Weight.ToString())] * sender.Distance(target);
-            battery += bl.BatteryUsages[DRONE_FREE] * target.Distance(bl.FindClosestBaseStation(target));
+            double battery = bl.BatteryUsages[(int)Enum.Parse(typeof(Enums.BatteryUsage), parcel.Weight.ToString())] * sender.Distances(target);
+            battery += bl.BatteryUsages[DRONE_FREE] * target.Distances(bl.FindClosestBaseStation(target));
             if (parcel.PickedUp is null)
-                battery += bl.BatteryUsages[DRONE_FREE] * drone.Distance(sender);
+                battery += bl.BatteryUsages[DRONE_FREE] * drone.Distances(sender);
             return battery;
         }
         /*

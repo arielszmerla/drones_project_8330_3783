@@ -16,8 +16,8 @@ namespace BL
     {
         BO.Drone droneBODOadpater(DO.Drone busDO)
         {
-            BO.Drone busBO = new BO.Drone();
-            busDO.CopyPropertiesTo(busBO);
+            BO.Drone busBO = dODrone(busDO);
+            //busDO.CopyPropertiesTo(busBO);
             return busBO;
         }
         #region gets
@@ -53,6 +53,22 @@ namespace BL
             p.WeightCategories = (Enums.WeightCategories)parcel.Weight;
             return p;
         }
+
+        /// <summary>
+        /// method to get a parcel on drone
+        /// </summary>
+        /// <param name="idP"></id drone>
+        /// <returns></returns parcel on delivery>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public Drone GetDroneOnParcel(int idP)
+        {
+         
+            DroneToList? p = drones.Find(de=>de.DeliveryId == idP);
+            if (p == null)
+                throw new GetException($"the drone with id: {idP} is not on delivery");
+           
+            return dODrone(Dal.GetDrone(p.Id));
+        }
         /// <summary>
         /// method to get a parcel on drone
         /// </summary>
@@ -62,7 +78,7 @@ namespace BL
         public ParcelToList GetParcelonDrone(int idP)
         {
 
-            DO.Parcel? p = Dal.GetParcelList(d => d.DroneId == idP && d.Delivered >= DateTime.Now).FirstOrDefault();
+            DO.Parcel? p = Dal.GetParcelList(d => d.DroneId == idP && d.Delivered == null).FirstOrDefault();
             if (p == null)
                 throw new GetException($"the drone with id: {idP} is not on delivery");
             else { return DOparcelBO((DO.Parcel)p); }
@@ -120,12 +136,10 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int id)
         {
-
-            DO.Drone busDO;
             try
             {
-                busDO = Dal.GetDrone(id);
-                return droneBODOadpater(busDO);
+                DO.Drone busDO = Dal.GetDrone(id);
+                return dODrone(busDO);
             }
             catch (DO.DroneException e)
             {
@@ -133,6 +147,7 @@ namespace BL
             }
 
         }
+
         #endregion
 
 

@@ -278,10 +278,11 @@ namespace DalObject
             int i = DataSource.Parcels.FindIndex(ps => ps.Id == idP);
             Parcel myParcel = DataSource.Parcels.Find(ps => ps.Id == idP);
             myParcel.DroneId = idD;
-            myParcel.Requested = DateTime.Now;
+            myParcel.Scheduled = DateTime.Now;
             DataSource.Parcels[i] = myParcel;
 
         }
+    
         /// <summary>
         /// method that sets the delivery time 
         /// </summary>

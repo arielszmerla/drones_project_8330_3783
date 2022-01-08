@@ -198,9 +198,9 @@ namespace PL
 
         private void show_drone_Click(object sender, RoutedEventArgs e)
         {
-            if (parcel.Assignment <= DateTime.Now && parcel.Delivered > DateTime.Now)
+            if (parcel.Assignment <= DateTime.Now && parcel.Delivered == null)
             {
-                new AddDrone(bl, bl.GetDrone(parcel.DIP.Id)).Show();
+                new AddDrone(bl, bl.GetDroneOnParcel(parcel.Id)).Show();
             }
             else MessageBox.Show("not on drone");
         }

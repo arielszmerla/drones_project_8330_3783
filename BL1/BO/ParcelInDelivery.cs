@@ -5,7 +5,7 @@ namespace BO
 {/// <summary>
 /// implement ParcelInDelivery class
 /// </summary>
-    public class ParcelInDelivery
+    public class ParcelInDelivery:ILocatable
     {
         public int Id { get; set; }
         public bool Status { get; set; }
@@ -13,7 +13,7 @@ namespace BO
         public BO.Enums.WeightCategories WeightCategorie { get; set; }
         public CustomerInParcel Sender { get; set; }
         public CustomerInParcel Target { get; set; }
-        public Location PickUpLocation { get; set; }
+        public Location Location { get; set; }
         public Location TargetLocation { get; set; }
         public double Distance { get; set; }
         /// <summary>
@@ -29,7 +29,7 @@ namespace BO
             _result += $"WeightCategorie is {WeightCategorie}\n";
             _result += $"Priority is {Prioritie}\n";
             _result += $"Status is {Status}\n";
-            _result += $"Pick Up Location is {PickUpLocation}\n";
+            _result += $"Pick Up Location is {Location}\n";
             _result += $"Target Cusomer Location is {TargetLocation}\n";
             return _result;
         }

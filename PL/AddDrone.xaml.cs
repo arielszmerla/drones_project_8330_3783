@@ -175,20 +175,17 @@ namespace PL
                 bl.UpdateDroneSentToCharge(dr.Id);
             else
             {
-
+                sendDrone.Visibility = Visibility.Collapsed;
                 MessageBox.Show("insert how many hours to charge");
                 timespan_get.Visibility = Visibility.Visible;
+                TimeSpan time = new TimeSpan(int.Parse(timespan_get.Text), 0, 0);
 
+                bl.UpdateReleaseDroneFromCharge(dr.Id, time);
+                timespan_get.Visibility = Visibility.Hidden;
             }
 
         }
-        private void timespan_get_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TimeSpan time = new TimeSpan(int.Parse(timespan_get.Text), 0, 0);
-            bl.UpdateReleaseDroneFromCharge(dr.Id, time);
-            timespan_get.Visibility = Visibility.Hidden;
-    
-        }
+      
         private void DeliveryChanges_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -204,11 +201,11 @@ namespace PL
                     if (drone.PID != null)
                     {
                         Parcel p = bl.GetParcel(drone.PID.Id);
-                        if (p.PickedUp < DateTime.Now && p.Delivered > DateTime.Now)
+                        if (p.Delivered ==null)
                         {
                             bl.UpdateDeliverParcel(dr.Id);
                         }
-                        if (p.PickedUp > DateTime.Now)
+                        if (p.PickedUp == null)
                         {
                             bl.UpdateDroneToPickUpAParcel(dr.Id);
                         }
