@@ -113,8 +113,8 @@
     <SenderId>100000005</SenderId>
     <TargetId>100000004</TargetId>
     <Priority>Urgent</Priority>
-    <Requested>2021-12-30T10:51:35</Requested>
-    <DroneId>0</DroneId>
+    <Requested>2022-01-09T00:58:02.2794968+02:00</Requested>
+    <DroneId>100006</DroneId>
     <Scheduled xsi:nil="true" />
     <PickedUp xsi:nil="true" />
     <Delivered xsi:nil="true" />
@@ -392,8 +392,8 @@
     <Requested>2021-12-30T10:51:35</Requested>
     <DroneId>100004</DroneId>
     <Scheduled>2022-01-03T22:57:57.226691+02:00</Scheduled>
-    <PickedUp xsi:nil="true" />
-    <Delivered xsi:nil="true" />
+    <PickedUp>2022-01-09T00:07:06.5442616+02:00</PickedUp>
+    <Delivered>2022-01-09T00:09:17.0422715+02:00</Delivered>
     <Weight>Heavy</Weight>
   </Parcel>
   <Parcel>
@@ -452,8 +452,8 @@
     <Requested>2021-12-30T10:51:35</Requested>
     <DroneId>100006</DroneId>
     <Scheduled>2022-01-03T22:57:57.226691+02:00</Scheduled>
-    <PickedUp xsi:nil="true" />
-    <Delivered xsi:nil="true" />
+    <PickedUp>2022-01-08T23:58:37.7441832+02:00</PickedUp>
+    <Delivered>2022-01-08T23:59:20.0278911+02:00</Delivered>
     <Weight>Light</Weight>
   </Parcel>
   <Parcel>
@@ -476,8 +476,8 @@
     <Requested>2021-12-30T10:51:35</Requested>
     <DroneId>100001</DroneId>
     <Scheduled>2022-01-03T22:57:57.226691+02:00</Scheduled>
-    <PickedUp xsi:nil="true" />
-    <Delivered xsi:nil="true" />
+    <PickedUp>2022-01-08T23:39:09.6424455+02:00</PickedUp>
+    <Delivered>2022-01-08T23:41:21.7686907+02:00</Delivered>
     <Weight>Light</Weight>
   </Parcel>
   <Parcel>
@@ -509,8 +509,8 @@
     <SenderId>100000007</SenderId>
     <TargetId>100000009</TargetId>
     <Priority>Urgent</Priority>
-    <Requested>2021-12-30T10:51:35</Requested>
-    <DroneId>0</DroneId>
+    <Requested>2022-01-08T23:42:27.0375732+02:00</Requested>
+    <DroneId>100001</DroneId>
     <Scheduled xsi:nil="true" />
     <PickedUp xsi:nil="true" />
     <Delivered xsi:nil="true" />

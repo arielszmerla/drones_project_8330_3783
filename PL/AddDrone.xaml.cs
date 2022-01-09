@@ -47,7 +47,7 @@ namespace PL
         BO.Drone dr = new();
         public AddDrone(IBL bl1, Drone drone)
         {
-                        InitializeComponent();
+            InitializeComponent();
             dr = drone;
             this.bl = bl1;
 
@@ -149,43 +149,56 @@ namespace PL
             }
         }
 
-            private void View_Map(object sender, RoutedEventArgs e)
+        private void View_Map(object sender, RoutedEventArgs e)
+        {
+            new MapsDisplay(dr, bl).Show();
+        }
+
+        private void Update_Drone_Click(object sender, RoutedEventArgs e)
+        {
+            if (dr.Status == Enums.DroneStatuses.Vacant || dr.Status == Enums.DroneStatuses.Maintenance)
             {
-                new MapsDisplay(dr, bl).Show();
+                sendDrone.Visibility = Visibility.Visible;
             }
 
-            private void Update_Drone_Click(object sender, RoutedEventArgs e)
-            {
-                if (dr.Status == Enums.DroneStatuses.Vacant || dr.Status == Enums.DroneStatuses.Maintenance)
-                {
-                    sendDrone.Visibility = Visibility.Visible;
-                }
-              
-            }
+        }
 
-         
-       
-
-
-        
 
         private void SendTo_charge(object sender, RoutedEventArgs e)
         {
+
+            TimeSpan time; 
             if (dr.Status == Enums.DroneStatuses.Vacant)
                 bl.UpdateDroneSentToCharge(dr.Id);
             else
             {
-                sendDrone.Visibility = Visibility.Collapsed;
+ 
                 MessageBox.Show("insert how many hours to charge");
                 timespan_get.Visibility = Visibility.Visible;
-                TimeSpan time = new TimeSpan(int.Parse(timespan_get.Text), 0, 0);
+                int i;
 
-                bl.UpdateReleaseDroneFromCharge(dr.Id, time);
-                timespan_get.Visibility = Visibility.Hidden;
+                if (int.TryParse(timespan_get.Text, out i))
+                {
+                    if (i > 0)
+                    {
+                        time = new TimeSpan(int.Parse(timespan_get.Text), 0, 0);
+                             bl.UpdateReleaseDroneFromCharge(dr.Id, time);
+                    timespan_get.Visibility = Visibility.Hidden;
+                    }
+               
+                }
+                else
+                {
+                    timespan_get.Text = "";
+                    MessageBox.Show("Please enter a positive number");
+                    timespan_get.Background = Brushes.Red;
+                }
+      
+
             }
 
         }
-      
+
         private void DeliveryChanges_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -196,12 +209,12 @@ namespace PL
                 }
                 else if (dr.Status == Enums.DroneStatuses.InDelivery)
                 {
-                    BO.Drone drone = bl.GetDrone(dr.Id);
+                   ParcelToList parcel = bl.GetParcelToListonDrone(dr.Id);
 
-                    if (drone.PID != null)
+                    if (parcel != null)
                     {
-                        Parcel p = bl.GetParcel(drone.PID.Id);
-                        if (p.Delivered ==null)
+                        Parcel p = bl.GetParcel(parcel.Id);
+                        if (p.Delivered == null)
                         {
                             bl.UpdateDeliverParcel(dr.Id);
                         }
@@ -217,7 +230,7 @@ namespace PL
                 this.myEvent("Missed Update");
             }
             this.myEvent("Managed Update");
-           
+
         }
 
         private void End_the_page(object sender, RoutedEventArgs e)
@@ -241,12 +254,12 @@ namespace PL
         }
         private void Form2_FormClosing(object sender, CancelEventArgs e)
         {
-     
+
             this.Show();
 
         }
 
-  
+
         private void statust_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             stats.Background = Brushes.Transparent;
@@ -274,9 +287,10 @@ namespace PL
         {
             try
             {
-                new ParcelActionWindow(bl, bl.GetParcelonDrone(dr.Id)).Show();
+                new ParcelActionWindow(bl, bl.GetParcelToListonDrone(dr.Id)).Show();
             }
-            catch (BO.GetException ex) {
+            catch (BO.GetException ex)
+            {
                 MessageBox.Show(ex.Message);
             }
         }

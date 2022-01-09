@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Icon="\images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico"
         Closing="AddDrone_Closing"
-        Title="AddDrone" Height="443" Width="844">
+        Title="AddDrone" Height="500" Width="944">
     <Window.Resources >
         <local:ConverterDoubleToInt x:Key="ConverterDoubleToInt"/>
         <local:ConverterLatitude x:Key="ConverterLatitude"/>
@@ -24,7 +24,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Button x:Name="PageStop"  Visibility="Visible" Grid.Column="3" HorizontalAlignment="Left"  Margin="38,47,0,348" Click="End_the_page" RenderTransformOrigin="0.832,-0.311" Width="38">
+        <Button x:Name="PageStop"  Visibility="Visible" Grid.Column="3" HorizontalAlignment="Left"  Margin="158,47,0,348" Click="End_the_page" RenderTransformOrigin="0.832,-0.311" Width="38">
 
             <Button.Background>
                 <ImageBrush ImageSource="\images\pngegg.png"/>
@@ -78,7 +78,7 @@
                 <Button  BorderBrush="Transparent" Background="Bisque"  Visibility="Visible" x:Name="DeliveryChanges" Content="deliverychange" HorizontalAlignment="Right"  VerticalAlignment="Top" Click="DeliveryChanges_Click" Height="46" Margin="0,16,14,0" Width="131"/>
                 <Button  BorderBrush="Transparent" Background="Bisque"  Visibility="Visible" x:Name="Update_Drone" Content="Update a drone" HorizontalAlignment="Center"  Width="131"  Height="46" Click="Update_Drone_Click" Margin="0,3,0,249"/>
                 <Button  BorderBrush="Transparent" Background="Bisque" x:Name="sendDrone"  Content="sendTocharge" Click="SendTo_charge"  HorizontalAlignment="Center"  Height="46" Width="131" Margin="0,132,0,272" />
-                <TextBox  BorderBrush="Transparent" Background="Bisque" Grid.Column="0" Visibility="Visible" x:Name="timespan_get" Text="" TextWrapping="Wrap" Margin="18,162,0,272" HorizontalAlignment="Left" Width="142" />
+                <TextBox  BorderBrush="Transparent" Background="Bisque" Grid.Column="0" Visibility="Visible" x:Name="timespan_get" Text="" TextWrapping="Wrap" Margin="0,162,0,272" HorizontalAlignment="Left" Width="142" />
                 <Button  BorderBrush="Transparent" Background="Bisque" x:Name="show_parcel_nDrone"  Content="Show Parcel" Click="show_parcel_inDrone"  HorizontalAlignment="Center"  Height="46" Width="130" Margin="0,132,0,272" Grid.Column="1" />
 
                

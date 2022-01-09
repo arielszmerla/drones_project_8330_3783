@@ -29,7 +29,7 @@ namespace BL
             //find all parcels that are connected to this drone
 
             //if any of the drone's parcels is picked up but not delivered
-            if (parcelConnected!=null)
+            if (parcelConnected != null && parcelConnected.Value.Id != 0)
             {
                 DO.Parcel p = (DO.Parcel)parcelConnected;
                 p.Delivered = DateTime.Now;
@@ -43,9 +43,9 @@ namespace BL
                 Location l1 = new Location { Latitude = cs.Latitude, Longitude = cs.Longitude };
                 dr.Location = l1;
                 dr.Status = Enums.DroneStatuses.Vacant;
-               dr.NumOfDeliveredParcel++;
-               dr.DeliveryId = 0;
-           
+                dr.NumOfDeliveredParcel++;
+                dr.DeliveryId = 0;
+
                 drones[drones.FindIndex(dr => dr.Id == id)] = dr;
                 try
                 {
@@ -68,9 +68,9 @@ namespace BL
                 throw new GetException("$ID OF DRONE {dr.Id} DOESN'T EXIST\n");
             DroneToList dr = drones.Find(dr => dr.Id == id);
             List<DO.Parcel> parcelConnected = (List<DO.Parcel>)Dal.GetParcelList(pc => pc.DroneId == id);
-   
 
-            int index = parcelConnected.FindIndex(pc => pc.Scheduled < DateTime.Now && pc.PickedUp ==null);
+
+            int index = parcelConnected.FindIndex(pc => pc.Scheduled < DateTime.Now && pc.PickedUp == null);
             //if any parcel has to be delivered
             if (index != -1)
             {
@@ -81,6 +81,7 @@ namespace BL
                 if (dr.Battery >= Dal.DroneElectricConsumations()[0] *
                     BO.LocationFuncs.Distance(dr.Location, new Location { Latitude = cs.Latitude, Longitude = cs.Longitude }))
                 {
+                    dr.Status = Enums.DroneStatuses.InDelivery;
                     p.PickedUp = DateTime.Now;
                     dr.Battery -= Dal.DroneElectricConsumations()[0] *
                          BO.LocationFuncs.Distance(dr.Location, new Location { Latitude = cs.Latitude, Longitude = cs.Longitude });
@@ -123,7 +124,7 @@ namespace BL
                 throw new GetException("Problem with parcel scheduling", ex);
             }
         }
-   
+
         /// <summary>
         /// function to release a drone from charging
         /// </summary>

@@ -18,7 +18,7 @@ namespace BL
         /// </summary>
         /// <param name="it"></param>
         /// <returns></returns>
-        private BO.CustomerToList DOcustomerBO(DO.Customer it)
+        private BO.CustomerToList DOcustomerToListBO(DO.Customer it)
         {
             BO.CustomerToList ct = new();
             ct.Id = it.Id;
@@ -29,6 +29,39 @@ namespace BL
             ct.NumberOfParcelsonTheWay = parcels.FindAll(pc => pc.TargetId == ct.Id && pc.Delivered > DateTime.Now).Count;
             ct.NumberOfParcelsSentAndDelivered = parcels.FindAll(pc => pc.SenderId == ct.Id && pc.Delivered <= DateTime.Now && pc.Delivered != DateTime.MinValue).Count;
             ct.NumberOfParcelsSentButNotDelivered = parcels.FindAll(pc => pc.SenderId == ct.Id && pc.Delivered > DateTime.Now).Count;
+
+            return ct;
+        } /// <summary>
+          /// get customer from DO converts it to customertolist
+          /// </summary>
+          /// <param name="it"></param>
+          /// <returns></returns>
+        private BO.Customer DOcustomerB(DO.Customer it)
+        {
+            BO.Customer ct = new();
+            ct.Id = it.Id;
+            ct.Name = it.Name;
+            ct.Phone = it.Phone;
+            List<DO.Parcel> parcels = (List<DO.Parcel>)Dal.GetParcelList(null);
+            ct.Location = new Location { Latitude = it.Latitude, Longitude = it.Longitude };
+
+            IEnumerable<DO.Parcel> parce = (from item in parcels
+                      where item.TargetId == ct.Id
+                      select item);
+
+            ct.From = (IEnumerable<ParcelByCustomer>)(from item in parce
+                                                    let parc = dOparcelTObyCustomerBO(item)
+                                                    select parc);
+            IEnumerable<DO.Parcel> p=    (from item in parcels
+                                                        where item.SenderId == ct.Id
+                                                        select item);
+            ct.To = (IEnumerable<ParcelByCustomer>)(from item in p
+                                                    let parc = dOparcelFROMbyCustomerBO(item)
+                                                    select parc);
+                
+
+
+          
 
             return ct;
         }

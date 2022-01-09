@@ -174,44 +174,7 @@ namespace BL
                     }
                 }
 
-            }/*
-                foreach (var parcel in Dal.GetParcelList(null))
-            {
-
-                if (drones.Any(dr => dr.Id == parcel.DroneId) && parcel.PickedUp >= DateTime.Now)
-                {
-                    Location closestBase = new();
-                    DroneToList droneToList = drones.Find(dr => dr.Id == parcel.DroneId);
-                    droneToList.Status = Enums.DroneStatuses.InDelivery;
-
-                    List<DO.Customer> customers = (List<DO.Customer>)Dal.GetCustomerList();
-                    DO.Customer cs = customers.Find(c => c.Id == parcel.SenderId);
-                    //caculate the nearest station to customer
-
-                    droneToList.Location = getClosestBase(new Location { Latitude = cs.Latitude, Longitude = cs.Longitude }).Location;
-
-                    List<DO.Customer> custom = (List<DO.Customer>)Dal.GetCustomerList();
-                    DO.Customer myCs = custom.Find(cs => cs.Id == parcel.SenderId);
-                    droneToList.Battery = random.Next((int)(BO.LocationFuncs.Distance(closestBase, new Location { Latitude = myCs.Latitude, Longitude = myCs.Longitude })
-                        * consumationFreeDrone + BatteryCons(new Location { Latitude = myCs.Latitude, Longitude = myCs.Longitude }, parcel)), 99) +
-                        random.NextDouble();
-                    int index = drones.FindIndex(dr => dr.Id == droneToList.Id);
-                    drones[index] = droneToList;
-                }
-                else if (drones.Any(dr => dr.Id == parcel.DroneId) && parcel.Delivered >= DateTime.Now && parcel.PickedUp < DateTime.Now)
-                {
-                    DroneToList droneToList = drones.FirstOrDefault(dr => dr.Id == parcel.DroneId);
-                    BO.Location loci = new BO.Location { Latitude = Dal.GetCustomerList().FirstOrDefault(cs => cs.Id == parcel.SenderId).Latitude, Longitude = Dal.GetCustomerList().FirstOrDefault(cs => cs.Id == parcel.SenderId).Longitude };
-                    droneToList.Location = loci;
-                    droneToList.Battery = random.Next((int)BatteryCons(droneToList.Location, parcel), 99) + random.NextDouble();
-                    int index = drones.FindIndex(dr => dr.Id == droneToList.Id);
-                    drones[index] = droneToList;
-                }
             }
-
-            for (int i = 0; i < drones.Count; i++)
-                drones[i] = updateDroneToList(drones[i]);
-        }*/
         }
         /// <summary>
         /// func that search if any parcel with a certain weigth category is set to be sent py a certain drone 
@@ -429,7 +392,7 @@ namespace BL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public DO.Customer GetCust(int id)
+     /*   public DO.Customer GetCust(int id)
         {
             try
             {
@@ -439,7 +402,7 @@ namespace BL
             {
                 throw new GetException($"This Customer {id} does not exist", p);
             }
-        }
+        }*/
         /// <summary>
         /// Gets the closest baseStation to a certain location
         /// </summary>

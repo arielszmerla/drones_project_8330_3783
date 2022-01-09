@@ -227,13 +227,6 @@ namespace DalXML
             baseStationDroneOut(myDrone.Value.StationId);
             drones1.RemoveAll(d => d.DroneId == idDrone);
             XMLTolls.SaveListToXMLSerializer(drones1, @"droneCharge.xml");
-            /*     var baseStations = XMLTolls.LoadListFromXMLSerializer<BaseStation>(@"stations.xml");
-                 BaseStation b = baseStations.Where(bs => bs.Id == myDrone.Value.StationId).FirstOrDefault();
-                 b.NumOfSlots++;
-                 baseStations.RemoveAll(bs => bs.Id == b.Id);
-                 baseStations.Add(b);
-                 XMLTolls.SaveListToXMLSerializer(baseStations, @"stations.xml");*/
-      
         }
         #endregion
         #region drones

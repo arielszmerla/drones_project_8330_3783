@@ -72,16 +72,40 @@ namespace BL
         /// <summary>
         /// method to get a parcel on drone
         /// </summary>
-        /// <param name="idP"></id drone>
+        /// <param name="idD"></id drone>
         /// <returns></returns parcel on delivery>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public ParcelToList GetParcelonDrone(int idP)
+        public ParcelToList GetParcelToListonDrone(int idD)
         {
 
-            DO.Parcel? p = Dal.GetParcelList(d => d.DroneId == idP && d.Delivered == null).FirstOrDefault();
+            DO.Parcel? p = Dal.GetParcelList(d => d.DroneId == idD && d.Requested!=null && d.Delivered == null).FirstOrDefault();
             if (p == null)
-                throw new GetException($"the drone with id: {idP} is not on delivery");
+                throw new GetException($"the drone with id: {idD} is not on delivery");
             else { return DOparcelBO((DO.Parcel)p); }
+        }
+        /// <summary>
+        /// method that returns a customer by Id
+        /// </summary>
+        /// <param name="idP"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public Customer GetCustomer(int idP) 
+        {
+            if (!Dal.GetCustomerList(pc => pc.Id == idP ).Any())
+                throw new GetException("id of BaseStation not found");
+            return DOcustomerB(Dal.GetCustomer(idP));
+
+        }
+        /// <summary>
+        /// method that returns a drone by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public Drone GetDrone(int id) {
+            if (!Dal.GetDroneList(pc => pc.Id == id && pc.Valid == true).Any())
+                throw new GetException("id of BaseStation not found");
+            return dODrone(Dal.GetDrone(id));
         }
         /// <summary>
         /// method that return a certain base station by id
@@ -91,62 +115,11 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.BaseStation GetBaseStation(int idP)
         {
-            if (!Dal.GetBaseStationsList(null).Any(pc => pc.Id == idP && pc.Valid == true))
+            if (!Dal.GetBaseStationsList(pc => pc.Id == idP && pc.Valid == true).Any())
                 throw new GetException("id of BaseStation not found");
             return dOBaseStation(Dal.GetBaseStation(idP));
         }
-        /// <summary>
-        /// get a customer selected by his id
-        /// </summary>
-        /// <param name="idP"></param>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public Customer GetCustomer(int idP)
-        {
-
-            DO.Customer myCust = new();
-            IEnumerable<DO.Customer> customers = Dal.GetCustomerList(c => c.Id == idP);
-            if (customers.Any(pc => pc.Id == idP))
-            {
-                myCust = customers.FirstOrDefault(pc => pc.Id == idP);
-            }
-            else
-                throw new GetException("id of Customer not found");
-            Customer customer = new Customer();
-            customer.Id = myCust.Id;
-
-            customer.Location = new Location { Latitude = myCust.Latitude, Longitude = myCust.Longitude };
-            customer.Name = myCust.Name;
-            customer.Phone = myCust.Phone;
-
-            customer.To = (List<ParcelByCustomer>)(from item in Dal.GetParcelList(ps => ps.TargetId == customer.Id)
-                                                   let parcelFR = dOparcelFROMbyCustomerBO(item)
-                                                   select parcelFR).ToList();
-
-            customer.From = (List<ParcelByCustomer>)(from item in Dal.GetParcelList(ps => ps.TargetId == customer.Id)
-                                                     let parcelT = dOparcelTObyCustomerBO(item)
-                                                     select parcelT).ToList();
-            return customer;
-        }
-        /// <summary>
-        /// get a single drone
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public Drone GetDrone(int id)
-        {
-            try
-            {
-                DO.Drone busDO = Dal.GetDrone(id);
-                return dODrone(busDO);
-            }
-            catch (DO.DroneException e)
-            {
-                throw new GetException(e.Message);
-            }
-
-        }
+    
 
         #endregion
 
@@ -498,7 +471,7 @@ namespace BL
             try
             {
                 IEnumerable<CustomerToList> c = from item in Dal.GetCustomerList()
-                                                let customerBO = DOcustomerBO(item)
+                                                let customerBO = DOcustomerToListBO(item)
                                                 where predicat == null ? true : predicat(customerBO)
                                                 select customerBO;
 

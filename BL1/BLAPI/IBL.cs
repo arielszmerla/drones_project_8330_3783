@@ -59,7 +59,7 @@ namespace BLAPI
         /// </summary>
         /// <param name="idP"></id drone>
         /// <returns></returns parcel on delivery>
-        ParcelToList GetParcelonDrone(int idP);
+        ParcelToList GetParcelToListonDrone(int idP);
         /// <summary>
         /// method that returns a base station by Id
         /// </summary>

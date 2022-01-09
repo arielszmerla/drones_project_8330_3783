@@ -11,7 +11,7 @@ namespace BO
         public int Id { get; set; }
         public CustomerInParcel Sender { get; set; }
         public CustomerInParcel Target { get; set; }
-        public  BO.Enums.WeightCategories WeightCategories { get; set; }
+        public BO.Enums.WeightCategories WeightCategories { get; set; }
         public BO.Enums.Priorities Priority { get; set; }
         public DroneInParcel DIP { get; set; }
         public DateTime? Created { get; set; }
