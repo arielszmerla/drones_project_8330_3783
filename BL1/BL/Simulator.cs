@@ -56,7 +56,7 @@ namespace BL
                         if (!sleepDelayTime()) break;
 
                         lock (bl) lock (dal)
-                            {
+                            {//next parcel
                                 parcelId = bl.Dal.GetParcelList(p => p.Scheduled == null
                                                                   && (Enums.WeightCategories)(p.Weight) <= drone.MaxWeight
                                                                   && drone.RequiredBattery(bl, p.Id) < drone.Battery)

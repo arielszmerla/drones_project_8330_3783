@@ -319,7 +319,7 @@ namespace PL
         private void simul_Click(object sender, RoutedEventArgs e)
         {
             hide(true);
-            worker = new()
+            worker = new BackgroundWorker()
             {
                 WorkerReportsProgress = true,
                 WorkerSupportsCancellation = true,
@@ -331,9 +331,10 @@ namespace PL
                 worker = null;
                 if (enter.Visibility == Visibility.Hidden) Close();
             };
-           worker.ProgressChanged += (sender, args) => updateDroneView();
+             worker.ProgressChanged += (sender, args) => updateDroneView();
             worker.RunWorkerAsync(drone.Id);
         }
+
         private void hide(bool flag)
         {
             if (flag)
@@ -345,7 +346,8 @@ namespace PL
             }
 
         }
-        private void updateDroneView() { 
+        private void updateDroneView() 
+        { 
         
         }
 
