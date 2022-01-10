@@ -61,12 +61,12 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDroneOnParcel(int idP)
         {
-         
-            DroneToList? p = drones.Find(de=>de.DeliveryId == idP);
+
+            DroneToList? p = drones.Find(de => de.DeliveryId == idP);
             if (p == null)
                 throw new GetException($"the drone with id: {idP} is not on delivery");
-           
-            return dODrone(Dal.GetDrone(p.Id));
+            lock (Dal)
+                return dODrone(Dal.GetDrone(p.Id));
         }
         /// <summary>
         /// method to get a parcel on drone
@@ -76,11 +76,17 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public ParcelToList GetParcelToListonDrone(int idD)
         {
+            lock (Dal)
+            {
+                DO.Parcel? p = Dal.GetParcelList(d => d.DroneId == idD && d.Requested != null && d.Delivered == null).FirstOrDefault();
+                if (p == null)
+                    throw new GetException($"the drone with id: {idD} is not on delivery");
+                else
+                {
 
-            DO.Parcel? p = Dal.GetParcelList(d => d.DroneId == idD && d.Requested!=null && d.Delivered == null).FirstOrDefault();
-            if (p == null)
-                throw new GetException($"the drone with id: {idD} is not on delivery");
-            else { return DOparcelBO((DO.Parcel)p); }
+                    return DOparcelBO((DO.Parcel)p);
+                }
+            }
         }
         /// <summary>
         /// method that returns a customer by Id
@@ -88,12 +94,14 @@ namespace BL
         /// <param name="idP"></param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public Customer GetCustomer(int idP) 
+        public Customer GetCustomer(int idP)
         {
-            if (!Dal.GetCustomerList(pc => pc.Id == idP ).Any())
-                throw new GetException("id of BaseStation not found");
-            return DOcustomerB(Dal.GetCustomer(idP));
-
+            lock (Dal)
+            {
+                if (!Dal.GetCustomerList(pc => pc.Id == idP).Any())
+                    throw new GetException("id of BaseStation not found");
+                return DOcustomerB(Dal.GetCustomer(idP));
+            }
         }
         /// <summary>
         /// method that returns a customertolist by Id
@@ -103,10 +111,12 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public CustomerToList GetCustomerToList(int idP)
         {
-            if (!Dal.GetCustomerList(pc => pc.Id == idP).Any())
-                throw new GetException("id of BaseStation not found");
-            return DOcustomerToListBO(Dal.GetCustomer(idP));
-
+            lock (Dal)
+            {
+                if (!Dal.GetCustomerList(pc => pc.Id == idP).Any())
+                    throw new GetException("id of BaseStation not found");
+                return DOcustomerToListBO(Dal.GetCustomer(idP));
+            }
         }
         /// <summary>
         /// method that returns a drone by Id
@@ -114,10 +124,14 @@ namespace BL
         /// <param name="id"></param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public Drone GetDrone(int id) {
-            if (!Dal.GetDroneList(pc => pc.Id == id && pc.Valid == true).Any())
-                throw new GetException($"id of Drone {id} not found");
-            return dODrone(Dal.GetDrone(id));
+        public Drone GetDrone(int id)
+        {
+            lock (Dal)
+            {
+                if (!Dal.GetDroneList(pc => pc.Id == id && pc.Valid == true).Any())
+                    throw new GetException($"id of Drone {id} not found");
+                return dODrone(Dal.GetDrone(id));
+            }
         }
         /// <summary>
         /// method that return a certain base station by id
@@ -127,11 +141,14 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BO.BaseStation GetBaseStation(int idP)
         {
-            if (!Dal.GetBaseStationsList(pc => pc.Id == idP && pc.Valid == true).Any())
-                throw new GetException("id of BaseStation not found");
-            return dOBaseStation(Dal.GetBaseStation(idP));
+            lock (Dal)
+            {
+                if (!Dal.GetBaseStationsList(pc => pc.Id == idP && pc.Valid == true).Any())
+                    throw new GetException("id of BaseStation not found");
+                return dOBaseStation(Dal.GetBaseStation(idP));
+            }
         }
-    
+
 
         #endregion
 
@@ -143,23 +160,26 @@ namespace BL
         /// <param name="id"></delete>
         public void DeleteParcel(int id)
         {
-            if (!Dal.GetParcelList(null).Any(c => c.Id == id))
+            lock (Dal)
             {
-                throw new DeleteException($"parcel with {id}as Id does not exist");
-            }
-            else if (Dal.GetParcelList(null).FirstOrDefault(c => c.Id == id).Delivered <= DateTime.Now)
-            {
-                throw new DeleteException($"parcel with {id}as Id has not yet been delivered");
-            }
-            else
-                try
+                if (!Dal.GetParcelList(null).Any(c => c.Id == id))
                 {
-                    Dal.DeleteParcel(id);
+                    throw new DeleteException($"parcel with {id}as Id does not exist");
                 }
-                catch (DO.DeleteException d)
+                else if (Dal.GetParcelList(null).FirstOrDefault(c => c.Id == id).Delivered <= DateTime.Now)
                 {
-                    throw new DeleteException($"parcel with {id}as Id does not exist", d);
+                    throw new DeleteException($"parcel with {id}as Id has not yet been delivered");
                 }
+                else
+                    try
+                    {
+                        Dal.DeleteParcel(id);
+                    }
+                    catch (DO.DeleteException d)
+                    {
+                        throw new DeleteException($"parcel with {id}as Id does not exist", d);
+                    }
+            }
         }
         /// <summary>
         /// delete an customer
@@ -167,24 +187,27 @@ namespace BL
         /// <param name="id"></id of customer to erase>
         public void DeleteCustomer(int id)
         {
-            if (!Dal.GetCustomerList(c => c.Id == id).Any())
+            lock (Dal)
             {
-                throw new DeleteException($"Customer with {id}as Id does not exist");
-            }
-            else if (Dal.GetParcelList(c => c.TargetId == id && c.Scheduled <= DateTime.Now && c.Delivered == DateTime.MinValue).Any())
-            {
-                throw new DeleteException($"Customer with {id}as Id has yet more commands on way");
-            }
-            else
-                try
+                if (!Dal.GetCustomerList(c => c.Id == id).Any())
                 {
-                    Dal.DeleteCustomer(id);
+                    throw new DeleteException($"Customer with {id}as Id does not exist");
                 }
+                else if (Dal.GetParcelList(c => c.TargetId == id && c.Scheduled <= DateTime.Now && c.Delivered == DateTime.MinValue).Any())
+                {
+                    throw new DeleteException($"Customer with {id}as Id has yet more commands on way");
+                }
+                else
+                    try
+                    {
+                        Dal.DeleteCustomer(id);
+                    }
 
-                catch (DO.DeleteException d)
-                {
-                    throw new DeleteException($"Customer with {id}as Id does not exist", d);
-                }
+                    catch (DO.DeleteException d)
+                    {
+                        throw new DeleteException($"Customer with {id}as Id does not exist", d);
+                    }
+            }
         }
         /// <summary>
         /// delete an Drone
@@ -192,23 +215,27 @@ namespace BL
         /// <param name="id"></id of Drone to erase>
         public void DeleteDrone(int id)
         {
-            if (!Dal.GetDroneList(c => c.Id == id).Any())
+            lock (Dal)
             {
-                throw new DeleteException($"Drone with {id}as Id does not exist");
+                if (!Dal.GetDroneList(c => c.Id == id).Any())
+                {
+                    throw new DeleteException($"Drone with {id}as Id does not exist");
+                }
+                else if (Dal.GetParcelList(c => c.DroneId == id && c.Scheduled <= DateTime.Now && c.Delivered == DateTime.MinValue).Any())
+                {
+                    throw new DeleteException($"Drone with {id}is on  delivery");
+                }
+                try
+                {
+                    Dal.DeleteDrone(id);
+                    drones.RemoveAll(pc => pc.Id == id);
+                }
+                catch (DO.DeleteException d)
+                {
+                    throw new DeleteException($"Drone with {id}as Id does not exist", d);
+                }
             }
-            else if (Dal.GetParcelList(c => c.DroneId == id && c.Scheduled <= DateTime.Now && c.Delivered == DateTime.MinValue).Any())
-            {
-                throw new DeleteException($"Drone with {id}is on  delivery");
-            }
-            try
-            {
-                Dal.DeleteDrone(id);
-                drones.RemoveAll(pc => pc.Id == id);
-            }
-            catch (DO.DeleteException d)
-            {
-                throw new DeleteException($"Drone with {id}as Id does not exist", d);
-            }
+
         }
         /// <summary>
         /// delete an BaseStation
@@ -216,23 +243,26 @@ namespace BL
         /// <param name="id"></id of BaseStation to erase>
         public void DeleteBasestation(int id)
         {
-            if (!Dal.GetBaseStationsList(null).Any(c => c.Id == id))
+            lock (Dal)
             {
-                throw new DeleteException($"BaseStation with {id}as Id does not exist");
-            }
-            else
+                if (!Dal.GetBaseStationsList(null).Any(c => c.Id == id))
+                {
+                    throw new DeleteException($"BaseStation with {id}as Id does not exist");
+                }
+                else
                 if (drones.Any(dr => dr.Location == new Location { Latitude = Dal.GetBaseStation(id).Latitude, Longitude = Dal.GetBaseStation(id).Longitude } && dr.Status == Enums.DroneStatuses.Maintenance))
-                throw new DeleteException($"BaseStation with {id}as Id is in use");
-            else
-                try
-                {
-                    Dal.DeleteBasestation(id);
-                    drones.RemoveAll(pc => pc.Id == id);
-                }
-                catch (DO.DeleteException d)
-                {
-                    throw new DeleteException($"BaseStation with {id}as Id does not exist", d);
-                }
+                    throw new DeleteException($"BaseStation with {id}as Id is in use");
+                else
+                    try
+                    {
+                        Dal.DeleteBasestation(id);
+                        drones.RemoveAll(pc => pc.Id == id);
+                    }
+                    catch (DO.DeleteException d)
+                    {
+                        throw new DeleteException($"BaseStation with {id}as Id does not exist", d);
+                    }
+            }
         }
         #endregion
         #region getlists
@@ -246,28 +276,31 @@ namespace BL
         {
             try
             {
-                if (predicat == null)
+                lock (Dal)
                 {
-                    IEnumerable<BaseStationToList> b = (from item in Dal.GetBaseStationsList(null)
-                                                        where item.Valid == true
-                                                        let DObaseStationBO = adaptBaseStationToList(item)
-                                                        select DObaseStationBO);
+                    if (predicat == null)
+                    {
+                        IEnumerable<BaseStationToList> b = (from item in Dal.GetBaseStationsList(null)
+                                                            where item.Valid == true
+                                                            let DObaseStationBO = adaptBaseStationToList(item)
+                                                            select DObaseStationBO);
 
-                    if (b == null)
-                        throw new GetException("empty list");
-                    return b.ToList();
-                }
-                else
-                {
-                    IEnumerable<BaseStationToList> b = (from item in Dal.GetBaseStationsList(null)
-                                                        where item.Valid == true
-                                                        let DObaseStationBO = adaptBaseStationToList(item)
-                                                        where predicat(DObaseStationBO)
-                                                        select DObaseStationBO);
+                        if (b == null)
+                            throw new GetException("empty list");
+                        return b.ToList();
+                    }
+                    else
+                    {
+                        IEnumerable<BaseStationToList> b = (from item in Dal.GetBaseStationsList(null)
+                                                            where item.Valid == true
+                                                            let DObaseStationBO = adaptBaseStationToList(item)
+                                                            where predicat(DObaseStationBO)
+                                                            select DObaseStationBO);
 
-                    if (b == null)
-                        throw new GetException("empty list");
-                    return b.ToList();
+                        if (b == null)
+                            throw new GetException("empty list");
+                        return b.ToList();
+                    }
                 }
             }
             catch (DO.BaseExeption ex)
@@ -283,30 +316,33 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStationToList> GetBaseStationListGroup()
         {
-            IEnumerable<BaseStationToList> b = (from item in Dal.GetBaseStationsList(null)
-                                                where item.Valid == true
-                                                let DObaseStationB = adaptBaseStationToList(item)
-                                                select DObaseStationB);
+            lock (Dal)
+            {
+                IEnumerable<BaseStationToList> b = (from item in Dal.GetBaseStationsList(null)
+                                                    where item.Valid == true
+                                                    let DObaseStationB = adaptBaseStationToList(item)
+                                                    select DObaseStationB);
 
-            IEnumerable<IGrouping<bool, BaseStationToList>> e = from item in b
-                                                                where item.Valid == true
-                                                                group item by item.NumOfSlotsInUse == 0
-                        into j
-                                                                select j;
-            List<BaseStationToList> ToReturn = new();
-            foreach (IGrouping<bool, BaseStationToList> mashehu in e)
-                switch (mashehu.Key)
-                {
-                    case true:
-                        foreach (BaseStationToList bs in mashehu)
-                            ToReturn.Add(bs);
-                        break;
-                    case false:
-                        foreach (BaseStationToList bs in mashehu)
-                            ToReturn.Add(bs);
-                        break;
-                }
-            return ToReturn;
+                IEnumerable<IGrouping<bool, BaseStationToList>> e = from item in b
+                                                                    where item.Valid == true
+                                                                    group item by item.NumOfSlotsInUse == 0
+                            into j
+                                                                    select j;
+                List<BaseStationToList> ToReturn = new();
+                foreach (IGrouping<bool, BaseStationToList> mashehu in e)
+                    switch (mashehu.Key)
+                    {
+                        case true:
+                            foreach (BaseStationToList bs in mashehu)
+                                ToReturn.Add(bs);
+                            break;
+                        case false:
+                            foreach (BaseStationToList bs in mashehu)
+                                ToReturn.Add(bs);
+                            break;
+                    }
+                return ToReturn;
+            }
         }
         /// <summary>
         /// returns two groups one with base stations with free slots and one without
@@ -315,11 +351,14 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<IGrouping<bool, BaseStationToList>> GetWithWithoutFreeSlotsBaseStationgroup()
         {
-            return (from item in Dal.GetBaseStationsList(null)
-                    where item.Valid == true
-                    let DObaseStationBo = adaptBaseStationToList(item)
-                    group DObaseStationBo by DObaseStationBo.NumOfFreeSlots == 0 into gs
-                    select gs);
+            lock (Dal)
+            {
+                return (from item in Dal.GetBaseStationsList(null)
+                        where item.Valid == true
+                        let DObaseStationBo = adaptBaseStationToList(item)
+                        group DObaseStationBo by DObaseStationBo.NumOfFreeSlots == 0 into gs
+                        select gs);
+            }
 
         }
 
@@ -333,10 +372,13 @@ namespace BL
         {
             try
             {
-                List<BaseStationToList> tmp = (List<BaseStationToList>)GetBaseStationList();
-                if (tmp.FindAll(bs => bs.NumOfFreeSlots > 0 && bs.Valid == true).Count == 0) ;
-                throw new GetException("empty list");
-                return tmp.FindAll(bs => bs.NumOfFreeSlots > 0 && bs.Valid == true);
+                lock (Dal)
+                {
+                    List<BaseStationToList> tmp = (List<BaseStationToList>)GetBaseStationList();
+                    if (tmp.FindAll(bs => bs.NumOfFreeSlots > 0 && bs.Valid == true).Count == 0)
+                        throw new GetException("empty list");
+                    return tmp.FindAll(bs => bs.NumOfFreeSlots > 0 && bs.Valid == true);
+                }
             }
             catch (DO.BaseExeption ex)
             {
@@ -353,23 +395,26 @@ namespace BL
         {
             try
             {
-                if (statuses == null)
+                lock (Dal)
                 {
-                    IEnumerable<ParcelToList> p = (from item in Dal.GetParcelList(null)
+                    if (statuses == null)
+                    {
+                        IEnumerable<ParcelToList> p = (from item in Dal.GetParcelList(null)
+                                                       let parcelBO = DOparcelBO(item)
+                                                       select parcelBO);
+                        if (p == null)
+                            throw new GetException("empty list");
+                        return p.ToList();
+                    }
+                    Enums.WeightCategories weight = (Enums.WeightCategories)statuses;
+                    IEnumerable<ParcelToList> b = (from item in Dal.GetParcelList(null)
                                                    let parcelBO = DOparcelBO(item)
+                                                   where parcelBO.WeightCategorie == weight
                                                    select parcelBO);
-                    if (p == null)
+                    if (b == null)
                         throw new GetException("empty list");
-                    return p.ToList();
+                    return b.ToList();
                 }
-                Enums.WeightCategories weight = (Enums.WeightCategories)statuses;
-                IEnumerable<ParcelToList> b = (from item in Dal.GetParcelList(null)
-                                               let parcelBO = DOparcelBO(item)
-                                               where parcelBO.WeightCategorie == weight
-                                               select parcelBO);
-                if (b == null)
-                    throw new GetException("empty list");
-                return b.ToList();
             }
             catch (DO.ParcelExeption ex)
             {
@@ -389,23 +434,27 @@ namespace BL
             {
                 if (name == "")
                 {
-                    IEnumerable<ParcelToList> b = (from item in Dal.GetParcelList(null)
-                                                   let parcelBO = DOparcelBO(item)
-                                                   select parcelBO);
-                    if (b == null)
-                        throw new GetException("empty list");
-                    return b.ToList();
+                    lock (Dal)
+                    {
+                        IEnumerable<ParcelToList> b = (from item in Dal.GetParcelList(null)
+                                                       let parcelBO = DOparcelBO(item)
+                                                       select parcelBO);
+                        if (b == null)
+                            throw new GetException("empty list");
+                        return b.ToList();
+                    }
                 }
-
-                IEnumerable<ParcelToList> p = (from item in Dal.GetParcelList(null)
-                                               let parcelBO = DOparcelBO(item)
-                                               where parcelBO.SenderName == name || parcelBO.TargetName == name
-                                               select parcelBO);
-                if (p == null)
-                    throw new GetException("empty list");
-                return p.ToList();
+                lock (Dal)
+                {
+                    IEnumerable<ParcelToList> p = (from item in Dal.GetParcelList(null)
+                                                   let parcelBO = DOparcelBO(item)
+                                                   where parcelBO.SenderName == name || parcelBO.TargetName == name
+                                                   select parcelBO);
+                    if (p == null)
+                        throw new GetException("empty list");
+                    return p.ToList();
+                }
             }
-
             catch (DO.ParcelExeption ex)
             {
                 throw new GetException("empty list", ex);
@@ -420,14 +469,15 @@ namespace BL
         {
             try
             {
-                IEnumerable<ParcelToList> p = (from item in Dal.GetParcelList(it => it.DroneId == 0)
-                                               let parcelBO = DOparcelBO(item)
-                                               select parcelBO
-                        );
-
-                if (p == null)
-                    throw new GetException("empty list");
-                return p.ToList();
+                lock (Dal)
+                {
+                    IEnumerable<ParcelToList> p = (from item in Dal.GetParcelList(it => it.DroneId == 0)
+                                                   let parcelBO = DOparcelBO(item)
+                                                   select parcelBO);
+                    if (p == null)
+                        throw new GetException("empty list");
+                    return p.ToList();
+                }
             }
             catch (DO.ParcelExeption ex)
             {
@@ -437,17 +487,20 @@ namespace BL
 
         public IEnumerable<DroneToList> GetDronesInBaseStationList(int Id)
         {
-            Location BaseLoc = new Location
+            lock (Dal)
             {
-                Latitude = Dal.GetBaseStation(Id).Latitude,
-                Longitude = Dal.GetBaseStation(Id).Longitude
-            };
-            return (from item in drones
-                    where item.Location.Latitude == BaseLoc.Latitude &&
-                    item.Location.Longitude == BaseLoc.Longitude &&
-                    item.Status == Enums.DroneStatuses.Maintenance
-                    && item.Valid == true
-                    select item);
+                Location BaseLoc = new Location
+                {
+                    Latitude = Dal.GetBaseStation(Id).Latitude,
+                    Longitude = Dal.GetBaseStation(Id).Longitude
+                };
+                return (from item in drones
+                        where item.Location.Latitude == BaseLoc.Latitude &&
+                        item.Location.Longitude == BaseLoc.Longitude &&
+                        item.Status == Enums.DroneStatuses.Maintenance
+                        && item.Valid == true
+                        select item);
+            }
         }
 
         /// <summary>
@@ -460,7 +513,7 @@ namespace BL
         public IEnumerable<DroneToList> GetDroneList(Enums.DroneStatuses? statuses = null, Enums.WeightCategories? weight = null)
         {
             if (statuses == null && weight == null)
-                return drones.ToList();
+                return drones.Where(d => d.Valid == true);
             else if (statuses != null && weight == null)
             {
                 return drones.Where(d => d.Status == statuses && d.Valid == true);
@@ -482,14 +535,17 @@ namespace BL
         {
             try
             {
-                IEnumerable<CustomerToList> c = from item in Dal.GetCustomerList()
-                                                let customerBO = DOcustomerToListBO(item)
-                                                where predicat == null ? true : predicat(customerBO)
-                                                select customerBO;
+                lock (Dal)
+                {
+                    IEnumerable<CustomerToList> c = from item in Dal.GetCustomerList()
+                                                    let customerBO = DOcustomerToListBO(item)
+                                                    where predicat == null ? true : predicat(customerBO)
+                                                    select customerBO;
 
-                if (c.Count() == 0)
-                    throw new GetException("empty list");
-                return c;
+                    if (c.Count() == 0)
+                        throw new GetException("empty list");
+                    return c;
+                }
             }
             catch (DO.CostumerExeption ex)
             {

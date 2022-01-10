@@ -73,15 +73,15 @@ namespace BL
                                         if (baseStationId != null)
                                         {
                                             drone.Status = Enums.DroneStatuses.Maintenance;
-                                            maintenance = Maintenance.Starting;  
+                                            maintenance = Maintenance.Starting;
                                             dal.AddDroneCharge(droneId, (int)baseStationId);
                                         }
                                         break;
                                     case (_, _):
                                         try
                                         {
-                                            dal.ParcelSchedule((int)parcelId, droneId); 
-                                            drone.DeliveryId= (int)parcelId;
+                                            dal.ParcelSchedule((int)parcelId, droneId);
+                                            drone.DeliveryId = (int)parcelId;
                                             initDelivery((int)parcelId);
                                             drone.Status = Enums.DroneStatuses.InDelivery;
                                         }
@@ -115,7 +115,7 @@ namespace BL
                                 {
                                     if (!sleepDelayTime()) break;
                                     lock (bl)
-                                    {//strange
+                                    {
                                         double delta = distance < STEP ? distance : STEP;
                                         distance -= delta;
                                         drone.Battery = Max(0.0, drone.Battery - delta * bl.BatteryUsages[DRONE_FREE]);
@@ -129,7 +129,7 @@ namespace BL
                                         {
                                             drone.Status = Enums.DroneStatuses.Vacant;
                                             dal.DeleteDroneCharge(droneId);
-                                        
+
                                         }
                                 else
                                 {
@@ -192,6 +192,12 @@ namespace BL
                         throw new GetException("Internal error: not available after Delivery...");
 
                 }
+              DroneToList d = bl.drones.Find(dr => dr.Id == drone.Id);
+                d.Location = drone.Location;
+                d.Status = drone.Status;
+                d.Battery = drone.Battery;
+                bl.drones.RemoveAll(dr => dr.Id == drone.Id);
+                bl.drones.Add(d);
                 updateDrone();
             } while (!checkStop());
         }

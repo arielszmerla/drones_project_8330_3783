@@ -17,7 +17,7 @@ namespace BL
 /// </summary>
     partial class BLImp : IBL
     {
-        private List<DroneToList> drones = new();
+        public List<DroneToList> drones = new();
         static Random random = new Random();
 
         internal readonly double[] BatteryUsages;

@@ -347,8 +347,8 @@ namespace PL
 
         }
         private void updateDroneView() 
-        { 
-        
+        {
+            dr = bl.GetDrone(dr.Id);
         }
 
 

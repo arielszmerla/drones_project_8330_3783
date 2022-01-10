@@ -46,15 +46,15 @@ namespace BL
             ct.Location = new Location { Latitude = it.Latitude, Longitude = it.Longitude };
 
             IEnumerable<DO.Parcel> parce = (from item in parcels
-                      where item.TargetId == ct.Id
-                      select item);
+                                            where item.TargetId == ct.Id
+                                            select item);
 
             ct.From = (IEnumerable<ParcelByCustomer>)(from item in parce
-                                                    let parc = dOparcelTObyCustomerBO(item)
-                                                    select parc);
-            IEnumerable<DO.Parcel> p=    (from item in parcels
-                                                        where item.SenderId == ct.Id
-                                                        select item);
+                                                      let parc = dOparcelTObyCustomerBO(item)
+                                                      select parc);
+            IEnumerable<DO.Parcel> p = (from item in parcels
+                                        where item.SenderId == ct.Id
+                                        select item);
             ct.To = (IEnumerable<ParcelByCustomer>)(from item in p
                                                     let parc = dOparcelFROMbyCustomerBO(item)
                                                     select parc);
@@ -133,8 +133,30 @@ namespace BL
                 bs.DeliveryId = parce.Id;
 
             }
-         
+
             return bs;
+        }/// <summary>
+         /// 
+         /// </summary>
+         /// <param name="dr"></param>
+         /// <returns></returns>
+        private DroneToList dODroneToList(DO.Drone dr)
+        {
+            lock (Dal)
+                return new DroneToList
+                {
+                    Location = drones.Find(dr => dr.Id == dr.Id).Location,
+                    MaxWeight = (Enums.WeightCategories)dr.MaxWeight,
+                    Id = dr.Id,
+                    Model = (Enums.DroneNames)dr.Model,
+                    Battery = drones.Find(dr => dr.Id == dr.Id).Battery,
+                    Status = drones.Find(dr => dr.Id == dr.Id).Status,
+                    DeliveryId = 0,
+                    Valid = dr.Valid,
+
+                    NumOfDeliveredParcel = Dal.GetParcelList(p => p.Delivered != null && p.DroneId == dr.Id).Count(),
+
+                };
         }
         /// <summary>
         /// convert basestation DO to basestationtolist BO 
