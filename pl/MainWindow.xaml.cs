@@ -33,9 +33,9 @@ namespace PL
         {
             InitializeComponent();
             ViewOptions.ItemsSource = Enum.GetValues(typeof(listChoice));
-            //string soundFilePath = @"/pl/hatikva.wav";
+          // string soundFilePath = @"C:\Users\ariel\source\repos\DotNet_5782_XXXX-YYYY\pl\hatikva.wav";
             //SoundPlayer player = new SoundPlayer(soundFilePath);
-            //player.Play();
+          //  player.Play();
 
         }
 
@@ -124,6 +124,7 @@ namespace PL
 
             if (s >= 100000000)
             {
+                
                 BO.Customer? b = bl.GetCustomer(s);
                 if (b == null)
                 {

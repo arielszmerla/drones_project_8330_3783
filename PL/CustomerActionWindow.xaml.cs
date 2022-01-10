@@ -21,7 +21,7 @@ namespace PL
     /// </summary>
     public partial class CustomerActionWindow : Window
     {
-
+        int id;
         private BLAPI.IBL bl1;
         public CustomerActionWindow(BLAPI.IBL bl, int n, int v=0)
         {
@@ -31,22 +31,24 @@ namespace PL
             {
                 try
                 {
-                    bl1.DeleteCustomer(n)
-                       ;
+                    bl1.DeleteCustomer(n);
                     MessageBox.Show("Delete Done!");
-
-
                 }
                 catch (BO.DeleteException exc)
                 {
-                    MessageBox.Show(exc.ToString());
+                    MessageBox.Show(exc.Message);
                     Close();
                 }
+            }
+            else {
+                customers.Add(bl.GetCustomerToList(n));
+                CustomerView.ItemsSource = customers;
+                id = customers[0].Id;
             }
             
 
         }
-        int id = 0;
+    
        List< BO.CustomerToList> customers = new();
         BO.Customer customer= new();
         public CustomerActionWindow(BLAPI.IBL bl, BO.CustomerToList cus)
@@ -68,16 +70,17 @@ namespace PL
 
         private void Update(object sender, RoutedEventArgs e)
         {
-            if (Phone.Text != "\r") //checks that key wasn't enter
+            if (Phone.Text != "\r" &&Phone.Text != "") //checks that key wasn't enter
             {
                 Regex myReg = new Regex("[^0-9]+"); //gets regular expression that allows only digits
-                if (myReg.IsMatch(Phone.Text)) //checks taht key entered is regular expression
+                if (!myReg.IsMatch(Phone.Text)) //checks taht key entered is regular expression
                     customer.Phone = Phone.Text;
                 else
                 {
                     Phone.Text = "";
                     MessageBox.Show("Please enter a positive number");
                     Phone.Background = Brushes.Red;
+                    return;
                 }
             }
             customer.Name = Name_update.Text;

@@ -62,34 +62,6 @@ namespace PL
                 e.Cancel = true;
 
         }
-
-
-        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
-        {
-            ChooseId.Background = Brushes.Bisque;
-
-        }
-
-        private void Name_input(object sender, TextChangedEventArgs e)
-        {
-            ChooseName.Background = Brushes.Bisque;
-        }
-
-        private void NOFS_Input(object sender, TextChangedEventArgs e)
-        {
-            ChooseNumOfFreeSlots.Background = Brushes.Bisque;
-        }
-
-        private void Latitude_input(object sender, TextChangedEventArgs e)
-        {
-            ChooseLatitude.Background = Brushes.Bisque;
-        }
-
-        private void Longitude_input(object sender, TextChangedEventArgs e)
-        {
-            ChooseLongitude.Background = Brushes.Bisque;
-        }
-
         private void enter_your_baseStation(object sender, RoutedEventArgs e)
         {
             int s;

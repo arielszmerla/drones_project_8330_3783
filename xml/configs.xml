@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <ArrayOfDouble xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <double>0.5</double>
-  <double>0.7</double>
-  <double>0.9</double>
   <double>1</double>
-  <double>35</double>
+  <double>2</double>
+  <double>3</double>
+  <double>4</double>
+  <double>50</double>
   <double>55</double>
 </ArrayOfDouble>

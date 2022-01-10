@@ -94,7 +94,7 @@ namespace PL
                 BO.Drone dr = new BO.Drone
                 {
                     Id = drone.Id,
-                    BatteryStatus = drone.BatteryStatus,
+                    Battery = drone.Battery,
                     Location = drone.Location,
                     MaxWeight = drone.MaxWeight,
                     Model = drone.Model,

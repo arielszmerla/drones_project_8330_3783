@@ -20,5 +20,23 @@ namespace PL
         {
             throw new NotImplementedException();
         }
+     
+
+    }
+    public sealed class ConverterLatitude : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            BO.Location val = (BO.Location)value;
+            return $"({val })";
+            
+        }
+
+        object IValueConverter.ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }
