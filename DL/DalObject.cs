@@ -282,7 +282,39 @@ namespace DalObject
             DataSource.Parcels[i] = myParcel;
 
         }
-    
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void ParcelPickup(int parcelId)
+        {
+            int index = DataSource.Parcels.FindIndex(p => p.Id == parcelId);
+            if (index == -1)
+                throw new ParcelExeption($"Parcel does not exists { parcelId }");
+            var parcel = (Parcel)DataSource.Parcels[index];
+            parcel.PickedUp = DateTime.Now;
+            DataSource.Parcels[index] = parcel;
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void ParcelSchedule(int parcelId, int droneId)
+        {
+            int index = DataSource.Parcels.FindIndex(p => (int)p.Id == parcelId);
+            if (index == -1)
+                throw new ParcelExeption($"Parcel does not exists { parcelId }");
+            Parcel parcel = (Parcel)DataSource.Parcels[index];
+            parcel.Scheduled = DateTime.Now;
+            parcel.DroneId = droneId;
+            DataSource.Parcels[index] = parcel;
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void ParcelDelivery(int parcelId)
+        {
+            int index = DataSource.Parcels.FindIndex(p => p.Id == parcelId);
+            if (index == -1)
+                throw new ParcelExeption($"Parcel does not exists { parcelId }");
+            var parcel = (Parcel)DataSource.Parcels[index];
+            parcel.Delivered = DateTime.Now;
+            DataSource.Parcels[index] = parcel;
+        }
         /// <summary>
         /// method that sets the delivery time 
         /// </summary>

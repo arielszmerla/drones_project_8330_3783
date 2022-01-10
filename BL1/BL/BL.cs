@@ -8,6 +8,7 @@ using DLAPI;
 using DO;
 using BO;
 using System.Runtime.CompilerServices;
+using static BL.BLImp;
 
 namespace BL
 {/// <summary>
@@ -64,7 +65,7 @@ namespace BL
                 throw new BLConfigException("", ex);
 
             }
-            BatteryUsages = Dal.DroneElectricConsumations().Select(n => n / 100.0).ToArray();
+            BatteryUsages = Dal.DroneElectricConsumations().Select(n => n ).ToArray();
 
             IntializeDrones();
 
@@ -149,7 +150,7 @@ namespace BL
                     drone.Location =dOBaseStation( b).Location;
                     Dal.AddDroneCharge(drone.Id, b.Id);
                     drone.Status = Enums.DroneStatuses.Maintenance;
-                    drone.Battery = 0.05 + 0.15 * random.NextDouble();
+                    drone.Battery =5  + 15 * random.NextDouble();
                 }
                 else
                 {
@@ -162,7 +163,7 @@ namespace BL
                         drone.Status = Enums.DroneStatuses.InDelivery;
                         drone.Location = findDroneLocation(drone);
                         double minBattery = drone.RequiredBattery(this, (int)parcelId);
-                        drone.Battery = minBattery + random.NextDouble() * (1 - minBattery);
+                        drone.Battery = minBattery + random.NextDouble() * (100 - minBattery);
 
                     }
                     else
@@ -170,11 +171,21 @@ namespace BL
                         drone.Status = Enums.DroneStatuses.Vacant;
                         drone.Location = findDroneLocation(drone);
                         double minBattery = BatteryUsages[(int)Enums.BatteryUsage.Available] * drone.Distances(FindClosestBaseStation(drone));
-                        drone.Battery = minBattery + random.NextDouble() * (1 - minBattery);
+                        drone.Battery = minBattery + random.NextDouble() * (100 - minBattery);
                     }
                 }
 
             }
+        }
+        /// <summary>
+        /// bl function to start simulation
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="update"></param>
+        /// <param name="checkStop"></param>
+        public void StartDroneSimulator(int id, Action update, Func<bool> checkStop)
+        {
+            new Simulator(this,  id, update,  checkStop);
         }
         /// <summary>
         /// func that search if any parcel with a certain weigth category is set to be sent py a certain drone 

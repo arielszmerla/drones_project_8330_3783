@@ -12,6 +12,13 @@ namespace BLAPI
 /// </summary>
     public interface IBL
     {
+        /// <summary>
+        /// func that starts simulation
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="update"> parameter to update the presentation</param>
+        /// <param name="checkStop">parameter stop the simulation</param>
+        void StartDroneSimulator(int id, Action update, Func<bool> checkStop);
 
         #region add 
         /// <summary>
@@ -42,6 +49,7 @@ namespace BLAPI
         void AddCustomer(Customer customer);
         #endregion
         #region gets
+        CustomerToList GetCustomerToList(int idP);
         /// <summary>
         ///  method that returns a parcel by id
         /// </summary>
@@ -158,6 +166,13 @@ namespace BLAPI
         /// <param name="numOfSlots"></param>
         /// <param name="name"></param>
         void UpdateBaseStation(int myId, int numOfSlots, string name);
+
+
+        /// <summary>
+        /// method to send a drone to assign to a parcel 
+        /// </summary>
+        /// <param name="id"></param>
+        void UpdateParcelDroneSchedule(int parcelId, int droneId);
         /// <summary>
         /// method to release a drone from charging.
         /// </summary>

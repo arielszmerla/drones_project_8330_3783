@@ -11,6 +11,7 @@
         public BO.Enums.DroneStatuses Status { get; set; }//
         public ParcelInDelivery PID { get; set; }
         public Location Location { get; set; }
+        public int DeliveryId { get; set; }//   DeliveryId
         public override string ToString()///toString erased func
         {
             string result = "";

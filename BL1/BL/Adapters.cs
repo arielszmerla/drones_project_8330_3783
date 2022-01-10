@@ -58,11 +58,6 @@ namespace BL
             ct.To = (IEnumerable<ParcelByCustomer>)(from item in p
                                                     let parc = dOparcelFROMbyCustomerBO(item)
                                                     select parc);
-                
-
-
-          
-
             return ct;
         }
         /// <summary>
@@ -118,7 +113,8 @@ namespace BL
                 Model = (Enums.DroneNames)dr.Model,
                 Battery = drones.Find(dr => dr.Id == dr.Id).Battery,
                 PID = null,
-                Status = drones.Find(dr => dr.Id == dr.Id).Status
+                Status = drones.Find(dr => dr.Id == dr.Id).Status,
+                DeliveryId = 0
             };
 
             DO.Parcel parce = new();
@@ -134,6 +130,7 @@ namespace BL
                 bs.PID.Location = GetCustomer(parce.SenderId).Location;
                 bs.PID.WeightCategorie = (Enums.WeightCategories)parce.Weight;
                 bs.PID.Distance = bs.PID.Distances(GetCustomer(parce.TargetId));
+                bs.DeliveryId = parce.Id;
 
             }
          

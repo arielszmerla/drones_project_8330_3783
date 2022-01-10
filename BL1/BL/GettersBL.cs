@@ -14,11 +14,10 @@ namespace BL
 /// </summary>
     partial class BLImp : IBL
     {
-        BO.Drone droneBODOadpater(DO.Drone busDO)
+        BO.Drone droneBODOadpater(DO.Drone d)
         {
-            BO.Drone busBO = dODrone(busDO);
-            //busDO.CopyPropertiesTo(busBO);
-            return busBO;
+            BO.Drone dr = dODrone(d);
+            return dr;
         }
         #region gets
         /// <summary>
@@ -30,8 +29,8 @@ namespace BL
         public Parcel GetParcel(int idP)
         {
             DO.Parcel parcel = new();
-            List<DO.Parcel> parcels = (List<DO.Parcel>)Dal.GetParcelList(null);
-            if (parcels.Any(pc => pc.Id == idP))
+            List<DO.Parcel> parcels = (List<DO.Parcel>)Dal.GetParcelList(pc => pc.Id == idP);
+            if (parcels.Any())
             {
                 parcel = parcels.Find(pc => pc.Id == idP);
             }
@@ -97,6 +96,19 @@ namespace BL
 
         }
         /// <summary>
+        /// method that returns a customertolist by Id
+        /// </summary>
+        /// <param name="idP"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public CustomerToList GetCustomerToList(int idP)
+        {
+            if (!Dal.GetCustomerList(pc => pc.Id == idP).Any())
+                throw new GetException("id of BaseStation not found");
+            return DOcustomerToListBO(Dal.GetCustomer(idP));
+
+        }
+        /// <summary>
         /// method that returns a drone by Id
         /// </summary>
         /// <param name="id"></param>
@@ -104,7 +116,7 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int id) {
             if (!Dal.GetDroneList(pc => pc.Id == id && pc.Valid == true).Any())
-                throw new GetException("id of BaseStation not found");
+                throw new GetException($"id of Drone {id} not found");
             return dODrone(Dal.GetDrone(id));
         }
         /// <summary>

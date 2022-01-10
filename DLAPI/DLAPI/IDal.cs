@@ -102,6 +102,21 @@ namespace DLAPI
         /// <param name="id"></param>
         void UpdateDronePickUp(int id);
         /// <summary>
+        /// to set a parcel to pickup
+        /// </summary>
+        /// <param name="id"></param>
+         void ParcelDelivery(int parcelId);
+        /// <summary>
+        /// to set a parcel to pickup
+        /// </summary>
+        /// <param name="id"></param>
+         void ParcelPickup(int parcelId);
+        /// <summary>
+        /// to set a parcel to pickup
+        /// </summary>
+        /// <param name="id"></param>
+         void ParcelSchedule(int parcelId,int droneId);
+        /// <summary>
         /// mehod to send drone to charge
         /// </summary>
         /// <param name="idD"></param>

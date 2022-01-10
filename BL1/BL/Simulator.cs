@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BLAPI;
-
 using BO;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -12,7 +11,7 @@ using static BL.BLImp;
 
 
 namespace BL
-{/*
+{
     class Simulator
     {
         enum Maintenance { Starting, Going, Charging }
@@ -21,7 +20,8 @@ namespace BL
         private const double TIME_STEP = DELAY / 1000.0;
         private const double STEP = VELOCITY / TIME_STEP;
 
-         public  Simulator(BLImp bLImp, int droneId, Action updateDrone, Func<bool> checkStop) {
+        public Simulator(BLImp bLImp, int droneId, Action updateDrone, Func<bool> checkStop)
+        {
 
             var bl = bLImp;
             var dal = bl.Dal;
@@ -39,7 +39,8 @@ namespace BL
             void initDelivery(int id)
             {
                 parcel = dal.GetParcel(id);
-                batteryUsage = (int)Enum.Parse(typeof(BatteryUsage), parcel?.Weight.ToString());
+                ///get use of battery
+                batteryUsage = (int)Enum.Parse(typeof(Enums.BatteryUsage), parcel?.Weight.ToString());
                 pickedUp = parcel?.PickedUp is not null;
                 customer = bl.GetCustomer((int)(pickedUp ? parcel?.TargetId : parcel?.SenderId));
             }
@@ -51,36 +52,36 @@ namespace BL
                 switch (drone)
                 {
                     case Drone { Status: Enums.DroneStatuses.Vacant }:
+                        //if false it means the worker is off!
                         if (!sleepDelayTime()) break;
 
                         lock (bl) lock (dal)
                             {
-                                parcelId = bl.Dal.GetParcelList(p => p?.Scheduled == null
-                                                                  && (Enums.WeightCategories)(p?.Weight) <= drone.MaxWeight
-                                                                  && drone.RequiredBattery(bl, (int)p?.Id) < drone.Battery)
-                                                 .OrderByDescending(p => p?.Priority)
-                                                 .ThenByDescending(p => p?.Weight)
-                                                 .FirstOrDefault()?.Id;
+                                parcelId = bl.Dal.GetParcelList(p => p.Scheduled == null
+                                                                  && (Enums.WeightCategories)(p.Weight) <= drone.MaxWeight
+                                                                  && drone.RequiredBattery(bl, p.Id) < drone.Battery)
+                                                 .OrderByDescending(p => p.Priority)
+                                                 .ThenByDescending(p => p.Weight)
+                                                 .FirstOrDefault().Id;
                                 switch (parcelId, drone.Battery)
                                 {
-                                    case (null, 1.0):
+                                    case (0, 100):
                                         break;
 
-                                    case (null, _):
-                                        baseStationId = bl.FindClosestBaseStation(drone, charge: true)?.Id;
+                                    case (0, _):
+                                        baseStationId = bl.FindClosestBaseStation(drone)?.Id;
                                         if (baseStationId != null)
                                         {
                                             drone.Status = Enums.DroneStatuses.Maintenance;
-                                            maintenance = Maintenance.Starting;
-                                            dal.BaseStationDroneIn((int)baseStationId);
+                                            maintenance = Maintenance.Starting;  
                                             dal.AddDroneCharge(droneId, (int)baseStationId);
                                         }
                                         break;
                                     case (_, _):
                                         try
                                         {
-                                            dal.UpdateParcelToDrone((int)parcelId, droneId);
-                                            drone.PID.Id = (int)parcelId;
+                                            dal.ParcelSchedule((int)parcelId, droneId); 
+                                            drone.DeliveryId= (int)parcelId;
                                             initDelivery((int)parcelId);
                                             drone.Status = Enums.DroneStatuses.InDelivery;
                                         }
@@ -98,13 +99,13 @@ namespace BL
                                     {
                                         try { bs = bl.GetBaseStation(baseStationId ?? dal.GetDroneChargeBaseStationId(drone.Id)); }
                                         catch (DO.ParcelExeption ex) { throw new GetException("Internal error getting parcel", ex); }
-                                        distance = drone.Distance(bs);
+                                        distance = drone.Distances(bs);
                                         maintenance = Maintenance.Going;
                                     }
                                 break;
 
                             case Maintenance.Going:
-                                if (distance < 0.01)
+                                if (distance < 0.01 || drone.Battery == 0.0)
                                     lock (bl)
                                     {
                                         drone.Location = bs.Location;
@@ -114,7 +115,7 @@ namespace BL
                                 {
                                     if (!sleepDelayTime()) break;
                                     lock (bl)
-                                    {
+                                    {//strange
                                         double delta = distance < STEP ? distance : STEP;
                                         distance -= delta;
                                         drone.Battery = Max(0.0, drone.Battery - delta * bl.BatteryUsages[DRONE_FREE]);
@@ -123,17 +124,17 @@ namespace BL
                                 break;
 
                             case Maintenance.Charging:
-                                if (drone.Battery == 1.0)
+                                if (drone.Battery == 100)
                                     lock (bl) lock (dal)
                                         {
-                                            drone.Status = Enums.DroneStatuses.Available;
+                                            drone.Status = Enums.DroneStatuses.Vacant;
                                             dal.DeleteDroneCharge(droneId);
-                                            dal.BaseStationDroneOut(bs.Id);//trow out drone from base
+                                        
                                         }
                                 else
                                 {
                                     if (!sleepDelayTime()) break;
-                                    lock (bl) drone.Battery = Min(1.0, drone.Battery + bl.BatteryUsages[DRONE_CHARGE] * TIME_STEP);
+                                    lock (bl) drone.Battery = Min(100, drone.Battery + bl.BatteryUsages[DRONE_CHARGE] * TIME_STEP);
                                 }
                                 break;
                             default:
@@ -144,19 +145,25 @@ namespace BL
                     case Drone { Status: Enums.DroneStatuses.InDelivery }:
                         lock (bl) lock (dal)
                             {
-                                try { if (parcelId == null) initDelivery((int)drone.DeliveryId); }
-                                catch (DO.ParcelExeption ex) { throw new GetException("Internal error getting parcel", ex); }
-                                distance = drone.Distance(customer);
+                                try
+                                {
+                                    if (parcelId == null) initDelivery((int)drone.DeliveryId);
+                                }
+                                catch (DO.ParcelExeption ex)
+                                {
+                                    throw new GetException("Internal error getting parcel", ex);
+                                }
+                                distance = drone.Distances(customer);
                             }
 
-                        if (distance < 0.01 || drone.Battery == 0.0)
+                        if (distance < 0.01 || drone.Battery == 0)
                             lock (bl) lock (dal)
                                 {
                                     drone.Location = customer.Location;
                                     if (pickedUp)
                                     {
                                         dal.ParcelDelivery((int)parcel?.Id);
-                                        drone.Status =Enums.DroneStatuses.Vacant;
+                                        drone.Status = Enums.DroneStatuses.Vacant;
 
                                     }
                                     else
@@ -191,11 +198,19 @@ namespace BL
 
         private static bool sleepDelayTime()
         {
-            try { Thread.Sleep(DELAY); } catch (ThreadInterruptedException) { return false; }
+            try
+            {
+                Thread.Sleep(DELAY);
+            }
+            catch (ThreadInterruptedException)
+            {
+                return false;
+            }
             return true;
         }
-
+        private double Max(double a, double b) => a > b ? a : b;
+        private double Min(double a, double b) => a < b ? a : b;
     }
-    */
+
 }
 

@@ -41,6 +41,7 @@ namespace DalXML
         }
         public DalXML()
         {
+            //empty charging drone list
             releaseDroneFromCharge();
         }
         #endregion
@@ -165,17 +166,24 @@ namespace DalXML
             XMLTolls.SaveListToXMLSerializer(drones1, @"droneCharge.xml");
             baseStationDroneIn(idBase);
         }
+        /// <summary>
+        /// release drone from charge
+        /// </summary>
         private void releaseDroneFromCharge() 
         {
             var drones1 = XMLTolls.LoadListFromXMLSerializer<DroneCharge>(@"droneCharge.xml");
             if (drones1.Count()>0) {
 
-                foreach (var unit in drones1)
+                foreach (var unit in drones1)//
                     baseStationDroneOut(unit.StationId);
             }
             drones1.Clear();
             XMLTolls.SaveListToXMLSerializer(drones1, @"droneCharge.xml");
         }
+        /// <summary>
+        /// func that update basestation free slots when drone comes in
+        /// </summary>
+        /// <param name="baseStationId"></param>
         private void baseStationDroneIn(int baseStationId)
         {
             XElement baseStations = XMLTolls.LoadListFromXMLElement(@"stations.xml");
@@ -187,6 +195,10 @@ namespace DalXML
             baseStation.Element("numOfSlots").Value = availableChargingPorts.ToString();
             XMLTolls.SaveListToXMLElement(baseStations, @"stations.xml");
         }
+        /// <summary>
+        /// func that update basestation free slots when drone goes out
+        /// </summary>
+        /// <param name="baseStationId"></param>
         private void baseStationDroneOut(int baseStationId)
         {
             XElement baseStations = XMLTolls.LoadListFromXMLElement(@"stations.xml");
@@ -336,11 +348,69 @@ namespace DalXML
             XMLTolls.SaveListToXMLSerializer(parcels, @"parcels.xml");
         }
         /// <summary>
-        /// send a drone to charge
+        /// to set a parcel to pickup
         /// </summary>
-        /// <param name="idD"></param>
-        /// <param name="baseName"></param>
-        [MethodImpl(MethodImplOptions.Synchronized)]
+        /// <param name="id"></param>
+        public void ParcelPickup(int parcelId)
+        {
+            var parcels = XMLTolls.LoadListFromXMLSerializer<Parcel>(@"parcels.xml");
+            var parcel = (from p in parcels
+                          where p.Id == parcelId
+                          select p).FirstOrDefault();
+          
+        
+            int k = parcels.FindIndex(ps => ps.Id == parcelId);
+            if (k == -1)
+                throw new ParcelExeption("invalid parcel id");
+            Parcel tmp = parcels[k];
+            tmp.PickedUp = DateTime.Now;
+            parcels[k] = tmp;
+
+            XMLTolls.SaveListToXMLSerializer(parcels, @"parcels.xml");
+        }
+        public void ParcelSchedule(int parcelId, int droneId)
+        {
+            var parcels = XMLTolls.LoadListFromXMLSerializer<Parcel>(@"parcels.xml");
+            var parcel = (from p in parcels
+                               where p.Id == parcelId
+                               select p).FirstOrDefault();
+            int k = parcels.FindIndex(ps => ps.Id == parcelId);
+            if (k == -1)
+                throw new ParcelExeption("invalid parcel id");
+            Parcel tmp = parcels[k];
+            tmp.DroneId = droneId;
+            tmp.Scheduled = DateTime.Now;
+            parcels[k] = tmp;
+
+            XMLTolls.SaveListToXMLSerializer(parcels, @"parcels.xml");
+        }
+        /// <summary>
+        /// to set a parcel to pickup
+        /// </summary>
+        /// <param name="id"></param>
+        public void ParcelDelivery(int parcelId)
+        {
+            var parcels = XMLTolls.LoadListFromXMLSerializer<Parcel>(@"parcels.xml");
+            var parcel = (from p in parcels
+                          where p.Id == parcelId
+                          select p).FirstOrDefault();
+
+
+            int k = parcels.FindIndex(ps => ps.Id == parcelId);
+            if (k == -1)
+                throw new ParcelExeption("invalid parcel id");
+            Parcel tmp = parcels[k];
+            tmp.Delivered = DateTime.Now;
+            parcels[k] = tmp;
+
+            XMLTolls.SaveListToXMLSerializer(parcels, @"parcels.xml");
+        }
+            /// <summary>
+            /// send a drone to charge
+            /// </summary>
+            /// <param name="idD"></param>
+            /// <param name="baseName"></param>
+            [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDroneToCharge(int idD, string baseName)
         {
             var drones = XMLTolls.LoadListFromXMLSerializer<Drone>(@"drones.xml");
@@ -427,6 +497,7 @@ namespace DalXML
             XMLTolls.SaveListToXMLSerializer(vs, @"configs.xml");
             return 1;
         }
+   
         /// <summary>
         /// gets parcel from database and return it to main
         /// </summary>

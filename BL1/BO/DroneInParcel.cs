@@ -2,7 +2,7 @@
 {/// <summary>
 /// implement class DroneInParcel
 /// </summary>
-    public class DroneInParcel  :ILocatable
+    public class DroneInParcel : ILocatable
     {
         public int Id { get; set; }
         public double BatteryStatus { get; set; }

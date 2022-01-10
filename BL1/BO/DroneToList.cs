@@ -1,6 +1,6 @@
 ﻿namespace BO
 {
-    public class DroneToList :ILocatable
+    public class DroneToList : ILocatable
     {
         public int Id { get; set; }
         public BO.Enums.DroneNames Model { get; set; }

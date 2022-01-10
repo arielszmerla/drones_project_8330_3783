@@ -167,12 +167,12 @@ namespace PL
         private void SendTo_charge(object sender, RoutedEventArgs e)
         {
 
-            TimeSpan time; 
+            TimeSpan time;
             if (dr.Status == Enums.DroneStatuses.Vacant)
                 bl.UpdateDroneSentToCharge(dr.Id);
             else
             {
- 
+
                 MessageBox.Show("insert how many hours to charge");
                 timespan_get.Visibility = Visibility.Visible;
                 int i;
@@ -182,10 +182,10 @@ namespace PL
                     if (i > 0)
                     {
                         time = new TimeSpan(int.Parse(timespan_get.Text), 0, 0);
-                             bl.UpdateReleaseDroneFromCharge(dr.Id, time);
-                    timespan_get.Visibility = Visibility.Hidden;
+                        bl.UpdateReleaseDroneFromCharge(dr.Id, time);
+                        timespan_get.Visibility = Visibility.Hidden;
                     }
-               
+
                 }
                 else
                 {
@@ -193,7 +193,7 @@ namespace PL
                     MessageBox.Show("Please enter a positive number");
                     timespan_get.Background = Brushes.Red;
                 }
-      
+
 
             }
 
@@ -206,23 +206,29 @@ namespace PL
                 if (dr.Status == Enums.DroneStatuses.Vacant)
                 {
                     bl.UpdateAssignParcelToDrone(dr.Id);
+                    dr.Status = Enums.DroneStatuses.InDelivery;
                 }
                 else if (dr.Status == Enums.DroneStatuses.InDelivery)
                 {
-                   ParcelToList parcel = bl.GetParcelToListonDrone(dr.Id);
+                    ParcelToList parcel = bl.GetParcelToListonDrone(dr.Id);
 
                     if (parcel != null)
                     {
                         Parcel p = bl.GetParcel(parcel.Id);
-                        if (p.Delivered == null)
-                        {
-                            bl.UpdateDeliverParcel(dr.Id);
-                        }
-                        if (p.PickedUp == null)
+                        if (p.PickedUp == null && p.Assignment!=null)
                         {
                             bl.UpdateDroneToPickUpAParcel(dr.Id);
                         }
+                        else if (p.Delivered == null)
+                        {
+                            bl.UpdateDeliverParcel(dr.Id);
+                        }
+
                     }
+                }
+                else
+                {
+                    this.myEvent("In Maintenance");
                 }
             }
             catch (AddException)
@@ -302,6 +308,49 @@ namespace PL
             this.dr = bl.GetDrone(dr.Id);
             MessageBox.Show("Managed Update");
         }
+
+        BackgroundWorker worker;
+        private void updateDrone() => worker.ReportProgress(0);
+        private bool checkStop() => worker.CancellationPending;
+
+
+        private void Manual_Click(object sender, RoutedEventArgs e) => worker?.CancelAsync();
+
+        private void simul_Click(object sender, RoutedEventArgs e)
+        {
+            hide(true);
+            worker = new()
+            {
+                WorkerReportsProgress = true,
+                WorkerSupportsCancellation = true,
+            };
+            worker.DoWork += (sender, args) => bl.StartDroneSimulator((int)dr.Id, updateDrone, checkStop);
+            worker.RunWorkerCompleted += (sender, args) =>
+            {
+                Auto.IsChecked = false;
+                worker = null;
+                if (enter.Visibility == Visibility.Hidden) Close();
+            };
+           worker.ProgressChanged += (sender, args) => updateDroneView();
+            worker.RunWorkerAsync(drone.Id);
+        }
+        private void hide(bool flag)
+        {
+            if (flag)
+            {
+                sendDrone.Visibility = Visibility.Collapsed;
+                Update_Drone.Visibility = Visibility.Collapsed;
+                Choose_models.Visibility = Visibility.Collapsed;
+                show_parcel_nDrone.Visibility = Visibility.Collapsed;
+            }
+
+        }
+        private void updateDroneView() { 
+        
+        }
+
+
+
     }
 }
 
