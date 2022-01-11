@@ -35,7 +35,7 @@
   <baseStation>
     <id>10005</id>
     <name>Base Machon_lev</name>
-    <numOfSlots>8</numOfSlots>
+    <numOfSlots>7</numOfSlots>
     <latitude>31.764764</latitude>
     <longitude>35.189358</longitude>
     <valid>true</valid>
