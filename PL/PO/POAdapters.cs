@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PO
+{
+    class POAdapters
+    {
+        public PO.Drone BODroneToPo (BO.Drone)
+        {
+            PO.Drone = new();
+            
+        }
+    }
+}

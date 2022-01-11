@@ -13,7 +13,7 @@ using System.Threading.Tasks;
             {
                 char coordin;
                 int hours = (int)num;
-                if (hours < 0)
+                if (hours < 0)  
                 {
                     coordin = 'S';
                     num *= -1;
