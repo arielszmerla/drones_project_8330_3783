@@ -27,7 +27,7 @@
   <baseStation>
     <id>10004</id>
     <name>Base Mercazit</name>
-    <numOfSlots>5</numOfSlots>
+    <numOfSlots>2</numOfSlots>
     <latitude>31.7835426</latitude>
     <longitude>35.208293</longitude>
     <valid>true</valid>
@@ -35,7 +35,7 @@
   <baseStation>
     <id>10005</id>
     <name>Base Machon_lev</name>
-    <numOfSlots>7</numOfSlots>
+    <numOfSlots>6</numOfSlots>
     <latitude>31.764764</latitude>
     <longitude>35.189358</longitude>
     <valid>true</valid>

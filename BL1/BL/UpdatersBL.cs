@@ -146,7 +146,6 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateParcelDroneSchedule(int parcelId, int droneId) 
         {
-
             Dal.ParcelSchedule(parcelId, droneId);
         }
         /// <summary>
@@ -160,7 +159,7 @@ namespace BL
             {
                 throw new GetException($"id {id} doesn't exist ");
             }
-            DroneToList drone = drones.Find(dr => dr.Id == id);
+            DroneToList drone = dODroneToList(Dal.GetDrone(id)); //drones.Find(dr => dr.Id == id);
             // if the drown isn't vacant it can't be charged.
             if (drone.Status != Enums.DroneStatuses.Vacant)
             {

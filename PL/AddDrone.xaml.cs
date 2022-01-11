@@ -27,7 +27,7 @@ namespace PL
 
         private Location loc = new();
         private IBL bl;
-
+        private PO.POAdapters poadapt = new PO.POAdapters();
 
         public AddDrone(IBL bl)
         {
@@ -44,7 +44,7 @@ namespace PL
             update_drone.Visibility = Visibility.Collapsed; Show_BaseStation_stack.Visibility = Visibility.Collapsed; show_Drone_titles.Visibility = Visibility.Collapsed;
 
         }
-        BO.Drone dr = new();
+        BO.Drone drone = new();
         PO.Drone poDrone = new();
         public AddDrone(IBL bl1, Drone drone)
         {
@@ -56,10 +56,9 @@ namespace PL
             Choose_models.ItemsSource = Enum.GetValues(typeof(Enums.DroneNames));
            
             update_drone.Visibility = Visibility.Visible;
-            poDrone = PO.POAdapters.BODroneToPo(drone, poDrone);
+            poDrone = poadapt.BODroneToPo(drone, poDrone);
         }
-        
-        BO.Drone drone = new();
+ 
         private void enter_your_drone(object sender, RoutedEventArgs e)
         {
 
@@ -70,7 +69,7 @@ namespace PL
                 if (i > 0)
                 {
 
-                    dr.Id = i;
+                    drone.Id = i;
                 }
             }
             else
@@ -120,23 +119,23 @@ namespace PL
             }
             else
             {
-                dr.MaxWeight = (BO.Enums.WeightCategories)WeightCategSelector.SelectedItem;
-                dr.Model = (Enums.DroneNames)Choose_model.SelectedItem;
-                dr.Id = i;
-                dr.Status = (Enums.DroneStatuses)StatusSelectorToadd.SelectedItem;
-                dr.Location = loc;
+                drone.MaxWeight = (BO.Enums.WeightCategories)WeightCategSelector.SelectedItem;
+                drone.Model = (Enums.DroneNames)Choose_model.SelectedItem;
+                drone.Id = i;
+                drone.Status = (Enums.DroneStatuses)StatusSelectorToadd.SelectedItem;
+                drone.Location = loc;
 
 
                 Random rand = new Random();
-                dr.Battery = rand.Next(99) + rand.NextDouble();
+                drone.Battery = rand.Next(99) + rand.NextDouble();
 
-                dr.Location = loc;
-                dr.PID = null;
+                drone.Location = loc;
+                drone.PID = null;
 
                 try
                 {
 
-                    bl.AddDrone(dr);
+                    bl.AddDrone(drone);
                     MessageBox.Show("Managed Add");
                     enter.Visibility = Visibility.Hidden;
                     this.Close();
@@ -153,12 +152,12 @@ namespace PL
 
         private void View_Map(object sender, RoutedEventArgs e)
         {
-            new MapsDisplay(dr, bl).Show();
+            new MapsDisplay(bl.GetDrone(poDrone.Id), bl).Show();
         }
 
         private void Update_Drone_Click(object sender, RoutedEventArgs e)
         {
-            if (dr.Status == Enums.DroneStatuses.Vacant || dr.Status == Enums.DroneStatuses.Maintenance)
+            if (poDrone.Status is (PO.Enums.DroneStatuses)Enums.DroneStatuses.Vacant or (PO.Enums.DroneStatuses)Enums.DroneStatuses.Maintenance)
             {
                 sendDrone.Visibility = Visibility.Visible;
             }
@@ -170,10 +169,10 @@ namespace PL
         {
 
             TimeSpan time;
-            if (dr.Status == Enums.DroneStatuses.Vacant)
+            if (poDrone.Status == (PO.Enums.DroneStatuses)Enums.DroneStatuses.Vacant)
             {
-                bl.UpdateDroneSentToCharge(dr.Id);
-                poDrone = PO.POAdapters.BODroneToPo(bl.GetDrone(drone.Id), poDrone);
+                bl.UpdateDroneSentToCharge(poDrone.Id);
+                poDrone = poadapt.BODroneToPo(bl.GetDrone(poDrone.Id), poDrone);
             }
             else
             {
@@ -187,9 +186,9 @@ namespace PL
                     if (i > 0)
                     {
                         time = new TimeSpan(int.Parse(timespan_get.Text), 0, 0);
-                        bl.UpdateReleaseDroneFromCharge(dr.Id, time);
+                        bl.UpdateReleaseDroneFromCharge(poDrone.Id, time);
                         timespan_get.Visibility = Visibility.Hidden;
-                        poDrone = PO.POAdapters.BODroneToPo(bl.GetDrone(drone.Id), poDrone);
+                        poDrone = poadapt.BODroneToPo(bl.GetDrone(poDrone.Id), poDrone);
                     }
 
                 }
@@ -210,25 +209,25 @@ namespace PL
         {
             try
             {
-                if (dr.Status == Enums.DroneStatuses.Vacant)
+                if (drone.Status == Enums.DroneStatuses.Vacant)
                 {
-                    bl.UpdateAssignParcelToDrone(drone.Id);
-                    dr.Status = Enums.DroneStatuses.InDelivery;
+                    bl.UpdateAssignParcelToDrone(poDrone.Id);
+                    drone.Status = Enums.DroneStatuses.InDelivery;
                 }
-                else if (dr.Status == Enums.DroneStatuses.InDelivery)
+                else if (drone.Status == Enums.DroneStatuses.InDelivery)
                 {
-                    ParcelToList parcel = bl.GetParcelToListonDrone(drone.Id);
+                    ParcelToList parcel = bl.GetParcelToListonDrone(poDrone.Id);
 
                     if (parcel != null)
                     {
                         Parcel p = bl.GetParcel(parcel.Id);
                         if (p.PickedUp == null && p.Assignment!=null)
                         {
-                            bl.UpdateDroneToPickUpAParcel(dr.Id);
+                            bl.UpdateDroneToPickUpAParcel(poDrone.Id);
                         }
                         else if (p.Delivered == null)
                         {
-                            bl.UpdateDeliverParcel(drone.Id);
+                            bl.UpdateDeliverParcel(poDrone.Id);
                         }
 
                     }
@@ -243,7 +242,7 @@ namespace PL
                 this.myEvent("Missed Update");
             }
             this.myEvent("Managed Update");
-            poDrone = PO.POAdapters.BODroneToPo(bl.GetDrone(drone.Id), poDrone);
+            poDrone = poadapt.BODroneToPo(bl.GetDrone(poDrone.Id), poDrone);
         }
 
         private void End_the_page(object sender, RoutedEventArgs e)
@@ -284,7 +283,7 @@ namespace PL
                 stats.Background = Brushes.Red;
             }
             else
-                dr.Status = (Enums.DroneStatuses)StatusSelectorToadd.SelectedItem;
+                drone.Status = (Enums.DroneStatuses)StatusSelectorToadd.SelectedItem;
 
         }
 
@@ -294,14 +293,14 @@ namespace PL
         {
 
             Choose_model.Background = Brushes.Transparent;
-            dr.Model = (Enums.DroneNames)Choose_model.SelectedItem;
+            drone.Model = (Enums.DroneNames)Choose_model.SelectedItem;
         }
 
         private void show_parcel_inDrone(object sender, RoutedEventArgs e)
         {
             try
             {
-                new ParcelActionWindow(bl, bl.GetParcelToListonDrone(drone.Id)).Show();
+                new ParcelActionWindow(bl, bl.GetParcelToListonDrone(poDrone.Id)).Show();
             }
             catch (BO.GetException ex)
             {
@@ -311,10 +310,10 @@ namespace PL
 
         private void Choose_models_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            bl.UpdateNameDrone(dr.Id, (Enums.DroneNames)Choose_models.SelectedItem);
-            this.dr = bl.GetDrone(dr.Id);
+            bl.UpdateNameDrone(poDrone.Id, (Enums.DroneNames)Choose_models.SelectedItem);
+            this.drone = bl.GetDrone(drone.Id);
             MessageBox.Show("Managed Update");
-            poDrone = PO.POAdapters.BODroneToPo(bl.GetDrone(drone.Id), poDrone);
+            poDrone = poadapt.BODroneToPo(bl.GetDrone(poDrone.Id), poDrone);
         }
 
         BackgroundWorker worker;
@@ -358,7 +357,7 @@ namespace PL
         private void updateDroneView() 
         {
            
-            poDrone = PO.POAdapters.BODroneToPo(bl.GetDrone(poDrone.Id), poDrone);
+            poDrone = poadapt.BODroneToPo(bl.GetDrone(poDrone.Id), poDrone);
         }
 
 

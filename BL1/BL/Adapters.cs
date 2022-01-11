@@ -105,15 +105,17 @@ namespace BL
         /// <returns></returns> new adapted parcel    
         private Drone dODrone(DO.Drone dr)
         {
+
+            DroneToList d = drones.Find(dr => dr.Id == dr.Id);
             Drone bs = new Drone
             {
-                Location = drones.Find(dr => dr.Id == dr.Id).Location,
+                Location = d.Location,
                 MaxWeight = (Enums.WeightCategories)dr.MaxWeight,
                 Id = dr.Id,
                 Model = (Enums.DroneNames)dr.Model,
-                Battery = drones.Find(dr => dr.Id == dr.Id).Battery,
+                Battery = d.Battery,
                 PID = null,
-                Status = drones.Find(dr => dr.Id == dr.Id).Status,
+                Status = d.Status,
                 DeliveryId = 0
             };
 

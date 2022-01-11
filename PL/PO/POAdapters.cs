@@ -8,7 +8,7 @@ namespace PO
 {/// <summary>
 /// converters
 /// </summary>
-   public static class POAdapters
+   public  class POAdapters
     {
 
         /// <summary>
@@ -16,7 +16,7 @@ namespace PO
         /// </summary>
         /// <param name="drone"></param>
         /// <returns></returns>
-        public static PO.Drone BODroneToPo(BO.Drone drone, PO.Drone dr)
+        public  PO.Drone BODroneToPo(BO.Drone drone, PO.Drone dr)
         {
             
            
@@ -37,7 +37,7 @@ namespace PO
         /// </summary>
         /// <param name="dr"></param>
         /// <returns></returns>
-        public static PO.DroneToList PODronetolist(BO.DroneToList dr)
+        public  PO.DroneToList PODronetolist(BO.DroneToList dr)
         {
 
             return new PO.DroneToList
@@ -57,7 +57,7 @@ namespace PO
         /// </summary>
         /// <param name="parcel"></param>
         /// <returns></returns>
-       public static PO.Parcel POParcelBO(BO.Parcel parcel)
+       public  PO.Parcel POParcelBO(BO.Parcel parcel)
         {
             return new Parcel
             {
