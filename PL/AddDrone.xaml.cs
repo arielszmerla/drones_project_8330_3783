@@ -351,7 +351,7 @@ namespace PL
             }
             else
                 update_drone.Visibility = Visibility.Visible;
-            Manual.Visibility = Visibility.Collapsed;
+                Manual.Visibility = Visibility.Collapsed;
 
         }
         private void updateDroneView() 

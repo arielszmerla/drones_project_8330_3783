@@ -27,18 +27,22 @@ namespace PL
         private IBL bl1;
         private int id;
         private IBL bl;
-        PO.DroneToList poDroneToList = new();
+       List< PO.DroneToList> poDroneToList = new();
+        PO.POAdapters poadapt = new();
         // drone list view
         public DroneListWindow1(IBL bl1)
         {
 
             InitializeComponent();
             this.bl1 = bl1;
-            DroneListView.ItemsSource = bl1.GetDroneList();
-            List<DroneToList> poDroneToList = (List<DroneToList>)(from item in bl1.GetDroneList()
-            let drone = PO.POAdapters.PODronetolist(item)
-            select drone);
-              DataContext = poDroneToList;
+         
+            foreach (var item in bl1.GetDroneList())
+            {
+                PO.DroneToList drone = poadapt.PODronetolist(item);
+                poDroneToList.Add(drone);
+            }
+               DataContext = poDroneToList;
+            DroneListView.ItemsSource = poDroneToList;
             StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
             WeightChoise.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
 
@@ -88,7 +92,7 @@ namespace PL
 
         private void drone_action(object sender,  MouseButtonEventArgs e)
         {
-            BO.DroneToList drone = (BO.DroneToList)DroneListView.SelectedItem;
+            PO.DroneToList drone = (PO.DroneToList)DroneListView.SelectedItem;
             if (drone == null)
             {
                 MessageBox.Show("click on a drone please");
@@ -101,10 +105,10 @@ namespace PL
                     Id = drone.Id,
                     Battery = drone.Battery,
                     Location = drone.Location,
-                    MaxWeight = drone.MaxWeight,
-                    Model = drone.Model,
+                    MaxWeight = (Enums.WeightCategories)drone.MaxWeight,
+                    Model = (Enums.DroneNames)drone.Model,
                     PID = null,
-                    Status = drone.Status
+                    Status = (Enums.DroneStatuses)drone.Status
                 };
                 Closing_Button.Visibility = Visibility.Hidden;
                 new AddDrone(bl1, dr).Show();

@@ -27,7 +27,7 @@
   <baseStation>
     <id>10004</id>
     <name>Base Mercazit</name>
-    <numOfSlots>2</numOfSlots>
+    <numOfSlots>4</numOfSlots>
     <latitude>31.7835426</latitude>
     <longitude>35.208293</longitude>
     <valid>true</valid>

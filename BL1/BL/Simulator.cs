@@ -192,12 +192,12 @@ namespace BL
                         throw new GetException("Internal error: not available after Delivery...");
 
                 }
-              DroneToList d = bl.drones.Find(dr => dr.Id == drone.Id);
+            /*    DroneToList d = bl.drones.Find(dr => dr.Id == drone.Id);
                 d.Location = drone.Location;
                 d.Status = drone.Status;
                 d.Battery = drone.Battery;
                 bl.drones.RemoveAll(dr => dr.Id == drone.Id);
-                bl.drones.Add(d);
+                bl.drones.Add(d);*/
                 updateDrone();
             } while (!checkStop());
         }
@@ -206,7 +206,7 @@ namespace BL
         {
             try
             {
-                Thread.Sleep(DELAY);
+                Thread.Sleep(DELAY * 100);
             }
             catch (ThreadInterruptedException)
             {

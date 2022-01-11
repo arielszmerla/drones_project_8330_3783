@@ -114,7 +114,9 @@ namespace BL
                 //if found a parcel that the drone can carry, update wanted states
                 drone.DeliveryId = parcelId;
                 drone.Status = Enums.DroneStatuses.InDelivery;
+
                 Dal.ParcelSchedule((int)parcelId, drone.Id);
+                drones[drones.FindIndex(dr => dr.Id == idC)] = drone;
             }
             catch (DO.ParcelExeption ex)
             {
