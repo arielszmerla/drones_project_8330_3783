@@ -21,5 +21,21 @@ namespace PO
             return dr;
 
         }
+        public PO.DroneToList PODronetolist(BO.DroneToList dr)
+        {
+
+            return new PO.DroneToList
+            {
+                Id = dr.Id,
+                Location = new Location { Latitude = dr.Location.Latitude, Longitude = dr.Location.Longitude },
+                MaxWeight = (Enums.WeightCategories)dr.MaxWeight,
+                DeliveryId = dr.DeliveryId,
+                NumOfDeliveredParcel = dr.NumOfDeliveredParcel,
+                Status = (Enums.DroneStatuses)dr.Status,
+                Battery = dr.Battery,
+                Model = (Enums.DroneNames)dr.Model
+            };
+
+        }
     }
 }

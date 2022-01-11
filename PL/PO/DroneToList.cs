@@ -96,20 +96,6 @@ namespace PO
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public PO.DroneToList PODronetolist(BO.DroneToList dr) {
-
-            return new PO.DroneToList
-            {
-                id = dr.Id,
-                location = new Location { Latitude = dr.Location.Latitude, Longitude = dr.Location.Longitude },
-                maxWeight = (Enums.WeightCategories)dr.MaxWeight,
-                deliveryId = dr.DeliveryId,
-                numOfDeliveredParcel = dr.NumOfDeliveredParcel,
-                status = (Enums.DroneStatuses)dr.Status,
-                battery = dr.Battery,
-                model = (Enums.DroneNames)dr.Model
-            };
-        
-        }
+       
     }
 }
