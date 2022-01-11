@@ -8,7 +8,7 @@ namespace PO
 {/// <summary>
 /// converters
 /// </summary>
-    class POAdapters
+   public static class POAdapters
     {
 
         /// <summary>
@@ -16,24 +16,28 @@ namespace PO
         /// </summary>
         /// <param name="drone"></param>
         /// <returns></returns>
-        public PO.Drone BODroneToPo(BO.Drone drone)
+        public static PO.Drone BODroneToPo(BO.Drone drone, PO.Drone dr)
         {
-            PO.Drone dr = new();
+            
+           
             dr.Id = drone.Id;
-            dr.Location = new Location { Latitude = drone.Location.Latitude, Longitude = drone.Location.Longitude };
+            dr.Location = new BO.Location { Latitude = drone.Location.Latitude, Longitude = drone.Location.Longitude };
             dr.MaxWeight = (Enums.WeightCategories)drone.MaxWeight;
             dr.Model = (Enums.DroneNames)drone.Model;
+            dr.DeliveryId = drone.DeliveryId;
             dr.Status = (Enums.DroneStatuses)drone.Status;
             dr.Distance = drone.Distance;
+            dr.Battery = drone.Battery;
             return dr;
 
         }
+       
         /// <summary>
         ///  converts droneToList from BO to PO
         /// </summary>
         /// <param name="dr"></param>
         /// <returns></returns>
-        public PO.DroneToList PODronetolist(BO.DroneToList dr)
+        public static PO.DroneToList PODronetolist(BO.DroneToList dr)
         {
 
             return new PO.DroneToList
@@ -53,7 +57,7 @@ namespace PO
         /// </summary>
         /// <param name="parcel"></param>
         /// <returns></returns>
-        PO.Parcel POParcelBO(BO.Parcel parcel)
+       public static PO.Parcel POParcelBO(BO.Parcel parcel)
         {
             return new Parcel
             {
