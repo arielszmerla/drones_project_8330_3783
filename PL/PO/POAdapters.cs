@@ -43,7 +43,7 @@ namespace PO
             return new PO.DroneToList
             {
                 Id = dr.Id,
-                Location = new Location { Latitude = dr.Location.Latitude, Longitude = dr.Location.Longitude },
+                Location = new BO.Location { Latitude = dr.Location.Latitude, Longitude = dr.Location.Longitude },
                 MaxWeight = (Enums.WeightCategories)dr.MaxWeight,
                 DeliveryId = dr.DeliveryId,
                 NumOfDeliveredParcel = dr.NumOfDeliveredParcel,

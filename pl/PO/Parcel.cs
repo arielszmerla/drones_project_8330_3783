@@ -21,17 +21,17 @@ namespace PO
         private string target;
         public string Target
         {
-            get => target; set { target = value; OnPropertyChanged("sender"); }
+            get => target; set { target = value; OnPropertyChanged("target"); }
         }
         private Enums.WeightCategories weightCategories;
         public Enums.WeightCategories WeightCategories
         {
-            get => weightCategories; set { weightCategories = value; OnPropertyChanged("sender"); }
+            get => weightCategories; set { weightCategories = value; OnPropertyChanged("weightCategories"); }
         }
         private Enums.Priorities priority;
         public Enums.Priorities Priority
         {
-            get => priority; set { priority = value; OnPropertyChanged("sender"); }
+            get => priority; set { priority = value; OnPropertyChanged("priority"); }
         }
      
 

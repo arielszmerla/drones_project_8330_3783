@@ -47,8 +47,8 @@ namespace PO
             set { status = value; OnPropertyChanged("status"); }
         }
 
-        private Location location;
-        public Location Location
+        private BO.Location location;
+        public BO.Location Location
         {
             get => location;
             set { location = value; OnPropertyChanged("location"); }
