@@ -147,7 +147,7 @@ namespace BL
                             {
                                 try
                                 {
-                                    if (parcelId == null) initDelivery((int)drone.DeliveryId);
+                                    if (parcelId == 0) initDelivery((int)drone.DeliveryId);
                                 }
                                 catch (DO.ParcelExeption ex)
                                 {

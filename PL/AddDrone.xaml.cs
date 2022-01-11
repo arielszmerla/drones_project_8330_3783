@@ -45,18 +45,20 @@ namespace PL
 
         }
         BO.Drone dr = new();
+        PO.Drone poDrone = new();
         public AddDrone(IBL bl1, Drone drone)
         {
             InitializeComponent();
-            dr = drone;
+         
+            this.DataContext = poDrone;
             this.bl = bl1;
-
-            Choose_models.ItemsSource = Enum.GetValues(typeof(Enums.DroneNames));
             Title = "ACTIONS";
+            Choose_models.ItemsSource = Enum.GetValues(typeof(Enums.DroneNames));
+           
             update_drone.Visibility = Visibility.Visible;
-            DataContext = dr;
+            poDrone = PO.POAdapters.BODroneToPo(drone, poDrone);
         }
-
+        
         BO.Drone drone = new();
         private void enter_your_drone(object sender, RoutedEventArgs e)
         {
@@ -169,7 +171,10 @@ namespace PL
 
             TimeSpan time;
             if (dr.Status == Enums.DroneStatuses.Vacant)
+            {
                 bl.UpdateDroneSentToCharge(dr.Id);
+                poDrone = PO.POAdapters.BODroneToPo(bl.GetDrone(drone.Id), poDrone);
+            }
             else
             {
 
@@ -184,6 +189,7 @@ namespace PL
                         time = new TimeSpan(int.Parse(timespan_get.Text), 0, 0);
                         bl.UpdateReleaseDroneFromCharge(dr.Id, time);
                         timespan_get.Visibility = Visibility.Hidden;
+                        poDrone = PO.POAdapters.BODroneToPo(bl.GetDrone(drone.Id), poDrone);
                     }
 
                 }
@@ -197,6 +203,7 @@ namespace PL
 
             }
 
+
         }
 
         private void DeliveryChanges_Click(object sender, RoutedEventArgs e)
@@ -205,12 +212,12 @@ namespace PL
             {
                 if (dr.Status == Enums.DroneStatuses.Vacant)
                 {
-                    bl.UpdateAssignParcelToDrone(dr.Id);
+                    bl.UpdateAssignParcelToDrone(drone.Id);
                     dr.Status = Enums.DroneStatuses.InDelivery;
                 }
                 else if (dr.Status == Enums.DroneStatuses.InDelivery)
                 {
-                    ParcelToList parcel = bl.GetParcelToListonDrone(dr.Id);
+                    ParcelToList parcel = bl.GetParcelToListonDrone(drone.Id);
 
                     if (parcel != null)
                     {
@@ -221,7 +228,7 @@ namespace PL
                         }
                         else if (p.Delivered == null)
                         {
-                            bl.UpdateDeliverParcel(dr.Id);
+                            bl.UpdateDeliverParcel(drone.Id);
                         }
 
                     }
@@ -236,7 +243,7 @@ namespace PL
                 this.myEvent("Missed Update");
             }
             this.myEvent("Managed Update");
-
+            poDrone = PO.POAdapters.BODroneToPo(bl.GetDrone(drone.Id), poDrone);
         }
 
         private void End_the_page(object sender, RoutedEventArgs e)
@@ -278,6 +285,7 @@ namespace PL
             }
             else
                 dr.Status = (Enums.DroneStatuses)StatusSelectorToadd.SelectedItem;
+
         }
 
 
@@ -293,7 +301,7 @@ namespace PL
         {
             try
             {
-                new ParcelActionWindow(bl, bl.GetParcelToListonDrone(dr.Id)).Show();
+                new ParcelActionWindow(bl, bl.GetParcelToListonDrone(drone.Id)).Show();
             }
             catch (BO.GetException ex)
             {
@@ -304,9 +312,9 @@ namespace PL
         private void Choose_models_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             bl.UpdateNameDrone(dr.Id, (Enums.DroneNames)Choose_models.SelectedItem);
-
             this.dr = bl.GetDrone(dr.Id);
             MessageBox.Show("Managed Update");
+            poDrone = PO.POAdapters.BODroneToPo(bl.GetDrone(drone.Id), poDrone);
         }
 
         BackgroundWorker worker;
@@ -324,7 +332,7 @@ namespace PL
                 WorkerReportsProgress = true,
                 WorkerSupportsCancellation = true,
             };
-            worker.DoWork += (sender, args) => bl.StartDroneSimulator((int)dr.Id, updateDrone, checkStop);
+            worker.DoWork += (sender, args) => bl.StartDroneSimulator(poDrone.Id, updateDrone, checkStop);
             worker.RunWorkerCompleted += (sender, args) =>
             {
                 Auto.IsChecked = false;
@@ -349,7 +357,8 @@ namespace PL
         }
         private void updateDroneView() 
         {
-            dr = bl.GetDrone(dr.Id);
+           
+            poDrone = PO.POAdapters.BODroneToPo(bl.GetDrone(poDrone.Id), poDrone);
         }
 
 

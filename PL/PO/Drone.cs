@@ -7,7 +7,10 @@ using System.ComponentModel;
 
 namespace PO
 {
-    class Drone : INotifyPropertyChanged
+    /// <summary>
+    /// implement PO dronetolist
+    /// </summary>
+    public class Drone : INotifyPropertyChanged
     {
         private int id;
         public int Id
@@ -45,8 +48,8 @@ namespace PO
             set { status = value; OnPropertyChanged("status"); }
         }
 
-        private Location location;
-        public Location Location
+        private BO.Location location;
+        public BO.Location Location
         {
             get => location;
             set { location = value; OnPropertyChanged("location"); }
@@ -67,13 +70,21 @@ namespace PO
             set { distance = value; OnPropertyChanged("distance"); }
         }
 
-
+        public bool changes()
+        {
+            return true;
+        
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
+
+
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+
+
         }
     }
-    
+
 }
