@@ -17,8 +17,8 @@ namespace PO
         }
 
 
-        private string model;
-        public string Model
+        private Enums.DroneNames model;
+        public Enums.DroneNames Model
         {
             get => model;
             set { model = value; OnPropertyChanged("model"); }
