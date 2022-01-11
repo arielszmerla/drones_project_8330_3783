@@ -103,7 +103,7 @@ namespace PL
                 };
                 Closing_Button.Visibility = Visibility.Hidden;
                 new AddDrone(bl1, dr).Show();
-                Close();
+             //   Close();
             }
         }
 

@@ -75,11 +75,11 @@
 
                 <ComboBox Visibility="Visible" Margin="18,120,14,134"  Opacity="0.8"   BorderBrush="Transparent"  Background="Bisque" x:Name="Choose_models" ToolTip="Enter Model"  IsEditable="True" Text="Model Input Update" Height="38" SelectionChanged="Choose_models_SelectionChanged" />
 
-                <Button  BorderBrush="Transparent" Background="Bisque"  Visibility="Visible" x:Name="DeliveryChanges" Content="deliverychange" HorizontalAlignment="Right"  VerticalAlignment="Top" Click="DeliveryChanges_Click" Height="46" Margin="0,16,14,0" Width="131"/>
-                <Button  BorderBrush="Transparent" Background="Bisque"  Visibility="Visible" x:Name="Update_Drone" Content="Update a drone" HorizontalAlignment="Center"  Width="131"  Height="46" Click="Update_Drone_Click" Margin="0,3,0,249"/>
-                <Button  BorderBrush="Transparent" Background="Bisque" x:Name="sendDrone"  Content="sendTocharge" Click="SendTo_charge"  HorizontalAlignment="Center"  Height="46" Width="131" Margin="0,132,0,272" />
-                <TextBox  BorderBrush="Transparent" Background="Bisque" Grid.Column="0" Visibility="Visible" x:Name="timespan_get" Text="" TextWrapping="Wrap" Margin="0,162,0,272" HorizontalAlignment="Left" Width="142" />
-                <Button  BorderBrush="Transparent" Background="Bisque" x:Name="show_parcel_nDrone"  Content="Show Parcel" Click="show_parcel_inDrone"  HorizontalAlignment="Center"  Height="46" Width="130" Margin="0,132,0,272" Grid.Column="1" />
+                <Button  BorderBrush="Transparent" Visibility="Visible" x:Name="DeliveryChanges" Content="deliverychange" HorizontalAlignment="Right"  VerticalAlignment="Top" Click="DeliveryChanges_Click" Height="46" Margin="0,16,14,0" Width="131"/>
+                <Button  BorderBrush="Transparent"   Visibility="Visible" x:Name="Update_Drone" Content="Update a drone" HorizontalAlignment="Center"  Width="131"  Height="46" Click="Update_Drone_Click" Margin="0,3,0,249"/>
+                <Button  BorderBrush="Transparent" x:Name="sendDrone"  Content="sendTocharge" Click="SendTo_charge"  HorizontalAlignment="Center"  Height="46" Width="131" Margin="0,132,0,272" />
+                <TextBox  BorderBrush="Transparent"  Grid.Column="0" Visibility="Visible" x:Name="timespan_get" Text="" TextWrapping="Wrap" Margin="0,162,0,272" HorizontalAlignment="Left" Width="142" />
+                <Button  BorderBrush="Transparent"  x:Name="show_parcel_nDrone"  Content="Show Parcel" Click="show_parcel_inDrone"  HorizontalAlignment="Center"  Height="46" Width="130" Margin="0,132,0,272" Grid.Column="1" />
 
 
 
@@ -136,6 +136,7 @@
             </Grid>
         </StackPanel>
         <Button x:Name="simul" Content="Auto" Grid.Column="3" HorizontalAlignment="Left" Margin="147,150,0,0" VerticalAlignment="Top" Width="89" Click="simul_Click"/>
+        <Button  x:Name="Manual" Content="Manual" Grid.Column="3" HorizontalAlignment="Left" Margin="147,190,0,0" VerticalAlignment="Top" Width="89" Click="Manual_Click" />
         <CheckBox x:Name="Auto" Visibility="Hidden" Content="CheckBox" Grid.Column="3" HorizontalAlignment="Left" Margin="210,197,0,0" VerticalAlignment="Top"/>
 
     </Grid>

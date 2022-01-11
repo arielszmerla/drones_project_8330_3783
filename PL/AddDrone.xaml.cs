@@ -339,11 +339,12 @@ namespace PL
         {
             if (flag)
             {
-                sendDrone.Visibility = Visibility.Collapsed;
-                Update_Drone.Visibility = Visibility.Collapsed;
-                Choose_models.Visibility = Visibility.Collapsed;
-                show_parcel_nDrone.Visibility = Visibility.Collapsed;
+                update_drone.Visibility = Visibility.Collapsed;
+                Manual.Visibility = Visibility.Visible;
             }
+            else
+                update_drone.Visibility = Visibility.Visible;
+            Manual.Visibility = Visibility.Collapsed;
 
         }
         private void updateDroneView() 
