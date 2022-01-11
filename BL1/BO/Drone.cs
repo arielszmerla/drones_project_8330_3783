@@ -12,6 +12,7 @@
         public ParcelInDelivery PID { get; set; }
         public Location Location { get; set; }
         public int DeliveryId { get; set; }//   DeliveryId
+        public double Distance { get; set; } // Distance to next stop
         public override string ToString()///toString erased func
         {
             string result = "";
