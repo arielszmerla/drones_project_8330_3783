@@ -17,8 +17,8 @@ namespace PO
             set { id = value; OnPropertyChanged("id"); }
         }
 
-        private string model;
-        public string Model
+        private Enums.DroneNames model;
+        public Enums.DroneNames Model
         {
             get => model;
             set { model = value; OnPropertyChanged("model"); }
@@ -94,6 +94,22 @@ namespace PO
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public PO.DroneToList PODronetolist(BO.DroneToList dr) {
+
+            return new PO.DroneToList
+            {
+                id = dr.Id,
+                location = new Location { Latitude = dr.Location.Latitude, Longitude = dr.Location.Longitude },
+                maxWeight = (Enums.WeightCategories)dr.MaxWeight,
+                deliveryId = dr.DeliveryId,
+                numOfDeliveredParcel = dr.NumOfDeliveredParcel,
+                status = (Enums.DroneStatuses)dr.Status,
+                battery = dr.Battery,
+                model = (Enums.DroneNames)dr.Model
+            };
+        
         }
     }
 }

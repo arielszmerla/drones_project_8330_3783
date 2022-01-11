@@ -102,9 +102,9 @@
     <TargetId>100000004</TargetId>
     <Priority>Urgent</Priority>
     <Requested>2022-01-09T21:56:02.8185835+02:00</Requested>
-    <DroneId>0</DroneId>
-    <Scheduled xsi:nil="true" />
-    <PickedUp xsi:nil="true" />
+    <DroneId>100006</DroneId>
+    <Scheduled>2022-01-11T16:28:44.1164015+02:00</Scheduled>
+    <PickedUp>2022-01-11T16:28:48.7326665+02:00</PickedUp>
     <Delivered xsi:nil="true" />
     <Weight>Light</Weight>
   </Parcel>
