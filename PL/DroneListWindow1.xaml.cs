@@ -27,15 +27,18 @@ namespace PL
         private IBL bl1;
         private int id;
         private IBL bl;
-
+        PO.DroneToList poDroneToList = new();
+        // drone list view
         public DroneListWindow1(IBL bl1)
         {
 
             InitializeComponent();
             this.bl1 = bl1;
             DroneListView.ItemsSource = bl1.GetDroneList();
-         
-            DataContext = DroneListView.ItemsSource;
+            List<DroneToList> poDroneToList = (List<DroneToList>)(from item in bl1.GetDroneList()
+            let drone = PO.POAdapters.PODronetolist(item)
+            select drone);
+              DataContext = poDroneToList;
             StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
             WeightChoise.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
 
@@ -44,6 +47,8 @@ namespace PL
             view.GroupDescriptions.Add(groupDescription);
 
         }
+
+       
 
         public DroneListWindow1(int id, IBL bl)
         {
