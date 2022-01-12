@@ -5,16 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="PL.DroneListWindow1"
-        mc:Ignorable="d"     Icon="\images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico"
+        mc:Ignorable="d"   Icon="\images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico"
         Closing="list_closing"
-         Title = "LIST OF DRONES" Height="450" Width="800" >
-
+         Title = "LIST OF DRONES" Height="450" Width="800" 
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}" Loaded="Window_Loaded">
     <Window.Resources>
-        <local:ConverterDoubleToInt x:Key="ConverterDoubleToInt"/>
+        <Style x:Key="ItemStyle" TargetType="{x:Type ListViewItem}">
+            <EventSetter Event="MouseDoubleClick" Handler="Drone_MouseDoubleClick" />
+            <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
+        </Style>
+
+    <local:ConverterDoubleToInt x:Key="ConverterDoubleToInt"/>
         <local:ConverterLatitude x:Key="ConverterLatitude"/>
         <DataTemplate x:Key="MyDataTemplate"
                   DataType="local:MyData">
-            <Grid>
+ 
+    <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"  />
                 </Grid.RowDefinitions>
@@ -77,7 +83,7 @@
         </Grid>
 
 
-        <ListView  Background="Transparent"  Foreground="Black" x:Name="DroneListView"  MouseDoubleClick="drone_action" FontSize="15" FontWeight="ExtraBlack" SelectionChanged="DroneListView_SelectionChanged" Margin="0,129,135,10" Grid.Row="1">
+        <ListView ItemsSource="{Binding Model.Drones, Mode=OneWay}"   Background="Transparent"  Foreground="Black" x:Name="DroneListView"   FontSize="15" FontWeight="ExtraBlack" MouseDoubleClick="DroneListView_SelectionChanged" Margin="0,129,135,10" Grid.Row="1">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID:" DisplayMemberBinding="{Binding Id}"/>

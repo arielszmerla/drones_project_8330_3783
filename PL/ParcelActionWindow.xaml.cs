@@ -200,7 +200,7 @@ namespace PL
         {
             if (parcel.Assignment <= DateTime.Now && parcel.Delivered == null)
             {
-                new AddDrone(bl, bl.GetDroneOnParcel(parcel.Id)).Show();
+                new AddDrone(bl, bl.GetDroneOnParcel(parcel.Id).Id).Show();
             }
             else MessageBox.Show("not on drone");
         }

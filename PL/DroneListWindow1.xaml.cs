@@ -27,22 +27,20 @@ namespace PL
         private IBL bl1;
         private int id;
         private IBL bl;
-       List< PO.DroneToList> poDroneToList = new();
+        List<PO.DroneToList> poDroneToList = new();
         PO.POAdapters poadapt = new();
+        public static Model Model { get; } = Model.Instance;
+
+        void Window_Loaded(object sender, RoutedEventArgs e) => Model.DronesRefresh();
         // drone list view
         public DroneListWindow1(IBL bl1)
         {
 
             InitializeComponent();
             this.bl1 = bl1;
-         
-            foreach (var item in bl1.GetDroneList())
-            {
-                PO.DroneToList drone = poadapt.PODronetolist(item);
-                poDroneToList.Add(drone);
-            }
-               DataContext = poDroneToList;
-            DroneListView.ItemsSource = poDroneToList;
+
+   
+       
             StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
             WeightChoise.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
 
@@ -52,7 +50,7 @@ namespace PL
 
         }
 
-       
+
 
         public DroneListWindow1(int id, IBL bl)
         {
@@ -65,7 +63,7 @@ namespace PL
             Weight_label.Visibility = Visibility.Hidden;
             WeightChoise.Visibility = Visibility.Hidden;
             actions.Visibility = Visibility.Hidden;
-            DroneListView.MouseDoubleClick -= drone_action;
+           // DroneListView.MouseDoubleClick -= drone_action;
 
 
         }
@@ -90,32 +88,35 @@ namespace PL
 
         }
 
-        private void drone_action(object sender,  MouseButtonEventArgs e)
-        {
-            PO.DroneToList drone = (PO.DroneToList)DroneListView.SelectedItem;
-            if (drone == null)
-            {
-                MessageBox.Show("click on a drone please");
-            }
-            else
-            {
+        /*   private void drone_action(object sender, MouseButtonEventArgs e)
+           {/*
+               PO.DroneToList drone = (PO.DroneToList)DroneListView.SelectedItem;
+               if (drone == null)
+               {
+                   MessageBox.Show("click on a drone please");
+               }
+               else
+               {
 
-                BO.Drone dr = new BO.Drone
-                {
-                    Id = drone.Id,
-                    Battery = drone.Battery,
-                    Location = drone.Location,
-                    MaxWeight = (Enums.WeightCategories)drone.MaxWeight,
-                    Model = (Enums.DroneNames)drone.Model,
-                    PID = null,
-                    Status = (Enums.DroneStatuses)drone.Status
-                };
-                Closing_Button.Visibility = Visibility.Hidden;
-                new AddDrone(bl1, dr).Show();
-             //   Close();
-            }
+                   BO.Drone dr = new BO.Drone
+                   {
+                       Id = drone.Id,
+                       Battery = drone.Battery,
+                       Location = drone.Location,
+                       MaxWeight = (Enums.WeightCategories)drone.MaxWeight,
+                       Model = (Enums.DroneNames)drone.Model,
+                       PID = null,
+                       Status = (Enums.DroneStatuses)drone.Status
+                   };
+                   Closing_Button.Visibility = Visibility.Hidden;
+                   new AddDrone(bl1, dr).Show();
+                   //   Close();
+               new AddDrone(bl, bl.GetDrone(((DroneToList)((ListViewItem)sender).DataContext).Id)).Show();
+           }*/
+        private void Drone_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
+            new AddDrone(bl,((DroneToList)((ListViewItem)sender).DataContext).Id).Show();
+
         }
-
         private void Closing_Button_Click(object sender, RoutedEventArgs e)
         {
             Closing_Button.Visibility = Visibility.Hidden;
@@ -126,14 +127,15 @@ namespace PL
             if (Closing_Button.Visibility != Visibility.Hidden)
                 e.Cancel = true;
         }
-        private void DroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void DroneListView_SelectionChanged(object sender, MouseButtonEventArgs e)
         {
-
+            if(sender!=null)
+            new AddDrone(bl, ((DroneToList)((ListView)sender).SelectedItem).Id).Show();
         }
 
         private void Reset_List(object sender, RoutedEventArgs e)
         {
-            
+
             DroneListView.ItemsSource = bl1.GetDroneList();
             WeightChoise.SelectedItem = null;
             StatusSelector.SelectedItem = null;
