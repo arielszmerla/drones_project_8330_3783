@@ -19,6 +19,7 @@
         <local:DeliveryIdConverter x:Key="DeliveryIdConverter"/>
         <local:statustoBoutton x:Key="statustoBoutton"/>
         <local:LocationtoMapLocation x:Key="LocationtoMapLocation"/>
+        <local:Deliveryidconvert x:Key="Deliveryidconvert"/>
     </Window.Resources>
     <Window.Clip>
         <RectangleGeometry Rect="0,0,944,500" RadiusX="35" RadiusY="35"/>
@@ -83,16 +84,16 @@
                 </Grid.ColumnDefinitions>
 
 
-                <ComboBox Visibility="Visible" Margin="18,120,14,134"  Opacity="0.8"   BorderBrush="Transparent"  Background="Bisque" x:Name="Choose_models" ToolTip="Enter Model"  IsEditable="True" Text="Model Input Update" Height="38" SelectionChanged="Choose_models_SelectionChanged" />
+                <ComboBox Visibility="Visible" Margin="18,120,14,134"  Opacity="0.8"   BorderBrush="Transparent"  Background="Beige" x:Name="Choose_models" ToolTip="Enter Model"  FontWeight="ExtraBlack" Foreground="Brown" IsEditable="True" Text="MODEL UPDATE" Height="38" SelectionChanged="Choose_models_SelectionChanged" />
 
-                <Button  BorderBrush="Transparent" Visibility="Visible" x:Name="DeliveryChanges" Content="Delivery change" HorizontalAlignment="Right"  VerticalAlignment="Top" Click="DeliveryChanges_Click" Height="46" Margin="0,16,14,0" Width="131"/>
-                <Button  BorderBrush="Transparent"   Visibility="Visible" x:Name="Update_Drone" Content="Update a drone" HorizontalAlignment="Center"  Width="131"  Height="46" Click="Update_Drone_Click" Margin="0,3,0,249"/>
+                <Button  BorderBrush="Transparent"  FontWeight="ExtraBlack" Foreground="DarkViolet" Visibility="Visible" x:Name="DeliveryChanges" Content="DELIVERY" HorizontalAlignment="Right"  VerticalAlignment="Top" Click="DeliveryChanges_Click" Height="46" Margin="0,16,14,0" Width="131"/>
+                <Button  BorderBrush="Transparent"  FontWeight="ExtraBlack" Foreground="Blue"  Visibility="Visible" x:Name="Update_Drone" Content="UPDATE" HorizontalAlignment="Center"  Width="131"  Height="46" Click="Update_Drone_Click" Margin="0,3,0,249"/>
                 <Button  BorderBrush="Transparent" x:Name="sendDrone"  Content="{Binding Text,ElementName=Statuss,Converter={StaticResource statustoBoutton} }"  Click="SendTo_charge" HorizontalAlignment="Center"  Height="46" Width="131" Margin="0,132,0,272" />
                 <TextBox  BorderBrush="Transparent"  Grid.Column="0" Visibility="Visible" x:Name="timespan_get" Text="" TextWrapping="Wrap" Margin="0,162,0,272" HorizontalAlignment="Left" Width="142" />
-                <Button  BorderBrush="Transparent"  x:Name="show_parcel_nDrone"  Content="Show Parcel" Click="show_parcel_inDrone"  HorizontalAlignment="Center"  Height="46" Width="130" Margin="0,132,0,272" Grid.Column="1" />
-                       
+                <Button  BorderBrush="Transparent" FontWeight="ExtraBlack" Foreground="Green"  x:Name="show_parcel_nDrone" Visibility="{Binding Drone.DeliveryId ,Converter={StaticResource Deliveryidconvert} }"  Content="Show Parcel" Click="show_parcel_inDrone"  HorizontalAlignment="Center"  Height="46" Width="130" Margin="0,132,0,272" Grid.Column="1" />
 
-  
+
+
 
                 <Button  BorderBrush="Transparent" Margin="66,46,31,336" Opacity="0.8" ToolTip="Click Here To view on map" FontSize="16" BorderThickness="0.5" x:Name="View_On_Map" Click="View_Map" Width="64" Height="68" RenderTransformOrigin="-0.208,-4.179" Grid.Column="1">
                     <Button.Background>
@@ -106,34 +107,42 @@
         <StackPanel   x:Name="show_Drone_titles" Background="Transparent" Visibility="Visible" Orientation="Vertical" Grid.Column="0" Margin="10,-11,0,0" Height="434" VerticalAlignment="Top">
             <Label x:Name="IsD_UUUUUU" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
             <Label x:Name="IsD_" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
-            <Label x:Name="ShowIsD"  FontSize="20" Foreground="Black" BorderThickness="2" FontWeight="Bold" Width="119" Height="39"  BorderBrush="Black" >
+            <Label x:Name="ShowIsD"  FontSize="20" Foreground="Black" BorderThickness="2" FontWeight="Bold" Width="113" Height="39"  BorderBrush="Black" >
                 <TextBlock TextDecorations="Underline" 
                Text="Drone:"/>
             </Label>
 
-            <Label x:Name="ShowID" FontSize="15" Content="Id" Width="113" Height="27" HorizontalAlignment="Center"/>
-            <Label   x:Name="ShowName" FontSize="15" Content="Name"  HorizontalAlignment="Center" Width="110" Margin="0,10,0,0"/>
-            <Label    x:Name="Status" FontSize="14" Content="Status"  HorizontalAlignment="Center" Width="117" Margin="0,10,0,0"/>
-            <Label  x:Name="BatteryStatus" BorderBrush="Transparent"  FontSize="15" HorizontalAlignment="Center" Content="BatteryStatus" Width="115" Margin="0,10,0,0"/>
-            <Label  x:Name="locs" BorderBrush="Transparent"  FontSize="15" HorizontalAlignment="Center" Content="Location" Width="120" Margin="0,10,0,0"/>
-
+            <Label x:Name="ShowID" FontSize="15" BorderThickness="2" BorderBrush="Black" Content="ID" Width="113" Height="27" HorizontalAlignment="Center"/>
+            <Label   x:Name="ShowName" FontSize="15" BorderThickness="2" BorderBrush="Black" Content="NAME"  HorizontalAlignment="Center" Width="110" Margin="0,10,0,0"/>
+            <Label    x:Name="Status" FontSize="14" BorderThickness="2" BorderBrush="Black" Content="STAUTS"  HorizontalAlignment="Center" Width="109" Margin="0,10,0,0"/>
+            <Label  x:Name="BatteryStatus"  BorderThickness="2" BorderBrush="Black" FontSize="15" HorizontalAlignment="Center" Content="BATTERY" Width="115" Margin="0,10,0,0"/>
+            <Label  x:Name="LOCATION" BorderThickness="2" BorderBrush="Black"  FontSize="15" HorizontalAlignment="Center" Content="LOCATION" Width="120" Margin="0,10,0,0"/>
+            <Label  x:Name="weight" BorderThickness="2" BorderBrush="Black"  FontSize="15" HorizontalAlignment="Center" Content="WEIGHT" Width="120" Margin="0,10,0,0"/>
+            <Label  x:Name="delivery" BorderThickness="2" BorderBrush="Black"  FontSize="15" HorizontalAlignment="Center" Content="DELIVERY" Width="120" Margin="0,10,0,0"/>
+            <Label  x:Name="Distance" BorderThickness="2" BorderBrush="Black"  FontSize="15" HorizontalAlignment="Center" Content="DISTANCE" Width="120" Margin="0,10,0,0"/>
         </StackPanel>
         <StackPanel DataContext="{Binding Drone}" x:Name="Show_BaseStation_stack" Background="Transparent" Visibility="Visible"    Orientation="Vertical" Grid.Column="1"  Margin="0,29,32,-31" RenderTransformOrigin="0.527,0.437">
 
-            <Label x:Name="IsD_UUUU" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
-            <Label x:Name="IsD_UUUUU" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
 
-            <TextBox  x:Name="Show_Id" Opacity="0.8"  BorderBrush="Transparent" Background="Azure"  Text= "{Binding  Id}" Width="145" Height="28"/>
-            <TextBox x:Name="Show_Name" Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Azure" Text= "{Binding Model}"  Width="147" Height="27" RenderTransformOrigin="0.502,1.282" />
-            <TextBox x:Name="Statuss" Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Azure"  Text= "{Binding  Status}" Width="147" Height="27" RenderTransformOrigin="0.502,1.282" />
-            <Grid Height="27" Name="aba"  Margin="3" Width="158">
-                <ProgressBar Name="BatteryProgressBar"  Value="{Binding Battery}" ToolTip="{Binding Battery}"  Margin="0,10,0,0" Width="152" Foreground="{Binding Battery, Converter={StaticResource BatteryToColorConverter}}" Height="41" RenderTransformOrigin="0.52,0.613" ValueChanged="BatteryProgressBar_ValueChanged"/>
 
+
+            <TextBox  x:Name="Show_Id" Opacity="0.8" Margin="0,80,0,0"   HorizontalAlignment="Left" BorderBrush="Transparent" Background="OldLace"  Text= "{Binding  Id}" Width="168" Height="28"/>
+            <TextBox x:Name="Show_Name" Opacity="0.8" HorizontalAlignment="Left"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,10,0" Background="OldLace" Text= "{Binding Model}"  Width="169" Height="27" RenderTransformOrigin="0.502,1.282" />
+            <TextBox x:Name="Statuss" Opacity="0.8"  BorderBrush="Transparent" HorizontalAlignment="Left" Visibility="Visible"  Margin="0,15,0,0" Background="OldLace"  Text= "{Binding  Status}" Width="170" Height="27" RenderTransformOrigin="0.502,1.282" />
+            <Grid  HorizontalAlignment="Left" Height="27" Name="aba"  Margin="10" Width="164">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="7*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="0*"/>
+                </Grid.RowDefinitions>
+                <ProgressBar  Name="BatteryProgressBar" Value="{Binding Battery, Mode=TwoWay}" Height="20" Foreground="{Binding Battery, Converter={StaticResource BatteryToColorConverter}}" Margin="0,4,0,3" Grid.RowSpan="2"/>
+                <TextBlock Text="{Binding Value, ElementName=BatteryProgressBar,Converter={StaticResource BatteryToProgressBarConverter}}"  HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,6,0,0"/>
             </Grid>
-            <Label  Background="Azure" Margin="0,10,0,0"   HorizontalAlignment="Center" Height="27"  Width="175" Content="{Binding MaxWeight}"/>
-            <Label  Background="Azure" Margin="0,10,0,0"   HorizontalAlignment="Center" Height="27"  Width="175" Content="{Binding Location,Converter={StaticResource ConverterLatitude } }"/>
-            <Label  Background="Azure" Margin="0,10,0,0"   HorizontalAlignment="Center" Height="27"  Width="175" Content="{Binding DeliveryId, Converter={StaticResource DeliveryIdConverter }}"/>
-            <Label  Background="Azure" Margin="0,10,0,0"   HorizontalAlignment="Center" Height="27"  Width="175" Content="{Binding Distance ,Converter={StaticResource KilometerConverter} }"/>
+
+            <Label  Background="OldLace" Margin="0,02,0,0"   HorizontalAlignment="Left" Height="27"  Width="175" Content="{Binding Location,Converter={StaticResource ConverterLatitude } }"/>
+            <Label  Background="OldLace" Margin="0,20,0,0"   HorizontalAlignment="Left" Height="27"  Width="175" Content="{Binding MaxWeight}"/>
+            <Label  Background="OldLace" Margin="0,10,0,0"   HorizontalAlignment="Left" Height="27"  Width="175" Content="{Binding DeliveryId, Converter={StaticResource DeliveryIdConverter }}"/>
+            <Label  Background="OldLace" Margin="0,20,0,0"   HorizontalAlignment="Left" Height="27"  Width="175" Content="{Binding Distance ,Converter={StaticResource KilometerConverter} }"/>
 
 
         </StackPanel>

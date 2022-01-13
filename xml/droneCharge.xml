@@ -4,16 +4,4 @@
     <DroneId>100001</DroneId>
     <StationId>10000</StationId>
   </DroneCharge>
-  <DroneCharge>
-    <DroneId>100005</DroneId>
-    <StationId>10005</StationId>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>100002</DroneId>
-    <StationId>10004</StationId>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>1276556</DroneId>
-    <StationId>10004</StationId>
-  </DroneCharge>
 </ArrayOfDroneCharge>

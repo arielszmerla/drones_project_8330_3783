@@ -171,7 +171,7 @@ namespace DalXML
         /// <summary>
         /// release drone from charge
         /// </summary>
-           [MethodImpl(MethodImplOptions.Synchronized)]
+         [MethodImpl(MethodImplOptions.Synchronized)]
         private void releaseDroneFromCharge() 
         {
             var drones1 = XMLTools.LoadListFromXMLSerializer<DroneCharge>(@"droneCharge.xml");

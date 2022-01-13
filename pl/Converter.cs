@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using Microsoft.Maps.MapControl.WPF;
@@ -31,7 +32,7 @@ namespace PL
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             BO.Location val = (BO.Location)value;
-            return $"({val })";
+            return $"({val})";
 
         }
 
@@ -44,7 +45,12 @@ namespace PL
     }
     public sealed class BatteryToProgressBarConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => (double)value * 100;
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            Double val = (Double)value;
+            return $"{ (int)val} %";
+
+
+        }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
             throw new NotImplementedException();
     }
@@ -70,7 +76,21 @@ namespace PL
             Double val = (Double)value;
             if (val == 0)
                 return "(no next stop scheduled yet)";
-            return $"({val.ToString()[0]}Km to next stop)";
+            return $"({val.ToString()[0]} Km to next stop)";
+
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
+                throw new NotImplementedException();
+    }
+    internal class Deliveryidconvert : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+
+            int val = (int)value;
+            if (val == 0)
+                return Visibility.Collapsed;
+            return Visibility.Visible ;
 
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
@@ -97,8 +117,8 @@ namespace PL
             if (value == null )
                 return "no parcel";
             else if( (int)value == 0)
-            return $"no next parcel yet";
-            else return $"next parcel is:{(int)value}";
+                 return $"no parcel assigned";
+            else return $"Parcel: {(int)value}";
 
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
@@ -112,16 +132,16 @@ namespace PL
 
             if ((string)value == "Vacant")
             {
-                return "Send to charge";
+                return "Recharge";
 
             }
             else if ((string)value == "Maintenance")
             {
-                return "Release to charge";
+                return "Release";
             }
             else
             {
-                return "Impossible to charge";
+                return "Impossible";
             }
 
         }
