@@ -13,12 +13,6 @@
     <Valid>true</Valid>
   </Drone>
   <Drone>
-    <Id>100002</Id>
-    <Model>MAVIC</Model>
-    <MaxWeight>Heavy</MaxWeight>
-    <Valid>true</Valid>
-  </Drone>
-  <Drone>
     <Id>100003</Id>
     <Model>PHANTOM</Model>
     <MaxWeight>Light</MaxWeight>
@@ -32,6 +26,42 @@
   </Drone>
   <Drone>
     <Id>100004</Id>
+    <Model>PHANTOM</Model>
+    <MaxWeight>Light</MaxWeight>
+    <Valid>true</Valid>
+  </Drone>
+  <Drone>
+    <Id>100002</Id>
+    <Model>PHANTOM</Model>
+    <MaxWeight>Heavy</MaxWeight>
+    <Valid>true</Valid>
+  </Drone>
+  <Drone>
+    <Id>123</Id>
+    <Model>PHANTOM</Model>
+    <MaxWeight>Middle</MaxWeight>
+    <Valid>false</Valid>
+  </Drone>
+  <Drone>
+    <Id>125</Id>
+    <Model>PHANTOM</Model>
+    <MaxWeight>Light</MaxWeight>
+    <Valid>false</Valid>
+  </Drone>
+  <Drone>
+    <Id>1234</Id>
+    <Model>PHANTOM</Model>
+    <MaxWeight>Middle</MaxWeight>
+    <Valid>false</Valid>
+  </Drone>
+  <Drone>
+    <Id>128</Id>
+    <Model>PHANTOM</Model>
+    <MaxWeight>Light</MaxWeight>
+    <Valid>true</Valid>
+  </Drone>
+  <Drone>
+    <Id>1276556</Id>
     <Model>PHANTOM</Model>
     <MaxWeight>Light</MaxWeight>
     <Valid>true</Valid>

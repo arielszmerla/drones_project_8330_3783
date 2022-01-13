@@ -169,6 +169,7 @@ namespace DalXML
         /// <summary>
         /// release drone from charge
         /// </summary>
+           [MethodImpl(MethodImplOptions.Synchronized)]
         private void releaseDroneFromCharge() 
         {
             var drones1 = XMLTolls.LoadListFromXMLSerializer<DroneCharge>(@"droneCharge.xml");
@@ -184,6 +185,7 @@ namespace DalXML
         /// func that update basestation free slots when drone comes in
         /// </summary>
         /// <param name="baseStationId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private void baseStationDroneIn(int baseStationId)
         {
             XElement baseStations = XMLTolls.LoadListFromXMLElement(@"stations.xml");
@@ -199,6 +201,7 @@ namespace DalXML
         /// func that update basestation free slots when drone goes out
         /// </summary>
         /// <param name="baseStationId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private void baseStationDroneOut(int baseStationId)
         {
             XElement baseStations = XMLTolls.LoadListFromXMLElement(@"stations.xml");
@@ -216,6 +219,7 @@ namespace DalXML
         /// </summary>
         /// <param name="droneId"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int GetDroneChargeBaseStationId(int droneId)
         {
             XElement DroneCharges = XMLTolls.LoadListFromXMLElement(@"droneCharge.xml");
@@ -401,6 +405,7 @@ namespace DalXML
                 throw new ParcelExeption("invalid parcel id");
             Parcel tmp = parcels[k];
             tmp.Delivered = DateTime.Now;
+          
             parcels[k] = tmp;
 
             XMLTolls.SaveListToXMLSerializer(parcels, @"parcels.xml");
@@ -537,6 +542,7 @@ namespace DalXML
             Parcel myParcel = parcels.Find(ps => ps.Id == idP);
             myParcel.DroneId = idD;
             myParcel.Requested = DateTime.Now;
+
             parcels[i] = myParcel;
             XMLTolls.SaveListToXMLSerializer(parcels, @"parcels.xml");
         }
@@ -554,6 +560,7 @@ namespace DalXML
             Parcel tmp = parcels[k];
             tmp.Delivered = DateTime.Now;
             tmp.DroneId = 0;
+
             parcels[k] = tmp;
             XMLTolls.SaveListToXMLSerializer(parcels, @"parcels.xml");
         }
@@ -587,6 +594,7 @@ namespace DalXML
             if (index == -1)
                 throw new ParcelExeption($"the parcel {p.Id} doesn't exists");
             parcels[index] = p;
+            
             XMLTolls.SaveListToXMLSerializer(parcels, @"parcels.xml");
         }
         /// <summary>

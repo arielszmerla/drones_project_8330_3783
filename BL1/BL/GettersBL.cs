@@ -512,17 +512,21 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> GetDroneList(Enums.DroneStatuses? statuses = null, Enums.WeightCategories? weight = null)
         {
+         //IEnumerable<DroneToList> drs =  from item in Dal.GetDroneList(d => d.Valid == true)
+         //              let drone = dODroneToList(item)
+         //                select drone;
+
             if (statuses == null && weight == null)
-                return drones.Where(d => d.Valid == true);
+                return drones.Where(d=>d.Valid==true);
             else if (statuses != null && weight == null)
             {
-                return drones.Where(d => d.Status == statuses && d.Valid == true);
+                return drones.Where(d => d.Status == statuses&& d.Valid == true);
             }
             else if (statuses != null && weight != null)
             {
-                return drones.Where(d => d.Status == statuses && d.MaxWeight == weight && d.Valid == true);
+                return drones.Where(d => d.Status == statuses && d.MaxWeight == weight&& d.Valid == true);
             }
-            return drones.Where(d => d.MaxWeight == weight && d.Valid == true);
+            return drones.Where(d => d.MaxWeight == weight&& d.Valid == true);
 
         }
         /// <summary>

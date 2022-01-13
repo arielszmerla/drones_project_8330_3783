@@ -65,7 +65,7 @@ namespace BL
                 throw new BLConfigException("", ex);
 
             }
-            BatteryUsages = Dal.DroneElectricConsumations().Select(n => n ).ToArray();
+            BatteryUsages = Dal.DroneElectricConsumations().Select(n => n).ToArray();
 
             IntializeDrones();
 
@@ -145,26 +145,24 @@ namespace BL
                 if (random.NextDouble() > 0.5)
                 {
 
-                  List<DO.BaseStation> bases = (List<DO.BaseStation>)Dal.GetBaseStationsList(b=>b.NumOfSlots>0);
-                   DO. BaseStation b = Dal.GetBaseStation(bases[random.Next(bases.Count() - 1)].Id);
-                    drone.Location =dOBaseStation( b).Location;
+                    List<DO.BaseStation> bases = (List<DO.BaseStation>)Dal.GetBaseStationsList(b => b.NumOfSlots > 0);
+                    DO.BaseStation b = Dal.GetBaseStation(bases[random.Next(bases.Count() - 1)].Id);
+                    drone.Location = dOBaseStation(b).Location;
                     Dal.AddDroneCharge(drone.Id, b.Id);
                     drone.Status = Enums.DroneStatuses.Maintenance;
-                    drone.Battery =5  + 15 * random.NextDouble();
+                    drone.Battery = 5 + 15 * random.NextDouble();
                 }
                 else
                 {
 
-                    int? parcelId = Dal.GetParcelList(p => p.DroneId == drone.Id && p.Scheduled !=null  && p.Delivered == null).FirstOrDefault().Id;
+                    int? parcelId = Dal.GetParcelList(p => p.DroneId == drone.Id && p.Scheduled != null && p.Delivered == null).FirstOrDefault().Id;
                     if (parcelId != 0)
                     {
-
                         drone.DeliveryId = parcelId;
                         drone.Status = Enums.DroneStatuses.InDelivery;
                         drone.Location = findDroneLocation(drone);
                         double minBattery = drone.RequiredBattery(this, (int)parcelId);
-                        drone.Battery = minBattery + random.NextDouble() * (100 - minBattery);
-
+                        drone.Battery = minBattery + random.NextDouble() * (100 - minBattery); 
                     }
                     else
                     {
@@ -185,7 +183,7 @@ namespace BL
         /// <param name="checkStop"></param>
         public void StartDroneSimulator(int id, Action update, Func<bool> checkStop)
         {
-            new Simulator(this,  id, update,  checkStop);
+            new Simulator(this, id, update, checkStop);
         }
         /// <summary>
         /// func that search if any parcel with a certain weigth category is set to be sent py a certain drone 
@@ -215,7 +213,7 @@ namespace BL
         }
         private Location findDroneLocation(DroneToList drone)
         {
-            int? parcelId = drone.DeliveryId ;
+            int? parcelId = drone.DeliveryId;
 
             switch (drone.Status)
             {
@@ -223,22 +221,22 @@ namespace BL
                     return Dal.GetBaseStation(Dal.GetDroneChargeBaseStationId(drone.Id)).Location();
 
                 case Enums.DroneStatuses.InDelivery:
-                    
-                        DO.Parcel parcel = Dal.GetParcel((int)parcelId);
 
-                        if (parcel.PickedUp > DateTime.Now)
-                        {
-                            BO.Customer customer = GetCustomer(parcel.SenderId);
-                            return FindClosestBaseStation(customer).Location;
-                        }
-                        if (parcel.Delivered > DateTime.Now)
-                        {
-                            return GetCustomer(parcel.SenderId).Location;
-                        }
-                        return Dal.GetCustomer(parcel.TargetId).Location();
-                    
+                    DO.Parcel parcel = Dal.GetParcel((int)parcelId);
+
+                    if (parcel.PickedUp > DateTime.Now)
+                    {
+                        BO.Customer customer = GetCustomer(parcel.SenderId);
+                        return FindClosestBaseStation(customer).Location;
+                    }
+                    if (parcel.Delivered > DateTime.Now)
+                    {
+                        return GetCustomer(parcel.SenderId).Location;
+                    }
+                    return Dal.GetCustomer(parcel.TargetId).Location();
+
                 case Enums.DroneStatuses.Vacant:
-                    if (parcelId!=null)
+                    if (parcelId != null)
                         return GetCustomer(Dal.GetParcel((int)parcelId).TargetId).Location;
 
                     IEnumerable<DO.Parcel> targets = Dal.GetParcelList(parcel => parcel.DroneId == drone.Id && parcel.TargetId != 0);
@@ -447,14 +445,13 @@ namespace BL
             foreach (var drone in drones)
             {
                 if (drone.Location == new Location { Latitude = closestBase.Latitude, Longitude = closestBase.Longitude } && drone.Status == Enums.DroneStatuses.Maintenance)
+                {
                     droneCharge = new BO.DroneCharge { Id = drone.Id, BatteryStatus = drone.Battery };
-                dc.Add(droneCharge);
+                    dc.Add(droneCharge);
+                }
 
             }
             b.ChargingDrones = dc;
-
-
-
             return b;
         }
 

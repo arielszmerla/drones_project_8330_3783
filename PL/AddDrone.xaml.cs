@@ -22,18 +22,20 @@ namespace PL
     /// <summary>
     /// Interaction logic for DroneWindow.xaml
     /// </summary>
-    public partial class AddDrone : Window,INotifyPropertyChanged
+    public partial class AddDrone : Window, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-     readonly IBL bl = BLFactory.GetBL();
+        readonly IBL bl = BLFactory.GetBL();
         public static Model Model { get; } = Model.Instance;
         private Location loc = new();
-      //  IBL bl;
+        //  IBL bl;
         private PO.POAdapters poadapt = new PO.POAdapters();
 
+        BO.Drone drone;
+        public Drone Drone { get => drone; }
         public AddDrone(IBL bl)
         {
-
+            drone = new();
             InitializeComponent();
             Title = "ADD A DRONE";
             this.bl = bl;
@@ -44,28 +46,25 @@ namespace PL
             add_drone_titles.Visibility = Visibility.Visible;
             enter.Visibility = Visibility.Visible;
             update_drone.Visibility = Visibility.Collapsed; Show_BaseStation_stack.Visibility = Visibility.Collapsed; show_Drone_titles.Visibility = Visibility.Collapsed;
-
+            Auto.Visibility = Visibility.Collapsed;
         }
 
 
-        BO. Drone drone;
-        public Drone Drone { get => drone; }
-       // PO.Drone poDrone = new();
+        // PO.Drone poDrone = new();
         public AddDrone(IBL bl1, int i)
         {
-         
-            drone = this.bl.GetDrone(i);
+                       drone = this.bl.GetDrone(i);
             InitializeComponent();
-         
-         //   this.DataContext = poDrone;
-        
+
+            //   this.DataContext = poDrone;
+
             Title = "ACTIONS";
             Choose_models.ItemsSource = Enum.GetValues(typeof(Enums.DroneNames));
-           
+
             update_drone.Visibility = Visibility.Visible;
             //poDrone = poadapt.BODroneToPo(drone, poDrone);
         }
- 
+
         private void enter_your_drone(object sender, RoutedEventArgs e)
         {
 
@@ -91,9 +90,9 @@ namespace PL
             if (double.TryParse(ChooseLatitude.Text, out s))
             {
 
-                if (i >= 0)
+                if (s>= 0)
                 {
-                    loc.Latitude = i;
+                    loc.Latitude = s;
                 }
             }
             if (ChooseLatitude.Text == "")
@@ -102,7 +101,7 @@ namespace PL
                 MessageBox.Show("Please, number > 0");
                 ChooseLatitude.Background = Brushes.Red;
             }
-
+            s = 0;
             if (double.TryParse(ChooseLongitude.Text, out s))
             {
                 if (s >= 0)
@@ -145,12 +144,14 @@ namespace PL
                     bl.AddDrone(drone);
                     MessageBox.Show("Managed Add");
                     enter.Visibility = Visibility.Hidden;
+                    updateDroneView();
                     this.Close();
 
 
                 }
                 catch (BO.AddException ex)
                 {
+                   
                     MessageBox.Show(ex.Message);
                 }
 
@@ -179,25 +180,25 @@ namespace PL
             if (Drone.Status == (Enums.DroneStatuses)Enums.DroneStatuses.Vacant)
             {
                 bl.UpdateDroneSentToCharge(Drone.Id);
-              //  Drone = poadapt.BODroneToPo(bl.GetDrone(poDrone.Id), poDrone);
+                //  Drone = poadapt.BODroneToPo(bl.GetDrone(poDrone.Id), poDrone);
 
             }
-            else
+            else if (Drone.Status == (Enums.DroneStatuses)Enums.DroneStatuses.Maintenance)
             {
 
-                MessageBox.Show("insert how many hours to charge");
-                timespan_get.Visibility = Visibility.Visible;
+                // MessageBox.Show("insert how many hours to charge");
+                // timespan_get.Visibility = Visibility.Visible;
                 int i;
 
-                if (int.TryParse(timespan_get.Text, out i))
-                {
-                    if (i > 0)
-                    {
-                        time = new TimeSpan(int.Parse(timespan_get.Text), 0, 0);
-                        bl.UpdateReleaseDroneFromCharge(Drone.Id, time);
-                        timespan_get.Visibility = Visibility.Hidden;
-                     //   poDrone = poadapt.BODroneToPo(bl.GetDrone(poDrone.Id), poDrone);
-                    }
+                // if (int.TryParse(timespan_get.Text, out i))
+                //  {//
+                //  if (i > 0)
+                //  {
+                time = new TimeSpan(3, 0, 0);
+                bl.UpdateReleaseDroneFromCharge(Drone.Id, time);
+                timespan_get.Visibility = Visibility.Hidden;
+                //   poDrone = poadapt.BODroneToPo(bl.GetDrone(poDrone.Id), poDrone);
+                /*    }
 
                 }
                 else
@@ -205,9 +206,7 @@ namespace PL
                     timespan_get.Text = "";
                     MessageBox.Show("Please enter a positive number");
                     timespan_get.Background = Brushes.Red;
-                }
-
-
+                }*/
             }
 
             updateDroneView();
@@ -220,16 +219,16 @@ namespace PL
                 if (drone.Status == Enums.DroneStatuses.Vacant)
                 {
                     bl.UpdateAssignParcelToDrone(Drone.Id);
-                    drone.Status = Enums.DroneStatuses.InDelivery;
+
                 }
                 else if (drone.Status == Enums.DroneStatuses.InDelivery)
                 {
                     ParcelToList parcel = bl.GetParcelToListonDrone(Drone.Id);
 
-                    if (parcel != null)
+                    if (parcel.Id != 0)
                     {
                         Parcel p = bl.GetParcel(parcel.Id);
-                        if (p.PickedUp == null && p.Assignment!=null)
+                        if (p.PickedUp == null && p.Assignment != null)
                         {
                             bl.UpdateDroneToPickUpAParcel(Drone.Id);
                         }
@@ -265,7 +264,7 @@ namespace PL
             if (this.enter.Visibility != Visibility.Hidden)
                 e.Cancel = true;
             else { }
-              //  new DroneListWindow1(bl).Show();
+            //  new DroneListWindow1(bl).Show();
         }
 
 
@@ -348,7 +347,7 @@ namespace PL
                 worker = null;
                 if (enter.Visibility == Visibility.Hidden) Close();
             };
-             worker.ProgressChanged += (sender, args) => updateDroneView();
+            worker.ProgressChanged += (sender, args) => updateDroneView();
             worker.RunWorkerAsync(drone.Id);
         }
 
@@ -373,9 +372,10 @@ namespace PL
             {
                 drone = bl.GetDrone(Drone.Id);
                 // updateFlags();
-                if (PropertyChanged != null) {
-                    PropertyChanged(this,new PropertyChangedEventArgs("Drone"));
-                
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("Drone"));
+
                 }
 
                 DroneToList droneForList = Model.Drones.FirstOrDefault(d => d.Id == Drone.Id);
@@ -383,12 +383,15 @@ namespace PL
                 if (index >= 0)
                 {
                     Model.Drones.Remove(droneForList);
-                    Model.Drones.Insert(index, bl.GetDroneList(Drone.Status).Where(d=>d.Id==Drone.Id).FirstOrDefault());
+                    Model.Drones.Insert(index, bl.GetDroneList(Drone.Status).Where(d => d.Id == Drone.Id).FirstOrDefault());
                 }
             }
         }
 
+        private void BatteryProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
 
+        }
     }
 }
 

@@ -147,7 +147,7 @@ namespace BL
                             {
                                 try
                                 {
-                                    if (parcelId == 0) initDelivery((int)drone.DeliveryId);
+                                    if (parcelId == null) initDelivery((int)drone.DeliveryId);
                                 }
                                 catch (DO.ParcelExeption ex)
                                 {
@@ -196,8 +196,10 @@ namespace BL
                 d.Location = drone.Location;
                 d.Status = drone.Status;
                 d.Battery = drone.Battery;
-                bl.drones.RemoveAll(dr => dr.Id == drone.Id);
-                bl.drones.Add(d);
+
+                bl.drones[bl.drones.FindIndex(dr => dr.Id == drone.Id)].Location = drone.Location;
+                bl.drones[bl.drones.FindIndex(dr => dr.Id == drone.Id)] .Status=drone.Status;
+                bl.drones[bl.drones.FindIndex(dr => dr.Id == drone.Id)].Battery = drone.Battery;
                 updateDrone();
             } while (!checkStop());
         }
@@ -206,7 +208,7 @@ namespace BL
         {
             try
             {
-                Thread.Sleep(DELAY * 100);
+                Thread.Sleep(DELAY);
             }
             catch (ThreadInterruptedException)
             {

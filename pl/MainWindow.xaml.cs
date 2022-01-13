@@ -54,7 +54,6 @@ namespace PL
                 case
                     listChoice.BaseStations:
                     new BaseStationViewWindow(bl).Show();
-                    Close();
                     break;
                 case listChoice.Drones:
                     new DroneListWindow1(bl).Show();
@@ -66,6 +65,7 @@ namespace PL
                     new ParcelListWindow(bl).Show();
                     break;
             }
+            ViewOptions.SelectedItem = 0;
 
         }
 

@@ -7,19 +7,26 @@
         mc:Ignorable="d"
         Icon="\images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico"
         Closing="AddDrone_Closing"
-        Title="AddDrone" Height="500" Width="944"
+        Title="AddDrone" Height="500" Width="944"  WindowStyle="None"
          DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}" >
     <Window.Resources >
         <local:ConverterDoubleToInt x:Key="ConverterDoubleToInt"/>
         <local:ConverterLatitude x:Key="ConverterLatitude"/>
-
+        <local:BatteryToProgressBarConverter x:Key="BatteryToProgressBarConverter"/>
+        <local:BatteryToColorConverter x:Key="BatteryToColorConverter"/>
+        <local:KilometerConverter x:Key="KilometerConverter"/>
+        <local:DeliveryIdConverter x:Key="DeliveryIdConverter"/>
+        <local:statustoBoutton x:Key="statustoBoutton"/>
     </Window.Resources>
+    <Window.Clip>
+        <RectangleGeometry Rect="0,0,944,500" RadiusX="35" RadiusY="35"/>
+    </Window.Clip>
     <Window.Background>
         <ImageBrush ImageSource="\images\dronefon.jpg" />
     </Window.Background>
     <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto" Margin="0,-1,0,1">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -43,9 +50,9 @@
             <ComboBox ToolTip="Status select" Opacity="0.8"  Margin="0,10,0,0"   BorderBrush="Transparent"  Background="Bisque" x:Name="StatusSelectorToadd" HorizontalAlignment="Center"  Text="Choose status" IsEditable="True"
                  IsReadOnly="True" RenderTransformOrigin="0.5,0.5" Width="147" Height="34"/>
 
-            <TextBox Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Bisque" x:Name="ChooseLatitude" ToolTip="Enter Latitude"  Text= ""   Width="147" Height="27" RenderTransformOrigin="0.502,1.282" />
+            <TextBox Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Bisque" x:Name="ChooseLatitude" ToolTip="between 31.740967 and 31.815177"  Text= ""   Width="147" Height="27" RenderTransformOrigin="0.502,1.282" />
 
-            <TextBox Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Bisque" x:Name="ChooseLongitude" ToolTip="Enter Longitude"  Text= ""  Width="147" Height="27" />
+            <TextBox Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Bisque" x:Name="ChooseLongitude" ToolTip="between 35.171323 and 35.202050"  Text= ""  Width="147" Height="27" />
             <Button Opacity="0.9"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,20,0,0" FontWeight="ExtraBlack" x:Name="enter" Content="ADD THIS DRONE"  Click="enter_your_drone" Width="120" Height="84" RenderTransformOrigin="0.61,2.198">
 
             </Button>
@@ -76,9 +83,9 @@
 
                 <ComboBox Visibility="Visible" Margin="18,120,14,134"  Opacity="0.8"   BorderBrush="Transparent"  Background="Bisque" x:Name="Choose_models" ToolTip="Enter Model"  IsEditable="True" Text="Model Input Update" Height="38" SelectionChanged="Choose_models_SelectionChanged" />
 
-                <Button  BorderBrush="Transparent" Visibility="Visible" x:Name="DeliveryChanges" Content="deliverychange" HorizontalAlignment="Right"  VerticalAlignment="Top" Click="DeliveryChanges_Click" Height="46" Margin="0,16,14,0" Width="131"/>
+                <Button  BorderBrush="Transparent" Visibility="Visible" x:Name="DeliveryChanges" Content="Delivery change" HorizontalAlignment="Right"  VerticalAlignment="Top" Click="DeliveryChanges_Click" Height="46" Margin="0,16,14,0" Width="131"/>
                 <Button  BorderBrush="Transparent"   Visibility="Visible" x:Name="Update_Drone" Content="Update a drone" HorizontalAlignment="Center"  Width="131"  Height="46" Click="Update_Drone_Click" Margin="0,3,0,249"/>
-                <Button  BorderBrush="Transparent" x:Name="sendDrone"  Content="sendTocharge" Click="SendTo_charge"  HorizontalAlignment="Center"  Height="46" Width="131" Margin="0,132,0,272" />
+                <Button  BorderBrush="Transparent" x:Name="sendDrone"  Content="{Binding Text,ElementName=Statuss,Converter={StaticResource statustoBoutton} }"  Click="SendTo_charge" HorizontalAlignment="Center"  Height="46" Width="131" Margin="0,132,0,272" />
                 <TextBox  BorderBrush="Transparent"  Grid.Column="0" Visibility="Visible" x:Name="timespan_get" Text="" TextWrapping="Wrap" Margin="0,162,0,272" HorizontalAlignment="Left" Width="142" />
                 <Button  BorderBrush="Transparent"  x:Name="show_parcel_nDrone"  Content="Show Parcel" Click="show_parcel_inDrone"  HorizontalAlignment="Center"  Height="46" Width="130" Margin="0,132,0,272" Grid.Column="1" />
 
@@ -93,51 +100,42 @@
 
 
         </StackPanel>
-        <StackPanel x:Name="show_Drone_titles" Background="Transparent" Visibility="Visible" Orientation="Vertical" Grid.Column="0" Margin="10,-11,0,0" Height="434" VerticalAlignment="Top">
+        <StackPanel   x:Name="show_Drone_titles" Background="Transparent" Visibility="Visible" Orientation="Vertical" Grid.Column="0" Margin="10,-11,0,0" Height="434" VerticalAlignment="Top">
             <Label x:Name="IsD_UUUUUU" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
             <Label x:Name="IsD_" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
-            <Label x:Name="ShowIsD"  FontSize="20" Foreground="Black" BorderThickness="2" FontWeight="Bold" Width="180" Height="39"  BorderBrush="Black" >
+            <Label x:Name="ShowIsD"  FontSize="20" Foreground="Black" BorderThickness="2" FontWeight="Bold" Width="119" Height="39"  BorderBrush="Black" >
                 <TextBlock TextDecorations="Underline" 
-               Text="Updating Drone:"/>
+               Text="Drone:"/>
             </Label>
-            
-            <Label x:Name="ShowID" FontSize="15" Content="Id" Width="200" Height="27" HorizontalAlignment="Center"/>
-            <Label   x:Name="ShowName" FontSize="15" Content="Name"  HorizontalAlignment="Center" Width="201" Margin="0,10,0,0"/>
-            <Label    x:Name="Status" FontSize="14" Content="Status"  HorizontalAlignment="Center" Width="201" Margin="0,10,0,0"/>
-            <Label  x:Name="BatteryStatus" BorderBrush="Transparent"  FontSize="15" HorizontalAlignment="Center" Content="BatteryStatus" Width="201" Margin="0,10,0,0"/>
-            <Label  x:Name="locs" BorderBrush="Transparent"  FontSize="15" HorizontalAlignment="Center" Content="Location" Width="199" Margin="0,10,0,0"/>
+
+            <Label x:Name="ShowID" FontSize="15" Content="Id" Width="113" Height="27" HorizontalAlignment="Center"/>
+            <Label   x:Name="ShowName" FontSize="15" Content="Name"  HorizontalAlignment="Center" Width="110" Margin="0,10,0,0"/>
+            <Label    x:Name="Status" FontSize="14" Content="Status"  HorizontalAlignment="Center" Width="117" Margin="0,10,0,0"/>
+            <Label  x:Name="BatteryStatus" BorderBrush="Transparent"  FontSize="15" HorizontalAlignment="Center" Content="BatteryStatus" Width="115" Margin="0,10,0,0"/>
+            <Label  x:Name="locs" BorderBrush="Transparent"  FontSize="15" HorizontalAlignment="Center" Content="Location" Width="120" Margin="0,10,0,0"/>
 
         </StackPanel>
-        <StackPanel DataContext="{Binding Drone}" x:Name="Show_BaseStation_stack" Background="Transparent" Visibility="Visible"    Orientation="Vertical" Grid.Column="1"  Margin="0,29,32,-31">
+        <StackPanel DataContext="{Binding Drone}" x:Name="Show_BaseStation_stack" Background="Transparent" Visibility="Visible"    Orientation="Vertical" Grid.Column="1"  Margin="0,29,32,-31" RenderTransformOrigin="0.527,0.437">
 
             <Label x:Name="IsD_UUUU" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
             <Label x:Name="IsD_UUUUU" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
-          
-            <TextBox  x:Name="Show_Id" Opacity="0.8"  BorderBrush="Transparent" Background="Azure"  Text= "{Binding Id}" Width="145" Height="28"/>
+
+            <TextBox  x:Name="Show_Id" Opacity="0.8"  BorderBrush="Transparent" Background="Azure"  Text= "{Binding  Id}" Width="145" Height="28"/>
             <TextBox x:Name="Show_Name" Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Azure" Text= "{Binding Model}"  Width="147" Height="27" RenderTransformOrigin="0.502,1.282" />
-            <TextBox x:Name="Statuss" Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Azure" DataContext="{Binding}" Text= "{Binding Status}" Width="147" Height="27" RenderTransformOrigin="0.502,1.282" />
-            <TextBox x:Name="ShowNumOfFreeSlots" Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Azure"  DataContext="{Binding}"  Text= "{Binding Battery}" Width="147" Height="27" RenderTransformOrigin="0.502,1.282" />
-            <Label  Background="Azure" Margin="0,10,0,0"   HorizontalAlignment="Center" Height="27"  Width="175"
-                              Content="{Binding Location }"/>
-            <Grid>
-                <ProgressBar x:Name="BatteryStatu" Value="{Binding Path= Battery }" Orientation="Vertical" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Top"  SnapsToDevicePixels="True"  Background="Black" Margin="0" Height="80" Width="35" >
-                    <ProgressBar.ToolTip >
-                        <ToolTip Placement="Bottom" Visibility="Visible">
-                            <StackPanel>
-                                <!--<Label Content="50% remaining/ available (plugged in , charging)"/>-->
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Power Availability : "/>
-                                    <TextBlock Text="{Binding Path= Battery }"/>
-                                    <TextBlock Text="%"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </ToolTip>
-                    </ProgressBar.ToolTip>
-                </ProgressBar>
+            <TextBox x:Name="Statuss" Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Azure"  Text= "{Binding  Status}" Width="147" Height="27" RenderTransformOrigin="0.502,1.282" />
+            <Grid Height="27" Name="aba"  Margin="3" Width="158">
+                <ProgressBar Name="BatteryProgressBar"  Value="{Binding Battery}" ToolTip="{Binding Battery}"  Margin="0,10,0,0" Width="152" Foreground="{Binding Battery, Converter={StaticResource BatteryToColorConverter}}" Height="41" RenderTransformOrigin="0.52,0.613" ValueChanged="BatteryProgressBar_ValueChanged"/>
+
             </Grid>
+            <Label  Background="Azure" Margin="0,10,0,0"   HorizontalAlignment="Center" Height="27"  Width="175" Content="{Binding MaxWeight}"/>
+            <Label  Background="Azure" Margin="0,10,0,0"   HorizontalAlignment="Center" Height="27"  Width="175" Content="{Binding Location,Converter={StaticResource ConverterLatitude } }"/>
+            <Label  Background="Azure" Margin="0,10,0,0"   HorizontalAlignment="Center" Height="27"  Width="175" Content="{Binding DeliveryId , Converter={StaticResource DeliveryIdConverter }}"/>
+            <Label  Background="Azure" Margin="0,10,0,0"   HorizontalAlignment="Center" Height="27"  Width="175" Content="{Binding Distance ,Converter={StaticResource KilometerConverter} }"/>
+
+
         </StackPanel>
         <Button x:Name="simul" Content="Auto" Grid.Column="3" HorizontalAlignment="Left" Margin="147,150,0,0" VerticalAlignment="Top" Width="89" Click="simul_Click"/>
-        <Button  x:Name="Manual" Content="Manual" Grid.Column="3" HorizontalAlignment="Left" Margin="147,190,0,0" VerticalAlignment="Top" Width="89" Click="Manual_Click" />
+        <Button  x:Name="Manual" Visibility="Collapsed" Content="Manual" Grid.Column="3" HorizontalAlignment="Left" Margin="147,190,0,0" VerticalAlignment="Top" Width="89" Click="Manual_Click" />
         <CheckBox x:Name="Auto" Visibility="Hidden" Content="CheckBox" Grid.Column="3" HorizontalAlignment="Left" Margin="210,197,0,0" VerticalAlignment="Top"/>
 
     </Grid>

@@ -83,7 +83,6 @@ namespace PL
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Closing_Button.Visibility = Visibility.Hidden;
-            Close();
             new AddDrone(bl1).Show();
 
         }

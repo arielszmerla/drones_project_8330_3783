@@ -151,7 +151,8 @@ namespace BL
             {
                 Id = drone.Id,
                 MaxWeight = (DO.WeightCategories)drone.MaxWeight,
-                Model = (DO.DroneNames)drone.Model
+                Model = (DO.DroneNames)drone.Model,
+                 Valid=true
             };
             if (drone.Status == Enums.DroneStatuses.Maintenance)
             {
@@ -175,6 +176,13 @@ namespace BL
             try
             {
                 Dal.AddDrone(drone1);
+                if (drone.Status == Enums.DroneStatuses.Maintenance) {
+
+                    List<DO.BaseStation> bases = (List<DO.BaseStation>)Dal.GetBaseStationsList(b => b.NumOfSlots > 0);
+                    DO.BaseStation b = Dal.GetBaseStation(bases[random.Next(bases.Count() - 1)].Id);
+                    drone.Location = dOBaseStation(b).Location;
+                    Dal.AddDroneCharge(drone.Id, b.Id);
+                }
             }
             catch (DO.DroneException d)
             {
@@ -191,7 +199,7 @@ namespace BL
                 MaxWeight = drone.MaxWeight,
                 Model = drone.Model,
                 NumOfDeliveredParcel = 0,
-                Status = drone.Status
+                Status = drone.Status, Valid=true
             };
             drones.Add(dr);
 
