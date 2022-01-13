@@ -21,8 +21,8 @@
         <local:DeliveryIdConverter x:Key="DeliveryIdConverter"/>
         <DataTemplate x:Key="MyDataTemplate"
                   DataType="local:MyData">
- 
-    <Grid>
+
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"  />
                 </Grid.RowDefinitions>
@@ -75,70 +75,57 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Label BorderBrush="Black" BorderThickness="5" Grid.Row="0" Foreground="BlanchedAlmond" VerticalContentAlignment="Center" FontSize="25" FontWeight="DemiBold" Content="BY STATUS" x:Name="Status_label" Grid.Column="1" Margin="0,0,28,0" />
-            <ComboBox  Opacity  ="0.8"   BorderBrush="Transparent" Background="Bisque" ToolTip="Drone Status" FontSize="10" Text="Drone Status" x:Name="StatusSelector"  Grid.Column="1" HorizontalAlignment= "Left" VerticalAlignment="Stretch" SelectionChanged="StatusSelector_SelectionChanged"  Margin="172,0,0,0"/>
-            <Label Grid.Row="0" BorderBrush="Black" BorderThickness="5" VerticalContentAlignment="Center" Foreground="BlanchedAlmond" Grid.Column="2" FontSize="25" FontWeight="DemiBold" Content="BY WEIGHT" x:Name="Weight_label" Margin="0,0,28,0"  />
-            <ComboBox FontSize="10" Background="Bisque"  BorderBrush="Transparent" Opacity="0.8" ToolTip="Drone weight" Text="Drone weight" x:Name="WeightChoise" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Stretch"  SelectionChanged="WeightChoise_SelectionChanged" Margin="172,0,0,0"/>
+            <Label BorderBrush="Black" BorderThickness="5" Grid.Row="0" Foreground="BlanchedAlmond" VerticalContentAlignment="Center" FontSize="25" FontWeight="DemiBold" Content="BY STATUS" x:Name="Status_label" Margin="129,0,99,0" Grid.ColumnSpan="2" />
+            <ComboBox  Opacity  ="0.8"   BorderBrush="Transparent" Background="Bisque" ToolTip="Drone Status" FontSize="10" Text="Drone Status" x:Name="StatusSelector"  Grid.Column="1" SelectionChanged="StatusSelector_SelectionChanged"  Margin="104,0,61,0"/>
+            <Label Grid.Row="0" BorderBrush="Black" BorderThickness="5" VerticalContentAlignment="Center" Foreground="BlanchedAlmond" Grid.Column="1" FontSize="25" FontWeight="DemiBold" Content="BY WEIGHT" x:Name="Weight_label" Margin="142,0,76,0" Grid.ColumnSpan="2"  />
+            <ComboBox FontSize="10" Background="Bisque"  BorderBrush="Transparent" Opacity="0.8" ToolTip="Drone weight" Text="Drone weight" x:Name="WeightChoise" Grid.Column="2" HorizontalAlignment="Left"  SelectionChanged="WeightChoise_SelectionChanged" Margin="127,0,0,0" Width="20"/>
 
 
-            <Label  Content="MY DRONES"  FontStyle="Italic" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Black"  BorderThickness="5" FontSize="35" FontWeight="ExtraBlack" Grid.ColumnSpan="2" Grid.Column="1" Margin="0,53,0,-76"/>
+            <Label  Content="MY DRONES"  FontStyle="Italic" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Black"  BorderThickness="5" FontSize="35" FontWeight="ExtraBlack" Grid.ColumnSpan="3" Margin="129,53,52,-76"/>
             <Button BorderBrush="Transparent"  Opacity="0.8" x:Name="reset" Visibility="Hidden" Content="Reset List"  Grid.Column="3" HorizontalAlignment="Left" Margin="19,0,0,0" VerticalAlignment="Center" Height="72" Width="171" ToolTip="Reset List" Click="Reset_List"/>
 
         </Grid>
 
 
-        <ListView ItemsSource="{Binding Model.Drones, Mode=OneWay}"   Background="Transparent"  Foreground="DarkRed" x:Name="DroneListView"   FontSize="15" FontWeight="ExtraBlack" MouseDoubleClick="DroneListView_SelectionChanged" Margin="0,129,135,10" Grid.Row="1">
+        <ListView FontSize="10" ItemsSource="{Binding Model.Drones, Mode=OneWay}"   Background="Transparent"  Foreground="DarkRed" x:Name="DroneListView"   FontWeight="ExtraBlack" MouseDoubleClick="DroneListView_SelectionChanged" Margin="0,129,0,10" Grid.Row="1">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID:" DisplayMemberBinding="{Binding Id}"/>
                     <GridViewColumn Header="MODEL:" DisplayMemberBinding="{Binding Model}"/>
                     <GridViewColumn Header="Weight:" DisplayMemberBinding="{Binding MaxWeight}"/>
                     <GridViewColumn Header="Status:" DisplayMemberBinding="{Binding Status}"/>
+                    <GridViewColumn Header="Location:" DisplayMemberBinding="{Binding Location, Converter={StaticResource ConverterLatitude}}"/>
                     <GridViewColumn Header="Parcel:" DisplayMemberBinding="{Binding DeliveryId , Converter={StaticResource DeliveryIdConverter }}"/>
                     <GridViewColumn >
                         <GridViewColumn.CellTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <ProgressBar Name="BatteryProgressBar"  Margin="-5,-1"  Value="{Binding Battery, Mode=TwoWay,Converter={StaticResource BatteryToProgressBarConverter}}" Width="Auto" Foreground="{Binding Battery, Converter={StaticResource BatteryToColorConverter}}"/>
-                                <TextBlock Text="{Binding Value, ElementName=BatteryProgressBar}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Grid>
-                        </DataTemplate>
-                    </GridViewColumn.CellTemplate>
-                    <GridViewColumn Header="Location:" DisplayMemberBinding="{Binding Location  , Converter={StaticResource  ConverterLatitude}}"/>
-                        </GridViewColumn>
+                            <DataTemplate>
+                                <Grid>
+                                    <ProgressBar  Name="BatteryProgressBar" Value="{Binding Battery, Mode=TwoWay}" Height="20" Width="70" Foreground="{Binding Battery, Converter={StaticResource BatteryToColorConverter}}"/>
+                                    <TextBlock Text="{Binding Value, ElementName=BatteryProgressBar,Converter={StaticResource BatteryToProgressBarConverter}}"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+
                 </GridView>
             </ListView.View>
-
-            <ListView.GroupStyle>
-                <GroupStyle>
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate>
-                            <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Model}"/>
-
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
-                </GroupStyle>
-            </ListView.GroupStyle>
         </ListView>
-        <StackPanel x:Name="actions" Margin="644,30,0,133" Grid.Row="1" >
-            <Button Opacity="0.8" ToolTip="Click Here To Add" Margin="0,30,0,0" BorderBrush="Black" FontSize="16" Click="Button_Click" Height="59" Width="60">
-            </Button>
-
-
-            <Button    BorderBrush="Transparent" Margin="0,30,0,0" Opacity="0.8" ToolTip="Click Here To view on map" FontSize="16" BorderThickness="0.5" x:Name="View_On_Map" Click="View_Map" Width="64" Height="68" RenderTransformOrigin="-0.208,-4.179">
+        <StackPanel Orientation="Horizontal" x:Name="actions" Margin="554,49,0,266" Grid.RowSpan="2" >
+            <Button    BorderBrush="Transparent" Opacity="0.8" ToolTip="Click Here To view on map" FontSize="16" BorderThickness="0.5" x:Name="View_On_Map" Click="View_Map" Width="64" Height="68" RenderTransformOrigin="-0.208,-4.179">
                 <Button.Background>
                     <ImageBrush ImageSource="\images\Google_Maps_logo.png"/>
                 </Button.Background>
             </Button>
-        </StackPanel>
-        <StackPanel Grid.Row="1" Margin="644,250,0,25">
-            <Button    BorderBrush="Red" Margin="0,30,0,0" Opacity="0.8" ToolTip="Click Here To Close" FontSize="16" BorderThickness="0.5" x:Name="Closing_Button" Click="Closing_Button_Click" Width="64" Height="68" RenderTransformOrigin="-0.208,-4.179">
+            <Button Opacity="0.8" ToolTip="Click Here To Add" Margin="10,0,0,0" BorderBrush="Black" FontSize="16" Click="Button_Click" Height="59" Width="60"/>
+
+            <Button    BorderBrush="Red" Opacity="0.8" Margin="20,0,0,0"  ToolTip="Click Here To Close" FontSize="16" BorderThickness="0.5" x:Name="Closing_Button" Click="Closing_Button_Click" Width="54" Height="62" RenderTransformOrigin="-0.208,-4.179">
                 <Button.Background>
                     <ImageBrush ImageSource="\images\pngegg.png"/>
                 </Button.Background>
             </Button>
-
         </StackPanel>
+
 
     </Grid>
 </Window>

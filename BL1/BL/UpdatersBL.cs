@@ -110,8 +110,8 @@ namespace BL
                     return;
                 //find the heaviest parcel the drone can take
                 var parcelId = nextParcel(drone);
-                if (parcelId == null)
-                    throw new BadStatusException("Can't do it - battery is too low, please send to charge");
+                if (parcelId == null || parcelId==0)
+                    throw new GetException("Problem with parcel scheduling, no more parcels");
 
 
                 //if found a parcel that the drone can carry, update wanted states

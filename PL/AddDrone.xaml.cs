@@ -199,7 +199,10 @@ namespace PL
             {
                 if (drone.Status == Enums.DroneStatuses.Vacant)
                 {
+                    try { 
                     bl.UpdateAssignParcelToDrone(Drone.Id);
+                    }
+                    catch (GetException ex) { Model.Error(ex.Message); }
 
                 }
                 else if (drone.Status == Enums.DroneStatuses.InDelivery)
@@ -211,7 +214,12 @@ namespace PL
                         Parcel p = bl.GetParcel(parcel.Id);
                         if (p.PickedUp == null && p.Assignment != null)
                         {
-                            bl.UpdateDroneToPickUpAParcel(Drone.Id);
+                            try
+                            {
+                                bl.UpdateDroneToPickUpAParcel(Drone.Id);
+                            }
+                            catch (GetException ex) { Model.Error(ex.Message); }
+
                         }
                         else if (p.Delivered == null)
                         {
