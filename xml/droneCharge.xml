@@ -5,27 +5,11 @@
     <StationId>10003</StationId>
   </DroneCharge>
   <DroneCharge>
-    <DroneId>100001</DroneId>
-    <StationId>10000</StationId>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>100003</DroneId>
-    <StationId>10001</StationId>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>100004</DroneId>
-    <StationId>10001</StationId>
-  </DroneCharge>
-  <DroneCharge>
     <DroneId>100002</DroneId>
-    <StationId>10001</StationId>
-  </DroneCharge>
-  <DroneCharge>
-    <DroneId>128</DroneId>
-    <StationId>10000</StationId>
+    <StationId>10005</StationId>
   </DroneCharge>
   <DroneCharge>
     <DroneId>1276556</DroneId>
-    <StationId>10003</StationId>
+    <StationId>10001</StationId>
   </DroneCharge>
 </ArrayOfDroneCharge>
