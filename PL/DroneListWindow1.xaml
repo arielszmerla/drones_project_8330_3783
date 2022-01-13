@@ -18,6 +18,7 @@
         <local:BatteryToProgressBarConverter x:Key="BatteryToProgressBarConverter"/>
         <local:BatteryToColorConverter x:Key="BatteryToColorConverter"/>
 
+        <local:DeliveryIdConverter x:Key="DeliveryIdConverter"/>
         <DataTemplate x:Key="MyDataTemplate"
                   DataType="local:MyData">
  
@@ -93,12 +94,12 @@
                     <GridViewColumn Header="MODEL:" DisplayMemberBinding="{Binding Model}"/>
                     <GridViewColumn Header="Weight:" DisplayMemberBinding="{Binding MaxWeight}"/>
                     <GridViewColumn Header="Status:" DisplayMemberBinding="{Binding Status}"/>
-                    <GridViewColumn Header="Battery:" DisplayMemberBinding="{Binding Battery , Converter={StaticResource ConverterDoubleToInt }}"/>
+                    <GridViewColumn Header="Parcel:" DisplayMemberBinding="{Binding DeliveryId , Converter={StaticResource DeliveryIdConverter }}"/>
                     <GridViewColumn >
                         <GridViewColumn.CellTemplate>
                         <DataTemplate>
                             <Grid>
-                                <ProgressBar Name="BatteryProgressBar"  Margin="-5,-1"  Value="{Binding Battery, Mode=OneWay,Converter={StaticResource BatteryToProgressBarConverter}}" Width="Auto" Foreground="{Binding Battery, Converter={StaticResource BatteryToColorConverter}}"/>
+                                <ProgressBar Name="BatteryProgressBar"  Margin="-5,-1"  Value="{Binding Battery, Mode=TwoWay,Converter={StaticResource BatteryToProgressBarConverter}}" Width="Auto" Foreground="{Binding Battery, Converter={StaticResource BatteryToColorConverter}}"/>
                                 <TextBlock Text="{Binding Value, ElementName=BatteryProgressBar}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Grid>
                         </DataTemplate>
