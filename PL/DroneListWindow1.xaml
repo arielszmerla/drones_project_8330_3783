@@ -86,7 +86,7 @@
         </Grid>
 
 
-        <ListView ItemsSource="{Binding Model.Drones, Mode=OneWay}"   Background="Transparent"  Foreground="Black" x:Name="DroneListView"   FontSize="15" FontWeight="ExtraBlack" MouseDoubleClick="DroneListView_SelectionChanged" Margin="0,129,135,10" Grid.Row="1">
+        <ListView ItemsSource="{Binding Model.Drones, Mode=OneWay}"   Background="Transparent"  Foreground="DarkRed" x:Name="DroneListView"   FontSize="15" FontWeight="ExtraBlack" MouseDoubleClick="DroneListView_SelectionChanged" Margin="0,129,135,10" Grid.Row="1">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID:" DisplayMemberBinding="{Binding Id}"/>

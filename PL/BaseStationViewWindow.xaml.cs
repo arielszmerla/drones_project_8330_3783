@@ -94,7 +94,6 @@ namespace PL
         private void Button_Click(object sender, RoutedEventArgs e) { 
                
             PageStop.Visibility = Visibility.Hidden;
-            new AddBaseStation(bl).Show();
             Close();
 
         }

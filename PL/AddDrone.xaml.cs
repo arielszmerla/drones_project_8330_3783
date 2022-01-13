@@ -82,7 +82,7 @@ namespace PL
             else
             {
                 ChooseId.Text = "";
-                MessageBox.Show("Please enter a positive number");
+                Model.Error("Please enter a positive number");
                 ChooseId.Background = Brushes.Red;
             }
 
@@ -98,8 +98,7 @@ namespace PL
             }
             if (ChooseLatitude.Text == "")
             {
-                ;
-                MessageBox.Show("Please, number > 0");
+                Model.Error("Please, number > 0");
                 ChooseLatitude.Background = Brushes.Red;
             }
             s = 0;
@@ -113,7 +112,7 @@ namespace PL
             }
             if (ChooseLongitude.Text == "")
             {
-                MessageBox.Show("Please, number > 0");
+                Model.Error("Please, number > 0");
                 ChooseLongitude.Background = Brushes.Red;
 
             }
@@ -181,7 +180,6 @@ namespace PL
             if (Drone.Status == (Enums.DroneStatuses)Enums.DroneStatuses.Vacant)
             {
                 bl.UpdateDroneSentToCharge(Drone.Id);
-                //  Drone = poadapt.BODroneToPo(bl.GetDrone(poDrone.Id), poDrone);
 
             }
             else if (Drone.Status == (Enums.DroneStatuses)Enums.DroneStatuses.Maintenance)
@@ -270,7 +268,7 @@ namespace PL
 
             if (stat == Enums.DroneStatuses.InDelivery)
             {
-                MessageBox.Show(" your choice is impossible");
+                Model.Error("your choice is impossible");
                 stats.Background = Brushes.Red;
             }
             else

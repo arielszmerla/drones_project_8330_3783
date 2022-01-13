@@ -86,7 +86,7 @@ namespace PL
 
             if (ChooseName.Text == "")
             {
-                MessageBox.Show("Please enter a name");
+                Model.Error("Please enter a name");
                 ChooseName.Background = Brushes.Red;
             }
             else
@@ -108,7 +108,7 @@ namespace PL
             {
                 ChooseNumOfFreeSlots.Text = "";
                 ChooseNumOfFreeSlots.Background = Brushes.Red;
-                MessageBox.Show("Please enter a number between 2 to 8");
+                Model.Error("Please enter a number between 2 to 8");
             }
 
             //latitude
@@ -123,7 +123,7 @@ namespace PL
             else
             {
                 ChooseLatitude.Text = "";
-                MessageBox.Show("Please enter a latitude between 31.740967 and 31.815177");
+                Model.Error("Please enter a latitude between 31.740967 and 31.815177");
                 ChooseLatitude.Background = Brushes.Red;
             }
 
@@ -138,7 +138,7 @@ namespace PL
             else
             {
                 ChooseLongitude.Text = "";
-                MessageBox.Show("Please enter a longitude between 35.171323 and 35.202050");
+                Model.Error("Please enter a longitude between 35.171323 and 35.202050");
                 ChooseLongitude.Background = Brushes.Red;
             }
 

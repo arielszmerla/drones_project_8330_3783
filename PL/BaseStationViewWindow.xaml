@@ -13,7 +13,7 @@
     </Window.Background>
     <Grid>
 
-        <ListView x:Name="BaseStationView"  DataContext="" MouseDoubleClick="BaseStationView_MouseDoubleClick"  Background="Transparent" Margin="0,74,163,10" SelectionChanged="ListView_SelectionChanged">
+        <ListView x:Name="BaseStationView" FontStyle="Oblique" FontSize="16" Foreground="DarkRed"  DataContext=""  MouseDoubleClick="BaseStationView_MouseDoubleClick"  Background="Transparent" Margin="0,74,163,10" SelectionChanged="ListView_SelectionChanged">
 
             <ListView.View>
                 <GridView>
