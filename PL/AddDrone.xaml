@@ -132,7 +132,7 @@
             </Grid>
             <Label  Background="Azure" Margin="0,10,0,0"   HorizontalAlignment="Center" Height="27"  Width="175" Content="{Binding MaxWeight}"/>
             <Label  Background="Azure" Margin="0,10,0,0"   HorizontalAlignment="Center" Height="27"  Width="175" Content="{Binding Location,Converter={StaticResource ConverterLatitude } }"/>
-            <Label  Background="Azure" Margin="0,10,0,0"   HorizontalAlignment="Center" Height="27"  Width="175" Content="{Binding DeliveryId , Converter={StaticResource DeliveryIdConverter }}"/>
+            <Label  Background="Azure" Margin="0,10,0,0"   HorizontalAlignment="Center" Height="27"  Width="175" Content="{Binding DeliveryId, Converter={StaticResource DeliveryIdConverter }}"/>
             <Label  Background="Azure" Margin="0,10,0,0"   HorizontalAlignment="Center" Height="27"  Width="175" Content="{Binding Distance ,Converter={StaticResource KilometerConverter} }"/>
 
 

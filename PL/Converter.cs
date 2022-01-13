@@ -94,12 +94,11 @@ namespace PL
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
 
-            if (value == null||(int)value == 0  )
-            {
-                return "no next parcel yet";
-
-            }
-            return $"next parcel is:{(int)value}";
+            if (value == null )
+                return "no parcel";
+            else if( (int)value == 0)
+            return $"no next parcel yet";
+            else return $"next parcel is:{(int)value}";
 
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
