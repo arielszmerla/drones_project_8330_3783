@@ -19,6 +19,7 @@ namespace PL
     /// </summary>
     public partial class CustomerListWindow : Window
     {
+        public static Model Model { get; } = Model.Instance;
         BLAPI.IBL bl;
         public CustomerListWindow(BLAPI.IBL bl)
         {
@@ -32,7 +33,7 @@ namespace PL
             BO.CustomerToList  customer = (BO.CustomerToList)CustomerViewList.SelectedItem;
             if (customer == null)
             {
-                MessageBox.Show("click on a Customer please");
+                Model.Error("click on a Customer please");
             }
             else
             {
