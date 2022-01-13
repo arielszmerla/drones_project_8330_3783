@@ -3,7 +3,7 @@
   <baseStation>
     <id>10001</id>
     <name>Base Ramot</name>
-    <numOfSlots>4</numOfSlots>
+    <numOfSlots>6</numOfSlots>
     <latitude>31.8099077</latitude>
     <longitude>35.1855049</longitude>
     <valid>true</valid>
@@ -19,7 +19,7 @@
   <baseStation>
     <id>10000</id>
     <name>jean marc</name>
-    <numOfSlots>5</numOfSlots>
+    <numOfSlots>7</numOfSlots>
     <latitude>31.745156</latitude>
     <longitude>35.1751589</longitude>
     <valid>true</valid>
@@ -27,7 +27,7 @@
   <baseStation>
     <id>10004</id>
     <name>Base Mercazit</name>
-    <numOfSlots>5</numOfSlots>
+    <numOfSlots>6</numOfSlots>
     <latitude>31.7835426</latitude>
     <longitude>35.208293</longitude>
     <valid>true</valid>
@@ -43,7 +43,7 @@
   <baseStation>
     <id>10005</id>
     <name>bloby</name>
-    <numOfSlots>9</numOfSlots>
+    <numOfSlots>10</numOfSlots>
     <latitude>31.764764</latitude>
     <longitude>35.189358</longitude>
     <valid>true</valid>
