@@ -2,6 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+          xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
@@ -17,6 +18,7 @@
         <local:KilometerConverter x:Key="KilometerConverter"/>
         <local:DeliveryIdConverter x:Key="DeliveryIdConverter"/>
         <local:statustoBoutton x:Key="statustoBoutton"/>
+        <local:LocationtoMapLocation x:Key="LocationtoMapLocation"/>
     </Window.Resources>
     <Window.Clip>
         <RectangleGeometry Rect="0,0,944,500" RadiusX="35" RadiusY="35"/>
@@ -88,8 +90,9 @@
                 <Button  BorderBrush="Transparent" x:Name="sendDrone"  Content="{Binding Text,ElementName=Statuss,Converter={StaticResource statustoBoutton} }"  Click="SendTo_charge" HorizontalAlignment="Center"  Height="46" Width="131" Margin="0,132,0,272" />
                 <TextBox  BorderBrush="Transparent"  Grid.Column="0" Visibility="Visible" x:Name="timespan_get" Text="" TextWrapping="Wrap" Margin="0,162,0,272" HorizontalAlignment="Left" Width="142" />
                 <Button  BorderBrush="Transparent"  x:Name="show_parcel_nDrone"  Content="Show Parcel" Click="show_parcel_inDrone"  HorizontalAlignment="Center"  Height="46" Width="130" Margin="0,132,0,272" Grid.Column="1" />
+                       
 
-
+  
 
                 <Button  BorderBrush="Transparent" Margin="66,46,31,336" Opacity="0.8" ToolTip="Click Here To view on map" FontSize="16" BorderThickness="0.5" x:Name="View_On_Map" Click="View_Map" Width="64" Height="68" RenderTransformOrigin="-0.208,-4.179" Grid.Column="1">
                     <Button.Background>

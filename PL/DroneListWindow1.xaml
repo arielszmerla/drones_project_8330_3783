@@ -13,9 +13,11 @@
             <EventSetter Event="MouseDoubleClick" Handler="Drone_MouseDoubleClick" />
             <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
         </Style>
-
-    <local:ConverterDoubleToInt x:Key="ConverterDoubleToInt"/>
+        <local:ConverterDoubleToInt x:Key="ConverterDoubleToInt"/>
         <local:ConverterLatitude x:Key="ConverterLatitude"/>
+        <local:BatteryToProgressBarConverter x:Key="BatteryToProgressBarConverter"/>
+        <local:BatteryToColorConverter x:Key="BatteryToColorConverter"/>
+
         <DataTemplate x:Key="MyDataTemplate"
                   DataType="local:MyData">
  
@@ -92,7 +94,17 @@
                     <GridViewColumn Header="Weight:" DisplayMemberBinding="{Binding MaxWeight}"/>
                     <GridViewColumn Header="Status:" DisplayMemberBinding="{Binding Status}"/>
                     <GridViewColumn Header="Battery:" DisplayMemberBinding="{Binding Battery , Converter={StaticResource ConverterDoubleToInt }}"/>
+                    <GridViewColumn >
+                        <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <ProgressBar Name="BatteryProgressBar"  Margin="-5,-1"  Value="{Binding Battery, Mode=OneWay,Converter={StaticResource BatteryToProgressBarConverter}}" Width="Auto" Foreground="{Binding Battery, Converter={StaticResource BatteryToColorConverter}}"/>
+                                <TextBlock Text="{Binding Value, ElementName=BatteryProgressBar}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
                     <GridViewColumn Header="Location:" DisplayMemberBinding="{Binding Location  , Converter={StaticResource  ConverterLatitude}}"/>
+                        </GridViewColumn>
                 </GridView>
             </ListView.View>
 

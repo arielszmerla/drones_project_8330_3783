@@ -47,6 +47,7 @@ namespace PL
             enter.Visibility = Visibility.Visible;
             update_drone.Visibility = Visibility.Collapsed; Show_BaseStation_stack.Visibility = Visibility.Collapsed; show_Drone_titles.Visibility = Visibility.Collapsed;
             Auto.Visibility = Visibility.Collapsed;
+
         }
 
 
@@ -57,10 +58,10 @@ namespace PL
             InitializeComponent();
 
             //   this.DataContext = poDrone;
-
+            locasa = drone.Location;
             Title = "ACTIONS";
             Choose_models.ItemsSource = Enum.GetValues(typeof(Enums.DroneNames));
-
+           // myMap.DataContext = locasa;
             update_drone.Visibility = Visibility.Visible;
             //poDrone = poadapt.BODroneToPo(drone, poDrone);
         }
@@ -365,7 +366,7 @@ namespace PL
             }
 
         }
-
+        Location locasa = new();
         private void updateDroneView()
         {
             lock (bl)
@@ -379,6 +380,7 @@ namespace PL
                 }
 
                 DroneToList droneForList = Model.Drones.FirstOrDefault(d => d.Id == Drone.Id);
+                
                 int index = Model.Drones.IndexOf(droneForList);
                 if (index >= 0)
                 {

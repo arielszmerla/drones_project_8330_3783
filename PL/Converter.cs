@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
+using Microsoft.Maps.MapControl.WPF;
 
 namespace PL
 {
@@ -65,6 +66,7 @@ namespace PL
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+
             Double val = (Double)value;
             if (val == 0)
                 return "(no next stop scheduled yet)";
@@ -74,7 +76,19 @@ namespace PL
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
                 throw new NotImplementedException();
     }
-
+    internal class LocationtoMapLocation : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            BO.Location val = (BO.Location)value;
+            Pushpin pin = new();
+            pin.Location.Latitude = val.Latitude;
+            pin.Location.Longitude = val.Longitude;
+            return val;
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
+                throw new NotImplementedException();
+    }
     internal class DeliveryIdConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
