@@ -94,9 +94,9 @@ namespace PL
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
 
-            if ((int)value == 0)
+            if (value == null||(int)value == 0  )
             {
-                return "no next parcel scheduled yet";
+                return "no next parcel yet";
 
             }
             return $"next parcel is:{(int)value}";
