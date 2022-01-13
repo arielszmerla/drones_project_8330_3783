@@ -10,10 +10,10 @@ using DO;
 
 namespace DalXML
 {
-    class XMLTolls
+    class XMLTools
     {
         static string dir = @"xml\";
-        static XMLTolls()
+        static XMLTools()
         {
             if (!Directory.Exists(dir))
                 Directory.CreateDirectory(dir);

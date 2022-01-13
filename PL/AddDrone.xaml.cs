@@ -152,8 +152,8 @@ namespace PL
                 }
                 catch (BO.AddException ex)
                 {
-                   
-                    MessageBox.Show(ex.Message);
+
+                    Model.Error("In maintenance");
                 }
 
             }
@@ -186,28 +186,10 @@ namespace PL
             }
             else if (Drone.Status == (Enums.DroneStatuses)Enums.DroneStatuses.Maintenance)
             {
-
-                // MessageBox.Show("insert how many hours to charge");
-                // timespan_get.Visibility = Visibility.Visible;
-                int i;
-
-                // if (int.TryParse(timespan_get.Text, out i))
-                //  {//
-                //  if (i > 0)
-                //  {
                 time = new TimeSpan(3, 0, 0);
                 bl.UpdateReleaseDroneFromCharge(Drone.Id, time);
                 timespan_get.Visibility = Visibility.Hidden;
-                //   poDrone = poadapt.BODroneToPo(bl.GetDrone(poDrone.Id), poDrone);
-                /*    }
-
-                }
-                else
-                {
-                    timespan_get.Text = "";
-                    MessageBox.Show("Please enter a positive number");
-                    timespan_get.Background = Brushes.Red;
-                }*/
+           
             }
 
             updateDroneView();
@@ -247,7 +229,7 @@ namespace PL
             }
             catch (AddException)
             {
-                this.myEvent("Missed Update");
+                Model.Error("Missed Update");
             }
             this.myEvent("Managed Update");
             //  poDrone = poadapt.BODroneToPo(bl.GetDrone(poDrone.Id), poDrone);
@@ -313,7 +295,7 @@ namespace PL
             }
             catch (BO.GetException ex)
             {
-                MessageBox.Show(ex.Message);
+                Model.Error(ex.Message);
             }
         }
 
