@@ -20,6 +20,7 @@ namespace PL
     public partial class ParcelListWindow : Window
     {
         BLAPI.IBL bl;
+        public static Model Model { get; } = Model.Instance;
         public ParcelListWindow(BLAPI.IBL bl,string name="")
         {
 
@@ -97,7 +98,9 @@ namespace PL
                         MessageBox.Show("Delete done");
                     }
                     catch (BO.DeleteException exc)
-                    { MessageBox.Show(exc.Message); }
+                    {
+                        Model.Error(exc.Message);
+                    }
                     Closing_Button.Visibility = Visibility.Hidden;
 
 

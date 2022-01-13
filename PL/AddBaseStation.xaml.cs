@@ -206,7 +206,7 @@ namespace PL
                 bs.Name = Name_Update.Text;
             if (bs.NumOfFreeSlots < 0)
             {
-                MessageBox.Show("Please enter a positive number");
+                Model.Error("Please enter a positive number");
                 SLOTS_UPDATE.Text = "";
                 SLOTS_UPDATE.Background = Brushes.Red;
             }

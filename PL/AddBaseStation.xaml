@@ -60,7 +60,7 @@
             <Button x:Name="enter" Opacity="0.9"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,20,0,0" FontWeight="ExtraBlack"  Content="ADD"  Click="enter_your_baseStation" Width="120" Height="84" RenderTransformOrigin="0.61,2.198"/>
 
         </StackPanel>
-        <StackPanel x:Name="Update_BaseStation"  Visibility="Visible"  Background="Transparent" Orientation="Vertical" Margin="10,0,0,0" Height="434" VerticalAlignment="Center" Grid.Column="2">
+        <StackPanel x:Name="Update_BaseStation"  Visibility="Collapsed"  Background="Transparent" Orientation="Vertical" Margin="10,0,0,0" Height="434" VerticalAlignment="Center" Grid.Column="2">
             <Label x:Name="IsD_U" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
             <Label x:Name="IsD_UU" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
 
