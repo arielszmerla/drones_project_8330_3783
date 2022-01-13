@@ -210,17 +210,21 @@ namespace PL
                 SLOTS_UPDATE.Text = "";
                 SLOTS_UPDATE.Background = Brushes.Red;
             }
-            try
+            else
             {
-                bl.UpdateBaseStation(bs.Id, bs.NumOfFreeSlots, bs.Name);
+                try
+                {
+                    bl.UpdateBaseStation(bs.Id, bs.NumOfFreeSlots, bs.Name);
+                }
+                catch (BO.GetException x)
+                {
+                    Model.Error(x.Message);
+                }
+                PageStop.Visibility = Visibility.Hidden;
+                new BaseStationViewWindow(bl).Show();
+                this.Close();
             }
-            catch (BO.GetException x)
-            {
-                Model.Error(x.Message);
-            }
-            PageStop.Visibility = Visibility.Hidden;
-            new BaseStationViewWindow(bl).Show();
-            this.Close();
+           
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)

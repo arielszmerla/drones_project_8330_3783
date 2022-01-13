@@ -745,6 +745,7 @@ namespace DalXML
                            NumOfSlots = int.Parse(basestation.Element("numOfSlots").Value),
                            Valid = bool.Parse(basestation.Element("valid").Value)
                        }).FirstOrDefault();
+
             }
             catch
             {

@@ -11,7 +11,7 @@
   <baseStation>
     <id>10002</id>
     <name>Base ZOO</name>
-    <numOfSlots>3</numOfSlots>
+    <numOfSlots>4</numOfSlots>
     <latitude>31.7861624</latitude>
     <longitude>35.1822896</longitude>
     <valid>true</valid>
@@ -19,15 +19,15 @@
   <baseStation>
     <id>10003</id>
     <name>Base Kotel</name>
-    <numOfSlots>2</numOfSlots>
+    <numOfSlots>3</numOfSlots>
     <latitude>31.7897954</latitude>
     <longitude>35.202992</longitude>
-    <valid>true</valid>
+    <valid>false</valid>
   </baseStation>
   <baseStation>
     <id>10004</id>
     <name>Base Mercazit</name>
-    <numOfSlots>5</numOfSlots>
+    <numOfSlots>2</numOfSlots>
     <latitude>31.7835426</latitude>
     <longitude>35.208293</longitude>
     <valid>true</valid>
