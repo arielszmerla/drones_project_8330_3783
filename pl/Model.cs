@@ -2,6 +2,8 @@
 using BO;
 using BLAPI;
 using System.Collections.ObjectModel;
+using System.Windows;
+using System.Media;
 
 namespace PL
 {
@@ -50,6 +52,12 @@ namespace PL
         public void DronesRefresh()
         {
             Drones = new(bl.GetDroneList((BO.Enums.DroneStatuses?)StatusSelector, (BO.Enums.WeightCategories?)WeightSelector));
+        }
+
+        public static void Error(string ex)
+        {
+            SystemSounds.Beep.Play();
+            MessageBox.Show(ex,"", MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
 
     }
