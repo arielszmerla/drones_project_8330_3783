@@ -50,6 +50,11 @@ namespace PL
             DataContext = baseStation;
         }
 
+        /// <summary>
+        /// function for closing the page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void End_the_page(object sender, RoutedEventArgs e)
         {
             PageStop.Visibility = Visibility.Hidden;
@@ -57,16 +62,29 @@ namespace PL
             this.Close();
         }
 
+        /// <summary>
+        /// function to provide the user from clicking the exit button 
+        /// on the corner of the page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddBaseStationClosing(object sender, CancelEventArgs e)
         {
             if (PageStop.Visibility != Visibility.Hidden)
                 e.Cancel = true;
 
         }
+
+        /// <summary>
+        /// button for adding a base station
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void enter_your_baseStation(object sender, RoutedEventArgs e)
         {
+            // we check very basic logic of each content before sending for update
             int s;
-            // first we insert id into the base station
+          
             if (int.TryParse(ChooseId.Text, out s))
             {
                 if (s > 0)
@@ -77,7 +95,7 @@ namespace PL
                 else
                 {
                     ChooseId.Text = "";
-                    MessageBox.Show("Please enter a positive number");
+                    Model.Error("Please enter a positive number");
                     ChooseId.Background = Brushes.Red;
                 }
             }
@@ -191,12 +209,22 @@ namespace PL
         {
 
         }
-
+        /// <summary>
+        /// update number of slots 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SLOTS_UPDATE_TextChanged(object sender, TextChangedEventArgs e)
         {
+            //when the user writes anything background return to bisque
             SLOTS_UPDATE.Background = Brushes.Bisque;
         }
 
+        /// <summary>
+        /// update func
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Update_Click(object sender, RoutedEventArgs e)
         {
             int s;
@@ -227,6 +255,11 @@ namespace PL
            
         }
 
+        /// <summary>
+        /// delete function
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -242,15 +275,17 @@ namespace PL
             this.Close();
         }
 
+        /// <summary>
+        /// function to show drones in a certain base station
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ViewDrones_Click(object sender, RoutedEventArgs e)
         {
             new DroneListWindow1(bs.Id,bl).Show();
         }
 
-        private void View_Map(object sender, RoutedEventArgs e)
-        {
-            new MapsDisplay(bs, bl).Show();
-        }
+       
 
     }
 }
