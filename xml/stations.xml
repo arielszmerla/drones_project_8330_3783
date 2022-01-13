@@ -3,7 +3,7 @@
   <baseStation>
     <id>10001</id>
     <name>Base Ramot</name>
-    <numOfSlots>5</numOfSlots>
+    <numOfSlots>4</numOfSlots>
     <latitude>31.8099077</latitude>
     <longitude>35.1855049</longitude>
     <valid>true</valid>
@@ -19,7 +19,7 @@
   <baseStation>
     <id>10005</id>
     <name>Base Machon_lev</name>
-    <numOfSlots>6</numOfSlots>
+    <numOfSlots>5</numOfSlots>
     <latitude>31.764764</latitude>
     <longitude>35.189358</longitude>
     <valid>true</valid>
