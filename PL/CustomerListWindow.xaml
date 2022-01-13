@@ -4,27 +4,28 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
-        mc:Ignorable="d"  Icon="\images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico"
-        Title="Customer  List" Height="450" Width="800">
+        mc:Ignorable="d"  Icon="\images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" WindowStyle="None"
+        Title="CUSTOMER LIST" Height="450" Width="800">
     <Window.Background>
-
-
         <ImageBrush ImageSource="\images\customerspic.png"/>
     </Window.Background>
-    <Grid>
+    <Window.Resources >
+        <local:ItemToColorConvert x:Key="ItemToColorConvert"/>
+        </Window.Resources >
+            <Grid>
         
-        <ListView x:Name="CustomerViewList" Background="Transparent" Margin="0,94,80,0" SelectionChanged="ListView_SelectionChanged">
+        <ListView x:Name="CustomerViewList"  FontSize="12" FontWeight="ExtraBlack" Background="Transparent" Margin="0,94,80,0" SelectionChanged="ListView_SelectionChanged">
             <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Path=Id}"/>
+                <GridView >
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Path=Id}"  >
+                       
+                    </GridViewColumn>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
                     <GridViewColumn Header="PHONE" DisplayMemberBinding="{Binding Path=Phone}"/>
-                    <GridViewColumn Header="Phone" DisplayMemberBinding="{Binding Path=NumberOfParcelsSentAndDelivered}"/>
-
-                    <GridViewColumn Header="NumberOfParcelsSentButNotDelivered" DisplayMemberBinding="{Binding Path=NumberOfParcelsSentButNotDelivered}"/>
-                    <GridViewColumn Header="NumberOfParcelsSentAndDelivered" DisplayMemberBinding="{Binding Path=NumberOfParcelsSentAndDelivered}"/>
-                    <GridViewColumn Header="NumberOfParcelsReceived" DisplayMemberBinding="{Binding Path=NumberOfParcelsReceived}"/>
-                    <GridViewColumn Header="NumberOfParcelsonTheWay" DisplayMemberBinding="{Binding Path=NumberOfParcelsonTheWay}"/>
+                    <GridViewColumn Header="Parcel Sent and delivered" DisplayMemberBinding="{Binding Path=NumberOfParcelsSentAndDelivered}"/>
+                    <GridViewColumn Header="Parcels Sent But Not Delivered" DisplayMemberBinding="{Binding Path=NumberOfParcelsSentButNotDelivered}"/>
+                    <GridViewColumn Header="Parcels Received" DisplayMemberBinding="{Binding Path=NumberOfParcelsReceived}"/>
+                    <GridViewColumn Header="Parcels on the Way" DisplayMemberBinding="{Binding Path=NumberOfParcelsonTheWay}"/>
                 </GridView>
             </ListView.View>
         </ListView>

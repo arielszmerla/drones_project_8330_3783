@@ -734,7 +734,7 @@ namespace DalXML
             try
             {
                 bas = (from basestation in baseRoot.Elements()
-                       where (basestation.Element("valid").Value) == true.ToString()
+                       where (basestation.Element("valid").Value) == "true"
                        where int.Parse(basestation.Element("id").Value) == bs.Id
                        select new BaseStation()
                        {
@@ -755,7 +755,7 @@ namespace DalXML
                 throw new BaseExeption("id of base not found");
             // we delete old base station with same id from the list
             XElement xElement = (from basestation in baseRoot.Elements()
-                                 where (basestation.Element("valid").Value) == true.ToString()
+                                 where (basestation.Element("valid").Value) == "true"
                                  where int.Parse(basestation.Element("id").Value) == bs.Id
                                  select basestation).FirstOrDefault();
             xElement.Remove();
