@@ -23,6 +23,7 @@ namespace PL
     /// </summary>
     public partial class AddBaseStation : Window
     {
+        public static Model Model { get; } = Model.Instance;
         private Location loc = new();
         private IBL bl;
         public AddBaseStation(IBL bl)
@@ -174,10 +175,7 @@ namespace PL
                 }
                 catch (BO.AddException x)
                 {
-
-                    SystemSounds.Beep.Play();
-                    MessageBox.Show(x.Message);
-                    return;
+                    Model.Error(x.Message);
                 }
             }
             else
@@ -218,7 +216,7 @@ namespace PL
             }
             catch (BO.GetException x)
             {
-                MessageBox.Show(x.ToString());
+                Model.Error(x.Message);
             }
             PageStop.Visibility = Visibility.Hidden;
             new BaseStationViewWindow(bl).Show();
@@ -233,7 +231,7 @@ namespace PL
             }
             catch (DeleteException x)
             {
-                MessageBox.Show(x.ToString());
+                Model.Error(x.Message);
             }
             PageStop.Visibility = Visibility.Hidden;
             new BaseStationViewWindow(bl).Show();
