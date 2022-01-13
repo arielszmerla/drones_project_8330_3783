@@ -129,4 +129,55 @@ namespace PL
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
                 throw new NotImplementedException();
     }
+    public class ItemToColorConvert : IValueConverter
+    {
+        //this converts the item from your data source to the color brush
+        //of the background of the row
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            //cast the value parameter to the type of item in your data source
+            Random RAND = new();
+           double r = RAND.NextDouble();
+            if (r>0.1) //some condition you want to use to choose the color
+            {
+                //highlight
+                return Brushes.Red;
+            }
+            else if (r>0.2)
+            {
+                //leave no background
+                return Brushes.Blue;
+            }
+            else if (r > 0.3)
+            {
+                //leave no background
+                return Brushes.Yellow;
+            }
+            else if (r > 0.5)
+            {
+                //leave no background
+                return Brushes.Green;
+            }
+            else if (r > 0.7)
+            {
+                //leave no background
+                return Brushes.Beige;
+            }
+            else if (r > 0.9)
+            {
+                //leave no background
+                return Brushes.Turquoise;
+            }
+            else
+            {
+                //leave no background
+                return Brushes.Transparent;
+            }
+   
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
+        throw new NotImplementedException();
+
     }
+}

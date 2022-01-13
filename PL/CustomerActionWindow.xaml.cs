@@ -17,13 +17,15 @@ using System.Windows.Shapes;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for CustomerActionWindow.xaml
+    /// Customer show list
     /// </summary>
     public partial class CustomerActionWindow : Window
     {
         int id;
         private BLAPI.IBL bl1;
-        public CustomerActionWindow(BLAPI.IBL bl, int n, int v=0)
+        public static Model Model { get; } = Model.Instance;
+
+        public CustomerActionWindow(BLAPI.IBL bl, int n, int v = 0)
         {
             InitializeComponent();
             this.bl1 = bl;
@@ -36,21 +38,23 @@ namespace PL
                 }
                 catch (BO.DeleteException exc)
                 {
-                    MessageBox.Show(exc.Message);
+                    Model.Error(exc.Message);
+
                     Close();
                 }
             }
-            else {
+            else
+            {
                 customers.Add(bl.GetCustomerToList(n));
                 CustomerView.ItemsSource = customers;
                 id = customers[0].Id;
             }
-            
+
 
         }
-    
-       List< BO.CustomerToList> customers = new();
-        BO.Customer customer= new();
+
+        List<BO.CustomerToList> customers = new();
+        BO.Customer customer = new();
         public CustomerActionWindow(BLAPI.IBL bl, BO.CustomerToList cus)
         {
             InitializeComponent();
@@ -70,7 +74,7 @@ namespace PL
 
         private void Update(object sender, RoutedEventArgs e)
         {
-            if (Phone.Text != "\r" &&Phone.Text != "") //checks that key wasn't enter
+            if (Phone.Text != "\r" && Phone.Text != "") //checks that key wasn't enter
             {
                 Regex myReg = new Regex("[^0-9]+"); //gets regular expression that allows only digits
                 if (!myReg.IsMatch(Phone.Text)) //checks taht key entered is regular expression
@@ -78,7 +82,9 @@ namespace PL
                 else
                 {
                     Phone.Text = "";
-                    MessageBox.Show("Please enter a positive number");
+                 
+                    Model.Error("Please enter a positive number");
+                
                     Phone.Background = Brushes.Red;
                     return;
                 }
@@ -108,15 +114,16 @@ namespace PL
                     Close();
 
                 }
-                catch (BO.GetException exc) {
-                    SystemSounds.Beep.Play();
-                    MessageBox.Show(exc.ToString());
+                catch (BO.GetException exc)
+                {
+                    Model.Error(exc.Message);
+
                 }
 
             }
         }
 
-       
+
         private void _SelectCustomerViewListionChanged(object sender, SelectionChangedEventArgs e)
         {
             Close();
