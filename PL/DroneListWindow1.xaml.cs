@@ -86,32 +86,6 @@ namespace PL
             new AddDrone(bl1).Show();
 
         }
-
-        /*   private void drone_action(object sender, MouseButtonEventArgs e)
-           {/*
-               PO.DroneToList drone = (PO.DroneToList)DroneListView.SelectedItem;
-               if (drone == null)
-               {
-                   MessageBox.Show("click on a drone please");
-               }
-               else
-               {
-
-                   BO.Drone dr = new BO.Drone
-                   {
-                       Id = drone.Id,
-                       Battery = drone.Battery,
-                       Location = drone.Location,
-                       MaxWeight = (Enums.WeightCategories)drone.MaxWeight,
-                       Model = (Enums.DroneNames)drone.Model,
-                       PID = null,
-                       Status = (Enums.DroneStatuses)drone.Status
-                   };
-                   Closing_Button.Visibility = Visibility.Hidden;
-                   new AddDrone(bl1, dr).Show();
-                   //   Close();
-               new AddDrone(bl, bl.GetDrone(((DroneToList)((ListViewItem)sender).DataContext).Id)).Show();
-           }*/
         private void Drone_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
             new AddDrone(bl,((DroneToList)((ListViewItem)sender).DataContext).Id).Show();
 
