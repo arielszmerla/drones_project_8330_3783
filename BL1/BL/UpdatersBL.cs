@@ -46,7 +46,7 @@ namespace BL
                 dr.NumOfDeliveredParcel++;
                 dr.DeliveryId = 0;
                 drones[drones.FindIndex(d => dr.Id == dr.Id)].Status = dr.Status;
-                drones[drones.FindIndex(d => dr.Id == dr.Id)].NumOfDeliveredParcel++;
+                drones[drones.FindIndex(d => dr.Id == dr.Id)].NumOfDeliveredParcel+=1;
                 drones[drones.FindIndex(d => dr.Id == dr.Id)].Battery = dr.Battery;
                 drones[drones.FindIndex(d => dr.Id == dr.Id)].Location = dr.Location;
                 try
@@ -89,6 +89,7 @@ namespace BL
                     drones[drones.FindIndex(dr => dr.Id == drone.Id)].Status = drone.Status;
                     drones[drones.FindIndex(dr => dr.Id == drone.Id)].Battery = drone.Battery;
                     drones[drones.FindIndex(dr => dr.Id == drone.Id)].Location = drone.Location;
+                    drones[drones.FindIndex(dr => dr.Id == drone.Id)].DeliveryId = p.Id;
                     Dal.ParcelPickup(p.Id);
                 }
                 else throw new BatteryException($"DRONE { drone.Id } DOESN'T HAVE ENOUGH BATTERY\n");

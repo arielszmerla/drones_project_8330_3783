@@ -163,7 +163,7 @@ namespace BL
                         Model = (Enums.DroneNames)dr.Model,
                         Battery = drones.Find(dr => dr.Id == dr.Id).Battery,
                         Status = drones.Find(dr => dr.Id == dr.Id).Status,
-                        DeliveryId = 0,
+                        DeliveryId = Dal.GetParcelList(p => p.Delivered == null && p.PickedUp!= null&& p.DroneId == dr.Id).Count(),
                         Valid = dr.Valid,
                         NumOfDeliveredParcel = Dal.GetParcelList(p => p.Delivered != null && p.DroneId == dr.Id).Count()
 

@@ -24,6 +24,8 @@ namespace PL
     /// </summary>
     public partial class MapsDisplay : Window
     {
+
+
         public static Model Model { get; } = Model.Instance;
         IBL bl;
         private BO.Drone drone;
@@ -43,6 +45,12 @@ namespace PL
                 ToolTipService.SetToolTip(pin, item);
                 MapLayer.SetPosition(pin, pin.Location);
                 // var mytemplate As System.Windows.Controls.ControlTemplate = FindResource("PushpinControlTemplate");
+                // Define the image to use as the pushpin icon.
+                Image pinImage = new Image();
+
+                //Define the URI location of the image.
+                pinImage.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri("/image/drone.png", UriKind.Relative));
+                pin.DataContext = pinImage;
                 pin.MouseDoubleClick += PinClicked;
                 myMap.Children.Add(pin);
 

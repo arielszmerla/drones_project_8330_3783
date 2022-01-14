@@ -25,7 +25,7 @@
         <RectangleGeometry Rect="0,0,944,500" RadiusX="35" RadiusY="35"/>
     </Window.Clip>
     <Window.Background>
-        <ImageBrush ImageSource="\images\dronefon.jpg" />
+        <ImageBrush ImageSource="\images\drona.jpg" />
     </Window.Background>
     <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto" Margin="0,-1,0,1">
         <Grid.ColumnDefinitions>

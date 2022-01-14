@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="PL.DroneListWindow1"
         mc:Ignorable="d"   Icon="\images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico"
         Closing="list_closing" WindowStyle="None"
-         Title = "LIST OF DRONES" Height="550" Width="950" BorderThickness="3" HorizontalAlignment="Center"  BorderBrush="Beige"  DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}" Loaded="Window_Loaded">
+         Title = "LIST OF DRONES" Height="700" Width="1300" BorderThickness="3" HorizontalAlignment="Center"   BorderBrush="Beige"  DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}" Loaded="Window_Loaded">
     <Window.Resources>
         <Style x:Key="ItemStyle" TargetType="{x:Type ListViewItem}">
             <EventSetter Event="MouseDoubleClick" Handler="Drone_MouseDoubleClick" />
@@ -54,11 +54,9 @@
         </DataTemplate>
     </Window.Resources>
 
-    <Window.Clip>
-        <RectangleGeometry Rect="0,0,944,500" RadiusX="35" RadiusY="35"/>
-    </Window.Clip>
+
     <Window.Background>
-        <ImageBrush ImageSource="\images\dronefon.jpg" />
+        <ImageBrush  ImageSource="\images\drona.jpg"/>
     </Window.Background>
 
     <Grid x:Name="MainGrid">
@@ -75,19 +73,19 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Label BorderBrush="Black" BorderThickness="5" Grid.Row="0" Foreground="BlanchedAlmond" VerticalContentAlignment="Center" FontSize="25" FontWeight="DemiBold" Content="BY STATUS" x:Name="Status_label" Margin="129,0,99,0" Grid.ColumnSpan="2" />
-            <ComboBox  Opacity  ="0.8"   BorderBrush="Transparent" Background="Bisque" ToolTip="Drone Status" FontSize="10" Text="Drone Status" x:Name="StatusSelector"  Grid.Column="1" SelectionChanged="StatusSelector_SelectionChanged"  Margin="104,0,61,0"/>
-            <Label Grid.Row="0" BorderBrush="Black" BorderThickness="5" VerticalContentAlignment="Center" Foreground="BlanchedAlmond" Grid.Column="1" FontSize="25" FontWeight="DemiBold" Content="BY WEIGHT" x:Name="Weight_label" Margin="142,0,76,0" Grid.ColumnSpan="2"  />
-            <ComboBox FontSize="10" Background="Bisque"  BorderBrush="Transparent" Opacity="0.8" ToolTip="Drone weight" Text="Drone weight" x:Name="WeightChoise" Grid.Column="2" HorizontalAlignment="Left"  SelectionChanged="WeightChoise_SelectionChanged" Margin="127,0,0,0" Width="20"/>
+            <Label BorderBrush="Black" BorderThickness="5" Grid.Row="0" Foreground="BlanchedAlmond" VerticalContentAlignment="Center" FontSize="25" FontWeight="DemiBold" Content="BY STATUS" x:Name="Status_label" Margin="214,5,57,-5" Grid.ColumnSpan="2" />
+            <ComboBox  Opacity  ="0.8"   BorderBrush="Transparent" Background="Bisque" ToolTip="Drone Status" FontSize="10" Text="Drone Status" x:Name="StatusSelector"  Grid.Column="1" SelectionChanged="StatusSelector_SelectionChanged"  Margin="272,7,308,-7" Grid.ColumnSpan="2"/>
+            <Label Grid.Row="0" BorderBrush="Black" BorderThickness="5" VerticalContentAlignment="Center" Foreground="BlanchedAlmond" Grid.Column="2" FontSize="25" FontWeight="DemiBold" Content="BY WEIGHT" x:Name="Weight_label" Margin="10,5,284,-5" Grid.ColumnSpan="2"  />
+            <ComboBox FontSize="10" Background="Bisque"  BorderBrush="Transparent" Opacity="0.8" ToolTip="Drone weight" Text="Drone weight" x:Name="WeightChoise" Grid.Column="3" HorizontalAlignment="Left"  SelectionChanged="WeightChoise_SelectionChanged" Margin="44,5,0,-5" Width="52"/>
 
 
-            <Label  Content="MY DRONES"  FontStyle="Italic" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Black"  BorderThickness="5" FontSize="35" FontWeight="ExtraBlack" Grid.ColumnSpan="3" Margin="129,53,52,-76"/>
+            <Label  Content="MY DRONES"  FontStyle="Italic" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Black"  BorderThickness="5" FontSize="35" FontWeight="ExtraBlack" Grid.ColumnSpan="4" Margin="214,89,228,-112"/>
             <Button BorderBrush="Transparent"  Opacity="0.8" x:Name="reset" Visibility="Hidden" Content="Reset List"  Grid.Column="3" HorizontalAlignment="Left" Margin="19,0,0,0" VerticalAlignment="Center" Height="72" Width="171" ToolTip="Reset List" Click="Reset_List"/>
 
         </Grid>
 
 
-        <ListView FontSize="10" ItemsSource="{Binding Model.Drones, Mode=OneWay}"   Background="Transparent"  Foreground="DarkRed" x:Name="DroneListView"   FontWeight="ExtraBlack" MouseDoubleClick="DroneListView_SelectionChanged" Margin="0,129,0,10" Grid.Row="1">
+        <ListView FontSize="14" ItemsSource="{Binding Model.Drones, Mode=OneWay}"   Background="Transparent"  Foreground="DarkRed" x:Name="DroneListView"   FontWeight="ExtraBlack" MouseDoubleClick="DroneListView_SelectionChanged" Margin="0,129,133,10" Grid.Row="1">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID:" DisplayMemberBinding="{Binding Id}"/>
@@ -112,15 +110,20 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <StackPanel Orientation="Horizontal" x:Name="actions" Margin="554,49,0,266" Grid.RowSpan="2" >
-            <Button    BorderBrush="Transparent" Opacity="0.8" ToolTip="Click Here To view on map" FontSize="16" BorderThickness="0.5" x:Name="View_On_Map" Click="View_Map" Width="64" Height="68" RenderTransformOrigin="-0.208,-4.179">
+        <StackPanel Orientation="Vertical"
+                    x:Name="actions" Margin="1118,111,0,59" Grid.Row="1" >
+            <Button    BorderBrush="Transparent" Margin="10,80,0,0"  Opacity="0.8" ToolTip="Click Here To view on map" FontSize="16" BorderThickness="0.5" x:Name="View_On_Map" Click="View_Map" Width="64" Height="68" RenderTransformOrigin="-0.208,-4.179">
                 <Button.Background>
                     <ImageBrush ImageSource="\images\Google_Maps_logo.png"/>
                 </Button.Background>
             </Button>
-            <Button Opacity="0.8" ToolTip="Click Here To Add" Margin="10,0,0,0" BorderBrush="Black" FontSize="16" Click="Button_Click" Height="59" Width="60"/>
+            <Button Opacity="0.8" ToolTip="Click Here To Add" Margin="10,80,0,0" BorderBrush="Black" FontSize="16" Click="Button_Click" Height="59" Width="60">
+                <Button.Background>
+                    <ImageBrush ImageSource="\images\pluspic.png"/>
+                </Button.Background>
+            </Button>
 
-            <Button    BorderBrush="Red" Opacity="0.8" Margin="20,0,0,0"  ToolTip="Click Here To Close" FontSize="16" BorderThickness="0.5" x:Name="Closing_Button" Click="Closing_Button_Click" Width="54" Height="62" RenderTransformOrigin="-0.208,-4.179">
+            <Button    BorderBrush="Red" Opacity="0.8" Margin="10,80,0,0"  ToolTip="Click Here To Close" FontSize="16" BorderThickness="0.5" x:Name="Closing_Button" Click="Closing_Button_Click" Width="54" Height="62" RenderTransformOrigin="-0.208,-4.179">
                 <Button.Background>
                     <ImageBrush ImageSource="\images\pngegg.png"/>
                 </Button.Background>

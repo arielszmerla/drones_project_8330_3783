@@ -59,7 +59,7 @@
     </Window.Resources>
     <Window.Background>
        
-        <ImageBrush ImageSource="images/dronefon.jpg"     />
+        <ImageBrush ImageSource="images/drona.jpg"     />
     </Window.Background>
 
     <Grid>
@@ -82,7 +82,7 @@
         </StackPanel>
         <StackPanel Grid.Column="1" Margin="95,0,0,0">
             <Button    Style="{StaticResource MaterialDesignMenuCommandButtonStyle}"
-          x:Name="Manager_Entry" Content="MANAGER" Margin="1,250,200,0" Height="50" HorizontalAlignment="Left" Width="86" Grid.Column="1" Click="Manager_Entry_Click"/>
+          x:Name="Manager_Entry" Content="MANAGER" Margin="1,250,200,0" Height="50" HorizontalAlignment="Left" Width="103" Grid.Column="1" Click="Manager_Entry_Click"/>
             <Label x:Name="enterPassword" Content="Enter password" Visibility="Collapsed" HorizontalAlignment="Left" Width="108" FontWeight="ExtraBlack" Margin="0,5,0,0" >
             </Label>
  
