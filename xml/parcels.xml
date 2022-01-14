@@ -30,10 +30,10 @@
     <TargetId>100000008</TargetId>
     <Priority>Normal</Priority>
     <Requested>2022-01-03T20:48:57.2176031+02:00</Requested>
-    <DroneId>0</DroneId>
-    <Scheduled xsi:nil="true" />
-    <PickedUp xsi:nil="true" />
-    <Delivered xsi:nil="true" />
+    <DroneId>100006</DroneId>
+    <Scheduled>2022-01-14T14:01:43.5508429+02:00</Scheduled>
+    <PickedUp>2022-01-14T14:01:46.0727537+02:00</PickedUp>
+    <Delivered>2022-01-14T14:01:47.5861493+02:00</Delivered>
     <Weight>Light</Weight>
   </Parcel>
   <Parcel>
@@ -162,10 +162,10 @@
     <TargetId>100000009</TargetId>
     <Priority>Normal</Priority>
     <Requested>2021-12-30T10:51:35</Requested>
-    <DroneId>0</DroneId>
-    <Scheduled xsi:nil="true" />
-    <PickedUp xsi:nil="true" />
-    <Delivered xsi:nil="true" />
+    <DroneId>100006</DroneId>
+    <Scheduled>2022-01-14T14:01:48.113399+02:00</Scheduled>
+    <PickedUp>2022-01-14T14:01:49.6258845+02:00</PickedUp>
+    <Delivered>2022-01-14T14:01:50.1341066+02:00</Delivered>
     <Weight>Light</Weight>
   </Parcel>
   <Parcel>
@@ -234,10 +234,10 @@
     <TargetId>100000006</TargetId>
     <Priority>Normal</Priority>
     <Requested>2021-12-30T10:51:35</Requested>
-    <DroneId>0</DroneId>
-    <Scheduled xsi:nil="true" />
-    <PickedUp xsi:nil="true" />
-    <Delivered xsi:nil="true" />
+    <DroneId>100006</DroneId>
+    <Scheduled>2022-01-14T14:01:50.6520501+02:00</Scheduled>
+    <PickedUp>2022-01-14T14:01:50.6602777+02:00</PickedUp>
+    <Delivered>2022-01-14T14:01:52.1956898+02:00</Delivered>
     <Weight>Light</Weight>
   </Parcel>
   <Parcel>
@@ -306,10 +306,10 @@
     <TargetId>100000004</TargetId>
     <Priority>Fast</Priority>
     <Requested>2021-12-30T10:51:35</Requested>
-    <DroneId>0</DroneId>
-    <Scheduled xsi:nil="true" />
-    <PickedUp xsi:nil="true" />
-    <Delivered xsi:nil="true" />
+    <DroneId>100006</DroneId>
+    <Scheduled>2022-01-14T14:01:38.9121764+02:00</Scheduled>
+    <PickedUp>2022-01-14T14:01:40.4441334+02:00</PickedUp>
+    <Delivered>2022-01-14T14:01:43.0093725+02:00</Delivered>
     <Weight>Light</Weight>
   </Parcel>
   <Parcel>

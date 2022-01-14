@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="PL.DroneListWindow1"
         mc:Ignorable="d"   Icon="\images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico"
         Closing="list_closing" WindowStyle="None"
-         Title = "LIST OF DRONES" Height="450" Width="800" BorderThickness="3"  BorderBrush="Beige"  DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}" Loaded="Window_Loaded">
+         Title = "LIST OF DRONES" Height="550" Width="950" BorderThickness="3" HorizontalAlignment="Center"  BorderBrush="Beige"  DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}" Loaded="Window_Loaded">
     <Window.Resources>
         <Style x:Key="ItemStyle" TargetType="{x:Type ListViewItem}">
             <EventSetter Event="MouseDoubleClick" Handler="Drone_MouseDoubleClick" />
