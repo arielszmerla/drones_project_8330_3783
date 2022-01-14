@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DLAPI": {
+      "commandName": "Project",
+      "workingDirectory": "$(SolutionDir)"
+    }
+  }
+}
