@@ -138,7 +138,8 @@ namespace BL
                           Model = (Enums.DroneNames)dr.Model,
                           MaxWeight = (Enums.WeightCategories)dr.MaxWeight,
                           Valid = true,
-                          DeliveryId = null
+                          DeliveryId = null,
+                          NumOfDeliveredParcel = Dal.GetParcelList(p => p.DroneId == dr.Id && p.Delivered != null).Count()
                       }).ToList();
             foreach (var drone in drones)
             {

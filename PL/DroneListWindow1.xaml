@@ -96,6 +96,7 @@
                     <GridViewColumn Header="Status:" DisplayMemberBinding="{Binding Status}"/>
                     <GridViewColumn Header="Location:" DisplayMemberBinding="{Binding Location, Converter={StaticResource ConverterLatitude}}"/>
                     <GridViewColumn Header="Parcel:" DisplayMemberBinding="{Binding DeliveryId , Converter={StaticResource DeliveryIdConverter }}"/>
+                    <GridViewColumn Header="Number of delivered parcel:" DisplayMemberBinding="{Binding NumOfDeliveredParcel}"/>
                     <GridViewColumn >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>

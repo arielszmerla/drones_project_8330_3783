@@ -146,12 +146,13 @@ namespace BL
 
                 return bs;
             }
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <param name="dr"></param>
-            /// <returns></returns>
-            private DroneToList dODroneToList(DO.Drone dr)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dr"></param>
+        /// <returns></returns>
+        [Obsolete("not in use but can be usable")]
+        private DroneToList dODroneToList(DO.Drone dr)
             {
                 lock (Dal)
                     return new DroneToList
@@ -164,8 +165,7 @@ namespace BL
                         Status = drones.Find(dr => dr.Id == dr.Id).Status,
                         DeliveryId = 0,
                         Valid = dr.Valid,
-
-                        NumOfDeliveredParcel = Dal.GetParcelList(p => p.Delivered != null && p.DroneId == dr.Id).Count(),
+                        NumOfDeliveredParcel = Dal.GetParcelList(p => p.Delivered != null && p.DroneId == dr.Id).Count()
 
                     };
             }
