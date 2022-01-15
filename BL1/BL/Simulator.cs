@@ -15,7 +15,7 @@ namespace BL
     class Simulator
     {
         enum Maintenance { Starting, Going, Charging }
-        private const double VELOCITY =0.5;
+        private const double VELOCITY = 0.5;
         private const int DELAY = 500;
         private const double TIME_STEP = DELAY / 1000.0;
         private const double STEP = VELOCITY / TIME_STEP;
@@ -47,10 +47,9 @@ namespace BL
 
             do
             {
-                //(var next, var id) = drone.nextAction(bl);
-
+                DroneToList d = bl.drones.Find(dr => dr.Id == drone.Id); //a temo unit for changes in UI
                 switch (drone)
-                {
+                {//incase drone vacant
                     case Drone { Status: Enums.DroneStatuses.Vacant }:
                         //if false it means the worker is off!
                         if (!sleepDelayTime()) break;
@@ -64,10 +63,10 @@ namespace BL
                                                  .ThenByDescending(p => p.Weight)
                                                  .FirstOrDefault().Id;
                                 switch (parcelId, drone.Battery)
-                                {
+                                {//if no parcel a drone fully charged///remains waiting
                                     case (0, 100):
                                         break;
-
+                                    //if no parcel but need to be chargwed so go to base
                                     case (0, _):
                                         baseStationId = bl.FindClosestBaseStation(drone)?.Id;
                                         if (baseStationId != null)
@@ -77,7 +76,7 @@ namespace BL
                                             dal.AddDroneCharge(droneId, (int)baseStationId);
                                         }
                                         break;
-                                    case (_, _):
+                                    case (_, _):// if parcel found go to take it
                                         try
                                         {
                                             dal.ParcelSchedule((int)parcelId, droneId);
@@ -90,10 +89,10 @@ namespace BL
                                 }
                             }
                         break;
-
+                    //case drone in maintenace satus
                     case Drone { Status: Enums.DroneStatuses.Maintenance }:
                         switch (maintenance)
-                        {
+                        {//if he is not yet at the base///go further
                             case Maintenance.Starting:
                                 lock (bl) lock (dal)
                                     {
@@ -103,15 +102,15 @@ namespace BL
                                         maintenance = Maintenance.Going;
                                     }
                                 break;
-
-                            case Maintenance.Going:
+                            //carry on the drone's way
+                            case Maintenance.Going://if got there
                                 if (distance < 0.01 || drone.Battery == 0.0)
                                     lock (bl)
                                     {
                                         drone.Location = bs.Location;
                                         maintenance = Maintenance.Charging;
                                     }
-                                else
+                                else//get more charge
                                 {
                                     if (!sleepDelayTime()) break;
                                     lock (bl)
@@ -122,16 +121,16 @@ namespace BL
                                     }
                                 }
                                 break;
-
+                            //if in charging
                             case Maintenance.Charging:
-                                if (drone.Battery == 100)
+                                if (drone.Battery == 100)//if full release it
                                     lock (bl) lock (dal)
                                         {
                                             drone.Status = Enums.DroneStatuses.Vacant;
                                             dal.DeleteDroneCharge(droneId);
 
                                         }
-                                else
+                                else//get more baterry
                                 {
                                     if (!sleepDelayTime()) break;
                                     lock (bl) drone.Battery = Min(100, drone.Battery + bl.BatteryUsages[DRONE_CHARGE] * TIME_STEP);
@@ -141,13 +140,13 @@ namespace BL
                                 throw new GetException("Internal error: wrong maintenance substate");
                         }
                         break;
-
+                        //if drone in delivery status
                     case Drone { Status: Enums.DroneStatuses.InDelivery }:
                         lock (bl) lock (dal)
                             {
                                 try
                                 {
-                                    if (parcelId == null) initDelivery((int)drone.DeliveryId);
+                                    if (parcelId == null) initDelivery((int)drone.DeliveryId);//if parcel not found//got o find
                                 }
                                 catch (DO.ParcelExeption ex)
                                 {
@@ -156,23 +155,24 @@ namespace BL
                                 distance = drone.Distances(customer);
                             }
 
-                        if (distance < 0.01 || drone.Battery == 0)
+                        if (distance < 0.01 || drone.Battery == 0)//on parcels location
                             lock (bl) lock (dal)
                                 {
                                     drone.Location = customer.Location;
-                                    if (pickedUp)
+                                    if (pickedUp)//if the drone already picked up so is arrived to delivery
                                     {
                                         dal.ParcelDelivery((int)parcel?.Id);
                                         drone.Status = Enums.DroneStatuses.Vacant;
+                                        d.NumOfDeliveredParcel++;
                                     }
-                                    else
+                                    else//take the parcel to the next customer
                                     {
                                         dal.ParcelPickup((int)parcel?.Id);
                                         customer = bl.GetCustomer((int)parcel?.TargetId);
                                         pickedUp = true;
                                     }
                                 }
-                        else
+                        else//if drone in the way..so go further
                         {
                             if (!sleepDelayTime()) break;
                             lock (bl)
@@ -191,18 +191,21 @@ namespace BL
                         throw new GetException("Internal error: not available after Delivery...");
 
                 }
-              DroneToList d = bl.drones.Find(dr => dr.Id == drone.Id);
+              
                 d.Location = drone.Location;
                 d.Status = drone.Status;
                 d.Battery = drone.Battery;
-
+                bl.drones[bl.drones.FindIndex(dr => dr.Id == drone.Id)].NumOfDeliveredParcel = d.NumOfDeliveredParcel;
                 bl.drones[bl.drones.FindIndex(dr => dr.Id == drone.Id)].Location = drone.Location;
-                bl.drones[bl.drones.FindIndex(dr => dr.Id == drone.Id)] .Status=drone.Status;
+                bl.drones[bl.drones.FindIndex(dr => dr.Id == drone.Id)].Status = drone.Status;
                 bl.drones[bl.drones.FindIndex(dr => dr.Id == drone.Id)].Battery = drone.Battery;
                 updateDrone();
-            } while (!checkStop());
+            } while (!checkStop());//while no stopped thread carry on loop 
         }
-
+        /// <summary>
+        /// func that put the thread on sleep for a short while
+        /// </summary>
+        /// <returns> if living thred</returns>
         private static bool sleepDelayTime()
         {
             try
@@ -215,7 +218,19 @@ namespace BL
             }
             return true;
         }
+        /// <summary>
+        /// calculate min
+        /// </summary>
+        /// <param name="a">param to compare</param>
+        /// <param name="b">param to compare</param>
+        /// <returns></returns>
         private double Max(double a, double b) => a > b ? a : b;
+        /// <summary>
+        /// calculate min
+        /// </summary>
+        /// <param name="a">param to compare</param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         private double Min(double a, double b) => a < b ? a : b;
     }
 

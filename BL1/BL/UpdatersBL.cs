@@ -46,7 +46,7 @@ namespace BL
                 dr.NumOfDeliveredParcel++;
                 dr.DeliveryId = 0;
                 drones[drones.FindIndex(d => dr.Id == dr.Id)].Status = dr.Status;
-                drones[drones.FindIndex(d => dr.Id == dr.Id)].NumOfDeliveredParcel+=1;
+                drones[drones.FindIndex(d => dr.Id == dr.Id)].NumOfDeliveredParcel=dr.NumOfDeliveredParcel;
                 drones[drones.FindIndex(d => dr.Id == dr.Id)].Battery = dr.Battery;
                 drones[drones.FindIndex(d => dr.Id == dr.Id)].Location = dr.Location;
                 try

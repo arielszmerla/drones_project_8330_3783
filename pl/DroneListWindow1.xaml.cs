@@ -28,7 +28,6 @@ namespace PL
         private int id;
         private IBL bl;
         List<PO.DroneToList> poDroneToList = new();
-        PO.POAdapters poadapt = new();
         public static Model Model { get; } = Model.Instance;
 
         void Window_Loaded(object sender, RoutedEventArgs e) => Model.DronesRefresh();
