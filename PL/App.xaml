@@ -7,9 +7,10 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <materialDesign1:CustomColorTheme BaseTheme="Light" PrimaryColor="Beige" SecondaryColor="DarkGreen" />
+                <materialDesign1:CustomColorTheme BaseTheme="Light" PrimaryColor="Beige" SecondaryColor="Blue" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
+    

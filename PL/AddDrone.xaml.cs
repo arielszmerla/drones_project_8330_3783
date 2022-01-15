@@ -319,7 +319,13 @@ namespace PL
         private bool checkStop() => worker.CancellationPending;
 
 
-        private void Manual_Click(object sender, RoutedEventArgs e) => worker?.CancelAsync();
+        private void Manual_Click(object sender, RoutedEventArgs e)
+        {
+            worker?.CancelAsync();
+
+            hide(false);
+
+        }
 
         private void simul_Click(object sender, RoutedEventArgs e)
         {
@@ -346,11 +352,15 @@ namespace PL
             {
                 update_drone.Visibility = Visibility.Collapsed;
                 Manual.Visibility = Visibility.Visible;
+           simul.Visibility = Visibility.Collapsed;
+                PageStop.Visibility = Visibility.Collapsed;
             }
             else
             {
                 update_drone.Visibility = Visibility.Visible;
                 Manual.Visibility = Visibility.Collapsed;
+                simul.Visibility = Visibility.Visible;
+                PageStop.Visibility = Visibility.Visible;
             }
 
         }

@@ -34,7 +34,10 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-
+        <Label x:Name="ShowIsD"  FontSize="20" Foreground="Black" BorderThickness="2" FontWeight="Bold" Width="113" Height="39"  BorderBrush="Black" >
+            <TextBlock TextDecorations="Underline" 
+               Text="Drone:"/>
+        </Label>
         <Button x:Name="PageStop"  Visibility="Visible" Grid.Column="3" HorizontalAlignment="Left"  Margin="158,47,0,348" Click="End_the_page" RenderTransformOrigin="0.832,-0.311" Width="38">
 
             <Button.Background>
@@ -76,7 +79,7 @@
             <Label  Background="Transparent"   BorderBrush="Transparent"  Visibility="Visible" x:Name="Longitude" FontSize="15" Content="Enter Longitude" Width="127" Margin="0,10,0,0"/>
 
         </StackPanel>
-        <StackPanel Background="Transparent" Visibility="Visible"  x:Name="update_drone" Orientation="Vertical" Grid.Column="2" Margin="0,104,89,44" Grid.ColumnSpan="2">
+        <StackPanel Background="Transparent" Visibility="Visible"  x:Name="update_drone" Orientation="Vertical" Grid.Column="2" Margin="0,104,220,67" Grid.ColumnSpan="2">
             <Grid Height="450" Width="321">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -84,13 +87,16 @@
                 </Grid.ColumnDefinitions>
 
 
-                <ComboBox Visibility="Visible" Margin="18,120,14,134"  Opacity="0.8"   BorderBrush="Transparent"  Background="Beige" x:Name="Choose_models" ToolTip="Enter Model"  FontWeight="ExtraBlack" Foreground="Brown" IsEditable="True" Text="MODEL UPDATE" Height="38" SelectionChanged="Choose_models_SelectionChanged" />
+                <ComboBox   Style="{StaticResource MaterialDesignOutlinedComboBox}"
+    IsEnabled="{Binding Path=IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox}"
+  
+    ItemsSource="{Binding ShortStringList}"  Visibility="Visible" Margin="18,199,18,200"  Opacity="0.8"   BorderBrush="Transparent"  Background="Beige" x:Name="Choose_models" ToolTip="Enter Model"  FontWeight="ExtraBlack" Foreground="Brown" IsEditable="True" Text="MODEL UPDATE" SelectionChanged="Choose_models_SelectionChanged" />
 
                 <Button  BorderBrush="Transparent"  FontWeight="ExtraBlack" Foreground="DarkViolet" Visibility="Visible" x:Name="DeliveryChanges" Content="DELIVERY" HorizontalAlignment="Right"  VerticalAlignment="Top" Click="DeliveryChanges_Click" Height="46" Margin="0,16,14,0" Width="131"/>
                 <Button  BorderBrush="Transparent"  FontWeight="ExtraBlack" Foreground="Blue"  Visibility="Visible" x:Name="Update_Drone" Content="UPDATE" HorizontalAlignment="Center"  Width="131"  Height="46" Click="Update_Drone_Click" Margin="0,3,0,249"/>
                 <Button  BorderBrush="Transparent" x:Name="sendDrone"  Content="{Binding Text,ElementName=Statuss,Converter={StaticResource statustoBoutton} }"  Click="SendTo_charge" HorizontalAlignment="Center"  Height="46" Width="131" Margin="0,132,0,272" />
                 <TextBox  BorderBrush="Transparent"  Grid.Column="0" Visibility="Visible" x:Name="timespan_get" Text="" TextWrapping="Wrap" Margin="0,162,0,272" HorizontalAlignment="Left" Width="142" />
-                <Button  BorderBrush="Transparent" FontWeight="ExtraBlack" Foreground="Green"  x:Name="show_parcel_nDrone" Visibility="{Binding Drone.DeliveryId ,Converter={StaticResource Deliveryidconvert} }"  Content="Show Parcel" Click="show_parcel_inDrone"  HorizontalAlignment="Center"  Height="46" Width="130" Margin="0,132,0,272" Grid.Column="1" />
+                <Button  BorderBrush="Transparent" FontWeight="ExtraBlack" Foreground="Green"  x:Name="show_parcel_nDrone" Visibility="{Binding Drone.DeliveryId ,Converter={StaticResource Deliveryidconvert} }"  Content="Show Parcel" Click="show_parcel_inDrone"  HorizontalAlignment="Left"  Height="46" Width="130" Margin="12,278,0,136" />
 
 
 
@@ -107,12 +113,9 @@
         <StackPanel   x:Name="show_Drone_titles" Background="Transparent" Visibility="Visible" Orientation="Vertical" Grid.Column="0" Margin="10,-11,0,0" Height="434" VerticalAlignment="Top">
             <Label x:Name="IsD_UUUUUU" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
             <Label x:Name="IsD_" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
-            <Label x:Name="ShowIsD"  FontSize="20" Foreground="Black" BorderThickness="2" FontWeight="Bold" Width="113" Height="39"  BorderBrush="Black" >
-                <TextBlock TextDecorations="Underline" 
-               Text="Drone:"/>
-            </Label>
 
-            <Label x:Name="ShowID" FontSize="15" BorderThickness="2" BorderBrush="Black" Content="ID" Width="113" Height="27" HorizontalAlignment="Center"/>
+
+            <Label x:Name="ShowID" FontSize="15" BorderThickness="2" BorderBrush="Black" Content="ID" Width="113" Height="32" HorizontalAlignment="Center" Margin="0,40,0,0"/>
             <Label   x:Name="ShowName" FontSize="15" BorderThickness="2" BorderBrush="Black" Content="NAME"  HorizontalAlignment="Center" Width="110" Margin="0,10,0,0"/>
             <Label    x:Name="Status" FontSize="14" BorderThickness="2" BorderBrush="Black" Content="STAUTS"  HorizontalAlignment="Center" Width="109" Margin="0,10,0,0"/>
             <Label  x:Name="BatteryStatus"  BorderThickness="2" BorderBrush="Black" FontSize="15" HorizontalAlignment="Center" Content="BATTERY" Width="115" Margin="0,10,0,0"/>
@@ -146,9 +149,12 @@
 
 
         </StackPanel>
-        <Button x:Name="simul" Content="Auto" Grid.Column="3" HorizontalAlignment="Left" Margin="147,150,0,0" VerticalAlignment="Top" Width="89" Click="simul_Click"/>
+        <Button      Style="{StaticResource MaterialDesignRaisedButton}"
+    x:Name="simul" Content="Auto" Grid.Column="3" HorizontalAlignment="Left" Margin="147,150,0,0" VerticalAlignment="Top" Width="89" Click="simul_Click"/>
         <Button  x:Name="Manual" Visibility="Collapsed" Content="Manual" Grid.Column="3" HorizontalAlignment="Left" Margin="147,190,0,0" VerticalAlignment="Top" Width="89" Click="Manual_Click" />
         <CheckBox x:Name="Auto" Visibility="Hidden" Content="CheckBox" Grid.Column="3" HorizontalAlignment="Left" Margin="210,197,0,0" VerticalAlignment="Top"/>
+   
+
 
     </Grid>
 </Window>

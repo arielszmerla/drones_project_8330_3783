@@ -73,7 +73,13 @@ namespace BL
                                         {
                                             drone.Status = Enums.DroneStatuses.Maintenance;
                                             maintenance = Maintenance.Starting;
-                                            dal.AddDroneCharge(droneId, (int)baseStationId);
+                                            try
+                                            {
+                                                dal.AddDroneCharge(droneId, (int)baseStationId);
+                                                drone.Status = Enums.DroneStatuses.Maintenance;
+                                                maintenance = Maintenance.Starting;
+                                            }//wait until free room
+                                            catch (DO.DroneChargeException) { };
                                         }
                                         break;
                                     case (_, _):// if parcel found go to take it

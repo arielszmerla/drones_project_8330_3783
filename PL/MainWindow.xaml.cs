@@ -25,14 +25,14 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        enum listChoice { Drones, BaseStations, Customers, Parcels };
+     
       //  private static SoundPlayer _backgroundMusic = new SoundPlayer();
 
         BLAPI.IBL bl = BLFactory.GetBL();
         public MainWindow()
         {
             InitializeComponent();
-            ViewOptions.ItemsSource = Enum.GetValues(typeof(listChoice));
+    
         //  string soundFilePath = @"C:\Users\ariel\source\repos\DotNet_5782_XXXX-YYYY\pl\hatikva.wav";
           //  SoundPlayer player = new SoundPlayer(soundFilePath);
 //player.Play();
@@ -46,28 +46,7 @@ namespace PL
             new DroneListWindow1(bl).Show();
         }
 
-        private void ViewOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            listChoice stat = (listChoice)ViewOptions.SelectedItem;
-            switch (stat)
-            {//Drones, BaseStations, Customers, Parcels
-                case
-                    listChoice.BaseStations:
-                    new BaseStationViewWindow(bl).Show();
-                    break;
-                case listChoice.Drones:
-                    new DroneListWindow1(bl).Show();
-                    break;
-                case listChoice.Customers:
-                    new CustomerListWindow(bl).Show();
-                    break;
-                case listChoice.Parcels:
-                    new ParcelListWindow(bl).Show();
-                    break;
-            }
-            ViewOptions.SelectedItem = 0;
-
-        }
+   
 
         private void Client_Entry_Click(object sender, RoutedEventArgs e)
         {
@@ -89,7 +68,7 @@ namespace PL
                 {
                 password.Password = "";
                 MessageBox.Show("Welcome sir!");
-                ViewOptions.Visibility = Visibility.Visible;
+                choice.Visibility = Visibility.Visible;
                 password.Visibility = Visibility.Collapsed;
                 Manager_Entry.Visibility = Visibility.Collapsed;
                 Client_Entry.Visibility = Visibility.Collapsed;
@@ -156,7 +135,7 @@ namespace PL
             {
                 password.Password = "";
                 MessageBox.Show("Welcome sir!");
-                ViewOptions.Visibility = Visibility.Visible;
+                choice.Visibility = Visibility.Visible;
                 password.Visibility = Visibility.Collapsed;
                 Manager_Entry.Visibility = Visibility.Collapsed;
                 Client_Entry.Visibility = Visibility.Collapsed;
@@ -176,5 +155,27 @@ namespace PL
 
 
         }
+
+        private void drones_Click(object sender, RoutedEventArgs e)
+        {
+            new DroneListWindow1(bl).Show();
+        }
+
+        private void bases_Click(object sender, RoutedEventArgs e)
+        {
+            new BaseStationViewWindow(bl).Show();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new ParcelListWindow(bl).Show();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            new CustomerListWindow(bl).Show();
+        }
     }
+        
+    
 }

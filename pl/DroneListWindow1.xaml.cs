@@ -37,9 +37,6 @@ namespace PL
 
             InitializeComponent();
             this.bl1 = bl1;
-
-   
-       
             StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
             WeightChoise.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
 
@@ -62,8 +59,6 @@ namespace PL
             Weight_label.Visibility = Visibility.Hidden;
             WeightChoise.Visibility = Visibility.Hidden;
             actions.Visibility = Visibility.Hidden;
-           // DroneListView.MouseDoubleClick -= drone_action;
-
 
         }
 
