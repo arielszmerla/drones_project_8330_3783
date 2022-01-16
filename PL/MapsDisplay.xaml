@@ -18,7 +18,8 @@
     </Window.Resources>
     <Grid>
         <m:Map x:Name="myMap" CredentialsProvider="guJUrZ34BK5ElZoJXhLF~--49nQagJXOzuBxSVvxeFg~AknLOna92w7xZLbgX4pdsS17j9_oSpA4mVUk_Sxi5amLhPgHelM4d23p4O8sqdHQ"
-               ZoomLevel="13" Center="31.771170,35.214086"  Mode="Road"/>
+               ZoomLevel="13" Center="31.771170,35.214086"  Mode="Road">
+        </m:Map>
     </Grid>
 </Window>
     

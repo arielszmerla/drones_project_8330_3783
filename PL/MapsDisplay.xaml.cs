@@ -18,7 +18,7 @@ using Microsoft.Maps.MapControl.WPF;
 namespace PL
 {
 
-   
+
     /// <summary>
     /// Interaction logic for MapsDisplay.xaml
     /// </summary>
@@ -38,6 +38,7 @@ namespace PL
             InitializeComponent();
 
             Pushpin pin;
+            DataContext = Model.Drones;
             foreach (var item in Model.Drones)
             {
                 pin = new();
@@ -50,36 +51,35 @@ namespace PL
 
                 //Define the URI location of the image.
                 pinImage.Source = new System.Windows.Media.Imaging.BitmapImage(new Uri("/image/drone.png", UriKind.Relative));
-                pin.DataContext = pinImage;
+                //  pin. = pinImage;
                 pin.MouseDoubleClick += PinClicked;
                 myMap.Children.Add(pin);
-
             }
 
 
-           
-                /*foreach (var item in bl.GetCustomerList())
-                {
-                    pin = new();
-                    pin.Location = new(item., item.Latitude);
-                    myMap.Children.Add(pin);
-                }*/
-                /*
 
-                foreach (var item in bl.GetBaseStationList())
-                {
-                    pin = new();
-                    pin.Location = new(item.  .Latitude, item.DroneLocation.Longitude);
-                    myMap.Children.Add(pin);
-                }
-                */
+            /*foreach (var item in bl.GetCustomerList())
+            {
+                pin = new();
+                pin.Location = new(item., item.Latitude);
+                myMap.Children.Add(pin);
+            }*/
+            /*
+
+            foreach (var item in bl.GetBaseStationList())
+            {
+                pin = new();
+                pin.Location = new(item.  .Latitude, item.DroneLocation.Longitude);
+                myMap.Children.Add(pin);
             }
+            */
+        }
 
         private void PinClicked(object sender, System.EventArgs e)
         {
-           Pushpin id =(Pushpin)sender;
-          BO. DroneToList d=  bl.GetDroneList(null).FirstOrDefault(p => p.Location.Latitude == id.Location.Latitude);
-            new AddDrone(bl, d.Id).Show();
+            Pushpin id = (Pushpin)sender;
+            BO.DroneToList d = bl.GetDroneList(null).FirstOrDefault(p => p.Location.Latitude == id.Location.Latitude);
+            if (d != null) new AddDrone(bl, d.Id).Show();
         }
 
         public MapsDisplay(BO.Drone drone, IBL bl1)

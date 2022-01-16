@@ -66,4 +66,10 @@
     <MaxWeight>Light</MaxWeight>
     <Valid>true</Valid>
   </Drone>
+  <Drone>
+    <Id>159</Id>
+    <Model>PHANTOM</Model>
+    <MaxWeight>Light</MaxWeight>
+    <Valid>true</Valid>
+  </Drone>
 </ArrayOfDrone>

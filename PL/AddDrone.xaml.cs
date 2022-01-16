@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BO;
 using BLAPI;
+using System.Text.RegularExpressions;
 
 namespace PL
 {
@@ -54,31 +55,31 @@ namespace PL
         // PO.Drone poDrone = new();
         public AddDrone(IBL bl1, int i)
         {
-                       drone = this.bl.GetDrone(i);
+            drone = this.bl.GetDrone(i);
             InitializeComponent();
 
             //   this.DataContext = poDrone;
             locasa = drone.Location;
             Title = "ACTIONS";
             Choose_models.ItemsSource = Enum.GetValues(typeof(Enums.DroneNames));
-           // myMap.DataContext = locasa;
+            // myMap.DataContext = locasa;
             update_drone.Visibility = Visibility.Visible;
-            //poDrone = poadapt.BODroneToPo(drone, poDrone);
+            simul.Visibility = Visibility.Collapsed;
         }
-
+        /// <summary>
+        /// func to create a drone
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void enter_your_drone(object sender, RoutedEventArgs e)
         {
 
             int i;
+            Regex myReg = new Regex("[^0-9]+"); //gets regular expression that allows only digits
+            if (!myReg.IsMatch(ChooseId.Text)) //checks taht key entered is regular expression
 
-            if (int.TryParse(ChooseId.Text, out i))
-            {
-                if (i > 0)
-                {
+                drone.Id = Int32.Parse(ChooseId.Text);
 
-                    drone.Id = i;
-                }
-            }
             else
             {
                 ChooseId.Text = "";
@@ -88,12 +89,12 @@ namespace PL
 
 
             double s;
-            if (double.TryParse(ChooseLatitude.Text, out s))
+            if (!myReg.IsMatch(ChooseLatitude.Text))
             {
 
-                if (s>= 0)
+                if (Int32.Parse(ChooseLatitude.Text) >= 0)
                 {
-                    loc.Latitude = s;
+                    loc.Latitude = Int32.Parse(ChooseLatitude.Text);
                 }
             }
             if (ChooseLatitude.Text == "")
@@ -102,12 +103,12 @@ namespace PL
                 ChooseLatitude.Background = Brushes.Red;
             }
             s = 0;
-            if (double.TryParse(ChooseLongitude.Text, out s))
+            if (!myReg.IsMatch(ChooseLongitude.Text))
             {
-                if (s >= 0)
+                if (!myReg.IsMatch(ChooseLongitude.Text))
                 {
 
-                    loc.Longitude = s;
+                    loc.Longitude = Int32.Parse(ChooseLongitude.Text);
                 }
             }
             if (ChooseLongitude.Text == "")
@@ -127,32 +128,24 @@ namespace PL
             {
                 drone.MaxWeight = (BO.Enums.WeightCategories)WeightCategSelector.SelectedItem;
                 drone.Model = (Enums.DroneNames)Choose_model.SelectedItem;
-                drone.Id = i;
                 drone.Status = (Enums.DroneStatuses)StatusSelectorToadd.SelectedItem;
                 drone.Location = loc;
-
-
                 Random rand = new Random();
                 drone.Battery = rand.Next(99) + rand.NextDouble();
-
                 drone.Location = loc;
                 drone.PID = null;
 
                 try
                 {
-
                     bl.AddDrone(drone);
                     MessageBox.Show("Managed Add");
                     enter.Visibility = Visibility.Hidden;
                     updateDroneView();
                     this.Close();
-
-
                 }
                 catch (BO.AddException ex)
                 {
-
-                    Model.Error("In maintenance");
+                    Model.Error(ex.Message);
                 }
 
             }
@@ -187,25 +180,30 @@ namespace PL
                 time = new TimeSpan(3, 0, 0);
                 bl.UpdateReleaseDroneFromCharge(Drone.Id, time);
                 timespan_get.Visibility = Visibility.Hidden;
-           
+
             }
 
             updateDroneView();
         }
-
+        /// <summary>
+        /// set the next action to do with parcel depending on parcels case
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeliveryChanges_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (drone.Status == Enums.DroneStatuses.Vacant)
+                if (drone.Status == Enums.DroneStatuses.Vacant)//if no parcel on drone
                 {
-                    try { 
-                    bl.UpdateAssignParcelToDrone(Drone.Id);
+                    try
+                    {
+                        bl.UpdateAssignParcelToDrone(Drone.Id);
                     }
                     catch (GetException ex) { Model.Error(ex.Message); }
 
                 }
-                else if (drone.Status == Enums.DroneStatuses.InDelivery)
+                else if (drone.Status == Enums.DroneStatuses.InDelivery)//if parcel on drone
                 {
                     ParcelToList parcel = bl.GetParcelToListonDrone(Drone.Id);
 
@@ -228,7 +226,7 @@ namespace PL
 
                     }
                 }
-                else
+                else//if drone on maintenance
                 {
                     this.myEvent("In Maintenance");
                 }
@@ -352,7 +350,7 @@ namespace PL
             {
                 update_drone.Visibility = Visibility.Collapsed;
                 Manual.Visibility = Visibility.Visible;
-           simul.Visibility = Visibility.Collapsed;
+                simul.Visibility = Visibility.Collapsed;
                 PageStop.Visibility = Visibility.Collapsed;
             }
             else
@@ -378,7 +376,7 @@ namespace PL
                 }
 
                 DroneToList droneForList = Model.Drones.FirstOrDefault(d => d.Id == Drone.Id);
-                
+
                 int index = Model.Drones.IndexOf(droneForList);
                 if (index >= 0)
                 {
