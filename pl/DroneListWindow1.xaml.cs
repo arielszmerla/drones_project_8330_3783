@@ -39,7 +39,6 @@ namespace PL
             this.bl1 = bl1;
             StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
             WeightChoise.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
-
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(DroneListView.ItemsSource);
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("Model");
             view.GroupDescriptions.Add(groupDescription);
