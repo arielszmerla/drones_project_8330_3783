@@ -18,7 +18,7 @@ namespace BL
         /// </summary>
         /// <param name="it"></param>
         /// <returns></returns>
-        private BO.CustomerToList DOcustomerToListBO(DO.Customer it)
+        private CustomerToList DOcustomerToListBO(DO.Customer it)
         {
             BO.CustomerToList ct = new();
             ct.Id = it.Id;
@@ -36,7 +36,7 @@ namespace BL
           /// </summary>
           /// <param name="it"></param>
           /// <returns></returns>
-        private BO.Customer DOcustomerB(DO.Customer it)
+        private Customer DOcustomerB(DO.Customer it)
         {
             BO.Customer ct = new();
             ct.Id = it.Id;
@@ -83,7 +83,7 @@ namespace BL
         /// </summary>
         /// <param name="myBase"></pacel from DO>
         /// <returns></returns> new adapted parcel    
-        private BO.BaseStation dOBaseStation(DO.BaseStation myBase)
+        private BaseStation dOBaseStation(DO.BaseStation myBase)
         {
             BaseStation bs = new BaseStation
             {
@@ -147,10 +147,10 @@ namespace BL
                 return bs;
             }
         /// <summary>
-        /// 
+        /// converts drone from do to DroneTolist in BO
         /// </summary>
         /// <param name="dr"></param>
-        /// <returns></returns>
+        /// <returns></returns> adapted DroneToList in Bo
         [Obsolete("not in use but can be usable")]
         private DroneToList dODroneToList(DO.Drone dr)
             {
@@ -173,9 +173,8 @@ namespace BL
             /// convert basestation DO to basestationtolist BO 
             /// </summary>
             /// <param name="baseStation"></pacel from DO>
-            /// 
             /// <returns></returns> new adapted parcel
-            private BO.BaseStationToList adaptBaseStationToList(DO.BaseStation baseStation)
+            private BaseStationToList adaptBaseStationToList(DO.BaseStation baseStation)
             {
 
                 BaseStationToList baseStationTo = new();
@@ -190,11 +189,11 @@ namespace BL
                 return baseStationTo;
             }
             /// <summary>
-            /// do parcel in customer converter
+            /// do parcel in customer converter to BO parcel
             /// </summary>
             /// <param name="parcel"></param>
-            /// <returns></returns>
-            private BO.ParcelByCustomer dOparcelTObyCustomerBO(DO.Parcel parcel)
+            /// <returns></returns> adapted parcel in customer
+            private ParcelByCustomer dOparcelTObyCustomerBO(DO.Parcel parcel)
             {
 
                 ParcelByCustomer tmp = new();
@@ -218,11 +217,11 @@ namespace BL
                 return tmp;
             }
             /// <summary>
-            /// do parcel in customer converter
+            /// DO parcel from customer converter to BO parcel from customer
             /// </summary>
             /// <param name="parcel"></param>
-            /// <returns></returns>
-            private BO.ParcelByCustomer dOparcelFROMbyCustomerBO(DO.Parcel parcel)
+            /// <returns>parcel from customer in BO  </returns> 
+            private ParcelByCustomer dOparcelFROMbyCustomerBO(DO.Parcel parcel)
             {
                 ParcelByCustomer tmp = new();
                 tmp.Id = parcel.Id;

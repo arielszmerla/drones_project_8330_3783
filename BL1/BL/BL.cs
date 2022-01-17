@@ -71,55 +71,7 @@ namespace BL
 
 
         }
-        /// <summary>
-        /// iniatialises the drone to list property
-        /// </summary>
-        /*  void IntializeDrone()
-          {
-              drones = (from d in Dal.GetDroneList()
-                        let drone = (DO.Drone)d
-                        select new DroneToList
-                        {
-                            Id = drone.Id,
-                            Model = (Enums.DroneNames)drone.Model,
-                            MaxWeight = (Enums.WeightCategories)drone.MaxWeight,
-                            Valid = true
-                        }).ToList();
-
-              foreach (var drone in drones)
-              {
-                  try
-                  {
-                      if (random.NextDouble() < 0.5)
-                          throw new Exception(); // to go to catch
-                      drone.Location = Dal.GetBaseStation(Dal.GetDroneChargeBaseStationId(drone.Id)).Location();
-                      drone.Status = Enums.DroneStatuses.Maintenance;
-                      drone.Battery = 0.05 + 0.15 * random.NextDouble();
-                  }
-                  catch (Exception)
-                  {
-                      int? parcelId = Dal.GetParcelList(null).FirstOrDefault(p => p.DroneId == drone.Id
-                                                                    && p.Scheduled != null
-                                                                    && p.Delivered == null).Id;
-                      if (parcelId != null)
-                      {
-                          drone.DeliveryId = parcelId;
-                          drone.Status = Enums.DroneStatuses.InDelivery;
-                          drone.Location = findDroneLocation(drone);
-                          double minBattery = drone.RequiredBattery(this, (int)parcelId);
-                          drone.Battery = minBattery + random.NextDouble() * (1 - minBattery);
-                      }
-                      else
-                      {
-                          drone.Status = Enums.DroneStatuses.Vacant;
-                          drone.Location = findDroneLocation(drone);
-                          double minBattery = BatteryUsages[(int)Enums.BatteryUsage.Available] * drone.Distance(FindClosestBaseStation(drone));
-                          drone.Battery = minBattery + random.NextDouble() * (1 - minBattery);
-                      }
-                  }
-              }
-          }*/
-
+    
 
         void IntializeDrones()
         {

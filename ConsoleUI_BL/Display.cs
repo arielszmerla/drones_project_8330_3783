@@ -10,7 +10,8 @@ namespace ConsoleUI_BL
 /// </summary>
     public partial class Program
     {
-        #region
+        #region getters
+
         public BO.Drone GetDrone(BLAPI.IBL myCompany)
         {
             bool checkP;
@@ -83,7 +84,7 @@ namespace ConsoleUI_BL
 
         #endregion
 
-        #region
+        #region get lists
         public IEnumerable<BO.CustomerToList> GetCustomerList(BLAPI.IBL myComp)
         {
             return myComp.GetCustomerList().ToList();

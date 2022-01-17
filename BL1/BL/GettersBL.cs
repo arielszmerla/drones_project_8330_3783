@@ -14,11 +14,15 @@ namespace BL
 /// </summary>
     partial class BLImp : IBL
     {
-        BO.Drone droneBODOadpater(DO.Drone d)
-        {
-            BO.Drone dr = dODrone(d);
-            return dr;
-        }
+        /// <summary>
+        /// adapter, drone from DO to Be
+        /// </summary>
+        /// <param name="d"></param>
+        /// <returns> BO drone </returns>
+        Drone droneBODOadpater(DO.Drone d) => dODrone(d);
+        
+           
+        
         #region gets
         /// <summary>
         /// method to get a parcel
@@ -152,7 +156,6 @@ namespace BL
 
         #endregion
 
-
         #region delete
         /// <summary>
         /// parcel to delete
@@ -265,9 +268,10 @@ namespace BL
             }
         }
         #endregion
+
         #region getlists
         /// <summary>
-        /// 
+        /// method that returns a list of the base stations 
         /// </summary>
         /// <param name="predicat"></param>
         /// <returns></returns>
@@ -280,6 +284,7 @@ namespace BL
                 {
                     if (predicat == null)
                     {
+                        // if the predicate is empty we insert all the valid base stations
                         IEnumerable<BaseStationToList> b = (from item in Dal.GetBaseStationsList(null)
                                                             where item.Valid == true
                                                             let DObaseStationBO = adaptBaseStationToList(item)
@@ -289,6 +294,8 @@ namespace BL
                             throw new GetException("empty list");
                         return b.ToList();
                     }
+                    // if the predicate isn't empty we check also the predicate and insert only fitting 
+                    // base stations
                     else
                     {
                         IEnumerable<BaseStationToList> b = (from item in Dal.GetBaseStationsList(null)
@@ -309,10 +316,11 @@ namespace BL
             }
         }
         /// <summary>
-        /// 
+        /// method to return base stations by groups (used to screen out wanted base
+        /// stations in a list view
         /// </summary>
         /// <param name="predicat"></param>
-        /// <returns></returns>
+        /// <returns>list of base statinons</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStationToList> GetBaseStationListGroup()
         {
@@ -484,7 +492,11 @@ namespace BL
                 throw new GetException("empty list", ex);
             }
         }
-
+        /// <summary>
+        /// returns list of drones that are charging in a base statinon
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns>list of drones that are charging in a base statinon</returns>
         public IEnumerable<DroneToList> GetDronesInBaseStationList(int Id)
         {
             lock (Dal)

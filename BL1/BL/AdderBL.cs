@@ -136,7 +136,6 @@ namespace BL
         /// add a single drone
         /// </summary>
         /// <param name="drone"></param>
-
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(Drone drone)
         {

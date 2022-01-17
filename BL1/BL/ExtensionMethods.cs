@@ -5,8 +5,17 @@ using static BL.BLImp;
 
 namespace BL
 {
+    /// <summary>
+    /// extension methods class
+    /// </summary>
     internal static class ExtensionMethods
     {
+        /// <summary>
+        /// func that calculets distance between two objects
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns> distance </returns>
         internal static double Distances(this ILocatable from, ILocatable to)
         {
             int R = 6371 * 1000; // metres
@@ -23,23 +32,49 @@ namespace BL
             return d;
         }
 
+        /// <summary>
+        /// helper calculate assistance
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
         internal static double EuclideanDistance(this Location from, Location to) =>
             Math.Sqrt(Math.Pow(to.Longitude - from.Longitude, 2) + Math.Pow(to.Latitude - from.Latitude, 2));
 
+        /// <summary>
+        /// return a customer in a parcel
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns> customers id and name </returns>
         internal static CustomerInParcel GetDeliveryCustomer(this DO.Customer customer) =>
             new()
             {
                 Id = customer.Id,
                 Name = customer.Name
-               // Location = new Location { Latitude = customer.Latitude, Longitude = customer.Longitude }
             };
 
+        /// <summary>
+        /// location of base station from DO to BO
+        /// </summary>
+        /// <param name="baseStation"></param>
+        /// <returns>BO Location of base station </returns>
         internal static Location Location(this DO.BaseStation baseStation) =>
             new() { Latitude = baseStation.Latitude, Longitude = baseStation.Longitude };
-
+        /// <summary>
+        /// location of customer in DO to BO
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns>Location of customer in BO</returns>
         internal static Location Location(this DO.Customer customer) =>
             new() { Latitude = customer.Latitude, Longitude = customer.Longitude };
-
+        /// <summary>
+        /// method that checks and returns required battery for a drone to pick up a parcel and go 
+        /// charge in a close base station
+        /// </summary>
+        /// <param name="drone"></param>
+        /// <param name="bl"></param>
+        /// <param name="parcelId"></param>
+        /// <returns> battey required </returns>
         internal static double RequiredBattery(this ILocatable drone, BLImp bl, int parcelId)
         {
             DO.Parcel parcel = bl.Dal.GetParcel(parcelId);
@@ -51,34 +86,7 @@ namespace BL
                 battery += bl.BatteryUsages[DRONE_FREE] * drone.Distances(sender);
             return battery;
         }
-        /*
-        internal static (Enums.DroneStatuses, int) nextActionA(this Drone drone, BLImp bl)
-        {
-            DO.Parcel? parcel;
-            return drone.Status switch
-            {
-                Enums.DroneStatuses.Vacant =>
-                        (parcel = bl.Dal.GetParcelList(p => p?.Scheduled == null
-                                        && (Enums.WeightCategories)(p?.Weight) <= drone.MaxWeight
-                                        && drone.RequiredBattery(bl, (int)p?.Id) < drone.Battery)
-                                                .OrderByDescending(p => p?.Priority)
-                                                .ThenByDescending(p => p?.Weight).FirstOrDefault()) == null
-                        ? (drone.Battery == 1.0 ? (Enums.DroneStatuses.Vacant, 0)
-                                                : (Enums.DroneStatuses.Maintenance, bl.FindClosestBaseStation(drone, charge: true).Id))
-                        : (Enums.DroneStatuses.InDelivery, (int)parcel?.Id),
-
-                Enums.DroneStatuses.InDelivery =>
-                    bl.Dal.GetParcel((int)drone.DeliveryId).Delivered != null ? (Enums.DroneStatuses.Vacant, 0)
-                                                                              : (Enums.DroneStatuses.InDelivery, (int)drone.DeliveryId),
-
-                Enums.DroneStatuses.Maintenance => (Enums.DroneStatuses.Vacant, 0),
-
-                Enums.DroneStatuses.None => (Enums.DroneStatuses.None, 0),
-
-                _ => (Enums.DroneStatuses.None, 0)
-            };
-        }
-        */
+       
     }
 }
 
