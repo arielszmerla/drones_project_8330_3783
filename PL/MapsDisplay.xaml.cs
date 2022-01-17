@@ -38,7 +38,7 @@ namespace PL
             InitializeComponent();
 
             Pushpin pin;
-            DataContext = Model.Drones;
+      
             foreach (var item in Model.Drones)
             {
                 pin = new();
