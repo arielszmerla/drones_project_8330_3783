@@ -199,21 +199,24 @@ namespace BL
         private double BatteryCons(Location lc, DO.Parcel parcel)
         {
             double total = 0;
-            double temp = 99999999999; ;
-            DO.Customer cs = Dal.GetCustomerList().First(cs => cs.Id == parcel.TargetId);
-            total += LocationFuncs.Distance(lc, new Location { Latitude = cs.Latitude, Longitude = cs.Longitude });
-            List<DO.BaseStation> bs = (List<DO.BaseStation>)Dal.GetBaseStationsList(null);
-            Location closestBase = new();
-            //look after closest baseStation
-            for (int i = 0; i < bs.Count(); i++)
+            double temp = 99999999999;
+            lock (Dal)
             {
-                if (LocationFuncs.Distance(new Location { Latitude = cs.Latitude, Longitude = cs.Longitude }, new Location { Latitude = bs[i].Latitude, Longitude = bs[i].Longitude }) < temp)
+                DO.Customer cs = Dal.GetCustomerList().First(cs => cs.Id == parcel.TargetId);
+                total += LocationFuncs.Distance(lc, new Location { Latitude = cs.Latitude, Longitude = cs.Longitude });
+                List<DO.BaseStation> bs = (List<DO.BaseStation>)Dal.GetBaseStationsList(null);
+                Location closestBase = new();
+                //look after closest baseStation
+                for (int i = 0; i < bs.Count(); i++)
                 {
-                    temp = LocationFuncs.Distance(new Location { Latitude = cs.Latitude, Longitude = cs.Longitude }, new Location { Latitude = bs[i].Latitude, Longitude = bs[i].Longitude });
-                    closestBase = new Location { Latitude = bs[i].Latitude, Longitude = bs[i].Longitude };
-                }
-            }//return amount of battery needed to the trip
-            return (total * Dal.DroneElectricConsumations()[(int)(parcel.Weight + 1)] + temp * Dal.DroneElectricConsumations()[0]);
+                    if (LocationFuncs.Distance(new Location { Latitude = cs.Latitude, Longitude = cs.Longitude }, new Location { Latitude = bs[i].Latitude, Longitude = bs[i].Longitude }) < temp)
+                    {
+                        temp = LocationFuncs.Distance(new Location { Latitude = cs.Latitude, Longitude = cs.Longitude }, new Location { Latitude = bs[i].Latitude, Longitude = bs[i].Longitude });
+                        closestBase = new Location { Latitude = bs[i].Latitude, Longitude = bs[i].Longitude };
+                    }
+                }//return amount of battery needed to the trip
+                return (total * Dal.DroneElectricConsumations()[(int)(parcel.Weight + 1)] + temp * Dal.DroneElectricConsumations()[0]);
+            }
         }
 
 
