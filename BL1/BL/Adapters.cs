@@ -119,7 +119,7 @@ namespace BL
                 DeliveryId = 0,
 
             };
-
+            //create parcel in delivery if any
             DO.Parcel parce = new();
             if (Dal.GetParcelList(p => p.DroneId == dr.Id && p.Delivered == null && p.Scheduled != null).Any())
             {
@@ -195,26 +195,28 @@ namespace BL
         /// <returns></returns> adapted parcel in customer
         private ParcelByCustomer dOparcelTObyCustomerBO(DO.Parcel parcel)
         {
-
-            ParcelByCustomer tmp = new();
-            tmp.Id = parcel.Id;
-            tmp.Priorities = (Enums.Priorities)parcel.Priority;
-            if (parcel.Delivered != DateTime.MinValue)
-                tmp.ParcelStatus = Enums.ParcelStatus.Delivered;
-            else if (parcel.PickedUp != DateTime.MinValue)
-                tmp.ParcelStatus = Enums.ParcelStatus.PickedUp;
-            else if (parcel.Requested != DateTime.MinValue)
-                tmp.ParcelStatus = Enums.ParcelStatus.Assigned;
-            else
-                tmp.ParcelStatus = Enums.ParcelStatus.Created;
-
-            tmp.CIP = new CustomerInParcel
+            lock (Dal)
             {
-                Id = parcel.TargetId,
-                Name = Dal.GetCustomer(parcel.TargetId).Name
-            };
-            tmp.WeightCategorie = (Enums.WeightCategories)parcel.Weight;
-            return tmp;
+                ParcelByCustomer tmp = new();
+                tmp.Id = parcel.Id;
+                tmp.Priorities = (Enums.Priorities)parcel.Priority;
+                if (parcel.Delivered != null)
+                    tmp.ParcelStatus = Enums.ParcelStatus.Delivered;
+                else if (parcel.PickedUp != null)
+                    tmp.ParcelStatus = Enums.ParcelStatus.PickedUp;
+                else if (parcel.Requested != null)
+                    tmp.ParcelStatus = Enums.ParcelStatus.Assigned;
+                else
+                    tmp.ParcelStatus = Enums.ParcelStatus.Created;
+
+                tmp.CIP = new CustomerInParcel
+                {
+                    Id = parcel.TargetId,
+                    Name = Dal.GetCustomer(parcel.TargetId).Name
+                };
+                tmp.WeightCategorie = (Enums.WeightCategories)parcel.Weight;
+                return tmp;
+            }
         }
         /// <summary>
         /// DO parcel from customer converter to BO parcel from customer
@@ -223,20 +225,23 @@ namespace BL
         /// <returns>parcel from customer in BO  </returns> 
         private ParcelByCustomer dOparcelFROMbyCustomerBO(DO.Parcel parcel)
         {
-            ParcelByCustomer tmp = new();
-            tmp.Id = parcel.Id;
-            tmp.Priorities = (Enums.Priorities)parcel.Priority;
-            if (parcel.Delivered != DateTime.MinValue)
-                tmp.ParcelStatus = Enums.ParcelStatus.Delivered;
-            else if (parcel.PickedUp != DateTime.MinValue)
-                tmp.ParcelStatus = Enums.ParcelStatus.PickedUp;
-            else if (parcel.Requested != DateTime.MinValue)
-                tmp.ParcelStatus = Enums.ParcelStatus.Assigned;
-            else
-                tmp.ParcelStatus = Enums.ParcelStatus.Created;
-            tmp.CIP = new CustomerInParcel { Id = parcel.SenderId, Name = Dal.GetCustomer(parcel.SenderId).Name };
-            tmp.WeightCategorie = (Enums.WeightCategories)parcel.Weight;
-            return tmp;
+            lock (Dal)
+            {
+                ParcelByCustomer tmp = new();
+                tmp.Id = parcel.Id;
+                tmp.Priorities = (Enums.Priorities)parcel.Priority;
+                if (parcel.Delivered != null)
+                    tmp.ParcelStatus = Enums.ParcelStatus.Delivered;
+                else if (parcel.PickedUp != null)
+                    tmp.ParcelStatus = Enums.ParcelStatus.PickedUp;
+                else if (parcel.Requested != null)
+                    tmp.ParcelStatus = Enums.ParcelStatus.Assigned;
+                else
+                    tmp.ParcelStatus = Enums.ParcelStatus.Created;
+                tmp.CIP = new CustomerInParcel { Id = parcel.SenderId, Name = Dal.GetCustomer(parcel.SenderId).Name };
+                tmp.WeightCategorie = (Enums.WeightCategories)parcel.Weight;
+                return tmp;
+            }
         }
     }
 }
