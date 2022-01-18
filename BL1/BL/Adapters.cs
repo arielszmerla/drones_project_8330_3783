@@ -144,8 +144,8 @@ namespace BL
                 }
             }
 
-                return bs;
-            }
+            return bs;
+        }
         /// <summary>
         /// converts drone from do to DroneTolist in BO
         /// </summary>
@@ -153,91 +153,91 @@ namespace BL
         /// <returns></returns> adapted DroneToList in Bo
         [Obsolete("not in use but can be usable")]
         private DroneToList dODroneToList(DO.Drone dr)
-            {
-                lock (Dal)
-                    return new DroneToList
-                    {
-                        Location = drones.Find(dr => dr.Id == dr.Id).Location,
-                        MaxWeight = (Enums.WeightCategories)dr.MaxWeight,
-                        Id = dr.Id,
-                        Model = (Enums.DroneNames)dr.Model,
-                        Battery = drones.Find(dr => dr.Id == dr.Id).Battery,
-                        Status = drones.Find(dr => dr.Id == dr.Id).Status,
-                        DeliveryId = Dal.GetParcelList(p => p.Delivered == null && p.PickedUp!= null&& p.DroneId == dr.Id).Count(),
-                        Valid = dr.Valid,
-                        NumOfDeliveredParcel = Dal.GetParcelList(p => p.Delivered != null && p.DroneId == dr.Id).Count()
-
-                    };
-            }
-            /// <summary>
-            /// convert basestation DO to basestationtolist BO 
-            /// </summary>
-            /// <param name="baseStation"></pacel from DO>
-            /// <returns></returns> new adapted parcel
-            private BaseStationToList adaptBaseStationToList(DO.BaseStation baseStation)
-            {
-
-                BaseStationToList baseStationTo = new();
-                baseStationTo.Id = baseStation.Id;
-                baseStationTo.Name = baseStation.Name;
-                Location loc = new Location { Latitude = baseStation.Latitude, Longitude = baseStation.Longitude };
-                baseStationTo.Location = loc;
-                baseStationTo.ChargingDrones = dronCharges(GetBaseStation(baseStation.Id));
-                baseStationTo.NumOfSlotsInUse = baseStationTo.ChargingDrones.Count;
-                baseStationTo.NumOfFreeSlots = baseStation.NumOfSlots - baseStationTo.NumOfSlotsInUse;
-                baseStationTo.Valid = baseStation.Valid;
-                return baseStationTo;
-            }
-            /// <summary>
-            /// do parcel in customer converter to BO parcel
-            /// </summary>
-            /// <param name="parcel"></param>
-            /// <returns></returns> adapted parcel in customer
-            private ParcelByCustomer dOparcelTObyCustomerBO(DO.Parcel parcel)
-            {
-
-                ParcelByCustomer tmp = new();
-                tmp.Id = parcel.Id;
-                tmp.Priorities = (Enums.Priorities)parcel.Priority;
-                if (parcel.Delivered != DateTime.MinValue)
-                    tmp.ParcelStatus = Enums.ParcelStatus.Delivered;
-                else if (parcel.PickedUp != DateTime.MinValue)
-                    tmp.ParcelStatus = Enums.ParcelStatus.PickedUp;
-                else if (parcel.Requested != DateTime.MinValue)
-                    tmp.ParcelStatus = Enums.ParcelStatus.Assigned;
-                else
-                    tmp.ParcelStatus = Enums.ParcelStatus.Created;
-
-                tmp.CIP = new CustomerInParcel
+        {
+            lock (Dal)
+                return new DroneToList
                 {
-                    Id = parcel.TargetId,
-                    Name = Dal.GetCustomer(parcel.TargetId).Name
+                    Location = drones.Find(dr => dr.Id == dr.Id).Location,
+                    MaxWeight = (Enums.WeightCategories)dr.MaxWeight,
+                    Id = dr.Id,
+                    Model = (Enums.DroneNames)dr.Model,
+                    Battery = drones.Find(dr => dr.Id == dr.Id).Battery,
+                    Status = drones.Find(dr => dr.Id == dr.Id).Status,
+                    DeliveryId = Dal.GetParcelList(p => p.Delivered == null && p.PickedUp != null && p.DroneId == dr.Id).Count(),
+                    Valid = dr.Valid,
+                    NumOfDeliveredParcel = Dal.GetParcelList(p => p.Delivered != null && p.DroneId == dr.Id).Count()
+
                 };
-                tmp.WeightCategorie = (Enums.WeightCategories)parcel.Weight;
-                return tmp;
-            }
-            /// <summary>
-            /// DO parcel from customer converter to BO parcel from customer
-            /// </summary>
-            /// <param name="parcel"></param>
-            /// <returns>parcel from customer in BO  </returns> 
-            private ParcelByCustomer dOparcelFROMbyCustomerBO(DO.Parcel parcel)
+        }
+        /// <summary>
+        /// convert basestation DO to basestationtolist BO 
+        /// </summary>
+        /// <param name="baseStation"></pacel from DO>
+        /// <returns></returns> new adapted parcel
+        private BaseStationToList adaptBaseStationToList(DO.BaseStation baseStation)
+        {
+
+            BaseStationToList baseStationTo = new();
+            baseStationTo.Id = baseStation.Id;
+            baseStationTo.Name = baseStation.Name;
+            Location loc = new Location { Latitude = baseStation.Latitude, Longitude = baseStation.Longitude };
+            baseStationTo.Location = loc;
+            baseStationTo.ChargingDrones = dronCharges(GetBaseStation(baseStation.Id));
+            baseStationTo.NumOfSlotsInUse = baseStationTo.ChargingDrones.Count;
+            baseStationTo.NumOfFreeSlots = baseStation.NumOfSlots;// - baseStationTo.NumOfSlotsInUse;
+            baseStationTo.Valid = baseStation.Valid;
+            return baseStationTo;
+        }
+        /// <summary>
+        /// do parcel in customer converter to BO parcel
+        /// </summary>
+        /// <param name="parcel"></param>
+        /// <returns></returns> adapted parcel in customer
+        private ParcelByCustomer dOparcelTObyCustomerBO(DO.Parcel parcel)
+        {
+
+            ParcelByCustomer tmp = new();
+            tmp.Id = parcel.Id;
+            tmp.Priorities = (Enums.Priorities)parcel.Priority;
+            if (parcel.Delivered != DateTime.MinValue)
+                tmp.ParcelStatus = Enums.ParcelStatus.Delivered;
+            else if (parcel.PickedUp != DateTime.MinValue)
+                tmp.ParcelStatus = Enums.ParcelStatus.PickedUp;
+            else if (parcel.Requested != DateTime.MinValue)
+                tmp.ParcelStatus = Enums.ParcelStatus.Assigned;
+            else
+                tmp.ParcelStatus = Enums.ParcelStatus.Created;
+
+            tmp.CIP = new CustomerInParcel
             {
-                ParcelByCustomer tmp = new();
-                tmp.Id = parcel.Id;
-                tmp.Priorities = (Enums.Priorities)parcel.Priority;
-                if (parcel.Delivered != DateTime.MinValue)
-                    tmp.ParcelStatus = Enums.ParcelStatus.Delivered;
-                else if (parcel.PickedUp != DateTime.MinValue)
-                    tmp.ParcelStatus = Enums.ParcelStatus.PickedUp;
-                else if (parcel.Requested != DateTime.MinValue)
-                    tmp.ParcelStatus = Enums.ParcelStatus.Assigned;
-                else
-                    tmp.ParcelStatus = Enums.ParcelStatus.Created;
-                tmp.CIP = new CustomerInParcel { Id = parcel.SenderId, Name = Dal.GetCustomer(parcel.SenderId).Name };
-                tmp.WeightCategorie = (Enums.WeightCategories)parcel.Weight;
-                return tmp;
-            }
+                Id = parcel.TargetId,
+                Name = Dal.GetCustomer(parcel.TargetId).Name
+            };
+            tmp.WeightCategorie = (Enums.WeightCategories)parcel.Weight;
+            return tmp;
+        }
+        /// <summary>
+        /// DO parcel from customer converter to BO parcel from customer
+        /// </summary>
+        /// <param name="parcel"></param>
+        /// <returns>parcel from customer in BO  </returns> 
+        private ParcelByCustomer dOparcelFROMbyCustomerBO(DO.Parcel parcel)
+        {
+            ParcelByCustomer tmp = new();
+            tmp.Id = parcel.Id;
+            tmp.Priorities = (Enums.Priorities)parcel.Priority;
+            if (parcel.Delivered != DateTime.MinValue)
+                tmp.ParcelStatus = Enums.ParcelStatus.Delivered;
+            else if (parcel.PickedUp != DateTime.MinValue)
+                tmp.ParcelStatus = Enums.ParcelStatus.PickedUp;
+            else if (parcel.Requested != DateTime.MinValue)
+                tmp.ParcelStatus = Enums.ParcelStatus.Assigned;
+            else
+                tmp.ParcelStatus = Enums.ParcelStatus.Created;
+            tmp.CIP = new CustomerInParcel { Id = parcel.SenderId, Name = Dal.GetCustomer(parcel.SenderId).Name };
+            tmp.WeightCategorie = (Enums.WeightCategories)parcel.Weight;
+            return tmp;
         }
     }
+}
 

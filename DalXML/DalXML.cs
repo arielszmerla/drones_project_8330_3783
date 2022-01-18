@@ -182,7 +182,6 @@ namespace DalXML
             var drones1 = XMLTools.LoadListFromXMLSerializer<DroneCharge>(DRONECHARGEPATH);
             if (drones1.Count() > 0)
             {
-
                 foreach (var unit in drones1)//
                     baseStationDroneOut(unit.StationId);
             }
@@ -219,6 +218,7 @@ namespace DalXML
             int availableChargingPorts = Convert.ToInt32(baseStation.Element("numOfSlots").Value);
             ++availableChargingPorts;
             baseStation.Element("numOfSlots").Value = availableChargingPorts.ToString();
+
             XMLTools.SaveListToXMLElement(baseStations, BASESTATIONPATH);
         }
         /// <summary>

@@ -81,7 +81,7 @@ namespace BL
             double consumationHeavyCarrier = Dal.DroneElectricConsumations()[3];
             double chargePerHour = Dal.DroneElectricConsumations()[4];
 
-
+          
             drones = (from drone in Dal.GetDroneList(d => d.Valid == true)
                       let dr = (DO.Drone)drone
                       select new DroneToList

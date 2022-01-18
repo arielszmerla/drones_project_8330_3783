@@ -334,7 +334,7 @@ namespace BL
         /// </summary>
         /// <param name="loc"></param>
         /// <returns></returns>
-        private BaseStation FindClosestBaseStation(ILocatable loc)
+        internal BaseStation FindClosestBaseStation(ILocatable loc)
         {
             lock (Dal)
             {  //get list of those
