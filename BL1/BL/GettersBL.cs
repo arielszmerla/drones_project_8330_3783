@@ -102,7 +102,7 @@ namespace BL
             lock (Dal)
             {
                 if (!Dal.GetCustomerList(pc => pc.Id == idP).Any())
-                    throw new GetException("id of BaseStation not found");
+                    throw new GetException("id of Customer not found");
                 return DOcustomerB(Dal.GetCustomer(idP));
             }
         }

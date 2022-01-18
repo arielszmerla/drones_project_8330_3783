@@ -75,7 +75,7 @@
         <StackPanel Grid.Row="0" Grid.Column="0" Margin="43,0,103,0">
             <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"
          x:Name="Client_Entry" Content="CLIENT LOG IN" HorizontalAlignment="Right" Margin="1,200,0,20" Height="49" Width="136" Click="Client_Entry_Click" RenderTransformOrigin="0.506,0.531"/>
-            <TextBox  x:Name="id_check" Visibility="Collapsed" HorizontalAlignment="Right" Width="60" TextChanged="client_id_TextChanged"  />
+            <TextBox  x:Name="id_check" Visibility="Collapsed" BorderBrush="Black" Background="Azure" HorizontalAlignment="Right" Width="60"  />
             <Button  Style="{StaticResource MaterialDesignRaisedAccentButton}" x:Name="Sign_In" Content="CLIENT SIGN IN" Height="52" HorizontalAlignment="Right" Width="136" Click="Sign_In_Click" 
          />
         </StackPanel>

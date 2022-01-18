@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BLAPI;
 using PL;
+using System.Text.RegularExpressions;
 
 
 namespace PL
@@ -25,157 +26,147 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-     
-      //  private static SoundPlayer _backgroundMusic = new SoundPlayer();
+
+        //  private static SoundPlayer _backgroundMusic = new SoundPlayer();
 
         BLAPI.IBL bl = BLFactory.GetBL();
         public MainWindow()
         {
             InitializeComponent();
-    
-        //  string soundFilePath = @"C:\Users\ariel\source\repos\DotNet_5782_XXXX-YYYY\pl\hatikva.wav";
-          //  SoundPlayer player = new SoundPlayer(soundFilePath);
-//player.Play();
+
+            //  string soundFilePath = @"C:\Users\ariel\source\repos\DotNet_5782_XXXX-YYYY\pl\hatikva.wav";
+            //  SoundPlayer player = new SoundPlayer(soundFilePath);
+            //player.Play();
 
         }
 
-
-
-        private void DronesList_Click_1(object sender, RoutedEventArgs e)
-        {
-            new DroneListWindow1(bl).Show();
-        }
-
-   
-
+        //ebter as a client
         private void Client_Entry_Click(object sender, RoutedEventArgs e)
         {
-            // new UserMainWindow(bl).Show();
             Manager_Entry.Visibility = Visibility.Collapsed;
+            if (id_check.Text == "")
+                MessageBox.Show("please enter your id");
             id_check.Visibility = Visibility.Visible;
-        }
-        private void Manager_Entry_Click(object sender, RoutedEventArgs e)
-        {
-            password.Visibility = Visibility.Visible;
-            LogIn.Visibility = Visibility.Visible;
-            enterPassword.Visibility = Visibility.Visible;
-        }
-
-        private void chek(int s, int sum)
-        {
-            
-                if (password.Password == "1234")
+            if (id_check.Text != "")
+            {
+                Regex myReg = new Regex("[^0-9]+"); //gets regular expression that allows only digits
+                if (myReg.IsMatch(id_check.Text)) //checks taht key entered is regular expression
                 {
-                password.Password = "";
-                MessageBox.Show("Welcome sir!");
-                choice.Visibility = Visibility.Visible;
-                password.Visibility = Visibility.Collapsed;
-                Manager_Entry.Visibility = Visibility.Collapsed;
-                Client_Entry.Visibility = Visibility.Collapsed;
-                LogIn.Visibility = Visibility.Collapsed;
-                enterPassword.Visibility = Visibility.Collapsed;
-                Sign_In.Visibility = Visibility.Collapsed;
-            }
-           else
-            {
-                password.Password = "";
-                password.Background = Brushes.Red;
-                MessageBox.Show("Please try again");
-            }
-
-
-        }
-
-        private void client_id_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-            int s;
-
-            if (int.TryParse(id_check.Text, out s))
-            {
-                if (s < 0)
+                    id_check.Background = Brushes.Red;
+                    MessageBox.Show("Please try again");
+                    id_check.Text = "";
+                }
+                //check legal size id
+                if (Int32.Parse(id_check.Text) >= 100000000)
+                {
+                    try
+                    {
+                        BO.Customer? b = bl.GetCustomer(int.Parse(id_check.Text));
+                        new UserMainWindow(bl, b.Id).Show();
+                    }
+                    catch (BO.GetException)
+                    {
+                        MessageBox.Show("this customer doesn't exist");
+                        id_check.Text = "";
+                    }
+                }
+                else
                 {
                     id_check.Background = Brushes.Red;
                     MessageBox.Show("Please try again");
                     id_check.Text = "";
                 }
             }
-
-            if (s >= 100000000)
-            {
-                
-                BO.Customer? b = bl.GetCustomer(s);
-                if (b == null)
-                {
-                    MessageBox.Show("this address doesn't exist");
-                    id_check.Text = "";
-
-                }
-                else
-                {
-                    new UserMainWindow(b.Id, bl).Show();
-
-                }
-
-            }
-        }
-
-
-        private void Sign_In_Click(object sender, RoutedEventArgs e)
-        {
-            new UserMainWindow(bl, 2).Show();
-        }
-
-        private void LogIn_Click(object sender, RoutedEventArgs e)
-        {
-
-
-
-            if (password.Password == "1234")
-            {
-                password.Password = "";
-                MessageBox.Show("Welcome sir!");
-                choice.Visibility = Visibility.Visible;
-                password.Visibility = Visibility.Collapsed;
-                Manager_Entry.Visibility = Visibility.Collapsed;
-                Client_Entry.Visibility = Visibility.Collapsed;
-                LogIn.Visibility = Visibility.Collapsed;
-                enterPassword.Visibility = Visibility.Collapsed;
-                Sign_In.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                password.Password = "";
-                password.Background = Brushes.Red;
-                MessageBox.Show("Please try again");
-            }
-
-
-
-
-
-        }
-
-        private void drones_Click(object sender, RoutedEventArgs e)
-        {
-            new DroneListWindow1(bl).Show();
-        }
-
-        private void bases_Click(object sender, RoutedEventArgs e)
-        {
-            new BaseStationViewWindow(bl).Show();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            new ParcelListWindow(bl).Show();
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            new CustomerListWindow(bl).Show();
-        }
-    }
         
-    
+    }
+    private void Manager_Entry_Click(object sender, RoutedEventArgs e)
+    {
+        password.Visibility = Visibility.Visible;
+        LogIn.Visibility = Visibility.Visible;
+        enterPassword.Visibility = Visibility.Visible;
+    }
+
+    private void chek(int s, int sum)
+    {
+
+        if (password.Password == "1234")
+        {
+            password.Password = "";
+            MessageBox.Show("Welcome sir!");
+            choice.Visibility = Visibility.Visible;
+            password.Visibility = Visibility.Collapsed;
+            Manager_Entry.Visibility = Visibility.Collapsed;
+            Client_Entry.Visibility = Visibility.Collapsed;
+            LogIn.Visibility = Visibility.Collapsed;
+            enterPassword.Visibility = Visibility.Collapsed;
+            Sign_In.Visibility = Visibility.Collapsed;
+        }
+        else
+        {
+            password.Password = "";
+            password.Background = Brushes.Red;
+            MessageBox.Show("Please try again");
+        }
+
+
+    }
+
+
+    private void Sign_In_Click(object sender, RoutedEventArgs e)
+    {
+        new UserMainWindow(bl, 2).Show();
+    }
+
+    private void LogIn_Click(object sender, RoutedEventArgs e)
+    {
+
+
+
+        if (password.Password == "1234")
+        {
+            password.Password = "";
+            MessageBox.Show("Welcome sir!");
+            choice.Visibility = Visibility.Visible;
+            password.Visibility = Visibility.Collapsed;
+            Manager_Entry.Visibility = Visibility.Collapsed;
+            Client_Entry.Visibility = Visibility.Collapsed;
+            LogIn.Visibility = Visibility.Collapsed;
+            enterPassword.Visibility = Visibility.Collapsed;
+            Sign_In.Visibility = Visibility.Collapsed;
+        }
+        else
+        {
+            password.Password = "";
+            password.Background = Brushes.Red;
+            MessageBox.Show("Please try again");
+        }
+
+
+
+
+
+    }
+
+    private void drones_Click(object sender, RoutedEventArgs e)
+    {
+        new DroneListWindow1(bl).Show();
+    }
+
+    private void bases_Click(object sender, RoutedEventArgs e)
+    {
+        new BaseStationViewWindow(bl).Show();
+    }
+
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        new ParcelListWindow(bl).Show();
+    }
+
+    private void Button_Click_1(object sender, RoutedEventArgs e)
+    {
+        new CustomerListWindow(bl).Show();
+    }
+}
+
+
 }
