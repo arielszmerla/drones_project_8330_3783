@@ -3,9 +3,10 @@ using BO;
 
 
 namespace BO
-{/// <summary>
-/// implement parcel class
-/// </summary>
+{
+    /// <summary>
+    /// implement parcel class
+    /// </summary>
     public class Parcel
     {
         public int Id { get; set; }

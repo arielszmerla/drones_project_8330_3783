@@ -13,6 +13,8 @@ namespace BL
     /// </summary>
     partial class BLImp
     {
+
+        #region adapters
         /// <summary>
         /// get customer from DO converts it to customertolist
         /// </summary>
@@ -31,11 +33,18 @@ namespace BL
             ct.NumberOfParcelsSentButNotDelivered = parcels.FindAll(pc => pc.SenderId == ct.Id && pc.Delivered > DateTime.Now).Count;
 
             return ct;
-        } /// <summary>
-          /// get customer from DO converts it to customertolist
-          /// </summary>
-          /// <param name="it"></param>
-          /// <returns></returns>
+        }
+        /// <summary>
+        /// adapter, drone from DO to Be
+        /// </summary>
+        /// <param name="d"></param>
+        /// <returns> BO drone </returns>
+        Drone droneBODOadpater(DO.Drone d) => dODrone(d);
+        /// <summary>
+        /// get customer from DO converts it to customertolist
+        /// </summary>
+        /// <param name="it"></param>
+        /// <returns></returns>
         private Customer DOcustomerB(DO.Customer it)
         {
             BO.Customer ct = new();
@@ -184,7 +193,7 @@ namespace BL
             baseStationTo.Location = loc;
             baseStationTo.ChargingDrones = dronCharges(GetBaseStation(baseStation.Id));
             baseStationTo.NumOfSlotsInUse = baseStationTo.ChargingDrones.Count;
-            baseStationTo.NumOfFreeSlots = baseStation.NumOfSlots;// - baseStationTo.NumOfSlotsInUse;
+            baseStationTo.NumOfFreeSlots = baseStation.NumOfSlots;
             baseStationTo.Valid = baseStation.Valid;
             return baseStationTo;
         }
@@ -196,7 +205,7 @@ namespace BL
         private ParcelByCustomer dOparcelTObyCustomerBO(DO.Parcel parcel)
         {
             lock (Dal)
-            {
+            {   //set logical status from data knowlegde
                 ParcelByCustomer tmp = new();
                 tmp.Id = parcel.Id;
                 tmp.Priorities = (Enums.Priorities)parcel.Priority;
@@ -243,6 +252,9 @@ namespace BL
                 return tmp;
             }
         }
+        #endregion
     }
 }
+
+
 

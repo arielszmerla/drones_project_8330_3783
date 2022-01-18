@@ -19,6 +19,7 @@ namespace BL
 /// </summary>
     partial class BLImp : IBL
     {
+        #region Adders
         /// <summary>
         /// add a costumer to database
         /// </summary>
@@ -63,12 +64,11 @@ namespace BL
         /// <param name="station"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddBaseStation(BaseStation station)
-        { //checks if exists already
+        { //checks if exists already or if daata is legal
             lock (Dal)
             {
                 if (Dal.GetBaseStationsList(null).Any(item => item.Id == station.Id))
                     throw new AddException($"id {station.Id} exist already");
-
                 if (station.NumOfFreeSlots < 3 || station.NumOfFreeSlots > 20)
                     throw new AddException("Invalid amount of number of free slots ");
                 if (station.Location.Latitude < 31.740967 || station.Location.Latitude > 31.815177)
@@ -172,6 +172,7 @@ namespace BL
 
                     }
                 }
+                //check if data input is legal
                 if (drone.Location.Latitude < 31.740967 || drone.Location.Latitude > 31.815177)
                     throw new AddException("Incorect Latitude, please enter correct Jerusalem coordinates");
                 if (drone.Location.Longitude < 35.171323 || drone.Location.Longitude > 35.202050)
@@ -250,6 +251,6 @@ namespace BL
                 }
             }
         }
-
+        #endregion
     }
 }

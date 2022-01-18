@@ -156,7 +156,7 @@ namespace BL
         [Obsolete("not in use, replaced by findparcelondrone")]
         private DO.Parcel findParcel(DroneToList dr, List<DO.Parcel> parcels, int weight)
         {
-            List<DO.Parcel> maxWeightParcels = parcels.FindAll(pcs => (int)pcs.Weight == weight && pcs.Scheduled == DateTime.MinValue);
+            List<DO.Parcel> maxWeightParcels = parcels.FindAll(pcs => (int)pcs.Weight == weight && pcs.Scheduled == null);
             return finfClosestParcelToDrone(dr.Location, maxWeightParcels);
         }
 
@@ -179,7 +179,7 @@ namespace BL
                     Location lc = new();
                     lc.Latitude = Dal.GetCustomerList().First(cs => cs.Id == parcels[i].SenderId).Latitude;
                     lc.Longitude = Dal.GetCustomerList().First(cs => cs.Id == parcels[i].SenderId).Longitude;
-                    //check closest
+                    //check closest to it
                     if (LocationFuncs.Distance(dronePlace, lc) < tmpLength)
                     {
                         tmpLength = LocationFuncs.Distance(dronePlace, lc);

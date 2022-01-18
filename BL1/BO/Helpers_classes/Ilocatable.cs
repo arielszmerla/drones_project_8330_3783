@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace BO
 {
+    /// <summary>
+    /// implement Ilocatable so used in inheritance by other classse BO
+    /// </summary>
     public interface ILocatable
     {
         Location Location { get; set; }

@@ -1,5 +1,8 @@
 ﻿namespace BO
 {
+    /// <summary>
+    /// create Location type
+    /// </summary>
     public class Location
     {
         public double Longitude { get; set; }

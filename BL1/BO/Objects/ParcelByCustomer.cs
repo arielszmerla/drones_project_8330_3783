@@ -1,7 +1,8 @@
 ﻿namespace BO
-{/// <summary>
-/// implement ParcelByCustomer class
-/// </summary>
+{
+    /// <summary>
+    /// implement ParcelByCustomer class
+    /// </summary>
     public class ParcelByCustomer
     {
         public int Id { get; set; }

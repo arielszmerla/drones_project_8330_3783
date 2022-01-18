@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using BO;
 namespace BLAPI
 {/// <summary>
-/// part of interface
+/// interface IBL
 /// </summary>
     public interface IBL
     {

@@ -2,10 +2,11 @@
 
 
 namespace BO
+
 {/// <summary>
 /// implement ParcelInDelivery class
 /// </summary>
-    public class ParcelInDelivery:ILocatable
+    public class ParcelInDelivery : ILocatable
     {
         public int Id { get; set; }
         public bool Status { get; set; }

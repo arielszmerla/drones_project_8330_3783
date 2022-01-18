@@ -11,7 +11,7 @@ namespace BL
 {
 
     /// <summary>
-    /// class that procieds deep copy
+    /// class that procieds deep copy (not in use finally in the project)
     /// </summary>
     public static class DeepCopyUtilities
     {

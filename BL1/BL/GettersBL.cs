@@ -14,12 +14,7 @@ namespace BL
 /// </summary>
     partial class BLImp : IBL
     {
-        /// <summary>
-        /// adapter, drone from DO to Be
-        /// </summary>
-        /// <param name="d"></param>
-        /// <returns> BO drone </returns>
-        Drone droneBODOadpater(DO.Drone d) => dODrone(d);
+      
         
            
         

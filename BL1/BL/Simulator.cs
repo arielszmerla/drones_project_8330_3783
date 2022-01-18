@@ -12,20 +12,29 @@ using static BL.BLImp;
 
 namespace BL
 {
+    /// <summary>
+    /// simulator implementation
+    /// </summary>
     class Simulator
-    {
-        enum Maintenance { Starting, Going, Charging }
-        private const double VELOCITY = 0.5;
-        private const int DELAY = 500;
-        private const double TIME_STEP = DELAY / 1000.0;
+    {  
+        enum Maintenance { Starting, Going, Charging }//maintenance statuses
+        private const double VELOCITY = 0.5;//velocity in km/s
+        private const int DELAY = 500;//delay of the sleep
+        private const double TIME_STEP = DELAY / 1000.0;//step is half a delay
         private const double STEP = VELOCITY / TIME_STEP;
-
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="bLImp">object bl</param>
+        /// <param name="droneId">id of drone to be simulate</param>
+        /// <param name="updateDrone">Action</param>
+        /// <param name="checkStop">stopparam</param>
         public Simulator(BLImp bLImp, int droneId, Action updateDrone, Func<bool> checkStop)
         {
 
-            var bl = bLImp;
-            var dal = bl.Dal;
-            var drone = bl.GetDrone(droneId);
+            var bl = bLImp;//bl object
+            var dal = bl.Dal;//Dal object
+            var drone = bl.GetDrone(droneId);//drone itself
             int? parcelId = null;
             int? baseStationId = null;
             BaseStation bs = null;
@@ -35,7 +44,9 @@ namespace BL
             bool pickedUp = false;
             Customer customer = null;
             Maintenance maintenance = Maintenance.Starting;
+            
 
+            //can be use to start a new delivery action
             void initDelivery(int id)
             {
                 parcel = dal.GetParcel(id);
@@ -44,10 +55,10 @@ namespace BL
                 pickedUp = parcel?.PickedUp is not null;
                 customer = bl.GetCustomer((int)(pickedUp ? parcel?.TargetId : parcel?.SenderId));
             }
-
+            //strat simulation
             do
             {
-                DroneToList d = bl.drones.Find(dr => dr.Id == drone.Id); //a temo unit for changes in UI
+                DroneToList d = bl.drones.Find(dr => dr.Id == drone.Id); //a temp unit for changes in UI
                 switch (drone)
                 {//incase drone vacant
                     case Drone { Status: Enums.DroneStatuses.Vacant }:
@@ -55,7 +66,7 @@ namespace BL
                         if (!sleepDelayTime()) break;
 
                         lock (bl) lock (dal)
-                            {//next parcel
+                            {//next parcel upon  demand with best priority
                                 parcelId = bl.Dal.GetParcelList(p => p.Scheduled == null
                                                                   && (Enums.WeightCategories)(p.Weight) <= drone.MaxWeight
                                                                   && drone.RequiredBattery(bl, p.Id) < drone.Battery)
@@ -66,11 +77,11 @@ namespace BL
                                 {//if no parcel a drone fully charged///remains waiting
                                     case (0, 100):
                                         break;
-                                    //if no parcel but need to be chargwed so go to base
+                                    //if no parcel but need to be charged so go to base
                                     case (0, _):
                                         baseStationId = bl.FindClosestBaseStation(drone)?.Id;
                                         if (baseStationId != null)
-                                        {
+                                        {   //strat maintenance status
                                             drone.Status = Enums.DroneStatuses.Maintenance;
                                             maintenance = Maintenance.Starting;
                                             try
@@ -197,7 +208,7 @@ namespace BL
                         throw new GetException("Internal error: not available after Delivery...");
 
                 }
-              
+              ///update the UI through dronetolist Observable collection
                 d.Location = drone.Location;
                 d.Status = drone.Status;
                 d.Battery = drone.Battery;
