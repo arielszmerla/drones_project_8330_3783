@@ -219,7 +219,6 @@ namespace DalXML
             int availableChargingPorts = Convert.ToInt32(baseStation.Element("numOfSlots").Value);
             ++availableChargingPorts;
             baseStation.Element("numOfSlots").Value = availableChargingPorts.ToString();
-
             XMLTools.SaveListToXMLElement(baseStations, BASESTATIONPATH);
         }
         /// <summary>

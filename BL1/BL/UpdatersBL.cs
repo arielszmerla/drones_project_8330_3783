@@ -163,7 +163,7 @@ namespace BL
         /// <param name="id"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDroneSentToCharge(int id)
-        {//if drone not found
+        {     //if drone not found
             if (!Dal.GetDroneList(dr => dr.Id == id).Any())
             {
                 throw new GetException($"id {id} doesn't exist ");
@@ -174,8 +174,10 @@ namespace BL
             {
                 return;
             }
+            //find closest base
             BO.BaseStation bc = getClosestBase(drone.Location);
             DO.BaseStation myBase = Dal.GetBaseStationsList(bas => bas.Latitude == bc.Location.Latitude && bas.Longitude == bc.Location.Longitude).FirstOrDefault();
+            //if there is enough energy in drone to go to next station and update drone and base
             if ((Dal.DroneElectricConsumations()[0]) *
                bc.Distances(drone) <= drone.Battery)
             {
@@ -183,8 +185,6 @@ namespace BL
                 BO.LocationFuncs.Distance(drone.Location, new Location { Latitude = myBase.Latitude, Longitude = myBase.Longitude });
                 drone.Location = new Location { Latitude = myBase.Latitude, Longitude = myBase.Longitude };
                 drone.Status = Enums.DroneStatuses.Maintenance;
-                //    drones.RemoveAll(dr => dr.Id == drone.Id);
-                //  drones.Add(drone);
                 drones[drones.FindIndex(dr => dr.Id == drone.Id)].Status = drone.Status;
                 drones[drones.FindIndex(dr => dr.Id == drone.Id)].Battery = drone.Battery;
                 drones[drones.FindIndex(dr => dr.Id == drone.Id)].Location = drone.Location;
