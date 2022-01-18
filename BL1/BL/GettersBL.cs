@@ -32,29 +32,33 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel GetParcel(int idP)
         {
-            DO.Parcel parcel = new();
-            List<DO.Parcel> parcels = (List<DO.Parcel>)Dal.GetParcelList(pc => pc.Id == idP);
-            if (parcels.Any())
+            lock (Dal)
             {
-                parcel = parcels.Find(pc => pc.Id == idP);
-            }
-            else
-                throw new GetException("id of parcel not found");
-            Parcel p = new Parcel();
-            List<DO.Customer> customers = (List<DO.Customer>)Dal.GetCustomerList();
-            p.Assignment = parcel.Scheduled;
-            p.Created = parcel.Requested;
-            p.Delivered = parcel.Delivered;
+                DO.Parcel parcel = new();
+                List<DO.Parcel> parcels = (List<DO.Parcel>)Dal.GetParcelList(pc => pc.Id == idP);
+                if (parcels.Any())
+                {
+                    parcel = parcels.Find(pc => pc.Id == idP);
+                }
+                else
+                    throw new GetException("id of parcel not found");
+                Parcel p = new Parcel();
+                List<DO.Customer> customers = (List<DO.Customer>)Dal.GetCustomerList();
+                p.Assignment = parcel.Scheduled;
+                p.Created = parcel.Requested;
+                p.Delivered = parcel.Delivered;
 
-            p.PickedUp = parcel.PickedUp;
-            p.Priority = (Enums.Priorities)parcel.Priority;
-            CustomerInParcel send = new CustomerInParcel { Id = parcel.SenderId, Name = customers.Find(cs => cs.Id == parcel.SenderId).Name };
-            CustomerInParcel targ = new CustomerInParcel { Id = parcel.TargetId, Name = customers.Find(cs => cs.Id == parcel.TargetId).Name };
-            p.Sender = send;
-            p.Target = targ;
-            p.Id = parcel.Id;
-            p.WeightCategories = (Enums.WeightCategories)parcel.Weight;
-            return p;
+                p.PickedUp = parcel.PickedUp;
+                p.Priority = (Enums.Priorities)parcel.Priority;
+                CustomerInParcel send = new CustomerInParcel { Id = parcel.SenderId, Name = customers.Find(cs => cs.Id == parcel.SenderId).Name };
+                CustomerInParcel targ = new CustomerInParcel { Id = parcel.TargetId, Name = customers.Find(cs => cs.Id == parcel.TargetId).Name };
+                p.Sender = send;
+                p.Target = targ;
+                p.Id = parcel.Id;
+                p.WeightCategories = (Enums.WeightCategories)parcel.Weight;
+                return p;
+            }
+           
         }
 
         /// <summary>
