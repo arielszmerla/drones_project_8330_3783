@@ -55,24 +55,6 @@ namespace PL
                 pin.MouseDoubleClick += PinClicked;
                 myMap.Children.Add(pin);
             }
-
-
-
-            /*foreach (var item in bl.GetCustomerList())
-            {
-                pin = new();
-                pin.Location = new(item., item.Latitude);
-                myMap.Children.Add(pin);
-            }*/
-            /*
-
-            foreach (var item in bl.GetBaseStationList())
-            {
-                pin = new();
-                pin.Location = new(item.  .Latitude, item.DroneLocation.Longitude);
-                myMap.Children.Add(pin);
-            }
-            */
         }
 
         private void PinClicked(object sender, System.EventArgs e)
