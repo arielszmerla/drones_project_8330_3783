@@ -215,7 +215,7 @@ namespace BL
         /// Create the list of drone charging on a baseStation
         /// </summary>
         /// <param name="bs"></param>
-        /// <returns></returns>
+        /// <returns>list of drones charging</returns>
         private List<DroneCharge> dronCharges(BaseStation bs)
         {//find the relevant drones
 
