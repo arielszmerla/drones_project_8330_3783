@@ -72,4 +72,10 @@
     <MaxWeight>Light</MaxWeight>
     <Valid>true</Valid>
   </Drone>
+  <Drone>
+    <Id>123232323</Id>
+    <Model>MAVIC</Model>
+    <MaxWeight>Middle</MaxWeight>
+    <Valid>true</Valid>
+  </Drone>
 </ArrayOfDrone>

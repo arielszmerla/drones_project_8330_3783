@@ -22,9 +22,15 @@ namespace PL
     public partial class CustomerActionWindow : Window
     {
         int id;
+
         private BLAPI.IBL bl1;
         public static Model Model { get; } = Model.Instance;
-
+        /// <summary>
+        /// show customer
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="n"></param>
+        /// <param name="v"></param>
         public CustomerActionWindow(BLAPI.IBL bl, int n, int v = 0)
         {
             InitializeComponent();
@@ -52,9 +58,19 @@ namespace PL
 
 
         }
+        public CustomerActionWindow(BLAPI.IBL bl)
+        {
+            InitializeComponent();
+            this.bl1 = bl;
 
+        }
         List<BO.CustomerToList> customers = new();
         BO.Customer customer = new();
+        /// <summary>
+        /// show customer windows
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="cus"></param>
         public CustomerActionWindow(BLAPI.IBL bl, BO.CustomerToList cus)
         {
             InitializeComponent();
@@ -62,8 +78,6 @@ namespace PL
             id = cus.Id;
             customers.Add(cus);
             CustomerView.ItemsSource = customers;
-
-
         }
 
         private void End_the_page(object sender, RoutedEventArgs e)

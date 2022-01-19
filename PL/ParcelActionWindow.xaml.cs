@@ -21,13 +21,17 @@ namespace PL
     /// </summary>
     public partial class ParcelActionWindow : Window
     {
+        public static Model Model { get; } = Model.Instance;
         private IBL bl;
         private ParcelToList p;
         public ParcelActionWindow()
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// parcel create window
+        /// </summary>
+        /// <param name="bl"></param>
         public ParcelActionWindow(IBL bl)
         {
             InitializeComponent();
@@ -40,6 +44,11 @@ namespace PL
             show_parcel_name_drone.Visibility = Visibility.Collapsed;
         }
         Parcel parcel = new();
+        /// <summary>
+        /// parcel show window
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="p"></param>
         public ParcelActionWindow(IBL bl, ParcelToList p)
         {
             InitializeComponent();
@@ -49,16 +58,21 @@ namespace PL
             {
                 DataContext = p;
             }
-            catch (BO.GetException g) { MessageBox.Show(g.ToString()); }
+            catch (BO.GetException g) { MessageBox.Show(g.Message); }
             set_parcel_Priority.Visibility = Visibility.Collapsed;
             set_parcel_Weight.Visibility = Visibility.Collapsed;
             show_parcel_Weight.Visibility = Visibility.Visible;
-           // show_parcel_Weight.Text = p.SenderName;
+            // show_parcel_Weight.Text = p.SenderName;
             show_Priority.Visibility = Visibility.Visible;
-           // show_Priority.Text = p.Priority.ToString();
+            // show_Priority.Text = p.Priority.ToString();
             parcel = bl.GetParcel(p.Id);
         }
-
+        /// <summary>
+        /// delete parcel window
+        /// </summary>
+        /// <param name="bl"></param>
+        /// <param name="p"></param>
+        /// <param name="v"></param>
         public ParcelActionWindow(IBL bl, ParcelToList p, int v)
         {
             InitializeComponent();
@@ -69,10 +83,14 @@ namespace PL
                 bl.DeleteParcel(p.Id);
             }
             catch (BO.DeleteException exc)
-            { MessageBox.Show(exc.ToString()); }
+            { Model.Error(exc.Message); }
 
         }
-
+        /// <summary>
+        /// gert id parceel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             int s;
@@ -91,7 +109,11 @@ namespace PL
                 show_parcel_id.Background = Brushes.Red;
             }
         }
-
+        /// <summary>
+        /// enter the parcel to the data 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void enter_your_parcel(object sender, RoutedEventArgs e)
         {
             int s;
@@ -147,29 +169,28 @@ namespace PL
             bool flag = false;
             if (set_parcel_Priority.SelectedItem == null)
             {
-                MessageBox.Show("please enter priority");
+               Model.Error("please enter priority");
                 flag = true;
             }
             if (set_parcel_Weight.SelectedItem == null)
             {
-                MessageBox.Show("please enter weight");
+                Model.Error("please enter weight");
                 flag = true;
             }
             if (show_parcel_id.Background == Brushes.Red)
             {
 
-                MessageBox.Show("please enter id");
+                Model.Error("please enter id");
                 flag = true;
             }
-
             if (show_parcel_sender.Background == Brushes.Red)
             {
-                MessageBox.Show("please enter id of sender");
+                Model.Error("please enter id of sender");
                 flag = true;
             }
             if (show_parcel_target.Background == Brushes.Red)
             {
-                MessageBox.Show("please enter id of target");
+                Model.Error("please enter id of target");
                 flag = true;
             }
             if (flag == false)
@@ -186,16 +207,20 @@ namespace PL
                 }
                 catch (BO.AddException exc)
                 {
-                    MessageBox.Show(exc.Message);
+                    Model.Error(exc.Message);
                 }
                 catch (BO.GetException exc)
                 {
-                    MessageBox.Show(exc.Message);
+                    Model.Error(exc.Message);
                 }
             }
 
         }
-
+        /// <summary>
+        /// show drone carrier
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void show_drone_Click(object sender, RoutedEventArgs e)
         {
             if (parcel.Assignment <= DateTime.Now && parcel.Delivered == null)
@@ -204,13 +229,16 @@ namespace PL
             }
             else MessageBox.Show("not on drone");
         }
-
+        /// <summary>
+        /// show client owwner
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void show_client_Click(object sender, RoutedEventArgs e)
         {
-            new CustomerActionWindow(bl, parcel.Sender.Id,1).Show();
-
+            new CustomerActionWindow(bl, parcel.Sender.Id, 1).Show();
         }
 
-     
+
     }
 }

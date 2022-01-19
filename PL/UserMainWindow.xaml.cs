@@ -13,7 +13,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using PO;
-using BLAPI;
 namespace PL
 {
     /// <summary>
@@ -28,8 +27,7 @@ namespace PL
             this.bl = bl;
             InitializeComponent();
             UserGrid.Visibility = Visibility.Collapsed;
-            btnUpdate.Visibility = Visibility.Collapsed;
-            
+            btnUpdate.Visibility = Visibility.Collapsed; 
         }
         BLAPI.IBL bl;
         public UserMainWindow(IBL bl)

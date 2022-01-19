@@ -29,7 +29,6 @@ namespace PL
         readonly IBL bl = BLFactory.GetBL();
         public static Model Model { get; } = Model.Instance;
         private Location loc = new();
-        //  IBL bl;
         private PO.POAdapters poadapt = new PO.POAdapters();
 
         BO.Drone drone;
@@ -51,20 +50,20 @@ namespace PL
 
         }
 
-
-        // PO.Drone poDrone = new();
+        /// <summary>
+        /// ctor show drone
+        /// </summary>
+        /// <param name="bl1">bl unit</param>
+        /// <param name="i">drone id</param>
         public AddDrone(IBL bl1, int i)
         {
             drone = this.bl.GetDrone(i);
             InitializeComponent();
-
-            //   this.DataContext = poDrone;
             locasa = drone.Location;
             Title = "ACTIONS";
             Choose_models.ItemsSource = Enum.GetValues(typeof(Enums.DroneNames));
-            // myMap.DataContext = locasa;
             update_drone.Visibility = Visibility.Visible;
-            simul.Visibility = Visibility.Collapsed;
+            simul.Visibility = Visibility.Visible;
         }
         /// <summary>
         /// func to create a drone
@@ -89,12 +88,12 @@ namespace PL
 
 
             double s;
-            if (!myReg.IsMatch(ChooseLatitude.Text))
+            if (myReg.IsMatch(ChooseLatitude.Text))
             {
 
-                if (Int32.Parse(ChooseLatitude.Text) >= 0)
+                if (double.Parse(ChooseLatitude.Text) >= 0)
                 {
-                    loc.Latitude = Int32.Parse(ChooseLatitude.Text);
+                    loc.Latitude = double.Parse(ChooseLatitude.Text);
                 }
             }
             if (ChooseLatitude.Text == "")
@@ -103,14 +102,15 @@ namespace PL
                 ChooseLatitude.Background = Brushes.Red;
             }
             s = 0;
-            if (!myReg.IsMatch(ChooseLongitude.Text))
-            {
-                if (!myReg.IsMatch(ChooseLongitude.Text))
+        
+                if (myReg.IsMatch(ChooseLongitude.Text))
                 {
-
-                    loc.Longitude = Int32.Parse(ChooseLongitude.Text);
+                if (double.Parse(ChooseLongitude.Text) >= 0)
+                {
+                    loc.Longitude = double.Parse(ChooseLongitude.Text);
                 }
-            }
+                }
+            
             if (ChooseLongitude.Text == "")
             {
                 Model.Error("Please, number > 0");

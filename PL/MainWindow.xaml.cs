@@ -40,7 +40,7 @@ namespace PL
 
         }
 
-        //ebter as a client
+        //enter as a client
         private void Client_Entry_Click(object sender, RoutedEventArgs e)
         {
             Manager_Entry.Visibility = Visibility.Collapsed;
@@ -77,96 +77,121 @@ namespace PL
                     id_check.Text = "";
                 }
             }
-        
-    }
-    private void Manager_Entry_Click(object sender, RoutedEventArgs e)
-    {
-        password.Visibility = Visibility.Visible;
-        LogIn.Visibility = Visibility.Visible;
-        enterPassword.Visibility = Visibility.Visible;
-    }
 
-    private void chek(int s, int sum)
-    {
-
-        if (password.Password == "1234")
-        {
-            password.Password = "";
-            MessageBox.Show("Welcome sir!");
-            choice.Visibility = Visibility.Visible;
-            password.Visibility = Visibility.Collapsed;
-            Manager_Entry.Visibility = Visibility.Collapsed;
-            Client_Entry.Visibility = Visibility.Collapsed;
-            LogIn.Visibility = Visibility.Collapsed;
-            enterPassword.Visibility = Visibility.Collapsed;
-            Sign_In.Visibility = Visibility.Collapsed;
         }
-        else
+        /// <summary>
+        /// enter as a manager
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Manager_Entry_Click(object sender, RoutedEventArgs e)
         {
-            password.Password = "";
-            password.Background = Brushes.Red;
-            MessageBox.Show("Please try again");
+            password.Visibility = Visibility.Visible;
+            LogIn.Visibility = Visibility.Visible;
+            enterPassword.Visibility = Visibility.Visible;
         }
-
-
-    }
-
-
-    private void Sign_In_Click(object sender, RoutedEventArgs e)
-    {
-        new UserMainWindow(bl, 2).Show();
-    }
-
-    private void LogIn_Click(object sender, RoutedEventArgs e)
-    {
-
-
-
-        if (password.Password == "1234")
+        /// <summary>
+        /// checks valid password
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="sum"></param>
+        private void chek(int s, int sum)
         {
-            password.Password = "";
-            MessageBox.Show("Welcome sir!");
-            choice.Visibility = Visibility.Visible;
-            password.Visibility = Visibility.Collapsed;
-            Manager_Entry.Visibility = Visibility.Collapsed;
-            Client_Entry.Visibility = Visibility.Collapsed;
-            LogIn.Visibility = Visibility.Collapsed;
-            enterPassword.Visibility = Visibility.Collapsed;
-            Sign_In.Visibility = Visibility.Collapsed;
-        }
-        else
-        {
-            password.Password = "";
-            password.Background = Brushes.Red;
-            MessageBox.Show("Please try again");
+
+            if (password.Password == "1234")
+            {
+                password.Password = "";
+                MessageBox.Show("Welcome sir!");
+                choice.Visibility = Visibility.Visible;
+                password.Visibility = Visibility.Collapsed;
+                Manager_Entry.Visibility = Visibility.Collapsed;
+                Client_Entry.Visibility = Visibility.Collapsed;
+                LogIn.Visibility = Visibility.Collapsed;
+                enterPassword.Visibility = Visibility.Collapsed;
+                Sign_In.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                password.Password = "";
+                password.Background = Brushes.Red;
+                MessageBox.Show("Please try again");
+            }
+
+
         }
 
-
-
-
-
+        /// <summary>
+        /// sign in for new client
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Sign_In_Click(object sender, RoutedEventArgs e)
+        {
+            new CustomerActionWindow(bl).Show();
+        }
+        /// <summary>
+        /// login as manafer 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void LogIn_Click(object sender, RoutedEventArgs e)
+        {
+            if (password.Password == "1234")
+            {
+                password.Password = "";
+                MessageBox.Show("Welcome sir!");
+                choice.Visibility = Visibility.Visible;
+                password.Visibility = Visibility.Collapsed;
+                Manager_Entry.Visibility = Visibility.Collapsed;
+                Client_Entry.Visibility = Visibility.Collapsed;
+                LogIn.Visibility = Visibility.Collapsed;
+                enterPassword.Visibility = Visibility.Collapsed;
+                Sign_In.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                password.Password = "";
+                password.Background = Brushes.Red;
+                MessageBox.Show("Please try again");
+            }
+        }
+        /// <summary>
+        /// get drone window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void drones_Click(object sender, RoutedEventArgs e)
+        {
+            new DroneListWindow1(bl).Show();
+        }
+        /// <summary>
+        /// get bases window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void bases_Click(object sender, RoutedEventArgs e)
+        {
+            new BaseStationViewWindow(bl).Show();
+        }
+        /// <summary>
+        /// get parcel window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new ParcelListWindow(bl).Show();
+        }
+        /// <summary>
+        /// get customer window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            new CustomerListWindow(bl).Show();
+        }
     }
-
-    private void drones_Click(object sender, RoutedEventArgs e)
-    {
-        new DroneListWindow1(bl).Show();
-    }
-
-    private void bases_Click(object sender, RoutedEventArgs e)
-    {
-        new BaseStationViewWindow(bl).Show();
-    }
-
-    private void Button_Click(object sender, RoutedEventArgs e)
-    {
-        new ParcelListWindow(bl).Show();
-    }
-
-    private void Button_Click_1(object sender, RoutedEventArgs e)
-    {
-        new CustomerListWindow(bl).Show();
-    }
-}
 
 
 }
