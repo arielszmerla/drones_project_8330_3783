@@ -13,7 +13,6 @@ namespace BL
 /// part of BL class
 /// </summary>
     partial class BLImp : IBL
-
     {
         #region drone updates
 
