@@ -20,7 +20,7 @@ namespace BLAPI
         /// <param name="checkStop">parameter stop the simulation</param>
         void StartDroneSimulator(int id, Action update, Func<bool> checkStop);
 
-        #region add 
+         #region add 
         /// <summary>
         /// method to add a base station 
         /// </summary>
