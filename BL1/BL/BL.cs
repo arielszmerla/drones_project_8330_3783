@@ -40,8 +40,6 @@ namespace BL
         private static object syncRoot = new object();
         public static BLImp Instance
         {
-
-
             get
             {
                 if (Nested.instance == null)
