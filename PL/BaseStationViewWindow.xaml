@@ -1,0 +1,74 @@
+﻿<Window x:Class="PL.BaseStationViewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        Icon="\images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico"
+        Closing="BaseSViewClosing"
+        mc:Ignorable="d"
+        Title="Base station view window" Height="450" Width="800">
+    <Window.Background>
+        <ImageBrush ImageSource="\images\baseStationPic.png" />
+    </Window.Background>
+    <Grid>
+
+        <ListView x:Name="BaseStationView" FontStyle="Oblique" FontSize="16" Foreground="DarkRed"  DataContext=""  MouseDoubleClick="BaseStationView_MouseDoubleClick"  Background="Transparent" Margin="0,74,163,10" SelectionChanged="ListView_SelectionChanged">
+
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Path=Id}"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name}"/>
+                    <GridViewColumn Header="NumOfFreeSlots" DisplayMemberBinding="{Binding Path=NumOfFreeSlots}"/>
+                    <GridViewColumn Header="NumOfSlotsInUse" DisplayMemberBinding="{Binding Path=NumOfSlotsInUse}"/>
+
+                </GridView>
+
+            </ListView.View>
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Path = BaseOptions.SelectedItem}"/>
+
+                        </DataTemplate>
+
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ListView.GroupStyle>
+        </ListView>
+
+      
+      
+
+        <Button x:Name="ResetList" Content="Reset List" Background ="BurlyWood"  Visibility="Collapsed"  HorizontalAlignment="Left" Margin="675,10,0,0" VerticalAlignment="Top" Click="ResetList_Click" Height="30" Width="100"/>
+        <Button x:Name="BaseOptions" Content="Devide by free slots" ToolTip="Click to devide between base stations with and without free slots"
+                HorizontalAlignment="Left" Margin="105,33,0,0" Background ="Bisque"  Foreground="Black" BorderThickness="7" FontWeight="ExtraBlack"  VerticalAlignment="Top" Width="175" Click="BaseOptions_Click"/>
+        <StackPanel Margin="700,200,0,0" Width="100" Height="300" Visibility="Visible">
+            <Button  VerticalAlignment="Top" Width="60" Height="50" Margin="10,20,0,0"  Click="Button_Click">
+
+                <Button.Background>
+                    <ImageBrush ImageSource="\images\pluspic.png" />
+                </Button.Background>
+            </Button>
+            
+            <Button x:Name="PageStop" Margin="10,20,0,0" ToolTip="close page"  Visibility="Visible" Click="End_the_page"  Width="60" Height="50">
+                <Button.Background>
+                    <ImageBrush ImageSource="\images\pngegg.png" />
+                </Button.Background>
+            </Button>
+
+        </StackPanel>
+                 
+
+
+
+
+
+
+
+
+
+    </Grid>
+
+</Window>

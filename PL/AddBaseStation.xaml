@@ -1,0 +1,128 @@
+﻿<Window x:Class="PL.AddBaseStation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Icon="\images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico"
+        Closing="AddBaseStationClosing"
+        Title="Add BaseStation" Height="450" Width="800">
+    <Window.Background>
+        <ImageBrush ImageSource = "\images\baseStationPic.png"/>
+    </Window.Background>
+    <Window.Resources >
+        <local:ConverterDoubleToInt x:Key="ConverterDoubleToInt"/>
+        <local:ConverterLatitude x:Key="ConverterLatitude"/>
+
+    </Window.Resources>
+    <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto" Margin="0,-1,0,1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Button x:Name="PageStop"  Visibility="Visible" Grid.Column="3" Width="50" Height="40" Margin="110,337,10,29" Click="End_the_page" RenderTransformOrigin="0.526,0.522">
+
+            <Button.Background>
+                <ImageBrush ImageSource="\images\pngegg.png"/>
+            </Button.Background>
+        </Button>
+
+        <StackPanel x:Name="add_BaseStation_titles" Visibility="Collapsed" Background="Transparent" Orientation="Vertical" Grid.Column="0" Margin="10,0,0,0" Height="434" VerticalAlignment="Center">
+
+            <Label x:Name="IsD" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
+            <Label x:Name="ID" FontSize="15" Content="Enter id" Width="180" Height="27"/>
+
+            <Label   x:Name="Name" FontSize="15" Content="Enter name"  HorizontalAlignment="Center" Width="180" Margin="0,10,0,0"/>
+
+            <Label    x:Name="Free_Slots" FontSize="14" Content="Enter number of free slots"  HorizontalAlignment="Center" Width="180" Margin="0,10,0,0"/>
+
+
+
+            <Label  x:Name="Latitude" BorderBrush="Transparent"  FontSize="15" Content="Enter Latitude" Width="180" Margin="0,10,0,0"/>
+
+            <Label  x:Name="Longitude"  Background="Transparent" Width="180"  BorderBrush="Transparent"  Visibility="Visible" FontSize="15" Content="Enter Longitude" Margin="0,10,0,0"/>
+
+        </StackPanel>
+        <StackPanel x:Name="add_BaseStation_stack"  Visibility="Collapsed" Background="Transparent"   Orientation="Vertical" Grid.Column="1"  Margin="0,35,63,-37">
+           <TextBox  x:Name="ChooseId" Opacity="0.8" IsEnabled="True" BorderBrush="Transparent" Background="Bisque" ToolTip="positive number"  Text= "" Width="145" Height="28"/>
+
+            <TextBox x:Name="ChooseName" Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Bisque"    Text= "" Width="147" Height="27" RenderTransformOrigin="0.502,1.282" />
+        
+            <TextBox x:Name="ChooseNumOfFreeSlots" Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Bisque"  ToolTip="between 3 and 20"  Text= ""   Width="147" Height="27" RenderTransformOrigin="0.502,1.282" />
+
+            <TextBox x:Name="ChooseLatitude" Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Bisque"  ToolTip="between 31.740967 and 31.815177"  Text= "" Width="147" Height="27" RenderTransformOrigin="0.502,1.282" />
+
+            <TextBox x:Name="ChooseLongitude" Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Bisque" Text=""  ToolTip="between 35.171323 and 35.202050"   Width="145" Height="28" />
+            <Button x:Name="enter" Opacity="0.9"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,20,0,0" FontWeight="ExtraBlack"  Content="ADD"  Click="enter_your_baseStation" Width="120" Height="84" RenderTransformOrigin="0.61,2.198"/>
+
+        </StackPanel>
+        <StackPanel x:Name="Update_BaseStation"  Visibility="Collapsed"  Background="Transparent" Orientation="Vertical" Margin="10,0,0,0" Height="434" VerticalAlignment="Center" Grid.Column="2">
+            <Label x:Name="IsD_U" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
+            <Label x:Name="IsD_UU" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
+
+            <Label Foreground= "Black" x:Name="Name_UP" FontSize="15" Content="Enter name" Width="145" Height="28"/>
+
+            <TextBox  x:Name="Name_Update" Opacity="0.8"  BorderBrush="Transparent" Background="Bisque" ToolTip="Enter name to update"  Text= ""  Width="145" Height="28" TextChanged="Name_UPDATE_TextChanged"/>
+
+            <Label x:Name="IsD_UUU" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
+
+            <Label Foreground= "Black" x:Name="NUS_UP" FontSize="15" Content="Enter number of slots" Width="156" Height="28"/>
+
+            <TextBox  x:Name="SLOTS_UPDATE" Opacity="0.8"  BorderBrush="Transparent" Background="Bisque" ToolTip="Enter number of slots to update"  Text= "" Width="145" Height="28" TextChanged="SLOTS_UPDATE_TextChanged"/>
+
+            <Button x:Name="Update" Opacity="0.9"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,20,0,0" FontWeight="ExtraBlack"  Content="Update"  Width="120" Height="30"  RenderTransformOrigin="0.61,2.198" Click="Update_Click"/>
+
+            <Button x:Name="DeleteBasestation" Opacity="0.9" BorderBrush="Transparent" Visibility="Visible"  Margin="0,20,0,0" FontWeight="ExtraBlack" Content="Delete" Width="120" Height="30"  Foreground="Red" Click="Delete_Click"/>
+
+            <Button x:Name="ViewDrones" FontWeight="ExtraBlack" Margin="0,20,0,0" Content="View drones" Foreground="Green" Width="120" Height="30"  Click="ViewDrones_Click"/>
+
+        </StackPanel>
+
+        <StackPanel x:Name="show_BaseStation_titles" Visibility="Visible" Background="Transparent" Orientation="Vertical" Grid.Column="0"  Margin="10,-10,0,0" Height="434" VerticalAlignment="Top">
+            <Label x:Name="IsD_UUUUUU" FontSize="15" Content="" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
+            <Label x:Name="IsD_" FontSize="15" Content="" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
+
+            
+            <Label x:Name="ShowIsD" FontWeight="Heavy"  FontSize="14" HorizontalContentAlignment="Center" Foreground="Brown"  HorizontalAlignment="Center" Width="auto" Height="28" Margin="0,10,0,0">
+                <TextBlock TextDecorations="Underline" 
+               Text="Updating Base station:"/>
+            </Label>
+
+
+            <Label x:Name="ShowID" FontSize="15" Background="LightCyan" Opacity="0.8" FontWeight="Heavy" BorderBrush="DarkCyan" BorderThickness="1" Content="ID" Width="150" HorizontalContentAlignment="Center" Height="27" HorizontalAlignment="Center"/>
+
+            <Label   x:Name="ShowName" FontSize="15" Background="LightCyan" Opacity="0.8" FontWeight="Heavy" BorderBrush="DarkCyan" BorderThickness="1"  Content="NAME"  HorizontalAlignment="Center" Width="150" HorizontalContentAlignment="Center" Margin="0,10,0,0"/>
+
+            <Label   x:Name="ShowFree_Slots" Background="LightCyan" Opacity="0.8" FontWeight="Heavy" BorderBrush="DarkCyan" BorderThickness="1"  FontSize="15" Content="FREE SLOTS"  HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="150" Margin="0,10,0,0"/>
+
+
+            <Label  x:Name="ShowLocation" Background="LightCyan" Opacity="0.8" FontWeight="Heavy" BorderBrush="DarkCyan" BorderThickness="1"  FontSize="15" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Content="Location" Width="150" Margin="0,10,0,0"/>
+
+
+
+        </StackPanel>
+        <StackPanel x:Name="Show_BaseStation_stack" Visibility="Visible" Background="Transparent"     Orientation="Vertical" Grid.Column="1"  Margin="0,29,63,-10">
+
+            <Label x:Name="IsD_UUUU"  FontSize="15" Content=""  HorizontalAlignment="Center" Width="135" Height="28" Margin="0,10,0,0"/>
+            <Label x:Name="IsD_UUUUU" FontSize="15" Content=""  HorizontalAlignment="Center" Width="135" Height="28" Margin="0,10,0,0"/>
+
+            <TextBox  x:Name="Show_Id" Foreground="DarkRed" HorizontalContentAlignment="Center" IsReadOnly="True" Opacity="0.8"  BorderBrush="Transparent"  Background="LightCyan"  Text= "{Binding Id}" Width="145" Height="28" />
+
+
+            <TextBox x:Name="Show_Name" Foreground="DarkRed" HorizontalContentAlignment="Center" IsReadOnly="True"  Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="LightCyan" Text= "{Binding Name}"  Width="129" Height="27" RenderTransformOrigin="0.502,1.282" />
+
+            <TextBox x:Name="ShowNumOfFreeSlots" HorizontalContentAlignment="Center" Foreground="DarkRed" IsReadOnly="True" Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="LightCyan"    Text= "{Binding NumOfFreeSlots}" Width="128" Height="27" RenderTransformOrigin="0.502,1.282" />
+            <Label  Margin="0,15,0,0" Foreground="DarkRed"  HorizontalAlignment="Left" Height="27"  Width="137" Background="LightCyan"  Content="{Binding Location,Converter={StaticResource ConverterLatitude } }"/>
+
+
+
+        </StackPanel>
+       
+
+
+    </Grid>
+</Window>

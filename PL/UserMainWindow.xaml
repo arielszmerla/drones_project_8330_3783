@@ -1,0 +1,64 @@
+﻿<Window x:Class="PL.UserMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"  
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"  
+        Title="MainWindow" Height="485" Width="725">
+    <Grid Margin="0,0,0,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ListView Name="UserGrid" Background="SeaGreen" Grid.Row="1" Margin="51,179,246,13"  ItemsSource="{Binding l}"  >
+            <ListView.View>
+                <GridView x:Name="grdTest">
+                    <GridViewColumn Header="UserId" DisplayMemberBinding="{Binding UserId}"  Width="50"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"  Width="80" />
+                    <GridViewColumn Header="Phone" DisplayMemberBinding="{Binding Phone}" Width="100" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBox Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="90,7,0,0" Name="txtUserId" VerticalAlignment="Top" Width="178" Text="{Binding ElementName=UserGrid,Path=SelectedItem.UserId}" />
+        <TextBox Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="90,35,0,0" Name="txtFirstName" VerticalAlignment="Top" Width="178" Text="{Binding ElementName=UserGrid,Path=SelectedItem.Name}"  />
+        <TextBox Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="90,62,0,0" Name="txtphone" VerticalAlignment="Top" Width="178" Text="{Binding ElementName=UserGrid,Path=SelectedItem.Phone}"  />
+        <TextBox Grid.Row="1" Height="23" Visibility="Collapsed"  HorizontalAlignment="Left" Margin="90,89,0,0" Name="latitue" VerticalAlignment="Top" Width="178" />
+        <TextBox Grid.Row="1" Height="23"  Visibility="Collapsed" HorizontalAlignment="Left" Margin="90,120,0,0" Name="longitue" VerticalAlignment="Top" Width="178" />
+        <Label Content="User Id" Grid.Row="1" HorizontalAlignment="Left" Margin="12,12,0,274" Name="label1" />
+        <Label Content="PHONE NUM" Grid.Row="1" Height="28" HorizontalAlignment="Left" Margin="12,60,0,0" Name="label2" VerticalAlignment="Top" />
+        <Label Content="Last Name"  Grid.Row="1" Height="28" HorizontalAlignment="Left" Margin="12,35,0,0" Name="label3" VerticalAlignment="Top" />
+        <Label Content="Latitude"  Visibility="Collapsed"  Grid.Row="1" Height="28" HorizontalAlignment="Left" Margin="12,95,0,0" Name="label4" VerticalAlignment="Top" />
+        <Label Content="Longitude"  Visibility="Collapsed"  Grid.Row="1" Height="28" HorizontalAlignment="Left" Margin="12,120,0,0" Name="label5" VerticalAlignment="Top" />
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Update" Grid.Row="1" Height="52" Margin="310,40,0,0" Name="btnUpdate"   
+                VerticalAlignment="Top" Width="127"  
+                Command="{Binding Path=UpdateCommand}" Click="btnUpdate_Click" />
+            <ComboBox  x:Name="client_choices"  BorderThickness="2" Margin="0,40,0,0" IsEditable="True" Text="Choose Update" Width="118" SelectionChanged="client_choices_SelectionChanged_1" Height="48" />
+        </StackPanel>
+        <Button Content="Sign in"  Visibility="Collapsed"  HorizontalAlignment="Left" Margin="319,19,0,0" Grid.Row="1" VerticalAlignment="Top" Height="66" Width="139" Click="Button_Click">
+            <Button.Triggers>
+                <EventTrigger RoutedEvent = "Button.Click">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty = "Width" Duration = "0:0:4">
+                                    <LinearDoubleKeyFrame Value = "60" KeyTime = "0:0:0"/>
+                                    <LinearDoubleKeyFrame Value = "120" KeyTime = "0:0:1"/>
+                                    <LinearDoubleKeyFrame Value = "200" KeyTime = "0:0:2"/>
+                                    <LinearDoubleKeyFrame Value = "300" KeyTime = "0:0:3"/>
+                                </DoubleAnimationUsingKeyFrames>
+
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty = "Height" Duration = "0:0:4">
+                                    <LinearDoubleKeyFrame Value = "30" KeyTime = "0:0:0"/>
+                                    <LinearDoubleKeyFrame Value = "40" KeyTime = "0:0:1"/>
+                                    <LinearDoubleKeyFrame Value = "80" KeyTime = "0:0:2"/>
+                                    <LinearDoubleKeyFrame Value = "150" KeyTime = "0:0:3"/>
+                                </DoubleAnimationUsingKeyFrames>
+
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Button.Triggers>
+        </Button>
+    </Grid>
+</Window>  

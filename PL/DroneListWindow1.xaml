@@ -1,0 +1,138 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="PL.DroneListWindow1"
+        mc:Ignorable="d"   Icon="\images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico"
+        Closing="list_closing" WindowStyle="None"
+         Title = "LIST OF DRONES" Height="700" Width="1300" BorderThickness="3" HorizontalAlignment="Center"   BorderBrush="Beige"  DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}" Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style x:Key="ItemStyle" TargetType="{x:Type ListViewItem}">
+            <EventSetter Event="MouseDoubleClick" Handler="Drone_MouseDoubleClick" />
+            <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
+        </Style>
+        <local:ConverterDoubleToInt x:Key="ConverterDoubleToInt"/>
+        <local:ConverterLatitude x:Key="ConverterLatitude"/>
+        <local:BatteryToProgressBarConverter x:Key="BatteryToProgressBarConverter"/>
+        <local:BatteryToColorConverter x:Key="BatteryToColorConverter"/>
+
+        <local:DeliveryIdConverter x:Key="DeliveryIdConverter"/>
+        <DataTemplate x:Key="MyDataTemplate"
+                  DataType="local:MyData">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"  />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                   Text="Drone Id " />
+
+                <TextBlock Grid.Column="1"
+                   Text=" Model " />
+
+                <TextBlock Grid.Column="2"
+                   Text=" Longitude: " />
+
+                <TextBlock Grid.Column="3"
+                   Text=" Latitude: " />
+
+                <TextBlock Grid.Column="4"
+                   Text=" Battery: " />
+
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+
+
+    <Window.Background>
+        <ImageBrush  ImageSource="\images\drona.jpg"/>
+    </Window.Background>
+
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="400*"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
+        VerticalAlignment="Stretch" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label BorderBrush="Black" BorderThickness="5" Grid.Row="0" Foreground="BlanchedAlmond" VerticalContentAlignment="Center" FontSize="25" FontWeight="DemiBold" Content="BY STATUS" x:Name="Status_label" Margin="214,5,57,-5" Grid.ColumnSpan="2" />
+            <ComboBox  Opacity  ="0.8"   BorderBrush="Transparent" Background="Bisque" ToolTip="Drone Status" FontSize="10" Text="Drone Status" x:Name="StatusSelector"  Grid.Column="1" SelectionChanged="StatusSelector_SelectionChanged"  Margin="272,7,308,-7" Grid.ColumnSpan="2"/>
+            <Label Grid.Row="0" BorderBrush="Black" BorderThickness="5" VerticalContentAlignment="Center" Foreground="BlanchedAlmond" Grid.Column="2" FontSize="25" FontWeight="DemiBold" Content="BY WEIGHT" x:Name="Weight_label" Margin="10,5,284,-5" Grid.ColumnSpan="2"  />
+            <ComboBox FontSize="10" Background="Bisque"  BorderBrush="Transparent" Opacity="0.8" ToolTip="Drone weight" Text="Drone weight" x:Name="WeightChoise" Grid.Column="3" HorizontalAlignment="Left"  SelectionChanged="WeightChoise_SelectionChanged" Margin="44,5,0,-5" Width="52"/>
+
+
+            <Label  Content="MY DRONES"  FontStyle="Italic" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Black"  BorderThickness="5" FontSize="35" FontWeight="ExtraBlack" Grid.ColumnSpan="4" Margin="214,89,228,-112"/>
+            <Button BorderBrush="Transparent"  Opacity="0.8" x:Name="reset" Visibility="Hidden" Content="Reset List"  Grid.Column="3" HorizontalAlignment="Left" Margin="19,0,0,0" VerticalAlignment="Center" Height="72" Width="171" ToolTip="Reset List" Click="Reset_List"/>
+
+        </Grid>
+
+
+        <ListView FontSize="14" ItemsSource="{Binding Model.Drones, Mode=OneWay}"   Background="Transparent"  Foreground="DarkRed" x:Name="DroneListView"   FontWeight="ExtraBlack" MouseDoubleClick="DroneListView_SelectionChanged" Margin="0,129,133,10" Grid.Row="1">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID:" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="MODEL:" DisplayMemberBinding="{Binding Model}"/>
+                    <GridViewColumn Header="Weight:" DisplayMemberBinding="{Binding MaxWeight}"/>
+                    <GridViewColumn Header="Status:" DisplayMemberBinding="{Binding Status}"/>
+                    <GridViewColumn Header="Location:" DisplayMemberBinding="{Binding Location, Converter={StaticResource ConverterLatitude}}"/>
+                    <GridViewColumn Header="Parcel:" DisplayMemberBinding="{Binding DeliveryId , Converter={StaticResource DeliveryIdConverter }}"/>
+                    <GridViewColumn Header="Number of delivered parcel:" DisplayMemberBinding="{Binding NumOfDeliveredParcel}"/>
+                    <GridViewColumn >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <ProgressBar  Name="BatteryProgressBar" Value="{Binding Battery, Mode=TwoWay}" Height="20" Width="70" Foreground="{Binding Battery, Converter={StaticResource BatteryToColorConverter}}"/>
+                                    <TextBlock Text="{Binding Value, ElementName=BatteryProgressBar,Converter={StaticResource BatteryToProgressBarConverter}}"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <StackPanel Orientation="Vertical"
+                    x:Name="actions" Margin="1118,111,0,59" Grid.Row="1" >
+            <Button    BorderBrush="Transparent" Margin="10,80,0,0"  Opacity="0.8" ToolTip="Click Here To view on map" FontSize="16" BorderThickness="0.5" x:Name="View_On_Map" Click="View_Map" Width="64" Height="68" RenderTransformOrigin="-0.208,-4.179">
+                <Button.Background>
+                    <ImageBrush ImageSource="\images\Google_Maps_logo.png"/>
+                </Button.Background>
+            </Button>
+            <Button Opacity="0.8" ToolTip="Click Here To Add" Margin="10,80,0,0" BorderBrush="Black" FontSize="16" Click="Button_Click" Height="59" Width="60">
+                <Button.Background>
+                    <ImageBrush ImageSource="\images\pluspic.png"/>
+                </Button.Background>
+            </Button>
+
+            <Button    BorderBrush="Red" Opacity="0.8" Margin="10,80,0,0"  ToolTip="Click Here To Close" FontSize="16" BorderThickness="0.5" x:Name="Closing_Button" Click="Closing_Button_Click" Width="54" Height="62" RenderTransformOrigin="-0.208,-4.179">
+                <Button.Background>
+                    <ImageBrush ImageSource="\images\pngegg.png"/>
+                </Button.Background>
+            </Button>
+        </StackPanel>
+
+
+    </Grid>
+</Window>
+
+
+
