@@ -12,14 +12,21 @@ using DS;
 
 namespace DalXML
 {
-
+    /// <summary>
+    /// data base implemention via xml
+    /// </summary>
     sealed public partial class DalXML : IDal
     {
+        #region  paths
+        /// <summary>
+        /// consts as paths
+        /// </summary>
         const string DRONEPATH = @"drones.xml";
         const string PARCELPATH = @"parcels.xml";
         const string BASESTATIONPATH = @"stations.xml";
         const string CUSTOMERPATH = @"customer.xml";
         const string DRONECHARGEPATH = @"droneCharge.xml";
+        #endregion
         #region singelton
         /// <summary>
         /// makes sure only one user can approch the code.
