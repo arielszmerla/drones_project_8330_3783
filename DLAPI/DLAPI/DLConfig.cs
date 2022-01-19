@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace DLAPI
-{
+{/// <summary>
+/// get config element for independants built projects 
+/// </summary>
     static class DLConfig
     {
         internal static string DalName;
