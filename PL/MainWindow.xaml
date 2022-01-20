@@ -110,7 +110,7 @@
     Content="PARCELS" Click="Button_Click"/>
             <Button
                       materialDesign:ButtonAssist.CornerRadius="25" Width="95"
-    Content="CUSTOMERS"
+    Content="CLIENT"
                  Style="{StaticResource MaterialDesignRaisedButton}" Click="Button_Click_1"
     
 />
