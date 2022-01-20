@@ -7,21 +7,72 @@
         mc:Ignorable="d"
         Title="Parcel Action Window" Height="450" Width="800">
     <Window.Background>
-        <ImageBrush ImageSource="\images\parcel.png" />
+        <ImageBrush ImageSource="\images\parcel.jpeg" />
     </Window.Background>
+    <Window.Clip>
+        <RectangleGeometry Rect="0,0,800,450" RadiusX="35" RadiusY="35"/>
+    </Window.Clip>
+    <Window.Resources>
+      
+    <ResourceDictionary>
+            <Style TargetType="{x:Type Button}" x:Key="MaterialDesignMenuCommandButtonStyle">
+
+                <Setter Property="Background" Value="Beige"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="1"/>
+                <Setter Property="Opacity" Value=".8"/>
+                <Setter Property="Width" Value="24"/>
+                <Setter Property="Height" Value="20"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                                <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsDefaulted" Value="true">
+                                    <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter Property="Opacity" TargetName="border" Value=".5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="true">
+
+                        <Setter Property="Foreground" Value="{x:Static SystemColors.HighlightTextBrush}" />
+                    </Trigger>
+                    <Trigger Property="IsPressed" Value="true">
+                        <Setter Property="Opacity" Value="1"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid RenderTransformOrigin="0.504,0.548" Margin="0,3,0,-3">
         <Grid.RowDefinitions>
             <RowDefinition Height="0.3*"  />
             <RowDefinition Height="0.7*"  />
 
         </Grid.RowDefinitions>
-        <StackPanel x:Name="Add_Stack" Margin="65,130,614,0" Grid.RowSpan="2">
+        <StackPanel x:Name="Add_Stack" Margin="0,130,655,0" Grid.RowSpan="2">
             <Label />
-            <Label Content="ID:" FontSize="20" FontWeight="DemiBold"  Background="SandyBrown" Opacity="0.7"/>
-            <Label Content="Sender" FontSize="20" FontWeight="DemiBold" Margin="0,2,0,0"  Background="SandyBrown" Opacity="0.7"/>
-            <Label Content="Target" FontSize="20" FontWeight="DemiBold" Margin="0,2,0,0"   Background="SandyBrown" Opacity="0.7"/>
-            <Label Content="Weight" FontSize="20" FontWeight="DemiBold" Margin="0,2,0,0"   Background="SandyBrown" Opacity="0.7"/>
-            <Label Content="Priority" FontSize="20" FontWeight="DemiBold" Margin="0,2,0,0"    Background="SandyBrown" Opacity="0.7"/>
+            <Label Content="ID:" FontSize="20" FontWeight="DemiBold"  Background="CadetBlue" />
+            <Label Content="Sender" FontSize="20" FontWeight="DemiBold" Margin="0,2,0,0"  Background="CadetBlue" />
+            <Label Content="Target" FontSize="20" FontWeight="DemiBold" Margin="0,2,0,0"   Background="CadetBlue" />
+            <Label Content="Weight" FontSize="20" FontWeight="DemiBold" Margin="0,2,0,0"   Background="CadetBlue" />
+            <Label Content="Priority" FontSize="20" FontWeight="DemiBold" Margin="0,2,0,0"    Background="CadetBlue"/>
         </StackPanel>
 
         <StackPanel Margin="150,130,478,0" Grid.RowSpan="2" x:Name="show"     RenderTransformOrigin="0.5,0.5">
@@ -30,16 +81,18 @@
             <TextBox x:Name="show_parcel_sender"   HorizontalAlignment="Center" Margin="0,05,0,0" TextWrapping="Wrap" Text="{ Binding SenderName}"  VerticalAlignment="Top" Width="72" Height="41"  Grid.Row="1"/>
             <TextBox x:Name="show_parcel_target"   HorizontalAlignment="Center" Margin="0,05,0,0" TextWrapping="Wrap" Text="{ Binding TargetName}"  VerticalAlignment="Top" Width="72" Height="28" Grid.Row="1"/>
             <TextBox x:Name="show_parcel_Weight"   HorizontalAlignment="Center" Margin="0,5,0,0" Visibility="Collapsed" TextWrapping="Wrap" Text="{ Binding WeightCategorie}"  VerticalAlignment="Top" Width="71" Height="23" Grid.Row="1"/>
-            <ComboBox  x:Name="set_parcel_Weight" HorizontalAlignment="Center" Margin="0,5,0,0" Height="30" Width="55" />
-            <ComboBox  x:Name="set_parcel_Priority" HorizontalAlignment="Center" Margin="0,5,0,0" Height="30" Width="55" />
+            <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
+    IsEnabled="{Binding Path=IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox}" x:Name="set_parcel_Weight" HorizontalAlignment="Center" Margin="0,5,0,0" Height="30" Width="55" />
+            <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
+    IsEnabled="{Binding Path=IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox}" x:Name="set_parcel_Priority" HorizontalAlignment="Center" Margin="0,5,0,0" Height="30" Width="55" />
             <TextBox x:Name="show_Priority"   HorizontalAlignment="Center" Visibility="Collapsed" Margin="0,5,0,0" TextWrapping="Wrap" Text="{ Binding  Priority}"  VerticalAlignment="Top" Width="71" Height="23"  Grid.Row="1"/>
             <TextBox x:Name="show_parcel_name_drone"   HorizontalAlignment="Center" Margin="0,5,0,0" TextWrapping="Wrap" Text="{ Binding DIP.Id}"  VerticalAlignment="Top" Width="71" Height="23"  Grid.Row="1"/>
             <Button x:Name="enter"  Opacity="0.9"   BorderBrush="Transparent" Visibility="Collapsed"  Margin="0,-5,0,0" FontWeight="ExtraBlack" Content="ADD THIS PARCEL"  Click="enter_your_parcel" Width="120" Height="84" RenderTransformOrigin="0.61,2.198">
             </Button>
         </StackPanel>
-        <StackPanel Margin="300,130,261,0" Visibility="Visible" Grid.RowSpan="2" RenderTransformOrigin="0.5,0.5">
-            <Button x:Name="show_drone" Content="SHOW DRONE" Margin="0,10,0,0" Height="52" Width="141" Click="show_drone_Click"/>
-            <Button x:Name="show_client" Content="SHOW CLIENT" Margin="0,10,0,0" Height="52" Width="140" Click="show_client_Click"/>
+        <StackPanel Margin="322,130,261,0" Visibility="Visible" Grid.RowSpan="2" RenderTransformOrigin="0.5,0.5">
+            <Button x:Name="show_drone"  Style="{StaticResource MaterialDesignRaisedButton}" Content="SHOW DRONE" Margin="0,10,0,0" Height="52" Width="141" Click="show_drone_Click"/>
+            <Button x:Name="show_client"       Style="{StaticResource MaterialDesignRaisedButton}"  Content="SHOW CLIENT" Margin="0,10,0,0" Height="52" Width="140" Click="show_client_Click"/>
 
         </StackPanel>
 

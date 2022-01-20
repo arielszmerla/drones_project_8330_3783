@@ -8,6 +8,9 @@
         mc:Ignorable="d"   Icon="\images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico"
         Closing="list_closing" WindowStyle="None"
          Title = "LIST OF DRONES" Height="700" Width="1300" BorderThickness="3" HorizontalAlignment="Center"   BorderBrush="Beige"  DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}" Loaded="Window_Loaded">
+    <Window.Clip>
+        <RectangleGeometry Rect="0,0,1300,700" RadiusX="45" RadiusY="45"/>
+    </Window.Clip>
     <Window.Resources>
         <Style x:Key="ItemStyle" TargetType="{x:Type ListViewItem}">
             <EventSetter Event="MouseDoubleClick" Handler="Drone_MouseDoubleClick" />
