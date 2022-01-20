@@ -13,7 +13,7 @@ namespace PL
 {
 
     /// <summary>
-    /// converters
+    /// converters double to int
     /// </summary>
     public sealed class ConverterDoubleToInt : IValueConverter
     {
@@ -31,6 +31,9 @@ namespace PL
 
 
     }
+    /// <summary>
+    /// converters Location to nice string
+    /// </summary>
     public sealed class ConverterLatitude : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -39,25 +42,27 @@ namespace PL
             return $"({val})";
 
         }
-
         object IValueConverter.ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
-
-
     }
+    /// <summary>
+    /// converters Battery to "num %"
+    /// </summary>
     public sealed class BatteryToProgressBarConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             Double val = (Double)value;
             return $"{ (int)val} %";
-
-
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
             throw new NotImplementedException();
     }
+
+    /// <summary>
+    /// set colour upon value of baterry
+    /// </summary>
     internal class BatteryToColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) =>
@@ -72,6 +77,9 @@ namespace PL
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
             throw new NotImplementedException();
     }
+    /// <summary>
+    /// show km to next stop if any 
+    /// </summary>
     internal class KilometerConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -86,6 +94,9 @@ namespace PL
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
                 throw new NotImplementedException();
     }
+    /// <summary>
+    /// set visibilty of label upon valiue i=of delivery item
+    /// </summary>
     internal class Deliveryidconvert : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -100,6 +111,9 @@ namespace PL
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
                 throw new NotImplementedException();
     }
+    /// <summary>
+    /// set location on map
+    /// </summary>
     internal class LocationtoMapLocation : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -113,6 +127,9 @@ namespace PL
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
                 throw new NotImplementedException();
     }
+    /// <summary>
+    /// nice string show of 
+    /// </summary>delivery parcel id if any
     internal class DeliveryIdConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -129,6 +146,9 @@ namespace PL
                 throw new NotImplementedException();
     }
     public enum DroneStatuses { Vacant, Maintenance, InDelivery }
+    /// <summary>
+    /// set content of a button upon drone status
+    /// </summary>
     internal class statustoBoutton : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
