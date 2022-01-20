@@ -7,7 +7,7 @@
         mc:Ignorable="d"  Icon="\images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" WindowStyle="None"
         Title="CUSTOMER LIST" Height="450" Width="800">
     <Window.Background>
-        <ImageBrush ImageSource="\images\customerspic.png"/>
+        <ImageBrush ImageSource="\images\cusomer.jpeg" Opacity="0.6"/>
     </Window.Background>
     <Window.Resources >
         <local:ItemToColorConvert x:Key="ItemToColorConvert"/>
