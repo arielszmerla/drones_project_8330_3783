@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Icon="\images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico"
         Closing="AddDrone_Closing"
-        Title="AddDrone" Height="500" Width="944"  WindowStyle="None"
+        Title="AddDrone" Height="500" Width="880"  WindowStyle="None"
          DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}" >
     <Window.Resources >
         <local:ConverterDoubleToInt x:Key="ConverterDoubleToInt"/>
@@ -22,7 +22,7 @@
         <local:Deliveryidconvert x:Key="Deliveryidconvert"/>
     </Window.Resources>
     <Window.Clip>
-        <RectangleGeometry Rect="0,0,944,500" RadiusX="35" RadiusY="35"/>
+        <RectangleGeometry Rect="0,0,880,500" RadiusX="35" RadiusY="35"/>
     </Window.Clip>
     <Window.Background>
         <ImageBrush ImageSource="\images\drona.jpg" />
@@ -38,7 +38,7 @@
             <TextBlock TextDecorations="Underline" 
                Text="Drone:"/>
         </Label>
-        <Button x:Name="PageStop"  Visibility="Visible" Grid.Column="3" HorizontalAlignment="Left"  Margin="158,47,0,348" Click="End_the_page" RenderTransformOrigin="0.832,-0.311" Width="38">
+        <Button x:Name="PageStop"  Visibility="Visible" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Bottom"  Margin="180,47,0,20" Click="End_the_page" RenderTransformOrigin="0.832,-0.311" Width="38">
 
             <Button.Background>
                 <ImageBrush ImageSource="\images\pngegg.png"/>
@@ -69,7 +69,7 @@
         </StackPanel>
         <StackPanel Background="Transparent"    Visibility="Collapsed" x:Name="add_drone_titles" Orientation="Vertical" Grid.Column="0" Margin="20,0,0,0" Height="434" VerticalAlignment="Bottom">
 
-         
+
             <Label x:Name="ID" FontSize="15" Content="Enter id"  HorizontalAlignment="Center" Width="124" Margin="0,10,0,0"/>
             <Label   x:Name="model" FontSize="15" Content="Enter model"  HorizontalAlignment="Center" Width="124" Margin="0,10,0,0"/>
 
@@ -84,6 +84,10 @@
         </StackPanel>
         <StackPanel Background="Transparent" Visibility="Visible"  x:Name="update_drone" Orientation="Vertical" Grid.Column="2" Margin="0,104,220,67" Grid.ColumnSpan="2">
             <Grid Height="450" Width="321">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="131*"/>
+                    <RowDefinition Height="94*"/>
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -93,15 +97,15 @@
                 <ComboBox   Style="{StaticResource MaterialDesignOutlinedComboBox}"
     IsEnabled="{Binding Path=IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox}"
   
-    ItemsSource="{Binding ShortStringList}"  Visibility="Visible" Margin="18,199,18,200"   Opacity="0.8"   BorderBrush="Transparent"  Background="Beige" x:Name="Choose_models" ToolTip="Enter Model"  FontWeight="ExtraBlack" Foreground="Brown" IsEditable="True" Text="MODEL UPDATE" SelectionChanged="Choose_models_SelectionChanged" />
+    ItemsSource="{Binding ShortStringList}"  Visibility="Visible" Margin="0,199,0,12"  HorizontalAlignment="Center" Width="130" Height="46"  Opacity="0.8" FontSize="11"   Background="Beige" x:Name="Choose_models" ToolTip="Enter Model"  FontWeight="ExtraBlack" Foreground="Brown" IsEditable="True" Text="Model" HorizontalContentAlignment="Center" SelectionChanged="Choose_models_SelectionChanged" />
 
-                <Button  BorderBrush="Transparent"  FontWeight="ExtraBlack" Foreground="DarkViolet" Visibility="Visible" x:Name="DeliveryChanges" Content="DELIVERY" Click="DeliveryChanges_Click" Height="46" Margin="0,16,14,380" Width="131"  HorizontalAlignment="Right" ToolTip="Do next step of delivery"/>
-              
-                <Button  BorderBrush="Transparent" x:Name="sendDrone" Visibility="Visible"  Content="{Binding Text ,ElementName=Statuss,Converter={StaticResource statustoBoutton} }"  Click="SendTo_charge" HorizontalAlignment="Right"  Height="46" Width="131" Margin="0,16,14,160" />
-               
-                <Button  BorderBrush="Transparent" FontWeight="ExtraBlack" Foreground="Green"  x:Name="show_parcel_nDrone" Visibility="{Binding Drone.DeliveryId ,Converter={StaticResource Deliveryidconvert} }"  Content="Show Parcel" Click="show_parcel_inDrone"  HorizontalAlignment="Left"  Height="46" Width="130" Margin="12,278,0,136" />
+                <Button  BorderBrush="Transparent"  FontWeight="ExtraBlack" Foreground="DarkViolet" Visibility="Visible" x:Name="DeliveryChanges" Content="DELIVERY" Click="DeliveryChanges_Click" Height="46" Margin="0,20,0,196" Width="130"  HorizontalAlignment="Center" ToolTip="Do next step of delivery"/>
 
-                <Button  BorderBrush="Transparent" Margin="66,46,31,336" Opacity="0.8" ToolTip="Click Here To view on map" FontSize="16" BorderThickness="0.5" x:Name="View_On_Map" Click="View_Map" Width="64" Height="68" RenderTransformOrigin="-0.208,-4.179" Grid.Column="1">
+                <Button  BorderBrush="Transparent" x:Name="sendDrone" Visibility="Visible"  Content="{Binding Text ,ElementName=Statuss,Converter={StaticResource statustoBoutton} }"  Click="SendTo_charge" HorizontalAlignment="Center"  Height="46" Width="130" Margin="0,75,0,141" />
+
+                <Button  BorderBrush="Transparent" FontWeight="ExtraBlack" Foreground="Green"  x:Name="show_parcel_nDrone" Visibility="{Binding Drone.DeliveryId ,Converter={StaticResource Deliveryidconvert} }"  Content="Show Parcel" Click="show_parcel_inDrone"  HorizontalAlignment="Center"  Height="46" Width="130" Margin="0,130,0,86" />
+
+                <Button  BorderBrush="Transparent" Margin="66,46,31,148" Opacity="0.8" ToolTip="Click Here To view on map" FontSize="16" BorderThickness="0.5" x:Name="View_On_Map" Click="View_Map" Width="64" Height="68" RenderTransformOrigin="-0.208,-4.179" Grid.Column="1">
                     <Button.Background>
                         <ImageBrush ImageSource="\images\Google_Maps_logo.png"/>
                     </Button.Background>
@@ -116,14 +120,14 @@
             <Label x:Name="IsD_" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
 
 
-            <Label x:Name="ShowID" FontSize="15" BorderThickness="2" BorderBrush="Black" Content="ID" Width="113" Height="32" HorizontalAlignment="Center" Margin="0,40,0,0"/>
-            <Label   x:Name="ShowName" FontSize="15" BorderThickness="2" BorderBrush="Black" Content="NAME"  HorizontalAlignment="Center" Width="110" Margin="0,10,0,0"/>
-            <Label    x:Name="Status" FontSize="14" BorderThickness="2" BorderBrush="Black" Content="STAUTS"  HorizontalAlignment="Center" Width="109" Margin="0,10,0,0"/>
-            <Label  x:Name="BatteryStatus"  BorderThickness="2" BorderBrush="Black" FontSize="15" HorizontalAlignment="Center" Content="BATTERY" Width="115" Margin="0,10,0,0" RenderTransformOrigin="2.677,-5.271"/>
-            <Label  x:Name="LOCATION" BorderThickness="2" BorderBrush="Black"  FontSize="15" HorizontalAlignment="Center" Content="LOCATION" Width="120" Margin="0,10,0,0"/>
-            <Label  x:Name="weight" BorderThickness="2" BorderBrush="Black"  FontSize="15" HorizontalAlignment="Center" Content="WEIGHT" Width="120" Margin="0,10,0,0"/>
-            <Label  x:Name="delivery" BorderThickness="2" BorderBrush="Black"  FontSize="15" HorizontalAlignment="Center" Content="DELIVERY" Width="120" Margin="0,10,0,0"/>
-            <Label  x:Name="Distance" BorderThickness="2" BorderBrush="Black"  FontSize="15" HorizontalAlignment="Center" Content="DISTANCE" Width="120" Margin="0,10,0,0"/>
+            <Label x:Name="ShowID" FontSize="15" BorderThickness="2" BorderBrush="Black" Content="ID" Width="80" Height="32" HorizontalAlignment="Center" Margin="0,40,0,0"/>
+            <Label   x:Name="ShowName" FontSize="15" BorderThickness="2" BorderBrush="Black" Content="NAME"  HorizontalAlignment="Center" Width="80" Margin="0,10,0,0"/>
+            <Label    x:Name="Status" FontSize="14" BorderThickness="2" BorderBrush="Black" Content="STAUTS"  HorizontalAlignment="Center" Width="80" Margin="0,10,0,0"/>
+            <Label  x:Name="BatteryStatus"  BorderThickness="2" BorderBrush="Black" FontSize="15" HorizontalAlignment="Center" Content="BATTERY" Width="80" Margin="0,10,0,0" RenderTransformOrigin="2.677,-5.271"/>
+            <Label  x:Name="LOCATION" BorderThickness="2" BorderBrush="Black"  FontSize="15" HorizontalAlignment="Center" Content="LOCATION" Width="80" Margin="0,10,0,0"/>
+            <Label  x:Name="weight" BorderThickness="2" BorderBrush="Black"  FontSize="15" HorizontalAlignment="Center" Content="WEIGHT" Width="80" Margin="0,10,0,0"/>
+            <Label  x:Name="delivery" BorderThickness="2" BorderBrush="Black"  FontSize="15" HorizontalAlignment="Center" Content="DELIVERY" Width="80" Margin="0,10,0,0"/>
+            <Label  x:Name="Distance" BorderThickness="2" BorderBrush="Black"  FontSize="15" HorizontalAlignment="Center" Content="DISTANCE" Width="80" Margin="0,10,0,0"/>
         </StackPanel>
         <StackPanel DataContext="{Binding Drone}" x:Name="Show_BaseStation_stack" Background="Transparent" Visibility="Visible"    Orientation="Vertical" Grid.Column="1"  Margin="0,29,32,-31" RenderTransformOrigin="0.527,0.437">
             <TextBox  x:Name="Show_Id" Opacity="0.8" Margin="0,80,0,0"   HorizontalAlignment="Left" BorderBrush="Transparent" Background="OldLace"  Text= "{Binding  Id}" Width="168" Height="28"/>
