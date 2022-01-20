@@ -171,7 +171,7 @@ namespace BL
                                 }
                                 distance = drone.Distances(customer);
                             }
-
+                        bl.drones[bl.drones.FindIndex(dr => dr.Id == drone.Id)].DeliveryId = parcelId;
                         if (distance < 0.01 || drone.Battery == 0)//on parcels location
                             lock (bl) lock (dal)
                                 {

@@ -83,13 +83,6 @@ namespace BL
         /// </summary>
         void IntializeDrones()
         {
-            double consumationFreeDrone = Dal.DroneElectricConsumations()[0];
-            double consumationLightCarrier = Dal.DroneElectricConsumations()[1];
-            double consumationMediumCarrier = Dal.DroneElectricConsumations()[2];
-            double consumationHeavyCarrier = Dal.DroneElectricConsumations()[3];
-            double chargePerHour = Dal.DroneElectricConsumations()[4];
-
-
             drones = (from drone in Dal.GetDroneList(d => d.Valid == true)
                       let dr = (DO.Drone)drone
                       select new DroneToList
@@ -106,7 +99,7 @@ namespace BL
                 if (random.NextDouble() > 0.5)
                 {
                     //get possible places for charging drone
-                    List<DO.BaseStation> bases = (List<DO.BaseStation>)Dal.GetBaseStationsList(b => b.NumOfSlots > 0);
+                    var bases = (List<DO.BaseStation>)Dal.GetBaseStationsList(b => b.NumOfSlots > 0);
                     DO.BaseStation b = Dal.GetBaseStation(bases[random.Next(bases.Count() - 1)].Id);
                     drone.Location = dOBaseStation(b).Location;
                     Dal.AddDroneCharge(drone.Id, b.Id);

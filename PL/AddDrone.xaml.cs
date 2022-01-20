@@ -101,7 +101,7 @@ namespace PL
                 Model.Error("Please, number > 0");
                 ChooseLatitude.Background = Brushes.Red;
             }
-            s = 0;
+    
         
                 if (myReg.IsMatch(ChooseLongitude.Text))
                 {
