@@ -42,6 +42,7 @@ namespace PL
             set_parcel_Weight.Visibility = Visibility.Visible;
             enter.Visibility = Visibility.Visible;
             show_parcel_name_drone.Visibility = Visibility.Collapsed;
+           show_client.Visibility = Visibility.Collapsed;
         }
         Parcel parcel = new();
         /// <summary>
@@ -238,7 +239,5 @@ namespace PL
         {
             new CustomerActionWindow(bl, parcel.Sender.Id, 1).Show();
         }
-
-
     }
 }

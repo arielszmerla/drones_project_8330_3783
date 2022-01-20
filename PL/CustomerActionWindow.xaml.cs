@@ -208,6 +208,15 @@ namespace PL
                 }
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void addParcel(object sender, RoutedEventArgs e)
+        {
+            new ParcelActionWindow(bl1).Show();
+        }
     }
 }
 

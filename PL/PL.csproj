@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <None Remove="images\baseStationPic.png" />
+    <None Remove="images\cusomer.jpeg" />
     <None Remove="images\drona.jpg" />
     <None Remove="images\dronefon.jpg" />
     <None Remove="images\Golden_State.mp3" />
@@ -46,6 +47,7 @@
 
   <ItemGroup>
     <Resource Include="images\baseStationPic.png" />
+    <Resource Include="images\cusomer.jpeg" />
     <Resource Include="images\drona.jpg" />
     <Resource Include="images\dronefon.jpg" />
     <EmbeddedResource Include="images\Golden_State.mp3" />
