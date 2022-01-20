@@ -11,6 +11,10 @@ using Microsoft.Maps.MapControl.WPF;
 
 namespace PL
 {
+
+    /// <summary>
+    /// converters
+    /// </summary>
     public sealed class ConverterDoubleToInt : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

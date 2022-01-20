@@ -154,14 +154,6 @@ namespace PL
             new MapsDisplay(bl.GetDrone(Drone.Id), bl).Show();
         }
 
-        private void Update_Drone_Click(object sender, RoutedEventArgs e)
-        {
-            if (Drone.Status is (BO.Enums.DroneStatuses)Enums.DroneStatuses.Vacant or (BO.Enums.DroneStatuses)Enums.DroneStatuses.Maintenance)
-            {
-                sendDrone.Visibility = Visibility.Visible;
-            }
-            updateDroneView();
-        }
 
 
         private void SendTo_charge(object sender, RoutedEventArgs e)
