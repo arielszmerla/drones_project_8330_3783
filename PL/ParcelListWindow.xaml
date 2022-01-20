@@ -17,7 +17,7 @@
             <RowDefinition Height="80"  />
             <RowDefinition Height="370"  />
         </Grid.RowDefinitions>
-        <ListView Grid.Row="1" x:Name="ParcelViewList"  Background="Transparent" Margin="0,47,100,0" SelectionChanged="ParcelViewList_SelectionChanged" >
+        <ListView Grid.Row="1" x:Name="ParcelViewList"  Background="Transparent" Margin="0,47,135,0" SelectionChanged="ParcelViewList_SelectionChanged" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn  Header="ID"  DisplayMemberBinding="{Binding Path=Id}" />
@@ -39,21 +39,26 @@
                 </GroupStyle>
             </ListView.GroupStyle>
         </ListView>
-        <Button    BorderBrush="Red" Opacity="0.8" ToolTip="Click Here To Close" FontSize="16" BorderThickness="0.5" x:Name="Closing_Button" HorizontalAlignment="Left" Click="Closing_Button_Click" Margin="726,349,0,29" Width="64">
-            <Button.Background>
-                <ImageBrush ImageSource="\images\pngegg.png" />
-            </Button.Background>
-        </Button>
+
+
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Width="800">
             <ComboBox x:Name="you_want_grouping" BorderThickness="2"  IsEditable="True" FontSize="20" FontWeight="ExtraBlack" IsReadOnly="True" Text="Sort By:" Margin="100,0,30,10"  SelectionChanged="you_want_grouping_Checked" Width="158" Height="72"  />
             <ComboBox BorderThickness="2" x:Name="Weight_Choice" FontSize="20" FontWeight="ExtraBlack" IsEditable="True" IsReadOnly="True" Text="View Choice" Margin="100,0,30,10" SelectionChanged="Weight_Choice_SelectionChanged" Width="167"  />
             <Button BorderBrush="Transparent"  Opacity="0.8" x:Name="reset" Content="Reset List" Visibility="Hidden" Grid.Column="3" VerticalAlignment="Center" Height="72" Width="89" ToolTip="Reset List" Click="Reset_List"/>
-            <Button  HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Height="65" RenderTransformOrigin="0.5,0.5" Width="86" Click="Add_Click">
+
+
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Margin="0,0,25,41" Height="130" Width="65">
+            <Button BorderBrush="Green" HorizontalAlignment="Center" Margin="0,0,0,20" VerticalAlignment="Top" Width="50" Height="40" Click="Add_Click">
                 <Button.Background>
-                    <ImageBrush ImageSource="\images\pluspic.png" />
+                    <ImageBrush ImageSource="images\plusIcon1.png" />
                 </Button.Background>
             </Button>
-
+            <Button    BorderBrush="Red" Visibility="Visible" VerticalAlignment ="Bottom"  Opacity="0.8" ToolTip="Click Here To Close"  x:Name="Closing_Button" HorizontalAlignment="Center" Click="Closing_Button_Click" Margin="0,0,0,0" Width="50" Height="40">
+                <Button.Background>
+                    <ImageBrush ImageSource="\images\exitpic.png" />
+                </Button.Background>
+            </Button>
         </StackPanel>
     </Grid>
 

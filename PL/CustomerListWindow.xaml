@@ -35,7 +35,7 @@
         <Button x:Name="PageStop"  Visibility="Visible" HorizontalAlignment="Left"  Margin="730,357,0,0" Click="End_the_page" Height="37" VerticalAlignment="Top" RenderTransformOrigin="0.526,0.522" Width="40">
             <Button.Background>
 
-                <ImageBrush ImageSource="\images\pngegg.png" />
+                <ImageBrush ImageSource="\images\exitpic.png" />
 
             </Button.Background>
         </Button>

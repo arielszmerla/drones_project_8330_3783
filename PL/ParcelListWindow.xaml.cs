@@ -37,10 +37,25 @@ namespace PL
             you_want_grouping.Items.Add("SenderName");
             you_want_grouping.Items.Add("TargetName");
         }
-
+        /// <summary>
+        /// close page button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Closing_Button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        /// <summary>
+        /// prevent regular closing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void list_closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (Closing_Button.Visibility != Visibility.Hidden)
+                e.Cancel = true;
         }
 
         /// <summary>

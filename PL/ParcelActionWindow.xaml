@@ -95,6 +95,11 @@
             <Button x:Name="show_client"       Style="{StaticResource MaterialDesignRaisedButton}"  Content="SHOW CLIENT" Margin="0,10,0,0" Height="52" Width="140" Click="show_client_Click"/>
 
         </StackPanel>
+        <Button    BorderBrush="Red" Visibility="Visible" VerticalAlignment ="Bottom" Grid.Row="1"  Opacity="0.8" ToolTip="Click Here To Close"  x:Name="Closing_Button" HorizontalAlignment="Right" Click="Closing_Button_Click" Margin="0,0,20,20" Width="50" Height="40">
+            <Button.Background>
+                <ImageBrush ImageSource="\images\exitpic.png" />
+            </Button.Background>
+        </Button>
 
     </Grid>
 </Window>

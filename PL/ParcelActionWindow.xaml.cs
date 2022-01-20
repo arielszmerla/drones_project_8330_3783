@@ -42,7 +42,7 @@ namespace PL
             set_parcel_Weight.Visibility = Visibility.Visible;
             enter.Visibility = Visibility.Visible;
             show_parcel_name_drone.Visibility = Visibility.Collapsed;
-           show_client.Visibility = Visibility.Collapsed;
+            show_client.Visibility = Visibility.Collapsed;
         }
         Parcel parcel = new();
         /// <summary>
@@ -131,7 +131,6 @@ namespace PL
             else
             {
                 show_parcel_sender.Text = "";
-                MessageBox.Show("Please enter a positive number");
                 show_parcel_sender.Background = Brushes.Red;
             }
             if (int.TryParse(show_parcel_target.Text, out s))
@@ -147,11 +146,17 @@ namespace PL
             else
             {
                 show_parcel_target.Text = "";
-                MessageBox.Show("Please enter a positive number");
                 show_parcel_target.Background = Brushes.Red;
             }
-            parcel.Priority = (BO.Enums.Priorities)set_parcel_Priority.SelectedItem;
-            parcel.WeightCategories = (BO.Enums.WeightCategories)set_parcel_Weight.SelectedItem;
+            // 
+            if (set_parcel_Priority.SelectedItem != null && set_parcel_Weight.SelectedItem != null)
+            {
+                parcel.Priority = (Enums.Priorities)set_parcel_Priority.SelectedItem;
+                parcel.WeightCategories = (Enums.WeightCategories)set_parcel_Weight.SelectedItem;
+            }
+
+
+
             if (int.TryParse(this.show_parcel_id.Text, out s))
             {
                 if (s > 0)
@@ -162,14 +167,13 @@ namespace PL
             else
             {
                 show_parcel_id.Text = "";
-                MessageBox.Show("Please enter a positive number");
                 show_parcel_id.Background = Brushes.Red;
             }
             //if no all values are legal
             bool flag = false;
             if (set_parcel_Priority.SelectedItem == null)
             {
-               Model.Error("please enter priority");
+                Model.Error("please enter priority");
                 flag = true;
             }
             if (set_parcel_Weight.SelectedItem == null)
@@ -206,11 +210,11 @@ namespace PL
                     Close();
                     new ParcelListWindow(bl).Show();
                 }
-                catch (BO.AddException exc)
+                catch (AddException exc)
                 {
                     Model.Error(exc.Message);
                 }
-                catch (BO.GetException exc)
+                catch (GetException exc)
                 {
                     Model.Error(exc.Message);
                 }
@@ -226,7 +230,7 @@ namespace PL
         {
             if (parcel.Assignment <= DateTime.Now && parcel.Delivered == null)
             {
-                new AddDrone(bl, bl.GetDroneOnParcel(parcel.Id).Id).Show();
+                new DroneAction(bl, bl.GetDroneOnParcel(parcel.Id).Id).Show();
             }
             else MessageBox.Show("not on drone");
         }
@@ -238,6 +242,26 @@ namespace PL
         private void show_client_Click(object sender, RoutedEventArgs e)
         {
             new CustomerActionWindow(bl, parcel.Sender.Id, 1).Show();
+        }
+
+        /// <summary>
+        /// close button event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Closing_Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        /// <summary>
+        /// prevent regular closing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void list_closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (Closing_Button.Visibility != Visibility.Hidden)
+                e.Cancel = true;
         }
     }
 }

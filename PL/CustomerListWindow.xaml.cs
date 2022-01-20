@@ -21,6 +21,10 @@ namespace PL
     {
         public static Model Model { get; } = Model.Instance;
         BLAPI.IBL bl;
+        /// <summary>
+        /// cunstrocter
+        /// </summary>
+        /// <param name="bl"></param>
         public CustomerListWindow(BLAPI.IBL bl)
         {
             InitializeComponent();
@@ -28,6 +32,11 @@ namespace PL
             CustomerViewList.ItemsSource = bl.GetCustomerList();
         }
 
+        /// <summary>
+        /// if we double click a customer to view his info
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BO.CustomerToList  customer = (BO.CustomerToList)CustomerViewList.SelectedItem;
@@ -64,7 +73,11 @@ namespace PL
                 
             }
         }
-
+        /// <summary>
+        /// end page function
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void End_the_page(object sender, RoutedEventArgs e)
         {
             this.Close();

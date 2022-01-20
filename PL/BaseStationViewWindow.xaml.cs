@@ -88,6 +88,7 @@ namespace PL
             }
             else
             {
+               //we update the info of base station and send it to baseation actions
                 BO.BaseStation baseStation = new BO.BaseStation
                 {
                     Id = bs.Id,
@@ -96,14 +97,11 @@ namespace PL
                     Location = bs.Location,
                     ChargingDrones = bs.ChargingDrones
                 };
-                new AddBaseStation(bl, baseStation).Show();
+                new BaseStationAction(bl, baseStation).Show();
             }
         }
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+    
 
 
 
@@ -114,7 +112,7 @@ namespace PL
     /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e) 
         {
-            new AddBaseStation(bl).Show();
+            new BaseStationAction(bl).Show();
         }
 
         /// <summary>

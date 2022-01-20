@@ -8,7 +8,7 @@ namespace PO
 {
     public class User : INotifyPropertyChanged
     {
-
+        // need to insert comments
         private int userId;
         private string name;
         private string phone;

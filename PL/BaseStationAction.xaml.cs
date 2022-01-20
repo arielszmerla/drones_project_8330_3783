@@ -21,7 +21,7 @@ namespace PL
     /// <summary>
     /// Interaction logic for AddBaseStation.xaml
     /// </summary>
-    public partial class AddBaseStation : Window
+    public partial class BaseStationAction : Window
     {
         public static Model Model { get; } = Model.Instance;
         private Location loc = new();
@@ -30,7 +30,7 @@ namespace PL
         /// constructor for adding a base station option
         /// </summary>
         /// <param name="bl"></param>
-        public AddBaseStation(IBL bl)
+        public BaseStationAction(IBL bl)
         {
      
             Title = "ADD A BASE STATION";
@@ -43,7 +43,7 @@ namespace PL
         /// constructor for double click on updating base station
         /// </summary>
         BO.BaseStation bs = new();
-        public AddBaseStation(IBL bl, BaseStation baseStation)
+        public BaseStationAction(IBL bl, BaseStation baseStation)
         {
             Title = "UPDATE";
             InitializeComponent();
