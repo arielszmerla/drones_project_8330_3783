@@ -11,7 +11,7 @@
   <baseStation>
     <id>10003</id>
     <name>Base Kotel</name>
-    <numOfSlots>7</numOfSlots>
+    <numOfSlots>6</numOfSlots>
     <latitude>31.7897954</latitude>
     <longitude>35.202992</longitude>
     <valid>true</valid>
@@ -19,7 +19,7 @@
   <baseStation>
     <id>10000</id>
     <name>jean marc</name>
-    <numOfSlots>10</numOfSlots>
+    <numOfSlots>9</numOfSlots>
     <latitude>31.745156</latitude>
     <longitude>35.1751589</longitude>
     <valid>true</valid>
@@ -35,7 +35,7 @@
   <baseStation>
     <id>10002</id>
     <name>4923</name>
-    <numOfSlots>8</numOfSlots>
+    <numOfSlots>7</numOfSlots>
     <latitude>31.7861624</latitude>
     <longitude>35.1822896</longitude>
     <valid>true</valid>
