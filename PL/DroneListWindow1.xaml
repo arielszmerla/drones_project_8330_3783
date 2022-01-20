@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:PL"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="PL.DroneListWindow1"
         mc:Ignorable="d"   Icon="\images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico"
+       WindowStartupLocation="Manual" 
+    Left="0" Top="0" 
         Closing="list_closing" WindowStyle="None"
          Title = "LIST OF DRONES" Height="700" Width="1300" BorderThickness="3" HorizontalAlignment="Center"   BorderBrush="Beige"  DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}" Loaded="Window_Loaded">
     <Window.Clip>

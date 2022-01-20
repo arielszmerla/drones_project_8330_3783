@@ -24,6 +24,7 @@
     <None Remove="images\exitpic.png" />
     <None Remove="images\Golden_State.mp3" />
     <None Remove="images\Google_Maps_logo.png" />
+    <None Remove="images\hatikva.wav" />
     <None Remove="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
     <None Remove="images\northernLight.png" />
     <None Remove="images\packages.png" />
@@ -64,6 +65,7 @@
     <Page Include="App.xaml" />
     <ProjectReference Include="..\BL1\BL1.csproj" />
     <Resource Include="images\Google_Maps_logo.png" />
+    <Content Include="images\hatikva.wav" />
     <Resource Include="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
     <Resource Include="images\northernLight.png" />
     <Resource Include="images\packages.png" />

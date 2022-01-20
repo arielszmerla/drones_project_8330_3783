@@ -18,7 +18,7 @@ namespace BL
         #region drone updates
 
         /// <summary>
-        /// Updae name to drone
+        /// Updaאe name to drone
         /// </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
@@ -202,7 +202,7 @@ namespace BL
         /// <param name="id"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDroneSentToCharge(int id)
-        {
+         {
             lock (Dal)
             {
                 //if drone not found
@@ -210,7 +210,7 @@ namespace BL
                 {
                     throw new GetException($"id {id} doesn't exist ");
                 }
-                DroneToList drone = drones.Find(dr => dr.Id == id); //drones.Find(dr => dr.Id == id);
+                DroneToList drone = drones.Find(dr => dr.Id == id); 
                                                                     // if the drown isn't vacant it can't be charged.
                 if (drone.Status != Enums.DroneStatuses.Vacant)
                 {

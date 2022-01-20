@@ -15,7 +15,7 @@ namespace DalXML
         static string dir = @"xml\";
         static XMLTools()
         {
-            if (!Directory.Exists(dir))
+             if (!Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
 
         }
