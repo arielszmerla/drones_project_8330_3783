@@ -9,14 +9,14 @@
         mc:Ignorable="d"
         Title="Base station view window" Height="450" Width="800">
     <Window.Background>
-        <ImageBrush ImageSource="\images\baseStationPic.png" />
+        <ImageBrush ImageSource="\images\northernLight.png" />
     </Window.Background>
     <Window.Clip>
         <RectangleGeometry Rect="0,0,800,450" RadiusX="35" RadiusY="35"/>
     </Window.Clip>
     <Grid>
 
-        <ListView x:Name="BaseStationView" FontStyle="Oblique" FontSize="16" Foreground="DarkRed"  DataContext=""  MouseDoubleClick="BaseStationView_MouseDoubleClick"  Background="Transparent" Margin="0,74,163,10" >
+        <ListView x:Name="BaseStationView" FontStyle="Oblique" FontSize="16" Foreground="White"  DataContext=""  MouseDoubleClick="BaseStationView_MouseDoubleClick"  Background="Transparent" Margin="0,74,163,10" >
 
             <ListView.View>
                 <GridView>
@@ -48,7 +48,7 @@
         <Button x:Name="BaseOptions" Content="Devide by free slots" ToolTip="Click to devide between base stations with and without free slots"
                 HorizontalAlignment="Left" Margin="105,33,0,0" Background ="Bisque"  Foreground="Black" BorderThickness="7" FontWeight="ExtraBlack"  VerticalAlignment="Top" Width="175" Click="BaseOptions_Click"/>
         <StackPanel Margin="700,200,0,0" Width="100" Height="300" Visibility="Visible">
-            <Button  VerticalAlignment="Top" Width="60" Height="50" Margin="10,20,0,0"  Click="Button_Click">
+            <Button  VerticalAlignment="Top" Width="60" Height="50" Margin="10,50,0,0"  Click="Button_Click">
 
                 <Button.Background>
                     <ImageBrush ImageSource="\images\plusIcon1.png" />

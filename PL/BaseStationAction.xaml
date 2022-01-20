@@ -9,7 +9,7 @@
         Closing="AddBaseStationClosing"
         Title="BaseStation Action" Height="450" Width="800">
     <Window.Background>
-        <ImageBrush ImageSource = "\images\baseStationPic.png"/>
+        <ImageBrush ImageSource = "\images\northernLight.png"/>
     </Window.Background>
     <Window.Resources >
         <local:ConverterDoubleToInt x:Key="ConverterDoubleToInt"/>
@@ -24,7 +24,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Button x:Name="PageStop"  Visibility="Visible" Grid.Column="3" Width="50" Height="40" Margin="110,337,10,29" Click="End_the_page" RenderTransformOrigin="0.526,0.522">
+        <Button x:Name="PageStop"  Visibility="Visible" Grid.Column="3" Width="60" Height="50" Margin="110,337,10,29" Click="End_the_page" RenderTransformOrigin="0.526,0.522">
 
             <Button.Background>
                 <ImageBrush ImageSource="\images\exitpic.png"/>

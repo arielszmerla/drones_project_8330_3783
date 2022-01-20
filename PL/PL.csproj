@@ -16,6 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\background.png.jpeg" />
     <None Remove="images\baseStationPic.png" />
     <None Remove="images\cusomer.jpeg" />
     <None Remove="images\drona.jpg" />
@@ -24,6 +25,9 @@
     <None Remove="images\Golden_State.mp3" />
     <None Remove="images\Google_Maps_logo.png" />
     <None Remove="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
+    <None Remove="images\northernLight.png" />
+    <None Remove="images\packages.png" />
+    <None Remove="images\parachute.png" />
     <None Remove="images\parcel.jpeg" />
     <None Remove="images\parcel.png" />
     <None Remove="images\plusIcon1.jfif" />
@@ -40,6 +44,7 @@
     <None Remove="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
     <None Remove="images\kisspng-logo-arrow-5ae2d845df31d9.4342434915248159419142.png" />
     <None Remove="images\pngwing.com.png" />
+    <None Remove="images\Two-Hearts-in-The-Sky-1024x768.png" />
     <None Remove="images\wifind_back.png" />
   </ItemGroup>
 
@@ -50,6 +55,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="images\background.png.jpeg" />
     <Resource Include="images\baseStationPic.png" />
     <Resource Include="images\cusomer.jpeg" />
     <Resource Include="images\drona.jpg" />
@@ -59,6 +65,9 @@
     <ProjectReference Include="..\BL1\BL1.csproj" />
     <Resource Include="images\Google_Maps_logo.png" />
     <Resource Include="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
+    <Resource Include="images\northernLight.png" />
+    <Resource Include="images\packages.png" />
+    <Resource Include="images\parachute.png" />
     <Resource Include="images\parcel.jpeg" />
     <Resource Include="images\parcel.png" />
     <Resource Include="images\plusIcon1.png" />
