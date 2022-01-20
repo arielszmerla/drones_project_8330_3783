@@ -36,10 +36,11 @@ namespace BL
                 }
                 if (customer.Id < 10000000 ||
                customer.Id > 999999999)
-                    throw new AddException("Invalid id  ");
+                    throw new AddException("Invalid id size ");
                 if (customer.Location.Latitude < 31.740967 || customer.Location.Latitude > 31.815177)
                     throw new AddException("Incorect Latitude, please enter correct Jerusalem coordinates");
-
+                if (customer.Location.Longitude < 35.171323 || customer.Location.Longitude > 35.202050)
+                    throw new AddException("Incorect Longitude, please enter correct Jerusalem coordinates");
                 try
                 {
                     //calling mydal after mapping BO to DO

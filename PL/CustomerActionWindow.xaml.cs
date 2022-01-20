@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Media;
@@ -22,7 +23,10 @@ namespace PL
     public partial class CustomerActionWindow : Window
     {
         int id;
-
+        double latitude { get; set; }
+        double longitude { get; set; }
+        string phone { get; set; }
+        BO.Customer subscribe = new();
         private BLAPI.IBL bl1;
         public static Model Model { get; } = Model.Instance;
         /// <summary>
@@ -62,7 +66,10 @@ namespace PL
         {
             InitializeComponent();
             this.bl1 = bl;
-
+            add_customer_stack.Visibility = Visibility.Visible;
+            add_CUSTOMER_titles.Visibility = Visibility.Visible;
+            CustomerView.Visibility = Visibility.Collapsed;
+            updates.Visibility = Visibility.Collapsed;
         }
         List<BO.CustomerToList> customers = new();
         BO.Customer customer = new();
@@ -96,9 +103,9 @@ namespace PL
                 else
                 {
                     Phone.Text = "";
-                 
+
                     Model.Error("Please enter a positive number");
-                
+
                     Phone.Background = Brushes.Red;
                     return;
                 }
@@ -142,5 +149,65 @@ namespace PL
         {
             Close();
         }
+        /// <summary>
+        /// add a client
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void enter_Click(object sender, RoutedEventArgs e)
+        {
+            Regex myReg = new Regex("[^0-9]+"); //gets regular expression that allows only digits
+            if (!myReg.IsMatch(ChooseId.Text)) //checks taht key entered is regular expression
+
+                subscribe.Id = Int32.Parse(ChooseId.Text);
+
+            else
+            {
+                ChooseId.Text = "";
+                Model.Error("Please enter a positive number");
+                ChooseId.Background = Brushes.Red;
+            }
+            if (!myReg.IsMatch(ChoosePhone.Text)) //checks taht key entered is regular expression
+                subscribe.Phone = ChoosePhone.Text;
+            else
+            {
+                Phone.Text = "";
+                Model.Error("Please enter a positive number");
+                Phone.Background = Brushes.Red;
+            }
+            Location loc = new();
+            if (myReg.IsMatch(ChooseLatitude.Text))
+                if (double.Parse(ChooseLatitude.Text) >= 0)
+                    loc.Latitude = double.Parse(ChooseLatitude.Text);
+            if (ChooseLatitude.Text == "")
+            {
+                Model.Error("Please, number > 0");
+                ChooseLatitude.Background = Brushes.Red;
+            }
+            if (myReg.IsMatch(ChooseLongitude.Text))
+                if (double.Parse(ChooseLongitude.Text) >= 0)
+                    loc.Longitude = double.Parse(ChooseLongitude.Text);
+            if (ChooseLongitude.Text == "")
+            {
+                Model.Error("Please, number > 0");
+                ChooseLongitude.Background = Brushes.Red;
+
+            }
+            if (ChoosePhone.Text != "" && ChooseId.Text != "" && ChooseLongitude.Text != "" && ChooseLatitude.Text != "" && ChooseId.Text != "")
+            {
+                subscribe.Location = loc;
+                try
+                {
+                    bl1.AddCustomer(subscribe);
+                    MessageBox.Show("WELLCOME SIR");
+                    Close();
+                }
+                catch (BO.AddException ex)
+                {
+                    Model.Error(ex.Message);
+                }
+            }
+        }
     }
 }
+

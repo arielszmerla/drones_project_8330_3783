@@ -76,9 +76,7 @@ namespace PL
             int i;
             Regex myReg = new Regex("[^0-9]+"); //gets regular expression that allows only digits
             if (!myReg.IsMatch(ChooseId.Text)) //checks taht key entered is regular expression
-
                 drone.Id = Int32.Parse(ChooseId.Text);
-
             else
             {
                 ChooseId.Text = "";
