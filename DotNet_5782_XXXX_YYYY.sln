@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F5D73600-7F21-42FA-99C3-9B8729E788FF}"
 	ProjectSection(SolutionItems) = preProject
 		CONFIG.xml = CONFIG.xml
+		ממשק הלקוח.docx = ממשק הלקוח.docx
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL1", "BL1\BL1.csproj", "{FF63572E-B16A-4F1E-BE19-CCD64C04B54C}"
