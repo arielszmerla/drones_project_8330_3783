@@ -28,6 +28,13 @@
     <Longitude>35.199858</Longitude>
     <Latitude>31.762722</Latitude>
   </Customer>
+ <Customer>
+    <Id>100000005</Id>
+    <Name>myName5</Name>
+    <Phone>51622642</Phone>
+    <Longitude>35.199858</Longitude>
+    <Latitude>31.762722</Latitude>
+  </Customer>
   <Customer>
     <Id>100000004</Id>
     <Name>myName4</Name>
@@ -62,22 +69,5 @@
     <Phone>75349291</Phone>
     <Longitude>35.196654</Longitude>
     <Latitude>31.765503</Latitude>
-  </Customer>
-  <Customer>
-    <Id>123423123</Id>
-    <Longitude>35.18</Longitude>
-    <Latitude>31.75</Latitude>
-  </Customer>
-  <Customer>
-    <Id>123122211</Id>
-    <Phone>3432</Phone>
-    <Longitude>35.18</Longitude>
-    <Latitude>31.75</Latitude>
-  </Customer>
-  <Customer>
-    <Id>123422332</Id>
-    <Phone>243412432431</Phone>
-    <Longitude>35.18</Longitude>
-    <Latitude>31.75</Latitude>
   </Customer>
 </ArrayOfCustomer>
