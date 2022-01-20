@@ -28,6 +28,7 @@ namespace PL
         private IBL bl;
         public AddBaseStation(IBL bl)
         {
+     
             Title = "ADD A BASE STATION";
             InitializeComponent();
             this.bl = bl;
@@ -58,7 +59,6 @@ namespace PL
         private void End_the_page(object sender, RoutedEventArgs e)
         {
             PageStop.Visibility = Visibility.Hidden;
-            new BaseStationViewWindow(bl).Show();
             this.Close();
         }
 

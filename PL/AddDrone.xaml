@@ -48,21 +48,21 @@
 
         <StackPanel Background="Transparent"   Visibility="Collapsed" x:Name="add_drone_stack" Orientation="Vertical" Grid.Column="1"  Margin="0,47,63,-37">
 
-            <TextBox Opacity="0.8"  BorderBrush="Transparent" Background="Bisque" x:Name="ChooseId" ToolTip="Enter Id"  Text= ""  Margin="0,40,0,0" Width="147" Height="27"/>
+            <TextBox Opacity="0.8"  BorderBrush="Transparent" Background="Bisque" x:Name="ChooseId" ToolTip="Enter Id"  Text= ""  Margin="0,40,0,0" Width="147" Height="30"/>
             <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}"
-    IsEnabled="{Binding Path=IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox}" Visibility="Visible" Margin="0,10,0,0"  Opacity="0.8"   BorderBrush="Transparent"  Background="Bisque" x:Name="Choose_model" ToolTip="Enter Model"   Text="Model_input" Width="148" Height="38" />
+    IsEnabled="{Binding Path=IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox}" Visibility="Visible" Margin="0,10,0,0"  Opacity="0.8"   BorderBrush="Transparent"  Background="Bisque" x:Name="Choose_model" ToolTip="Enter Model"   Text="Model_input" Width="147" Height="30" />
 
             <ComboBox Opacity="0.8" Style="{StaticResource MaterialDesignOutlinedComboBox}"
     IsEnabled="{Binding Path=IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox}"  Margin="0,10,0,0"  ToolTip="Weight select"  Background="Bisque" x:Name="WeightCategSelector" HorizontalAlignment="Center"  Text="Choose weight" IsEditable="True"
-                 IsReadOnly="True"   BorderBrush="Transparent"  Height="34" Width="149"/>
+                 IsReadOnly="True"   BorderBrush="Transparent"  Width="147" Height="30"/>
             <ComboBox ToolTip="Status select" Style="{StaticResource MaterialDesignOutlinedComboBox}"
     IsEnabled="{Binding Path=IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox}" Opacity="0.8"  Margin="0,10,0,0"   BorderBrush="Transparent"  Background="Bisque" x:Name="StatusSelectorToadd" HorizontalAlignment="Center"  Text="Choose status" IsEditable="True"
-                 IsReadOnly="True" RenderTransformOrigin="0.5,0.5" Width="147" Height="34"/>
+                 IsReadOnly="True" RenderTransformOrigin="0.5,0.5" Width="147" Height="30"/>
 
-            <TextBox Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Bisque" x:Name="ChooseLatitude" ToolTip="between 31.740967 and 31.815177"  Text= ""   Width="147" Height="27" RenderTransformOrigin="0.502,1.282" />
+            <TextBox Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Bisque" x:Name="ChooseLatitude" ToolTip="between 31.740967 and 31.815177"  Text= ""   Width="147" Height="30" RenderTransformOrigin="0.502,1.282" />
 
-            <TextBox Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Bisque" x:Name="ChooseLongitude" ToolTip="between 35.171323 and 35.202050"  Text= ""  Width="147" Height="27" />
-            <Button Opacity="0.9"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,20,0,0" FontWeight="ExtraBlack" x:Name="enter" Content="ADD THIS DRONE"  Click="enter_your_drone" Width="120" Height="84" RenderTransformOrigin="0.61,2.198">
+            <TextBox Opacity="0.8"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,10,0,0" Background="Bisque" x:Name="ChooseLongitude" ToolTip="between 35.171323 and 35.202050"  Text= ""  Width="147" Height="30" />
+            <Button Opacity="0.9"  BorderBrush="Transparent" Visibility="Visible"  Margin="0,20,0,0" FontWeight="ExtraBlack" x:Name="enter" Content="ADD" Background="Green"  Click="enter_your_drone" Width="120" Height="84" RenderTransformOrigin="0.61,2.198">
 
             </Button>
 
@@ -70,16 +70,16 @@
         <StackPanel Background="Transparent"    Visibility="Collapsed" x:Name="add_drone_titles" Orientation="Vertical" Grid.Column="0" Margin="20,0,0,0" Height="434" VerticalAlignment="Bottom">
 
 
-            <Label x:Name="ID" FontSize="15" Content="Enter id"  HorizontalAlignment="Center" Width="124" Margin="0,10,0,0"/>
-            <Label   x:Name="model" FontSize="15" Content="Enter model"  HorizontalAlignment="Center" Width="124" Margin="0,10,0,0"/>
+            <Label x:Name="ID" FontSize="15" Content="ID"  HorizontalAlignment="Center" Width="124" Margin="0,24,0,0"/>
+            <Label   x:Name="model" FontSize="15" Content="Model"  HorizontalAlignment="Center" Width="124" Margin="0,12,0,0"/>
 
-            <Label    x:Name="Categorie_weight" FontSize="15" Content="Enter Weight"  HorizontalAlignment="Center" Width="123" Margin="0,10,0,0"/>
+            <Label    x:Name="Categorie_weight" FontSize="15" Content="Weight"  HorizontalAlignment="Center" Width="123" Margin="0,12,0,0"/>
 
-            <Label   Visibility="Visible" x:Name="stats" FontSize="15" Content="Enter Status"  HorizontalAlignment="Center" Width="124" Margin="0,10,0,0"/>
+            <Label   Visibility="Visible" x:Name="stats" FontSize="15" Content="Status"  HorizontalAlignment="Center" Width="124" Margin="0,12,0,0"/>
 
-            <Label   BorderBrush="Transparent" x:Name="Latitude" FontSize="15" Content="Enter Latitude" Width="124" Margin="0,10,0,0"/>
+            <Label   BorderBrush="Transparent" x:Name="Latitude" FontSize="15" Content="Latitude" Width="124" Margin="0,12,0,0"/>
 
-            <Label  Background="Transparent"   BorderBrush="Transparent"  Visibility="Visible" x:Name="Longitude" FontSize="15" Content="Enter Longitude" Width="127" Margin="0,10,0,0"/>
+            <Label  Background="Transparent"   BorderBrush="Transparent"  Visibility="Visible" x:Name="Longitude" FontSize="15" Content="Longitude" Width="127" Margin="0,12,0,0"/>
 
         </StackPanel>
         <StackPanel Background="Transparent" Visibility="Visible"  x:Name="update_drone" Orientation="Vertical" Grid.Column="2" Margin="0,104,220,67" Grid.ColumnSpan="2">
@@ -99,7 +99,7 @@
 
                 <Button  BorderBrush="Transparent" x:Name="sendDrone" Visibility="Visible"  Content="{Binding Text ,ElementName=Statuss,Converter={StaticResource statustoBoutton} }"  Click="SendTo_charge" HorizontalAlignment="Right"  Height="46" Width="131" Margin="0,16,14,160" />
 
-                <Button  BorderBrush="Transparent" FontWeight="ExtraBlack" Foreground="Green"  x:Name="show_parcel_nDrone" Visibility="{Binding Drone.DeliveryId ,Converter={StaticResource Deliveryidconvert} }"  Content="Show Parcel" Click="show_parcel_inDrone"  HorizontalAlignment="Left"  Height="46" Width="130" Margin="12,278,0,136" />
+                <Button  BorderBrush="Transparent" FontWeight="ExtraBlack" Foreground="Green"  x:Name="show_parcel_nDrone" Visibility="{Binding Drone.DeliveryId ,Converter={StaticResource Deliveryidconvert} }"  Content="Show Parcel" Click="show_parcel_inDrone"  HorizontalAlignment="Right"  Height="46" Width="130" Margin="0,16,14,270" />
 
                 <Button  BorderBrush="Transparent" Margin="66,46,31,336" Opacity="0.8" ToolTip="Click Here To view on map" FontSize="16" BorderThickness="0.5" x:Name="View_On_Map" Click="View_Map" Width="64" Height="68" RenderTransformOrigin="-0.208,-4.179" Grid.Column="1">
                     <Button.Background>
@@ -116,9 +116,9 @@
             <Label x:Name="IsD_" FontSize="15" Content=""  HorizontalAlignment="Center" Width="180" Height="28" Margin="0,10,0,0"/>
 
 
-            <Label x:Name="ShowID" FontSize="15" BorderThickness="2" BorderBrush="Black" Content="ID" Width="113" Height="32" HorizontalAlignment="Center" Margin="0,40,0,0"/>
-            <Label   x:Name="ShowName" FontSize="15" BorderThickness="2" BorderBrush="Black" Content="NAME"  HorizontalAlignment="Center" Width="110" Margin="0,10,0,0"/>
-            <Label    x:Name="Status" FontSize="14" BorderThickness="2" BorderBrush="Black" Content="STAUTS"  HorizontalAlignment="Center" Width="109" Margin="0,10,0,0"/>
+            <Label  x:Name="ShowID" Visibility="Visible" FontSize="15" BorderThickness="2" BorderBrush="Black" Content="ID" Width="113" Height="32" HorizontalAlignment="Center" Margin="0,40,0,0"/>
+            <Label  x:Name="ShowName" FontSize="15" BorderThickness="2" BorderBrush="Black" Content="NAME"  HorizontalAlignment="Center" Width="110" Margin="0,10,0,0"/>
+            <Label  x:Name="Status" FontSize="14" BorderThickness="2" BorderBrush="Black" Content="STAUTS"  HorizontalAlignment="Center" Width="109" Margin="0,10,0,0"/>
             <Label  x:Name="BatteryStatus"  BorderThickness="2" BorderBrush="Black" FontSize="15" HorizontalAlignment="Center" Content="BATTERY" Width="115" Margin="0,10,0,0" RenderTransformOrigin="2.677,-5.271"/>
             <Label  x:Name="LOCATION" BorderThickness="2" BorderBrush="Black"  FontSize="15" HorizontalAlignment="Center" Content="LOCATION" Width="120" Margin="0,10,0,0"/>
             <Label  x:Name="weight" BorderThickness="2" BorderBrush="Black"  FontSize="15" HorizontalAlignment="Center" Content="WEIGHT" Width="120" Margin="0,10,0,0"/>

@@ -34,13 +34,18 @@ namespace PL
             DataContext = BaseStationView.ItemsSource;
         }
 
+
         private void End_the_page(object sender, RoutedEventArgs e)
         {
             PageStop.Visibility = Visibility.Hidden;
-            new MainWindow().Show();
             Close();
 
         }
+        /// <summary>
+        /// helper function so the regular close button wont work
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BaseSViewClosing(object sender, CancelEventArgs e)
         {
             if (PageStop.Visibility != Visibility.Hidden)
@@ -48,18 +53,25 @@ namespace PL
 
         }
 
-        private void View_Map(object sender, RoutedEventArgs e)
-        {
-            new MapsDisplay(bl).Show();
-        }
+      
 
-
+        /// <summary>
+        /// reset button to reset the base station viewed list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ResetList_Click(object sender, RoutedEventArgs e)
         {
             BaseStationView.ItemsSource = bl.GetBaseStationList();
             ResetList.Visibility = Visibility.Hidden;
         }
 
+        /// <summary>
+        /// function for double click on a certin base station in order to view or update
+        /// its info
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BaseStationView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             BO.BaseStationToList bs = (BO.BaseStationToList)BaseStationView.SelectedItem;
@@ -77,9 +89,7 @@ namespace PL
                     Location = bs.Location,
                     ChargingDrones = bs.ChargingDrones
                 };
-                PageStop.Visibility = Visibility.Hidden;
                 new AddBaseStation(bl, baseStation).Show();
-                Close();
             }
         }
 
@@ -90,14 +100,21 @@ namespace PL
 
 
 
-    
-        private void Button_Click(object sender, RoutedEventArgs e) { 
-               
-            PageStop.Visibility = Visibility.Hidden;
-            Close();
-
+    /// <summary>
+    /// function to exit page
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+        private void Button_Click(object sender, RoutedEventArgs e) 
+        {
+            new AddBaseStation(bl).Show();
         }
 
+        /// <summary>
+        /// if we want to devide the base stations viewed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BaseOptions_Click(object sender, RoutedEventArgs e)
         {
             BaseStationView.ItemsSource = bl.GetBaseStationListGroup();
