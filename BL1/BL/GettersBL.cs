@@ -14,10 +14,8 @@ namespace BL
 /// </summary>
     partial class BLImp : IBL
     {
-      
-        
-           
-        
+
+
         #region gets
         /// <summary>
         /// method to get a parcel
@@ -30,15 +28,16 @@ namespace BL
             lock (Dal)
             {
                 DO.Parcel parcel = new();
-                List<DO.Parcel> parcels = (List<DO.Parcel>)Dal.GetParcelList(pc => pc.Id == idP);
+                var parcels = (List<DO.Parcel>)Dal.GetParcelList(pc => pc.Id == idP);
                 if (parcels.Any())
                 {
                     parcel = parcels.Find(pc => pc.Id == idP);
                 }
                 else
                     throw new GetException("id of parcel not found");
+                //create the parcel for the BL
                 Parcel p = new Parcel();
-                List<DO.Customer> customers = (List<DO.Customer>)Dal.GetCustomerList();
+                var customers = (List<DO.Customer>)Dal.GetCustomerList();
                 p.Assignment = parcel.Scheduled;
                 p.Created = parcel.Requested;
                 p.Delivered = parcel.Delivered;
@@ -53,7 +52,7 @@ namespace BL
                 p.WeightCategories = (Enums.WeightCategories)parcel.Weight;
                 return p;
             }
-           
+
         }
 
         /// <summary>
@@ -64,7 +63,6 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDroneOnParcel(int idP)
         {
-
             DroneToList? p = drones.Find(de => de.DeliveryId == idP);
             if (p == null)
                 throw new GetException($"the drone with id: {idP} is not on delivery");
@@ -85,10 +83,8 @@ namespace BL
                 if (p == null)
                     throw new GetException($"the drone with id: {idD} is not on delivery");
                 else
-                {
-
                     return DOparcelBO((DO.Parcel)p);
-                }
+
             }
         }
         /// <summary>
@@ -167,7 +163,7 @@ namespace BL
                 if (!Dal.GetParcelList(null).Any(c => c.Id == id))
                 {
                     throw new DeleteException($"parcel with {id}as Id does not exist");
-                }
+                }//if parcel not yet deliverd
                 else if (Dal.GetParcelList(null).FirstOrDefault(c => c.Id == id).Delivered <= DateTime.Now)
                 {
                     throw new DeleteException($"parcel with {id}as Id has not yet been delivered");
@@ -194,8 +190,8 @@ namespace BL
                 if (!Dal.GetCustomerList(c => c.Id == id).Any())
                 {
                     throw new DeleteException($"Customer with {id}as Id does not exist");
-                }
-                else if (Dal.GetParcelList(c => c.TargetId == id && c.Scheduled <= DateTime.Now && c.Delivered == DateTime.MinValue).Any())
+                }//if parcel not yet deliverd
+                else if (Dal.GetParcelList(c => c.TargetId == id && c.Scheduled <= DateTime.Now && c.Delivered == null).Any())
                 {
                     throw new DeleteException($"Customer with {id}as Id has yet more commands on way");
                 }
@@ -222,8 +218,8 @@ namespace BL
                 if (!Dal.GetDroneList(c => c.Id == id).Any())
                 {
                     throw new DeleteException($"Drone with {id}as Id does not exist");
-                }
-                else if (Dal.GetParcelList(c => c.DroneId == id && c.Scheduled <= DateTime.Now && c.Delivered == DateTime.MinValue).Any())
+                }//if drone on delivery can t be deleted
+                else if (Dal.GetParcelList(c => c.DroneId == id && c.Scheduled <= DateTime.Now && c.Delivered == null).Any())
                 {
                     throw new DeleteException($"Drone with {id}is on  delivery");
                 }
@@ -251,14 +247,13 @@ namespace BL
                 {
                     throw new DeleteException($"BaseStation with {id}as Id does not exist");
                 }
-                else
+                else//if drone on charging
                 if (drones.Any(dr => dr.Location == new Location { Latitude = Dal.GetBaseStation(id).Latitude, Longitude = Dal.GetBaseStation(id).Longitude } && dr.Status == Enums.DroneStatuses.Maintenance))
                     throw new DeleteException($"BaseStation with {id}as Id is in use");
                 else
                     try
                     {
                         Dal.DeleteBasestation(id);
-                        drones.RemoveAll(pc => pc.Id == id);
                     }
                     catch (DO.DeleteException d)
                     {
@@ -524,16 +519,16 @@ namespace BL
         public IEnumerable<DroneToList> GetDroneList(Enums.DroneStatuses? statuses = null, Enums.WeightCategories? weight = null)
         {
             if (statuses == null && weight == null)
-                return drones.Where(d=>d.Valid==true);
+                return drones.Where(d => d.Valid == true);
             else if (statuses != null && weight == null)
             {
-                return drones.Where(d => d.Status == statuses&& d.Valid == true);
+                return drones.Where(d => d.Status == statuses && d.Valid == true);
             }
             else if (statuses != null && weight != null)
             {
-                return drones.Where(d => d.Status == statuses && d.MaxWeight == weight&& d.Valid == true);
+                return drones.Where(d => d.Status == statuses && d.MaxWeight == weight && d.Valid == true);
             }
-            return drones.Where(d => d.MaxWeight == weight&& d.Valid == true);
+            return drones.Where(d => d.MaxWeight == weight && d.Valid == true);
         }
         /// <summary>
         /// RETURN ienumerable of customerToList members

@@ -16,8 +16,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Golden_State.mp3" />
-    <None Remove="hatikva.wav" />
     <None Remove="images\baseStationPic.png" />
     <None Remove="images\drona.jpg" />
     <None Remove="images\dronefon.jpg" />
@@ -38,7 +36,6 @@
     <None Remove="images\pngegg.png" />
     <None Remove="images\pngwing.com.png" />
     <None Remove="images\wifind_back.png" />
-    <None Remove="marseillaise.wav" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,12 +45,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Golden_State.mp3" />
-    <Resource Include="hatikva.wav" />
     <Resource Include="images\baseStationPic.png" />
     <Resource Include="images\drona.jpg" />
     <Resource Include="images\dronefon.jpg" />
     <EmbeddedResource Include="images\Golden_State.mp3" />
+    <Page Include="App.xaml" />
     <ProjectReference Include="..\BL1\BL1.csproj" />
     <Resource Include="images\Google_Maps_logo.png" />
     <Resource Include="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
@@ -71,13 +67,10 @@
     <Resource Include="images\pngegg.png" />
     <Resource Include="images\pngwing.com.png" />
     <Resource Include="images\wifind_back.png" />
-    <Resource Include="marseillaise.wav">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Resource.Designer.cs">
+    <Compile Update="UIElements\Resource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resource.resx</DependentUpon>
@@ -85,10 +78,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Resource.resx">
+    <EmbeddedResource Update="UIElements\Resource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="BaseStationViewWindow - Copy.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
   </ItemGroup>
 
 </Project>

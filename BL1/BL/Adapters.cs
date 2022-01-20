@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using BO;
@@ -22,17 +23,20 @@ namespace BL
         /// <returns></returns>
         private CustomerToList DOcustomerToListBO(DO.Customer it)
         {
-            BO.CustomerToList ct = new();
-            ct.Id = it.Id;
-            ct.Name = it.Name;
-            ct.Phone = it.Phone;
-            List<DO.Parcel> parcels = (List<DO.Parcel>)Dal.GetParcelList(null);
-            ct.NumberOfParcelsReceived = parcels.FindAll(pc => pc.TargetId == ct.Id && pc.Delivered <= DateTime.Now && pc.Delivered != DateTime.MinValue).Count;
-            ct.NumberOfParcelsonTheWay = parcels.FindAll(pc => pc.TargetId == ct.Id && pc.Delivered > DateTime.Now).Count;
-            ct.NumberOfParcelsSentAndDelivered = parcels.FindAll(pc => pc.SenderId == ct.Id && pc.Delivered <= DateTime.Now && pc.Delivered != DateTime.MinValue).Count;
-            ct.NumberOfParcelsSentButNotDelivered = parcels.FindAll(pc => pc.SenderId == ct.Id && pc.Delivered > DateTime.Now).Count;
-
+            lock (Dal)
+            {
+                //set basis data
+                BO.CustomerToList ct=    new BO.CustomerToList();
+                ct.Id = it.Id;
+                ct.Name = it.Name;
+                ct.Phone = it.Phone;
+                var parcels = (List<DO.Parcel>)Dal.GetParcelList(null);
+                ct.NumberOfParcelsReceived = parcels.FindAll(pc => pc.TargetId == ct.Id && pc.Delivered <= DateTime.Now && pc.Delivered != null).Count;
+                ct.NumberOfParcelsonTheWay = parcels.FindAll(pc => pc.TargetId == ct.Id && pc.Delivered > DateTime.Now).Count;
+                ct.NumberOfParcelsSentAndDelivered = parcels.FindAll(pc => pc.SenderId == ct.Id && pc.Delivered <= DateTime.Now && pc.Delivered != null).Count;
+                ct.NumberOfParcelsSentButNotDelivered = parcels.FindAll(pc => pc.SenderId == ct.Id && pc.Delivered > DateTime.Now).Count;
             return ct;
+        }
         }
         /// <summary>
         /// adapter, drone from DO to Be
@@ -47,27 +51,31 @@ namespace BL
         /// <returns></returns>
         private Customer DOcustomerB(DO.Customer it)
         {
-            BO.Customer ct = new();
-            ct.Id = it.Id;
-            ct.Name = it.Name;
-            ct.Phone = it.Phone;
-            List<DO.Parcel> parcels = (List<DO.Parcel>)Dal.GetParcelList(null);
-            ct.Location = new Location { Latitude = it.Latitude, Longitude = it.Longitude };
+            lock (Dal)
+            {
+                //creste new bl unit of customer
+                BO.Customer ct = new();
+                ct.Id = it.Id;
+                ct.Name = it.Name;
+                ct.Phone = it.Phone;
+                var parcels = (List<DO.Parcel>)Dal.GetParcelList(null);
+                ct.Location = new Location { Latitude = it.Latitude, Longitude = it.Longitude };
 
-            IEnumerable<DO.Parcel> parce = (from item in parcels
-                                            where item.TargetId == ct.Id
+                IEnumerable<DO.Parcel> parce = (from item in parcels
+                                                where item.TargetId == ct.Id
+                                                select item);
+
+                ct.From = (IEnumerable<ParcelByCustomer>)(from item in parce
+                                                          let parc = dOparcelTObyCustomerBO(item)
+                                                          select parc);
+                IEnumerable<DO.Parcel> p = (from item in parcels
+                                            where item.SenderId == ct.Id
                                             select item);
-
-            ct.From = (IEnumerable<ParcelByCustomer>)(from item in parce
-                                                      let parc = dOparcelTObyCustomerBO(item)
-                                                      select parc);
-            IEnumerable<DO.Parcel> p = (from item in parcels
-                                        where item.SenderId == ct.Id
-                                        select item);
-            ct.To = (IEnumerable<ParcelByCustomer>)(from item in p
-                                                    let parc = dOparcelFROMbyCustomerBO(item)
-                                                    select parc);
-            return ct;
+                ct.To = (IEnumerable<ParcelByCustomer>)(from item in p
+                                                        let parc = dOparcelFROMbyCustomerBO(item)
+                                                        select parc);
+                return ct;
+            }
         }
         /// <summary>
         /// convert parcel DO to parceltolist BO 
@@ -76,16 +84,17 @@ namespace BL
         /// <returns></returns> new adapted parcel
         private BO.ParcelToList DOparcelBO(DO.Parcel it)
         {
-            ParcelToList parcelToList = new ParcelToList
-            {
-                Id = it.Id,
-                Priority = (Enums.Priorities)it.Priority,
-                WeightCategorie = (Enums.WeightCategories)it.Weight
-            };
-
-            parcelToList.SenderName = Dal.GetCustomerList().FirstOrDefault(s => s.Id == it.SenderId).Name;
-            parcelToList.TargetName = Dal.GetCustomerList().FirstOrDefault(s => s.Id == it.TargetId).Name;
-            return parcelToList;
+            lock (Dal)
+            {//set basis data
+                return new ParcelToList
+                {
+                    Id = it.Id,
+                    Priority = (Enums.Priorities)it.Priority,
+                    WeightCategorie = (Enums.WeightCategories)it.Weight,
+                    SenderName = Dal.GetCustomerList().FirstOrDefault(s => s.Id == it.SenderId).Name,
+                    TargetName = Dal.GetCustomerList().FirstOrDefault(s => s.Id == it.TargetId).Name
+                };
+            }
         }
         /// <summary>
         /// convert basestation DO to basestationtolist BO 
@@ -94,18 +103,22 @@ namespace BL
         /// <returns></returns> new adapted parcel    
         private BaseStation dOBaseStation(DO.BaseStation myBase)
         {
-            BaseStation bs = new BaseStation
-            {
-                Location = new Location { Latitude = myBase.Latitude, Longitude = myBase.Longitude },
+            lock (Dal)
+            {//set basis data
+                BaseStation bs = new BaseStation
+                {
+                    Location = new Location { Latitude = myBase.Latitude, Longitude = myBase.Longitude },
 
-                Id = myBase.Id,
-                Name = myBase.Name
+                    Id = myBase.Id,
+                    Name = myBase.Name
 
-            };
-            bs.ChargingDrones = dronCharges(bs);
-            bs.NumOfFreeSlots = myBase.NumOfSlots - bs.ChargingDrones.Count;
+                };
+                //implement data BL
+                bs.ChargingDrones = dronCharges(bs);
+                bs.NumOfFreeSlots = myBase.NumOfSlots - bs.ChargingDrones.Count;
 
-            return bs;
+                return bs;
+            }
         }
         /// <summary>
         /// convert basestation DO to basestationtolist BO 
@@ -114,7 +127,7 @@ namespace BL
         /// <returns></returns> new adapted parcel    
         private Drone dODrone(DO.Drone dr)
         {
-
+            //gets the basis unit from bl list
             DroneToList d = drones.Find(d => d.Id == dr.Id);
             Drone bs = new Drone
             {
@@ -128,31 +141,33 @@ namespace BL
                 DeliveryId = 0,
 
             };
-            //create parcel in delivery if any
-            DO.Parcel parce = new();
-            if (Dal.GetParcelList(p => p.DroneId == dr.Id && p.Delivered == null && p.Scheduled != null).Any())
+            lock (Dal)
             {
-                parce = Dal.GetParcelList(p => p.DroneId == dr.Id && p.Delivered == null && p.Scheduled != null).FirstOrDefault();
-                bs.PID = new ParcelInDelivery();
-                bs.PID.Id = parce.Id;
-                bs.PID.Prioritie = (Enums.Priorities)parce.Priority;
-                bs.PID.Target = new CustomerInParcel { Id = parce.SenderId, Name = Dal.GetCustomer(parce.SenderId).Name };
-                bs.PID.Sender = new CustomerInParcel { Id = parce.TargetId, Name = Dal.GetCustomer(parce.TargetId).Name };
-                bs.PID.TargetLocation = GetCustomer(parce.TargetId).Location;
-                bs.PID.Location = GetCustomer(parce.SenderId).Location;
-                bs.PID.WeightCategorie = (Enums.WeightCategories)parce.Weight;
-                bs.PID.Distance = bs.PID.Distances(GetCustomer(parce.TargetId));
-                bs.DeliveryId = parce.Id;
-                if (parce.PickedUp == null)
+                //create parcel in delivery if any
+                DO.Parcel parce = new();
+                if (Dal.GetParcelList(p => p.DroneId == dr.Id && p.Delivered == null && p.Scheduled != null).Any())
                 {
-                    bs.Distance = bs.Distances(GetCustomer(parce.SenderId));
-                }
-                if (parce.Delivered == null && parce.PickedUp != null)
-                {
-                    bs.Distance = bs.Distances(GetCustomer(parce.TargetId));
+                    parce = Dal.GetParcelList(p => p.DroneId == dr.Id && p.Delivered == null && p.Scheduled != null).FirstOrDefault();
+                    bs.PID = new ParcelInDelivery();
+                    bs.PID.Id = parce.Id;
+                    bs.PID.Prioritie = (Enums.Priorities)parce.Priority;
+                    bs.PID.Target = new CustomerInParcel { Id = parce.SenderId, Name = Dal.GetCustomer(parce.SenderId).Name };
+                    bs.PID.Sender = new CustomerInParcel { Id = parce.TargetId, Name = Dal.GetCustomer(parce.TargetId).Name };
+                    bs.PID.TargetLocation = GetCustomer(parce.TargetId).Location;
+                    bs.PID.Location = GetCustomer(parce.SenderId).Location;
+                    bs.PID.WeightCategorie = (Enums.WeightCategories)parce.Weight;
+                    bs.PID.Distance = bs.PID.Distances(GetCustomer(parce.TargetId));
+                    bs.DeliveryId = parce.Id;
+                    if (parce.PickedUp == null)
+                    {
+                        bs.Distance = bs.Distances(GetCustomer(parce.SenderId));
+                    }
+                    if (parce.Delivered == null && parce.PickedUp != null)
+                    {
+                        bs.Distance = bs.Distances(GetCustomer(parce.TargetId));
+                    }
                 }
             }
-
             return bs;
         }
         /// <summary>
@@ -185,7 +200,7 @@ namespace BL
         /// <returns></returns> new adapted parcel
         private BaseStationToList adaptBaseStationToList(DO.BaseStation baseStation)
         {
-
+            //find matchind data
             BaseStationToList baseStationTo = new();
             baseStationTo.Id = baseStation.Id;
             baseStationTo.Name = baseStation.Name;
@@ -235,7 +250,7 @@ namespace BL
         private ParcelByCustomer dOparcelFROMbyCustomerBO(DO.Parcel parcel)
         {
             lock (Dal)
-            {
+            {//find matchind data
                 ParcelByCustomer tmp = new();
                 tmp.Id = parcel.Id;
                 tmp.Priorities = (Enums.Priorities)parcel.Priority;

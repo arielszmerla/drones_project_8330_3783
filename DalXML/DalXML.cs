@@ -249,14 +249,16 @@ namespace DalXML
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteDroneCharge(int idDrone)
         {
+            //check if drone and charge unit exists
             DroneCharge? myDrone = null;
-            List<DroneCharge> drones1 = XMLTools.LoadListFromXMLSerializer<DroneCharge>(DRONECHARGEPATH);
-            myDrone = drones1.Where(dr => dr.DroneId == idDrone).FirstOrDefault();
+            List<DroneCharge> dronesCharge = XMLTools.LoadListFromXMLSerializer<DroneCharge>(DRONECHARGEPATH);
+            myDrone = dronesCharge.Where(dr => dr.DroneId == idDrone).FirstOrDefault();
             if (myDrone == null)
                 throw new DroneChargeException("id of drone not found");
+            //take oout from data
             baseStationDroneOut(myDrone.Value.StationId);
-            drones1.RemoveAll(d => d.DroneId == idDrone);
-            XMLTools.SaveListToXMLSerializer(drones1, DRONECHARGEPATH);
+            dronesCharge.RemoveAll(d => d.DroneId == idDrone);
+            XMLTools.SaveListToXMLSerializer(dronesCharge, DRONECHARGEPATH);
         }
         #endregion
 
@@ -270,9 +272,7 @@ namespace DalXML
         {
             List<Drone> drones = XMLTools.LoadListFromXMLSerializer<Drone>(DRONEPATH);
             if (drones.Any(dr => dr.Id == drone.Id))
-            {
                 throw new DroneException("id already exist");
-            }
             drones.Add(drone);
             XMLTools.SaveListToXMLSerializer(drones, DRONEPATH);
         }
@@ -285,9 +285,7 @@ namespace DalXML
         {
             var drones = XMLTools.LoadListFromXMLSerializer<Drone>(DRONEPATH);
             if (!drones.Any(cos => cos.Id == id))
-            {
                 throw new DroneException($"Drone with {id} as Id does not exist");
-            }
             if (drones.Where(d => d.Id == id).FirstOrDefault().Valid == false)
                 throw new DroneException($"Drone with {id} as Id is alredy deleted");
             drones.RemoveAll(p => p.Id == id);
@@ -317,7 +315,7 @@ namespace DalXML
         {
             var drones = XMLTools.LoadListFromXMLSerializer<Drone>(DRONEPATH);
 
-            IEnumerable<Drone> d = (from item in drones
+           var d = (from item in drones
                                     where predicate == null ? true : predicate(item) && item.Valid == true
                                     select item);
             if (d == null)

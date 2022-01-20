@@ -25,7 +25,7 @@ namespace BL
             //find "to be sent" parcels
             lock (Dal)
             {
-                List<DO.Parcel> maxWeightParcels = parcels.FindAll(pcs => (int)pcs.Weight == weight && pcs.Scheduled == DateTime.MinValue);
+                List<DO.Parcel> maxWeightParcels = parcels.FindAll(pcs => (int)pcs.Weight == weight && pcs.Scheduled == null);
                 if (maxWeightParcels.Count > 0)
                 {//checks if the drone can reach them
                     DO.Parcel p = finfClosestParcelToDrone(dr.Location, maxWeightParcels);
@@ -72,14 +72,14 @@ namespace BL
                             return GetCustomer(parcel.SenderId).Location;
                         }
                         return Dal.GetCustomer(parcel.TargetId).Location();
-                        //if drone is vacant 
+                    //if drone is vacant 
                     case Enums.DroneStatuses.Vacant:
-                        //if a parcel remain so go to sender of one of those or basestarion randomly
+                        //if a parcel remain vacant so go to sender of one of those or basestarton randomly
                         if (parcelId != null)
                             return GetCustomer(Dal.GetParcel((int)parcelId).TargetId).Location;
 
-                        IEnumerable<DO.Parcel> targets = Dal.GetParcelList(parcel => parcel.DroneId == drone.Id && parcel.TargetId != 0);
-                        if (random.NextDouble() < 0.5 && targets.Any())
+                        var targets = Dal.GetParcelList(parcel => parcel.DroneId == drone.Id && parcel.TargetId != 0);
+                        if (random.NextDouble() < 0.5 && targets.Any())//randomly choose status
                         {
 
                             int[] idss = (from item in targets
@@ -90,7 +90,7 @@ namespace BL
                         var stations = Dal.GetBaseStationsList(b => b.Valid == true).ToArray();
                         if (stations.Any())
                             return stations[random.Next(1, stations.Length)].Location();
-                        return new Location
+                        return new Location//if noroom so go to random place 
                         {
                             Latitude = (double)random.Next(31740967, 31815177) / (double)1000000,
                             Longitude = (double)random.Next(35171323, 35202050) / (double)1000000
@@ -226,18 +226,10 @@ namespace BL
         /// <param name="bs"></param>
         /// <returns>list of drones charging</returns>
         private List<DroneCharge> dronCharges(BaseStation bs)
-        {//find the relevant drones
-
-            List<DroneCharge> droneCharges = new();
-            IEnumerable<DroneToList> dr = drones.FindAll(dr => dr.Status == Enums.DroneStatuses.Maintenance && dr.Location.Latitude == bs.Location.Latitude);
-            foreach (var item in dr)
-            {
-                DroneCharge d = new DroneCharge { Id = item.Id, BatteryStatus = item.Battery };
-                droneCharges.Add(d);
-            }
-            return droneCharges;
-
-        }
+         //find the relevant drones
+         => (from item in drones.FindAll(dr => dr.Status == Enums.DroneStatuses.Maintenance && dr.Location.Latitude == bs.Location.Latitude)
+             let d = new DroneCharge { Id = item.Id, BatteryStatus = item.Battery }
+             select d).ToList();
 
         /// <summary>
         /// Gets the closest baseStation to a certain location
@@ -246,7 +238,7 @@ namespace BL
         /// <returns></returns>
         private BaseStation getClosestBase(Location dr)
         {
-            lock(Dal)
+            lock (Dal)
             {
                 //get closest base with frre slots
                 List<DO.BaseStation> bs = (List<DO.BaseStation>)Dal.GetBaseStationsList(bs => bs.NumOfSlots > 0);
@@ -277,58 +269,10 @@ namespace BL
                                     select new DroneCharge { Id = drone.Id, BatteryStatus = drone.Battery }).ToList();
                 return b;
             }
-           
+
         }
 
-        /// <summary>
-        /// update drone to list place and status
-        /// </summary>
-        /// <param name="dronetolis"> droneto list to update</param>
-        /// <returns > updated one</returns>
-        [Obsolete("not in use")]
-        private DroneToList updateDroneToList(DroneToList dronetolis)
-        {
-            lock(Dal)
-            {
-                if (dronetolis.Status != Enums.DroneStatuses.InDelivery)
-                {
-                    //puts the drone or vacant or maintenance
-                    dronetolis.Status = (Enums.DroneStatuses)random.Next(2);
-                }
-                if (dronetolis.Status == Enums.DroneStatuses.Maintenance)
-                {
-                    List<DO.BaseStation> bs = (List<DO.BaseStation>)Dal.GetBaseStationsList(null);
-                    int rand = random.Next(bs.Count() - 1);
-                    Location loc = new Location { Latitude = bs[rand].Latitude, Longitude = bs[rand].Longitude };
-                    dronetolis.Location = loc;
-                    dronetolis.Battery = 20 * random.NextDouble();
-                    Dal.AddDroneCharge(dronetolis.Id, bs[rand].Id);
-
-                }
-                if (dronetolis.Status == Enums.DroneStatuses.Vacant)
-                {
-                    List<DO.Customer> c = (List<DO.Customer>)Dal.GetCustomerList();
-                    List<DO.Parcel> parcels = (List<DO.Parcel>)Dal.GetParcelList(null);
-                    List<DO.Parcel> tmp = parcels.FindAll(pc => pc.Delivered < DateTime.Now && pc.Delivered != DateTime.MinValue);
-                    List<DO.Customer> customersTmp = new();
-                    foreach (var it in tmp)
-                    {
-                        if (c.Any(cs => cs.Id == it.TargetId))
-                            customersTmp.Add(c.Find(cs => cs.Id == it.TargetId));
-                    }
-                    List<DO.BaseStation> bs = (List<DO.BaseStation>)Dal.GetBaseStationsList(null);
-                    Location lc = new Location { Latitude = bs[0].Latitude, Longitude = bs[0].Longitude };
-                    dronetolis.Location = lc;
-                    try
-                    {
-                        dronetolis.Battery = random.Next((int)(LocationFuncs.Distance(dronetolis.Location, getClosestBase(dronetolis.Location).Location) * Dal.DroneElectricConsumations()[0]), 99) + random.NextDouble();
-                    }
-                    catch (GetException e) { throw e; }
-                }
-                return dronetolis;
-            }
-            
-        }
+      
         /// <summary>
         /// find closest base with free slots
         /// </summary>

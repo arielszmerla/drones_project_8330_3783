@@ -32,13 +32,16 @@ namespace PL
         private IBL bl1;
         private BO.BaseStation bs;
         void Window_Loaded(object sender, RoutedEventArgs e) => Model.DronesRefresh();
+        /// <summary>
+        /// map dislpay builder
+        /// </summary>
+        /// <param name="IBL"></param>
         public MapsDisplay(IBL IBL)
         {
             bl = IBL;
             InitializeComponent();
-
+            //create pins on mao
             Pushpin pin;
-      
             foreach (var item in Model.Drones)
             {
                 pin = new();
@@ -56,14 +59,22 @@ namespace PL
                 myMap.Children.Add(pin);
             }
         }
-
+        /// <summary>
+        /// set what happens on click no pin
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PinClicked(object sender, System.EventArgs e)
         {
             Pushpin id = (Pushpin)sender;
             BO.DroneToList d = bl.GetDroneList(null).FirstOrDefault(p => p.Location.Latitude == id.Location.Latitude);
             if (d != null) new AddDrone(bl, d.Id).Show();
         }
-
+        /// <summary>
+        /// show a single drone map
+        /// </summary>
+        /// <param name="drone"></param>
+        /// <param name="bl1"></param>
         public MapsDisplay(BO.Drone drone, IBL bl1)
         {
             this.drone = drone;
@@ -79,6 +90,11 @@ namespace PL
             MapLayer.SetPosition(pin, pin.Location);
 
         }
+        /// <summary>
+        /// show basetation map
+        /// </summary>
+        /// <param name="bs"></param>
+        /// <param name="bl1"></param>
         public MapsDisplay(BO.BaseStation bs, IBL bl1)
         {
             this.bs = bs;

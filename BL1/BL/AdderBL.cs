@@ -124,8 +124,7 @@ namespace BL
 
                     throw new AddException($"The drone {drone.Id} already exists ", d);
                 }
-
-                List<DO.BaseStation> bs = (List<DO.BaseStation>)Dal.GetBaseStationsList(b => b.Valid == true);
+                var bs = (List<DO.BaseStation>)Dal.GetBaseStationsList(b => b.Valid == true);
 
                 //put it in the BL droneList
                 DroneToList dr = new DroneToList
@@ -194,7 +193,7 @@ namespace BL
                 if (drone.Status == Enums.DroneStatuses.Maintenance)
                 {
 
-                    List<DO.BaseStation> bases = (List<DO.BaseStation>)Dal.GetBaseStationsList(b => b.NumOfSlots > 0);
+                    var bases = (List<DO.BaseStation>)Dal.GetBaseStationsList(b => b.NumOfSlots > 0);
                     DO.BaseStation b = Dal.GetBaseStation(bases[random.Next(bases.Count() - 1)].Id);
                     drone.Location = dOBaseStation(b).Location;
                     Dal.AddDroneCharge(drone.Id, b.Id);
