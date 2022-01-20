@@ -29,13 +29,6 @@
     <Latitude>31.762722</Latitude>
   </Customer>
   <Customer>
-    <Id>100000005</Id>
-    <Name>myName5</Name>
-    <Phone>30919069</Phone>
-    <Longitude>35.175217</Longitude>
-    <Latitude>31.760307</Latitude>
-  </Customer>
-  <Customer>
     <Id>100000004</Id>
     <Name>myName4</Name>
     <Phone>86462457</Phone>

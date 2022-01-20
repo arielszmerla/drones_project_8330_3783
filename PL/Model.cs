@@ -7,14 +7,23 @@ using System.Media;
 
 namespace PL
 {
+    /// <summary>
+    /// model to all the other classes
+    /// </summary>
     public class Model : INotifyPropertyChanged
     {
+        //event for changes in drone list
         public event PropertyChangedEventHandler PropertyChanged;
         static readonly IBL bl = BLFactory.GetBL();
 
         Model() { }
+        /// <summary>
+        /// singleton creation
+        /// </summary>
         public static Model Instance { get; } = new Model();
-
+        /// <summary>
+        /// observable list so changes are felt by event
+        /// </summary>
         ObservableCollection<DroneToList> drones = new(bl.GetDroneList());
         public ObservableCollection<DroneToList> Drones
         {
@@ -48,12 +57,15 @@ namespace PL
                 DronesRefresh();
             }
         }
-
+        //refresh list on changing conditions
         public void DronesRefresh()
         {
             Drones = new(bl.GetDroneList((BO.Enums.DroneStatuses?)StatusSelector, (BO.Enums.WeightCategories?)WeightSelector));
         }
-
+        /// <summary>
+        /// error model announcemenet
+        /// </summary>
+        /// <param name="ex"></param>
         public static void Error(string ex)
         {
             SystemSounds.Beep.Play();

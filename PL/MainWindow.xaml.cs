@@ -62,7 +62,7 @@ namespace PL
                     try
                     {
                         BO.Customer? b = bl.GetCustomer(int.Parse(id_check.Text));
-                        new CustomerActionWindow(bl, b.Id).Show();
+                        new CustomerActionWindow(bl, b.Id,1).Show();
                     }
                     catch (BO.GetException)
                     {

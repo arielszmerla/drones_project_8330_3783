@@ -62,9 +62,7 @@ namespace PL
             set_parcel_Priority.Visibility = Visibility.Collapsed;
             set_parcel_Weight.Visibility = Visibility.Collapsed;
             show_parcel_Weight.Visibility = Visibility.Visible;
-            // show_parcel_Weight.Text = p.SenderName;
             show_Priority.Visibility = Visibility.Visible;
-            // show_Priority.Text = p.Priority.ToString();
             parcel = bl.GetParcel(p.Id);
         }
         /// <summary>
@@ -116,6 +114,7 @@ namespace PL
         /// <param name="e"></param>
         private void enter_your_parcel(object sender, RoutedEventArgs e)
         {
+            //first gets the values
             int s;
             int idNew = 0;
             if (int.TryParse(show_parcel_sender.Text, out s))
@@ -165,7 +164,7 @@ namespace PL
                 MessageBox.Show("Please enter a positive number");
                 show_parcel_id.Background = Brushes.Red;
             }
-
+            //if no all values are legal
             bool flag = false;
             if (set_parcel_Priority.SelectedItem == null)
             {
@@ -193,6 +192,7 @@ namespace PL
                 Model.Error("please enter id of target");
                 flag = true;
             }
+            //if all values all legally set
             if (flag == false)
             {
                 parcel.Created = DateTime.Now;
