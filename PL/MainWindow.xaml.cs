@@ -35,7 +35,7 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
-            string soundFilePath = @"mus\hatikva.wav";
+            string soundFilePath = @"mus\BackGround.wav.wav";
             SoundPlayer player = new SoundPlayer(soundFilePath);
             player.Play();
             
