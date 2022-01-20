@@ -27,16 +27,16 @@ namespace PL
     public partial class MainWindow : Window
     {
 
-      ///   private static SoundPlayer _backgroundMusic = new SoundPlayer();
+        ///   private static SoundPlayer _backgroundMusic = new SoundPlayer();
 
         BLAPI.IBL bl = BLFactory.GetBL();
         public MainWindow()
         {
             InitializeComponent();
 
-      //string soundFilePath = @"C:\Users\ariel\source\repos\DotNet_5782_XXXX-YYYY\pl\hatikva.wav";
-    //          SoundPlayer player = new SoundPlayer(soundFilePath);
-         //  player.Play();
+            //string soundFilePath = @"C:\Users\ariel\source\repos\DotNet_5782_XXXX-YYYY\pl\hatikva.wav";
+            //          SoundPlayer player = new SoundPlayer(soundFilePath);
+            //  player.Play();
 
         }
 
@@ -44,6 +44,12 @@ namespace PL
         private void Client_Entry_Click(object sender, RoutedEventArgs e)
         {
             Manager_Entry.Visibility = Visibility.Collapsed;
+            Sign_In.Visibility = Visibility.Collapsed;
+            LogIn.Visibility = Visibility.Collapsed;
+            enterPassword.Visibility = Visibility.Collapsed;
+            password.Visibility = Visibility.Collapsed;
+
+            Enter_But.Visibility = Visibility.Visible;
             if (id_check.Text == "")
                 MessageBox.Show("please enter your id");
             id_check.Visibility = Visibility.Visible;
@@ -53,29 +59,11 @@ namespace PL
                 if (myReg.IsMatch(id_check.Text)) //checks taht key entered is regular expression
                 {
                     id_check.Background = Brushes.Red;
-                    MessageBox.Show("Please try again");
+                    MessageBox.Show("Please enter only numbers");
                     id_check.Text = "";
                 }
-                //check legal size id
-                if (Int32.Parse(id_check.Text) >= 100000000)
-                {
-                    try
-                    {
-                        BO.Customer? b = bl.GetCustomer(int.Parse(id_check.Text));
-                        new CustomerActionWindow(bl, b.Id,1).Show();
-                    }
-                    catch (BO.GetException)
-                    {
-                        MessageBox.Show("this customer doesn't exist");
-                        id_check.Text = "";
-                    }
-                }
-                else
-                {
-                    id_check.Background = Brushes.Red;
-                    MessageBox.Show("Please try again");
-                    id_check.Text = "";
-                }
+              
+
             }
 
         }
@@ -190,6 +178,26 @@ namespace PL
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             new CustomerListWindow(bl).Show();
+        }
+
+        /// <summary>
+        /// button to check the password of a client and open customer action window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                BO.Customer? b = bl.GetCustomer(int.Parse(id_check.Text));
+                new CustomerActionWindow(bl, b.Id, 1).Show();
+            }
+            catch (BO.GetException)
+            {
+
+                MessageBox.Show("this customer doesn't exist");
+                id_check.Text = "";
+            }
         }
     }
 
