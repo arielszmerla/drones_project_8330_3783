@@ -64,11 +64,11 @@
         </Grid.RowDefinitions>
         <StackPanel x:Name="Add_Stack" Margin="0,130,655,0" Grid.RowSpan="2">
             <Label />
-            <Label Content="ID:" FontSize="20" FontWeight="DemiBold"  Background="Azure" Opacity="0.7"/>
-            <Label Content="Sender" FontSize="20" FontWeight="DemiBold" Margin="0,2,0,0"  Background="SandyBrown" Opacity="0.7"/>
-            <Label Content="Target" FontSize="20" FontWeight="DemiBold" Margin="0,2,0,0"   Background="SandyBrown" Opacity="0.7"/>
-            <Label Content="Weight" FontSize="20" FontWeight="DemiBold" Margin="0,2,0,0"   Background="SandyBrown" Opacity="0.7"/>
-            <Label Content="Priority" FontSize="20" FontWeight="DemiBold" Margin="0,2,0,0"    Background="SandyBrown" Opacity="0.7"/>
+            <Label Content="ID:" FontSize="20" FontWeight="DemiBold"  Background="CadetBlue" />
+            <Label Content="Sender" FontSize="20" FontWeight="DemiBold" Margin="0,2,0,0"  Background="CadetBlue" />
+            <Label Content="Target" FontSize="20" FontWeight="DemiBold" Margin="0,2,0,0"   Background="CadetBlue" />
+            <Label Content="Weight" FontSize="20" FontWeight="DemiBold" Margin="0,2,0,0"   Background="CadetBlue" />
+            <Label Content="Priority" FontSize="20" FontWeight="DemiBold" Margin="0,2,0,0"    Background="CadetBlue"/>
         </StackPanel>
 
         <StackPanel Margin="150,130,478,0" Grid.RowSpan="2" x:Name="show"     RenderTransformOrigin="0.5,0.5">
@@ -86,7 +86,7 @@
             <Button x:Name="enter"  Opacity="0.9"   BorderBrush="Transparent" Visibility="Collapsed"  Margin="0,-5,0,0" FontWeight="ExtraBlack" Content="ADD THIS PARCEL"  Click="enter_your_parcel" Width="120" Height="84" RenderTransformOrigin="0.61,2.198">
             </Button>
         </StackPanel>
-        <StackPanel Margin="300,130,261,0" Visibility="Visible" Grid.RowSpan="2" RenderTransformOrigin="0.5,0.5">
+        <StackPanel Margin="322,130,261,0" Visibility="Visible" Grid.RowSpan="2" RenderTransformOrigin="0.5,0.5">
             <Button x:Name="show_drone"  Style="{StaticResource MaterialDesignRaisedButton}" Content="SHOW DRONE" Margin="0,10,0,0" Height="52" Width="141" Click="show_drone_Click"/>
             <Button x:Name="show_client"       Style="{StaticResource MaterialDesignRaisedButton}"  Content="SHOW CLIENT" Margin="0,10,0,0" Height="52" Width="140" Click="show_client_Click"/>
 
