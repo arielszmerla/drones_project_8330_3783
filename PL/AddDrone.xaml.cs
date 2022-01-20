@@ -177,7 +177,6 @@ namespace PL
             {
                 time = new TimeSpan(3, 0, 0);
                 bl.UpdateReleaseDroneFromCharge(Drone.Id, time);
-                timespan_get.Visibility = Visibility.Hidden;
 
             }
 

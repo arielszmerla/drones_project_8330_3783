@@ -80,7 +80,7 @@
 
 
             <Label  Content="MY DRONES"  FontStyle="Italic" Foreground="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="Black"  BorderThickness="5" FontSize="35" FontWeight="ExtraBlack" Grid.ColumnSpan="4" Margin="214,89,228,-112"/>
-            <Button BorderBrush="Transparent"  Opacity="0.8" x:Name="reset" Visibility="Hidden" Content="Reset List"  Grid.Column="3" HorizontalAlignment="Left" Margin="19,0,0,0" VerticalAlignment="Center" Height="72" Width="171" ToolTip="Reset List" Click="Reset_List"/>
+            <Button BorderBrush="Transparent"  Opacity="0.8" x:Name="reset" Visibility="Collapsed" Content="Reset List"  Grid.Column="3" HorizontalAlignment="Left" Margin="109,0,0,0" VerticalAlignment="Center" Height="72" Width="171" ToolTip="Reset List" Click="Reset_List"/>
 
         </Grid>
 

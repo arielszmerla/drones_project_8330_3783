@@ -93,12 +93,12 @@
                 <ComboBox   Style="{StaticResource MaterialDesignOutlinedComboBox}"
     IsEnabled="{Binding Path=IsChecked, ElementName=OutlinedComboBoxEnabledCheckBox}"
   
-    ItemsSource="{Binding ShortStringList}"  Visibility="Visible" Margin="18,199,18,200"  Opacity="0.8"   BorderBrush="Transparent"  Background="Beige" x:Name="Choose_models" ToolTip="Enter Model"  FontWeight="ExtraBlack" Foreground="Brown" IsEditable="True" Text="MODEL UPDATE" SelectionChanged="Choose_models_SelectionChanged" />
+    ItemsSource="{Binding ShortStringList}"  Visibility="Visible" Margin="18,199,18,200"   Opacity="0.8"   BorderBrush="Transparent"  Background="Beige" x:Name="Choose_models" ToolTip="Enter Model"  FontWeight="ExtraBlack" Foreground="Brown" IsEditable="True" Text="MODEL UPDATE" SelectionChanged="Choose_models_SelectionChanged" />
 
-                <Button  BorderBrush="Transparent"  FontWeight="ExtraBlack" Foreground="DarkViolet" Visibility="Visible" x:Name="DeliveryChanges" Content="DELIVERY" HorizontalAlignment="Right"  VerticalAlignment="Top" Click="DeliveryChanges_Click" Height="46" Margin="0,16,14,0" Width="131"/>
-                <Button  BorderBrush="Transparent"  FontWeight="ExtraBlack" Foreground="Blue"  Visibility="Visible" x:Name="Update_Drone" Content="UPDATE" HorizontalAlignment="Center"  Width="131"  Height="46" Click="Update_Drone_Click" Margin="0,3,0,249"/>
-                <Button  BorderBrush="Transparent" x:Name="sendDrone"  Content="{Binding Text,ElementName=Statuss,Converter={StaticResource statustoBoutton} }"  Click="SendTo_charge" HorizontalAlignment="Center"  Height="46" Width="131" Margin="0,132,0,272" />
-                <TextBox  BorderBrush="Transparent"  Grid.Column="0" Visibility="Visible" x:Name="timespan_get" Text="" TextWrapping="Wrap" Margin="0,162,0,272" HorizontalAlignment="Left" Width="142" />
+                <Button  BorderBrush="Transparent"  FontWeight="ExtraBlack" Foreground="DarkViolet" Visibility="Visible" x:Name="DeliveryChanges" Content="DELIVERY" Click="DeliveryChanges_Click" Height="46" Margin="0,16,14,380" Width="131"  HorizontalAlignment="Right" ToolTip="Do next step of delivery"/>
+                <Button  BorderBrush="Transparent"  FontWeight="ExtraBlack" Foreground="Blue"  Visibility="Visible" x:Name="Update_Drone" Content="UPDATE"    Click="Update_Drone_Click" Height="46"  Margin="0,16,14,270" Width="131" HorizontalAlignment="Right"  />
+                <Button  BorderBrush="Transparent" x:Name="sendDrone" Visibility="Visible"  Content="{Binding Text,ElementName=Statuss,Converter={StaticResource statustoBoutton} }"  Click="SendTo_charge" HorizontalAlignment="Right"  Height="46" Width="131" Margin="0,16,14,160" />
+               
                 <Button  BorderBrush="Transparent" FontWeight="ExtraBlack" Foreground="Green"  x:Name="show_parcel_nDrone" Visibility="{Binding Drone.DeliveryId ,Converter={StaticResource Deliveryidconvert} }"  Content="Show Parcel" Click="show_parcel_inDrone"  HorizontalAlignment="Left"  Height="46" Width="130" Margin="12,278,0,136" />
 
                 <Button  BorderBrush="Transparent" Margin="66,46,31,336" Opacity="0.8" ToolTip="Click Here To view on map" FontSize="16" BorderThickness="0.5" x:Name="View_On_Map" Click="View_Map" Width="64" Height="68" RenderTransformOrigin="-0.208,-4.179" Grid.Column="1">
