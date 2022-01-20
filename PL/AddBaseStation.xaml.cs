@@ -26,6 +26,10 @@ namespace PL
         public static Model Model { get; } = Model.Instance;
         private Location loc = new();
         private IBL bl;
+        /// <summary>
+        /// constructor for adding a base station option
+        /// </summary>
+        /// <param name="bl"></param>
         public AddBaseStation(IBL bl)
         {
      

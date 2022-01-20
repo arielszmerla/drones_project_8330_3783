@@ -23,8 +23,11 @@ namespace PL
     public partial class BaseStationViewWindow : Window
     {
         private BLAPI.IBL bl;
-        // enum options {Free_Base_Stations, Num_Of_Free_Bases }
 
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="bl"></param>
         public BaseStationViewWindow(BLAPI.IBL bl)
         {
             InitializeComponent();
@@ -34,7 +37,11 @@ namespace PL
             DataContext = BaseStationView.ItemsSource;
         }
 
-
+        /// <summary>
+        /// end page button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void End_the_page(object sender, RoutedEventArgs e)
         {
             PageStop.Visibility = Visibility.Hidden;
