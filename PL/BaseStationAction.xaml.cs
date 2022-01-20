@@ -21,13 +21,18 @@ namespace PL
     /// <summary>
     /// Interaction logic for AddBaseStation.xaml
     /// </summary>
-    public partial class AddBaseStation : Window
+    public partial class BaseStationAction : Window
     {
         public static Model Model { get; } = Model.Instance;
         private Location loc = new();
         private IBL bl;
-        public AddBaseStation(IBL bl)
+        /// <summary>
+        /// constructor for adding a base station option
+        /// </summary>
+        /// <param name="bl"></param>
+        public BaseStationAction(IBL bl)
         {
+     
             Title = "ADD A BASE STATION";
             InitializeComponent();
             this.bl = bl;
@@ -38,7 +43,7 @@ namespace PL
         /// constructor for double click on updating base station
         /// </summary>
         BO.BaseStation bs = new();
-        public AddBaseStation(IBL bl, BaseStation baseStation)
+        public BaseStationAction(IBL bl, BaseStation baseStation)
         {
             Title = "UPDATE";
             InitializeComponent();
@@ -58,7 +63,6 @@ namespace PL
         private void End_the_page(object sender, RoutedEventArgs e)
         {
             PageStop.Visibility = Visibility.Hidden;
-            new BaseStationViewWindow(bl).Show();
             this.Close();
         }
 

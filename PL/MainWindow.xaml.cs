@@ -40,16 +40,22 @@ namespace PL
 
         }
 
-        //enter as a client
+        /// <summary>
+        /// if entering as a client
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Client_Entry_Click(object sender, RoutedEventArgs e)
         {
+            #region visibilaties
             Manager_Entry.Visibility = Visibility.Collapsed;
             Sign_In.Visibility = Visibility.Collapsed;
             LogIn.Visibility = Visibility.Collapsed;
             enterPassword.Visibility = Visibility.Collapsed;
             password.Visibility = Visibility.Collapsed;
-
             Enter_But.Visibility = Visibility.Visible;
+            #endregion
+
             if (id_check.Text == "")
                 MessageBox.Show("please enter your id");
             id_check.Visibility = Visibility.Visible;
@@ -62,7 +68,7 @@ namespace PL
                     MessageBox.Show("Please enter only numbers");
                     id_check.Text = "";
                 }
-              
+
 
             }
 

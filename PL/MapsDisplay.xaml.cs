@@ -68,7 +68,7 @@ namespace PL
         {
             Pushpin id = (Pushpin)sender;
             BO.DroneToList d = bl.GetDroneList(null).FirstOrDefault(p => p.Location.Latitude == id.Location.Latitude);
-            if (d != null) new AddDrone(bl, d.Id).Show();
+            if (d != null) new DroneAction(bl, d.Id).Show();
         }
         /// <summary>
         /// show a single drone map

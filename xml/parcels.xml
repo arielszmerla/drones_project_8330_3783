@@ -296,8 +296,8 @@
     <Requested>2021-12-30T10:51:35</Requested>
     <DroneId>100002</DroneId>
     <Scheduled>2022-01-19T21:02:10.7286756+02:00</Scheduled>
-    <PickedUp xsi:nil="true" />
-    <Delivered xsi:nil="true" />
+    <PickedUp>2022-01-20T13:41:22.3690074+02:00</PickedUp>
+    <Delivered>2022-01-20T13:41:26.3964778+02:00</Delivered>
     <Weight>Heavy</Weight>
   </Parcel>
   <Parcel>

@@ -120,15 +120,15 @@
                     <ImageBrush ImageSource="\images\Google_Maps_logo.png"/>
                 </Button.Background>
             </Button>
-            <Button Opacity="0.8" ToolTip="Click Here To Add" Margin="10,80,0,0" BorderBrush="Black" FontSize="16" Click="Button_Click" Height="59" Width="60">
+            <Button  Opacity="0.8" ToolTip="Click Here To Add" Margin="10,120,0,0" BorderBrush="Green" FontSize="16" Click="Button_Click" Height="55" Width="60">
                 <Button.Background>
-                    <ImageBrush ImageSource="\images\pluspic.png"/>
+                    <ImageBrush ImageSource="images\plusIcon1.png" />
                 </Button.Background>
             </Button>
 
-            <Button    BorderBrush="Red" Opacity="0.8" Margin="10,80,0,0"  ToolTip="Click Here To Close" FontSize="16" BorderThickness="0.5" x:Name="Closing_Button" Click="Closing_Button_Click" Width="54" Height="62" RenderTransformOrigin="-0.208,-4.179">
+            <Button    BorderBrush="Red" Opacity="0.8" Margin="10,30,0,0"  ToolTip="Click Here To Close" FontSize="16" BorderThickness="0.5" x:Name="Closing_Button" Click="Closing_Button_Click" Width="55" Height="60" >
                 <Button.Background>
-                    <ImageBrush ImageSource="\images\pngegg.png"/>
+                    <ImageBrush ImageSource="\images\exitpic.png"/>
                 </Button.Background>
             </Button>
         </StackPanel>

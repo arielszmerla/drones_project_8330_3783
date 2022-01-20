@@ -62,17 +62,25 @@ namespace PL
 
 
         }
+        /// <summary>
+        /// cunstroctor for adding new customer
+        /// </summary>
+        /// <param name="bl"></param>
         public CustomerActionWindow(BLAPI.IBL bl)
         {
             InitializeComponent();
             this.bl1 = bl;
+            #region visibilites
             add_customer_stack.Visibility = Visibility.Visible;
             add_CUSTOMER_titles.Visibility = Visibility.Visible;
             CustomerView.Visibility = Visibility.Collapsed;
             updates.Visibility = Visibility.Collapsed;
+            #endregion
+
         }
-        List<BO.CustomerToList> customers = new();
-        BO.Customer customer = new();
+
+        List<CustomerToList> customers = new();
+        Customer customer = new();
         /// <summary>
         /// show customer windows
         /// </summary>
@@ -87,12 +95,21 @@ namespace PL
             CustomerView.ItemsSource = customers;
         }
 
+        /// <summary>
+        /// func to close window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void End_the_page(object sender, RoutedEventArgs e)
         {
             Close();
         }
 
-
+        /// <summary>
+        /// update customer button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Update(object sender, RoutedEventArgs e)
         {
             if (Phone.Text != "\r" && Phone.Text != "") //checks that key wasn't enter
@@ -111,7 +128,7 @@ namespace PL
                 }
             }
             customer.Name = Name_update.Text;
-
+            // if both text boxes are empty
             if (Name_update.Text == "" && Phone.Text == "")
             {
                 MessageBoxButton b = MessageBoxButton.YesNo;
@@ -144,11 +161,13 @@ namespace PL
             }
         }
 
-
-        private void _SelectCustomerViewListionChanged(object sender, SelectionChangedEventArgs e)
+        //no use for function
+       /* private void _SelectCustomerViewListionChanged(object sender, SelectionChangedEventArgs e)
         {
             Close();
-        }
+        }*/
+
+
         /// <summary>
         /// add a client
         /// </summary>

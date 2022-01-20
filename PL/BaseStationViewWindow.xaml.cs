@@ -23,8 +23,11 @@ namespace PL
     public partial class BaseStationViewWindow : Window
     {
         private BLAPI.IBL bl;
-        // enum options {Free_Base_Stations, Num_Of_Free_Bases }
 
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="bl"></param>
         public BaseStationViewWindow(BLAPI.IBL bl)
         {
             InitializeComponent();
@@ -34,13 +37,22 @@ namespace PL
             DataContext = BaseStationView.ItemsSource;
         }
 
+        /// <summary>
+        /// end page button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void End_the_page(object sender, RoutedEventArgs e)
         {
             PageStop.Visibility = Visibility.Hidden;
-            new MainWindow().Show();
             Close();
 
         }
+        /// <summary>
+        /// helper function so the regular close button wont work
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BaseSViewClosing(object sender, CancelEventArgs e)
         {
             if (PageStop.Visibility != Visibility.Hidden)
@@ -48,18 +60,25 @@ namespace PL
 
         }
 
-        private void View_Map(object sender, RoutedEventArgs e)
-        {
-            new MapsDisplay(bl).Show();
-        }
+      
 
-
+        /// <summary>
+        /// reset button to reset the base station viewed list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ResetList_Click(object sender, RoutedEventArgs e)
         {
             BaseStationView.ItemsSource = bl.GetBaseStationList();
             ResetList.Visibility = Visibility.Hidden;
         }
 
+        /// <summary>
+        /// function for double click on a certin base station in order to view or update
+        /// its info
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BaseStationView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             BO.BaseStationToList bs = (BO.BaseStationToList)BaseStationView.SelectedItem;
@@ -69,6 +88,7 @@ namespace PL
             }
             else
             {
+               //we update the info of base station and send it to baseation actions
                 BO.BaseStation baseStation = new BO.BaseStation
                 {
                     Id = bs.Id,
@@ -77,27 +97,29 @@ namespace PL
                     Location = bs.Location,
                     ChargingDrones = bs.ChargingDrones
                 };
-                PageStop.Visibility = Visibility.Hidden;
-                new AddBaseStation(bl, baseStation).Show();
-                Close();
+                new BaseStationAction(bl, baseStation).Show();
             }
         }
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-
-
     
-        private void Button_Click(object sender, RoutedEventArgs e) { 
-               
-            PageStop.Visibility = Visibility.Hidden;
-            Close();
 
+
+
+    /// <summary>
+    /// function to exit page
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+        private void Button_Click(object sender, RoutedEventArgs e) 
+        {
+            new BaseStationAction(bl).Show();
         }
 
+        /// <summary>
+        /// if we want to devide the base stations viewed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BaseOptions_Click(object sender, RoutedEventArgs e)
         {
             BaseStationView.ItemsSource = bl.GetBaseStationListGroup();

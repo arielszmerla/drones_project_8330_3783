@@ -16,19 +16,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\background.png.jpeg" />
     <None Remove="images\baseStationPic.png" />
     <None Remove="images\cusomer.jpeg" />
     <None Remove="images\drona.jpg" />
     <None Remove="images\dronefon.jpg" />
+    <None Remove="images\exitpic.png" />
     <None Remove="images\Golden_State.mp3" />
     <None Remove="images\Google_Maps_logo.png" />
     <None Remove="images\hatikva.wav" />
     <None Remove="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
+    <None Remove="images\northernLight.png" />
+    <None Remove="images\packages.png" />
+    <None Remove="images\parachute.png" />
     <None Remove="images\parcel.jpeg" />
     <None Remove="images\parcel.png" />
+    <None Remove="images\plusIcon1.jfif" />
+    <None Remove="images\plusIcon1.png" />
+    <None Remove="images\plusIcon2.jfif" />
+    <None Remove="images\plusIcon3.png" />
     <None Remove="images\pluspic.png" />
     <None Remove="images\plussignpic.png" />
-    <None Remove="images\pngegg.png" />
     <None Remove="images\customerspic.png" />
     <None Remove="images\drone-icon.png" />
     <None Remove="images\drone.png" />
@@ -36,8 +44,8 @@
     <None Remove="images\Icon1.ico" />
     <None Remove="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
     <None Remove="images\kisspng-logo-arrow-5ae2d845df31d9.4342434915248159419142.png" />
-    <None Remove="images\pngegg.png" />
     <None Remove="images\pngwing.com.png" />
+    <None Remove="images\Two-Hearts-in-The-Sky-1024x768.png" />
     <None Remove="images\wifind_back.png" />
   </ItemGroup>
 
@@ -48,6 +56,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="images\background.png.jpeg" />
     <Resource Include="images\baseStationPic.png" />
     <Resource Include="images\cusomer.jpeg" />
     <Resource Include="images\drona.jpg" />
@@ -58,11 +67,15 @@
     <Resource Include="images\Google_Maps_logo.png" />
     <Resource Include="images\hatikva.wav" />
     <Resource Include="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
+    <Resource Include="images\northernLight.png" />
+    <Resource Include="images\packages.png" />
+    <Resource Include="images\parachute.png" />
     <Resource Include="images\parcel.jpeg" />
     <Resource Include="images\parcel.png" />
+    <Resource Include="images\plusIcon1.png" />
+    <Resource Include="images\plusIcon3.png" />
     <Resource Include="images\pluspic.png" />
-    <Resource Include="images\plussignpic.png" />
-    <Resource Include="images\pngegg.png" />
+    <Resource Include="images\exitpic.png" />
     <Resource Include="images\customerspic.png" />
     <Resource Include="images\drone-icon.png" />
     <Resource Include="images\drone.png" />
@@ -70,7 +83,6 @@
     <Resource Include="images\Icon1.ico" />
     <Resource Include="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
     <Resource Include="images\kisspng-logo-arrow-5ae2d845df31d9.4342434915248159419142.png" />
-    <Resource Include="images\pngegg.png" />
     <Resource Include="images\pngwing.com.png" />
     <Resource Include="images\wifind_back.png" />
   </ItemGroup>

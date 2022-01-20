@@ -31,7 +31,10 @@ namespace PL
         public static Model Model { get; } = Model.Instance;
 
         void Window_Loaded(object sender, RoutedEventArgs e) => Model.DronesRefresh();
-        // drone list view window
+        /// <summary>
+        /// cunstroctor
+        /// </summary>
+        /// <param name="bl1"></param>
         public DroneListWindow1(IBL bl1)
         {
 
@@ -91,7 +94,7 @@ namespace PL
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            new AddDrone(bl1).Show();
+            new DroneAction(bl1).Show();
 
         }
         /// <summary>
@@ -100,7 +103,7 @@ namespace PL
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Drone_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
-            new AddDrone(bl,((DroneToList)((ListViewItem)sender).DataContext).Id).Show();
+            new DroneAction(bl,((DroneToList)((ListViewItem)sender).DataContext).Id).Show();
 
         }
         /// <summary>
@@ -114,7 +117,7 @@ namespace PL
             Close();
         }
         /// <summary>
-        /// closing event
+        /// prevent regular closing
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -131,7 +134,7 @@ namespace PL
         private void DroneListView_SelectionChanged(object sender, MouseButtonEventArgs e)
         {
             if(sender!=null)
-            new AddDrone(bl, ((DroneToList)((ListView)sender).SelectedItem).Id).Show();
+            new DroneAction(bl, ((DroneToList)((ListView)sender).SelectedItem).Id).Show();
         }
         /// <summary>
         /// reset view of the whole list
