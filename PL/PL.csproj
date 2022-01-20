@@ -65,7 +65,7 @@
     <Page Include="App.xaml" />
     <ProjectReference Include="..\BL1\BL1.csproj" />
     <Resource Include="images\Google_Maps_logo.png" />
-    <Resource Include="images\hatikva.wav" />
+    <Content Include="images\hatikva.wav" />
     <Resource Include="images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico" />
     <Resource Include="images\northernLight.png" />
     <Resource Include="images\packages.png" />

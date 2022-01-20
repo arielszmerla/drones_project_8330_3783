@@ -27,17 +27,18 @@ namespace PL
     public partial class MainWindow : Window
     {
 
-         private static SoundPlayer _backgroundMusic = new SoundPlayer();
-
+        private static SoundPlayer _backgroundMusic = new SoundPlayer();
+    
+      
+       
         BLAPI.IBL bl = BLFactory.GetBL();
         public MainWindow()
         {
             InitializeComponent();
-
-           string soundFilePath = @"C:\Users\ariel\source\repos\DotNet_5782_XXXX-YYYY\PL\images\hatikva.wav";
-                    SoundPlayer player = new SoundPlayer(soundFilePath);
+            string soundFilePath = @"mus\hatikva.wav";
+            SoundPlayer player = new SoundPlayer(soundFilePath);
             player.Play();
-
+            
         }
 
         /// <summary>
