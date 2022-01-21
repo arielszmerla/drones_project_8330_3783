@@ -35,7 +35,7 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
-            string soundFilePath = @"mus\BackGround.wav.wav";
+            string soundFilePath = @"mus\BackGround.wav";
             SoundPlayer player = new SoundPlayer(soundFilePath);
             player.Play();
             
