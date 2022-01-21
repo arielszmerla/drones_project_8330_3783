@@ -25,11 +25,11 @@ namespace PL
     /// </summary>
     public partial class DroneAction : Window, INotifyPropertyChanged
     {
+        //set event on change of binding source
         public event PropertyChangedEventHandler PropertyChanged;
         readonly IBL bl = BLFactory.GetBL();
         public static Model Model { get; } = Model.Instance;
         private Location loc = new();
-        private PO.POAdapters poadapt = new PO.POAdapters();
 
         BO.Drone drone;
         public Drone Drone { get => drone; }
@@ -82,6 +82,8 @@ namespace PL
         /// <param name="e"></param>
         private void enter_your_drone(object sender, RoutedEventArgs e)
         {
+
+            ///checks validity of data
             Regex myReg = new Regex("[^0-9]+"); //gets regular expression that allows only digits
             if (!myReg.IsMatch(ChooseId.Text)) //checks taht key entered is regular expression
                 drone.Id = Int32.Parse(ChooseId.Text);
@@ -136,7 +138,7 @@ namespace PL
                 drone.PID = null;
 
                 try
-                {
+                {//add a drone to data
                     bl.AddDrone(drone);
                     MessageBox.Show("Managed Add");
                     enter.Visibility = Visibility.Hidden;
