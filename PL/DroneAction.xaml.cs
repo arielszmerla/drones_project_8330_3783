@@ -238,7 +238,6 @@ namespace PL
                 Model.Error("Missed Update");
             }
             this.myEvent("Managed Update");
-            //  poDrone = poadapt.BODroneToPo(bl.GetDrone(poDrone.Id), poDrone);
             updateDroneView();
         }
 
@@ -409,12 +408,8 @@ namespace PL
             lock (bl)
             {
                 drone = bl.GetDrone(Drone.Id);
-                // updateFlags();
                 if (PropertyChanged != null)
-                {
                     PropertyChanged(this, new PropertyChangedEventArgs("Drone"));
-
-                }
 
                 DroneToList droneForList = Model.Drones.FirstOrDefault(d => d.Id == Drone.Id);
                 // we search for the drone with same id, update him and replace with old drone (erase old drone)
