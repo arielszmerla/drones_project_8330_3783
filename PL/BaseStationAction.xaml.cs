@@ -248,12 +248,12 @@ namespace PL
                 {
                     bl.UpdateBaseStation(bs.Id, bs.NumOfFreeSlots, bs.Name);
                 }
-                catch (BO.GetException x)
+                catch (GetException x)
                 {
                     Model.Error(x.Message);
                 }
                 PageStop.Visibility = Visibility.Hidden;
-                new BaseStationViewWindow(bl).Show();
+                MessageBox.Show("Managed update!");
                 this.Close();
             }
            

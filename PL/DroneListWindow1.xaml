@@ -117,12 +117,12 @@
         </ListView>
         <StackPanel Orientation="Vertical"
                     x:Name="actions" Margin="1118,111,0,59" Grid.Row="1" >
-            <Button    BorderBrush="Transparent" Margin="10,80,0,0"  Opacity="0.8" ToolTip="Click Here To view on map" FontSize="16" BorderThickness="0.5" x:Name="View_On_Map" Click="View_Map" Width="64" Height="68" RenderTransformOrigin="-0.208,-4.179">
+            <Button  x:Name="View_On_Map" BorderBrush="Transparent" Margin="10,80,0,0"  Opacity="0.8" ToolTip="Click Here To view on map" FontSize="16" BorderThickness="0.5"  Click="View_Map" Width="64" Height="68" RenderTransformOrigin="-0.208,-4.179">
                 <Button.Background>
                     <ImageBrush ImageSource="\images\Google_Maps_logo.png"/>
                 </Button.Background>
             </Button>
-            <Button  Opacity="0.8" ToolTip="Click Here To Add" Margin="10,120,0,0" BorderBrush="Green" FontSize="16" Click="Button_Click" Height="55" Width="60">
+            <Button x:Name="newDrone"  Opacity="0.8" ToolTip="Click Here To Add" Margin="10,120,0,0" BorderBrush="Green" FontSize="16" Click="Button_Click" Height="55" Width="60">
                 <Button.Background>
                     <ImageBrush ImageSource="images\plusIcon1.png" />
                 </Button.Background>

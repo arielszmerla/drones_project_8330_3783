@@ -61,11 +61,16 @@ namespace PL
             this.bl = bl;
             InitializeComponent();
             DroneListView.ItemsSource = bl.GetDronesInBaseStationList(id);
+            #region visibilaties
+            Closing_Button.Visibility = Visibility.Visible;
             StatusSelector.Visibility = Visibility.Hidden;
             Status_label.Visibility = Visibility.Hidden;
             Weight_label.Visibility = Visibility.Hidden;
             WeightChoise.Visibility = Visibility.Hidden;
-            actions.Visibility = Visibility.Hidden;
+            newDrone.Visibility = Visibility.Hidden;
+            View_On_Map.Visibility = Visibility.Hidden;
+            #endregion
+
 
         }
         /// <summary>
@@ -102,8 +107,9 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Drone_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
-            new DroneAction(bl,((DroneToList)((ListViewItem)sender).DataContext).Id).Show();
+        private void Drone_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            new DroneAction(bl, ((DroneToList)((ListViewItem)sender).DataContext).Id).Show();
 
         }
         /// <summary>
@@ -133,8 +139,8 @@ namespace PL
         /// <param name="e"></param>
         private void DroneListView_SelectionChanged(object sender, MouseButtonEventArgs e)
         {
-            if(sender!=null)
-            new DroneAction(bl, ((DroneToList)((ListView)sender).SelectedItem).Id).Show();
+            if (sender != null)
+                new DroneAction(bl, ((DroneToList)((ListView)sender).SelectedItem).Id).Show();
         }
         /// <summary>
         /// reset view of the whole list
