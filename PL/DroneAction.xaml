@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Icon="\images\iconfinder-technologymachineelectronicdevice06-4026454_113332.ico"
         Closing="DroneAction_Closing"
-        Title="DroneAction" Height="500" Width="944"  WindowStyle="None"
+        Title="Drone Action" Height="500" Width="944"  WindowStyle="None"
          DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}" >
     <Window.Resources >
         <local:ConverterDoubleToInt x:Key="ConverterDoubleToInt"/>

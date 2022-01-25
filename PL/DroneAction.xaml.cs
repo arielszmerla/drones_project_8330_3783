@@ -121,7 +121,7 @@ namespace PL
             // basic check for longitude
             if (ChooseLongitude.Text == "")
             {
-                Model.Error("Please, number > 0");
+                Model.Error("Please, enter a positive number");
                 ChooseLongitude.Background = Brushes.Red;
 
             }
@@ -277,32 +277,7 @@ namespace PL
 
 
   
-
-
-      
-     /*  private void status_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            stats.Background = Brushes.Transparent;
-            Enums.DroneStatuses stat = (Enums.DroneStatuses)((ComboBox)sender).SelectedItem;
-
-            if (stat == Enums.DroneStatuses.InDelivery)
-            {
-                Model.Error("your choice is impossible");
-                stats.Background = Brushes.Red;
-            }
-            else
-                drone.Status = (Enums.DroneStatuses)StatusSelectorToadd.SelectedItem;
-
-        }
-      
-
-        
-        private void Choose_model_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-            Choose_model.Background = Brushes.Transparent;
-            drone.Model = (Enums.DroneNames)Choose_model.SelectedItem;
-        }*/
+ 
 
         /// <summary>
         /// button to show parcel in drone

@@ -60,7 +60,7 @@ namespace PL
         //refresh list on changing conditions
         public void DronesRefresh()
         {
-            Drones = new(bl.GetDroneList((BO.Enums.DroneStatuses?)StatusSelector, (BO.Enums.WeightCategories?)WeightSelector));
+            Drones = new(bl.GetDroneList((BO.Enums.DroneStatuses?)StatusSelector, (Enums.WeightCategories?)WeightSelector));
         }
         /// <summary>
         /// error model announcemenet
