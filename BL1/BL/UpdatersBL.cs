@@ -9,9 +9,10 @@ using DO;
 using BO;
 
 namespace BL
-{/// <summary>
-/// part of BL class
-/// </summary>
+{
+    /// <summary>
+    /// part of BL class
+    /// </summary>
     partial class BLImp : IBL
     {
 
@@ -202,7 +203,7 @@ namespace BL
         /// <param name="id"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDroneSentToCharge(int id)
-         {
+        {
             lock (Dal)
             {
                 //if drone not found
@@ -210,8 +211,8 @@ namespace BL
                 {
                     throw new GetException($"id {id} doesn't exist ");
                 }
-                DroneToList drone = drones.Find(dr => dr.Id == id); 
-                                                                    // if the drown isn't vacant it can't be charged.
+                DroneToList drone = drones.Find(dr => dr.Id == id);
+                // if the drown isn't vacant it can't be charged.
                 if (drone.Status != Enums.DroneStatuses.Vacant)
                 {
                     return;
@@ -284,7 +285,7 @@ namespace BL
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomerInfo(int idC, string name, string phone)
         {
-            lock(Dal)
+            lock (Dal)
             {
                 //if customer not found
                 if (!Dal.GetCustomerList().Any(cu => cu.Id == idC))
@@ -300,7 +301,7 @@ namespace BL
                     bs.Phone = phone;
                 Dal.UpdateCustomerInfoFromBL(bs);
             }
-           
+
         }
         #endregion
 
