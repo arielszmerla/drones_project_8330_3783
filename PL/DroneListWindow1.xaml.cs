@@ -27,7 +27,6 @@ namespace PL
         private IBL bl1;
         private int id;
         private IBL bl;
-        List<PO.DroneToList> poDroneToList = new();
         public static Model Model { get; } = Model.Instance;
 
         void Window_Loaded(object sender, RoutedEventArgs e) => Model.DronesRefresh();
@@ -80,7 +79,7 @@ namespace PL
         /// <param name="e"></param>
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DroneListView.ItemsSource = bl1.GetDroneList((BO.Enums.DroneStatuses?)StatusSelector.SelectedItem, (BO.Enums.WeightCategories?)WeightChoise.SelectedItem);
+            DroneListView.ItemsSource = bl1.GetDroneList((Enums.DroneStatuses?)StatusSelector.SelectedItem, (BO.Enums.WeightCategories?)WeightChoise.SelectedItem);
             reset.Visibility = Visibility.Visible;
         }
         /// <summary>

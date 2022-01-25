@@ -17,6 +17,14 @@ namespace PL
     /// </summary>
     public sealed class ConverterDoubleToInt : IValueConverter
     {
+        /// <summary>
+        /// from double to int
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns>int value</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             Double val = (Double)value;
@@ -24,6 +32,14 @@ namespace PL
 
         }
 
+        /// <summary>
+        /// not implemented
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         object IValueConverter.ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
@@ -42,6 +58,14 @@ namespace PL
             return $"({val})";
 
         }
+        /// <summary>
+        /// not implemented
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         object IValueConverter.ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
@@ -56,6 +80,14 @@ namespace PL
             Double val = (Double)value;
             return $"{ (int)val} %";
         }
+        /// <summary>
+        /// not implemented
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
             throw new NotImplementedException();
     }
@@ -74,6 +106,14 @@ namespace PL
                 < 60 => Brushes.GreenYellow,
                 _ => Brushes.Green
             };
+        /// <summary>
+        /// not implemented
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
             throw new NotImplementedException();
     }
@@ -99,6 +139,14 @@ namespace PL
     /// </summary>
     internal class Deliveryidconvert : IValueConverter
     {
+        /// <summary>
+        /// only if a parcel in in a drone we display it
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
 
@@ -138,7 +186,7 @@ namespace PL
             if (value == null )
                 return "no parcel";
             else if( (int)value == 0)
-                 return $"no parcel assigned";
+                 return "no parcel assigned";
             else return $"Parcel: {(int)value}";
 
         }
